@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Devp
+Bundle-SymbolicName: net.aicoder.epi.devp;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: net.aicoder.epi.devp.DevpPlugin
+Bundle-Vendor: AiCoder
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ net.aicoder.epi.base;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Automatic-Module-Name: net.aicoder.epi.devp
+Bundle-ActivationPolicy: lazy
+Export-Package: net.aicoder.epi.devp

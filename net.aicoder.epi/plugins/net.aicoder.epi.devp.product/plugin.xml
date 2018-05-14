@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="Sample Multi-page Editor"
+            extensions="aic"
+            icon="icons/sample.png"
+            contributorClass="net.aicoder.epi.devp.product.view.editors.ProductEditorContributor"
+            class="net.aicoder.epi.devp.product.view.editors.ProductEditor"
+            id="net.aicoder.epi.devp.product.view.editors.ProductEditor">
+      </editor>
+   </extension>
+
+	<extension
+  		point="org.eclipse.ui.views">
+		<view
+			id="net.aicoder.epi.devp.product.view.views.ProductExploer"
+            class="net.aicoder.epi.devp.product.view.views.ProductExploer"
+            name="Product Explorer"
+            icon="icons/product_exploer.gif"
+			>
+		</view>
+	</extension>
+   
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="Product Design2"
+            icon="icons/releng_gears.gif"
+            class="net.aicoder.epi.base.view.EpiPerspective"
+            id="net.aicoder.epi.devp.product.ProductPerspective">
+      </perspective>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+	<perspectiveExtension
+		targetID="net.aicoder.epi.devp.product.ProductPerspective">
+            
+		<!-- Outline as Fastview !-->
+		<view
+                  closeable="true"
+                  standalone="false"
+                  moveable="true"
+                  visible="true"
+                  showTitle="true"
+                  ratio="0.25"
+                  relationship="left"
+                  relative="net.aicoder.epi.devp.product.view.editors.ProductEditor"
+                  id="net.aicoder.epi.devp.product.view.views.ProductExploer"/>
+		<view
+                  closeable="true"
+                  standalone="false"
+                  moveable="true"
+                  visible="true"
+                  showTitle="true"
+                  ratio="0.15"
+                  relationship="right"
+                  relative="net.aicoder.epi.devp.product.view.editors.ProductEditor"
+                  id="org.eclipse.ui.views.ContentOutline"/>
+	</perspectiveExtension>
+   </extension>
+ 
+ </plugin>
