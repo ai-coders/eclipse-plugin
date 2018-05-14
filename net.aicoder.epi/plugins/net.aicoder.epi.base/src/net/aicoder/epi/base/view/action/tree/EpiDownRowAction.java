@@ -1,6 +1,5 @@
 package net.aicoder.epi.base.view.action.tree;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -14,10 +13,7 @@ import net.aicoder.epi.base.BaseImageConstant;
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.model.ITreeNode;
 import net.aicoder.epi.base.view.action.BaseAction;
-import net.aicoder.epi.base.view.adapter.EpiInput;
-import net.aicoder.epi.base.view.definer.IViewDefiner;
 import net.aicoder.epi.base.view.element.tree.EpiTree;
-import net.aicoder.epi.base.view.element.tree.EpiTreeContentProvider;
 
 public class EpiDownRowAction extends BaseAction {
 	private static String actionText = "记录下移";

@@ -15,7 +15,7 @@ import net.aicoder.epi.base.view.editor.EpiFormPage;
 import net.aicoder.epi.sample.edittable.Ch9TableEditorComposite;
 
 public class PrdOverviewPage extends EpiFormPage {
-	private IEpiAction[] toolBarAactons;
+	//private IEpiAction[] toolBarAactons;
 	ScrolledForm form;
 
 	public PrdOverviewPage(FormEditor editor) {
@@ -43,14 +43,11 @@ public class PrdOverviewPage extends EpiFormPage {
 	private void createContent(final ScrolledForm form, FormToolkit toolkit) {
 		IEpiEditorInput editorInput = (IEpiEditorInput) this.getEditor().getEditorInput();
 		IBaseVo currentData = editorInput.getCurrentData();
+		form.setText(currentData.getName());
 		Composite  composite = form.getBody();
 		composite.setLayout(new FillLayout());
 		
 		new Ch9TableEditorComposite(form.getBody());
-
-		//hookToolBars(form.getToolBarManager());
-		//Group group = new Group(form.getBody(), SWT.NONE);
-		//group.setText(currentData.getName() + "产品总览");
 	}
 	
 	@Override

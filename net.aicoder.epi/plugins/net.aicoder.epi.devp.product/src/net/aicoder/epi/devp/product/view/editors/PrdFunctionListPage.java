@@ -10,7 +10,6 @@ import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.editor.EpiFormPage;
 import net.aicoder.epi.base.view.element.table.EpiTable;
 import net.aicoder.epi.base.view.element.table.EpiTableDefiner;
-import net.aicoder.epi.base.view.element.tree.EpiTreeDefiner;
 import net.aicoder.epi.devp.product.dataoper.ModuleDataoper;
 
 public class PrdFunctionListPage extends EpiFormPage {
@@ -43,7 +42,7 @@ public class PrdFunctionListPage extends EpiFormPage {
 	
 	@Override
 	protected void createControl(Composite parent) {
-		definer = new EpiTreeDefiner(null, columnsDefine);
+		definer = new EpiTableDefiner(null, columnsDefine);
 		IEpiEditorInput editInput = (IEpiEditorInput)editor.getEditorInput();
 		IBaseVo product = editInput.getCurrentData();
 		IEpiInput input = dataoper.loadModuleList(product);

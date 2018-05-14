@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            name="Sample Multi-page Editor"
+            name="ProductEditor"
             extensions="aic"
             icon="icons/sample.png"
             contributorClass="net.aicoder.epi.devp.product.view.editors.ProductEditorContributor"
@@ -27,7 +27,7 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            name="Product Design2"
+            name="Product Design"
             icon="icons/releng_gears.gif"
             class="net.aicoder.epi.base.view.EpiPerspective"
             id="net.aicoder.epi.devp.product.ProductPerspective">
