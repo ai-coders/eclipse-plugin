@@ -29,12 +29,12 @@
 		<link>
 			<name>base-src</name>
 			<type>2</type>
-			<location>D:/MyWST/epi/net.aicoder.epi/plugins/net.aicoder.epi.base/src</location>
+			<location>../net.aicoder.epi.base/src</location>
 		</link>
 		<link>
 			<name>devp-src</name>
 			<type>2</type>
-			<location>D:/MyWST/epi/net.aicoder.epi/plugins/net.aicoder.epi.devp/src</location>
+			<location>../net.aicoder.epi.devp/src</location>
 		</link>
 	</linkedResources>
 </projectDescription>
