@@ -6,7 +6,7 @@
       <editor
             name="ProductEditor"
             extensions="aic"
-            icon="icons/sample.png"
+            icon="icons/product/product.png"
             contributorClass="net.aicoder.epi.devp.product.view.editors.ProductEditorContributor"
             class="net.aicoder.epi.devp.product.view.editors.ProductEditor"
             id="net.aicoder.epi.devp.product.view.editors.ProductEditor">
@@ -19,7 +19,7 @@
 			id="net.aicoder.epi.devp.product.view.views.ProductExploer"
             class="net.aicoder.epi.devp.product.view.views.ProductExploer"
             name="Product Explorer"
-            icon="icons/product_exploer.gif"
+            icon="icons/product_exploer.png"
 			>
 		</view>
 	</extension>
@@ -28,7 +28,7 @@
          point="org.eclipse.ui.perspectives">
       <perspective
             name="Product Design"
-            icon="icons/releng_gears.gif"
+            icon="icons/product_exploer.png"
             class="net.aicoder.epi.base.view.EpiPerspective"
             id="net.aicoder.epi.devp.product.ProductPerspective">
       </perspective>
