@@ -11,8 +11,8 @@ classes/
 .apt_generated
 .classpath
 .factorypath
-.project
-.settings
+###.project
+###.settings
 .springBeans
 .sts4-cache
 
