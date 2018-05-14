@@ -27,14 +27,24 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>base-src</name>
+			<name>base_src</name>
 			<type>2</type>
-			<location>D:/MyWST/epi/net.aicoder.epi/plugins/net.aicoder.epi.base/src</location>
+			<locationURI>base_src</locationURI>
 		</link>
 		<link>
-			<name>devp-src</name>
+			<name>devp_src</name>
 			<type>2</type>
-			<location>D:/MyWST/epi/net.aicoder.epi/plugins/net.aicoder.epi.devp/src</location>
+			<locationURI>devp_src</locationURI>
 		</link>
 	</linkedResources>
+	<variableList>
+		<variable>
+			<name>base_src</name>
+			<value>$%7BPARENT-1-PROJECT_LOC%7D/net.aicoder.epi.base/src</value>
+		</variable>
+		<variable>
+			<name>devp_src</name>
+			<value>$%7BPARENT-1-PROJECT_LOC%7D/net.aicoder.epi.devp/src</value>
+		</variable>
+	</variableList>
 </projectDescription>
