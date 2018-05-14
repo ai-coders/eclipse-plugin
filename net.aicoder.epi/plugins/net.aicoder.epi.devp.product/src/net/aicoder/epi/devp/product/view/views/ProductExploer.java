@@ -38,7 +38,7 @@ public class ProductExploer extends EpiExplorer {
 	};
 	
 	private IEpiAction[] toolBarAactons;
-	ProductDataoper dataoper;
+	private ProductDataoper dataoper;
 
 	
 	public ProductExploer() {
@@ -55,9 +55,6 @@ public class ProductExploer extends EpiExplorer {
 		toolBarAactons = new IEpiAction[2];
 		toolBarAactons[0] = new EpiAddAction();
 		toolBarAactons[1] = new EpiDeleteAction();
-
-		//addAction = new EpiAddAction();
-		//deleteAction = new EpiDeleteAction();
 		
 		IActionBars bars = getViewSite().getActionBars();
 		fillLocalPullDown(bars.getMenuManager());

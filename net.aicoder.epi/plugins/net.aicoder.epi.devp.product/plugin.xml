@@ -56,7 +56,7 @@
                   moveable="true"
                   visible="true"
                   showTitle="true"
-                  ratio="0.15"
+                  ratio="0.25"
                   relationship="right"
                   relative="net.aicoder.epi.devp.product.view.editors.ProductEditor"
                   id="org.eclipse.ui.views.ContentOutline"/>
