@@ -28,7 +28,7 @@ import net.aicoder.tcom.tools.util.AiStringUtil;
 public class EpiExplorer extends CommonNavigator implements IContextProvider, IViewElement {
 	public static String ID = EpiExplorer.class.getName();
 
-	private IViewDefiner definer;
+	private EpiExplorerDefiner definer;
 	private CommonViewer viewer;
 
 	private boolean editable = true;
@@ -43,7 +43,7 @@ public class EpiExplorer extends CommonNavigator implements IContextProvider, IV
 		super();
 	}
 
-	public EpiExplorer(IViewDefiner definer) {
+	public EpiExplorer(EpiExplorerDefiner definer) {
 		super();
 		this.definer = definer;
 	}
@@ -56,6 +56,7 @@ public class EpiExplorer extends CommonNavigator implements IContextProvider, IV
 		viewer.setContentProvider(definer.getContentProvider());
 		viewer.setLabelProvider(definer.getLabelProvider());
 		viewer.setInput(definer.getAdapter());
+		viewer.setSorter(definer.getSorter());
 
 		if (definer.hasOpenEditAction()) {
 			hookDoubleClickAction();
@@ -154,7 +155,7 @@ public class EpiExplorer extends CommonNavigator implements IContextProvider, IV
 		return definer;
 	}
 
-	public void setDefiner(IViewDefiner definer) {
+	public void setDefiner(EpiExplorerDefiner definer) {
 		this.definer = definer;
 	}
 

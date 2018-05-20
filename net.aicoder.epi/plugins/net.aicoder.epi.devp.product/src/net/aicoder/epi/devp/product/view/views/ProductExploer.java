@@ -15,7 +15,6 @@ import net.aicoder.epi.base.view.action.IEpiAction;
 import net.aicoder.epi.base.view.adapter.EpiEditorInput;
 import net.aicoder.epi.base.view.adapter.IEpiInput;
 import net.aicoder.epi.base.view.adapter.IEpiEditorInput;
-import net.aicoder.epi.base.view.definer.IViewDefiner;
 import net.aicoder.epi.base.view.explorer.EpiExplorer;
 import net.aicoder.epi.base.view.explorer.EpiExplorerDefiner;
 import net.aicoder.epi.devp.DevpConstant;
@@ -45,7 +44,7 @@ public class ProductExploer extends EpiExplorer {
 		super();
 		dataoper = new ProductDataoper();
 		
-		IViewDefiner definer = new ProductExploerDefiner(viewDefine);
+		EpiExplorerDefiner definer = new ProductExploerDefiner(viewDefine);
 		definer.createAdapter(null);
 		this.setDefiner(definer);
 	}
