@@ -1,29 +1,28 @@
-package net.aicoder.devp.model.dev;
+package net.aicoder.devp.model.dev.system;
 
 import net.aicoder.devp.model.DevpBaseEo;
 
-public class DevaModuleEo extends DevpBaseEo {
+public class SysDiagramEo extends DevpBaseEo {
 	private static final long serialVersionUID = 1L;
 
-	private int mduFlag; // Ä£ĞÍ±êÖ¾, 0:²úÆ·;1:Ä£¿é;2:¹¦ÄÜ
-	private String type; // ÀàĞÍ
-	private String stereotype; // ¹¹ÔìĞÍ
-	private String scope; // ·¶Î§
-	private String version; // °æ±¾
-	private String phase; // ½×¶Î
-	private String status; // ×´Ì¬
-	private long prdRid; // ²úÆ·±àºÅ
-	private String prdCode; // ²úÆ·´úÂë
-	private String prdName; // ²úÆ·Ãû³Æ
-	private long parentRid; // ¸¸Ä£¿é±àºÅ
-	private int seq; // Ë³ĞòºÅ
+	private String dgmFlag; // ç³»ç»Ÿå…ƒç´ æ‰€å±ç±»å‹æ ‡è¯†
+	private String type; // ç±»å‹
+	private String subType; // å­ç±»å‹
+	private String stereotype; // æ„é€ å‹
+	private String scope; // èŒƒå›´
+	private String version; // ç‰ˆæœ¬
+	private String phase; // é˜¶æ®µ
+	private String status; // çŠ¶æ€
+	private long prdRid; // äº§å“ç¼–å·
+	private long elmRid; // ç³»ç»Ÿå…ƒç´ ç¼–å·
+	private int seq; // é¡ºåºå·
 
-	public int getMduFlag() {
-		return mduFlag;
+	public String getDgmFlag() {
+		return dgmFlag;
 	}
 
-	public void setMduFlag(int mduFlag) {
-		this.mduFlag = mduFlag;
+	public void setDgmFlag(String dgmFlag) {
+		this.dgmFlag = dgmFlag;
 	}
 
 	public String getType() {
@@ -32,6 +31,14 @@ public class DevaModuleEo extends DevpBaseEo {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getSubType() {
+		return subType;
+	}
+
+	public void setSubType(String subType) {
+		this.subType = subType;
 	}
 
 	public String getStereotype() {
@@ -82,28 +89,12 @@ public class DevaModuleEo extends DevpBaseEo {
 		this.prdRid = prdRid;
 	}
 
-	public String getPrdCode() {
-		return prdCode;
+	public long getElmRid() {
+		return elmRid;
 	}
 
-	public void setPrdCode(String prdCode) {
-		this.prdCode = prdCode;
-	}
-
-	public String getPrdName() {
-		return prdName;
-	}
-
-	public void setPrdName(String prdName) {
-		this.prdName = prdName;
-	}
-
-	public long getParentRid() {
-		return parentRid;
-	}
-
-	public void setParentRid(long parentRid) {
-		this.parentRid = parentRid;
+	public void setElmRid(long elmRid) {
+		this.elmRid = elmRid;
 	}
 
 	public int getSeq() {

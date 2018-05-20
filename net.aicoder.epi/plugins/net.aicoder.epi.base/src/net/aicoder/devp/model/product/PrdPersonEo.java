@@ -5,22 +5,22 @@ import net.aicoder.devp.model.DevpBaseEo;
 public class PrdPersonEo extends DevpBaseEo {
 	private static final long serialVersionUID = 1L;
 
-	private int nexusType; // ¹ØÁªÔªËØÀàĞÍ
-	private long nexusRid; // ¹ØÁªÔªËØ±àºÅ
-	private int seq; // Ë³ĞòºÅ
-	private long uid; // ÓÃ»§±àºÅ
+	private String nexusType; // å…³è”å…ƒç´ ç±»å‹
+	private long nexusRid; // å…³è”å…ƒç´ ç¼–å·
+	private int seq; // é¡ºåºå·
+	private long uid; // ç”¨æˆ·ç¼–å·
+	private String type; // ç”¨æˆ·ç±»å‹
+	private String role; // ç”¨æˆ·ç±»å‹
+	private String status; // çŠ¶æ€
+	private long userTid; // ç”¨æˆ·ç§Ÿæˆ·ç¼–å·
+	private long orgRid; // ç»„ç»‡ç¼–å·
+	private String orgName; // ç»„ç»‡åç§°
 
-	private String type; // ÓÃ»§ÀàĞÍ
-	private String role; // ÓÃ»§ÀàĞÍ
-	private String status; // ×´Ì¬
-	private long orgRid; // ×éÖ¯±àºÅ
-	private String orgName; // ×éÖ¯Ãû³Æ
-
-	public int getNexusType() {
+	public String getNexusType() {
 		return nexusType;
 	}
 
-	public void setNexusType(int nexusType) {
+	public void setNexusType(String nexusType) {
 		this.nexusType = nexusType;
 	}
 
@@ -72,6 +72,14 @@ public class PrdPersonEo extends DevpBaseEo {
 		this.status = status;
 	}
 
+	public long getUserTid() {
+		return userTid;
+	}
+
+	public void setUserTid(long userTid) {
+		this.userTid = userTid;
+	}
+
 	public long getOrgRid() {
 		return orgRid;
 	}
@@ -87,5 +95,4 @@ public class PrdPersonEo extends DevpBaseEo {
 	public void setOrgName(String orgName) {
 		this.orgName = orgName;
 	}
-
 }

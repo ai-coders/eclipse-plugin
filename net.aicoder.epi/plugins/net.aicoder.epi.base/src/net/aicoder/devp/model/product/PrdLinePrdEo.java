@@ -5,13 +5,12 @@ import net.aicoder.devp.model.DevpBaseEo;
 public class PrdLinePrdEo extends DevpBaseEo {
 	private static final long serialVersionUID = 1L;
 
-	private long lineRid; // ²úÆ·Ïß±àºÅ
-	private long prdRid; // ²úÆ·±àºÅ
-	private int seq; // Ë³ĞòºÅ
-
-	private String type; // ÀàĞÍ
-	private String stereotype; // ¹¹ÔìĞÍ
-	private String scope; // ·¶Î§
+	private long lineRid; // äº§å“çº¿ç¼–å·
+	private long prdRid; // äº§å“ç¼–å·
+	private int seq; // é¡ºåºå·
+	private String type; //  ç±»å‹
+	private String stereotype; //  æ„é€ å‹
+	private String scope; //  èŒƒå›´
 
 	public long getLineRid() {
 		return lineRid;

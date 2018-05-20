@@ -4,9 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public interface IDevpEo extends Serializable {
-	public EtypeEnum getEtype();
-
-	//public void setEtype(DevpEtypeEnum etype);
+	public EtypeEnum getEtype(); //元素类型，产品线、产品、组件....
 
 	public long getRid();
 
@@ -27,6 +25,10 @@ public interface IDevpEo extends Serializable {
 	public String getDescription();
 
 	public void setDescription(String description);
+	
+	public int getRecordState();
+	
+	public void setRecordState(int recordState);
 
 	public String getCreateUid();
 

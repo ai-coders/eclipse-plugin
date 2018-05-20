@@ -1,46 +1,30 @@
-package net.aicoder.devp.model.system;
+package net.aicoder.devp.model.dev.system;
 
 import net.aicoder.devp.model.DevpBaseEo;
 
-public class SysIdeprjCmpEo extends DevpBaseEo {
+public class SysElementEo extends DevpBaseEo {
 	private static final long serialVersionUID = 1L;
 
-	private long ideRid; // ¿ª·¢¹¤³Ì±àºÅ
-	private long sysRid; // ÏµÍ³±àºÅ
-	private long cmpRid; // ×é¼ş±àºÅ
+	private String elmFlag; // ç³»ç»Ÿå…ƒç´ æ‰€å±ç±»å‹æ ‡è¯†,CMP-ç»„ä»¶,IDE-å¼€å‘,DPY-éƒ¨ç½²
+	private String type; // ç±»å‹
+	private String subType; // å­ç±»å‹
+	private String stereotype; // æ„é€ å‹
+	private String scope; // èŒƒå›´
+	private String version; // ç‰ˆæœ¬
+	private String phase; // é˜¶æ®µ
+	private String status; // çŠ¶æ€
+	private long prdRid; // äº§å“ç¼–å·
+	private long parentRid; // çˆ¶åŒ…ç¼–å·
+	private int seq; // é¡ºåºå·
+	private int sharedComponent; // æ˜¯å¦ä¸ºå…±äº«ç»„ä»¶
+	private int sharedService; // æ˜¯å¦æä¾›å…±äº«æœåŠ¡
 
-	private String type; // ×é¼şÀàĞÍ
-	private String stereotype; // ¹¹ÔìĞÍ
-	private String scope; // ·¶Î§
-	private String version; // °æ±¾
-	private String phase; // ½×¶Î
-	private String status; // ×´Ì¬
-	private int seq; // Ë³ĞòºÅ
-	private int sharedComponent; // ÊÇ·ñÎª¹²Ïí×é¼ş
-	private int sharedService; // ÊÇ·ñÌá¹©¹²Ïí·şÎñ
-
-	public long getIdeRid() {
-		return ideRid;
+	public String getElmFlag() {
+		return elmFlag;
 	}
 
-	public void setIdeRid(long ideRid) {
-		this.ideRid = ideRid;
-	}
-
-	public long getSysRid() {
-		return sysRid;
-	}
-
-	public void setSysRid(long sysRid) {
-		this.sysRid = sysRid;
-	}
-
-	public long getCmpRid() {
-		return cmpRid;
-	}
-
-	public void setCmpRid(long cmpRid) {
-		this.cmpRid = cmpRid;
+	public void setElmFlag(String elmFlag) {
+		this.elmFlag = elmFlag;
 	}
 
 	public String getType() {
@@ -49,6 +33,14 @@ public class SysIdeprjCmpEo extends DevpBaseEo {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getSubType() {
+		return subType;
+	}
+
+	public void setSubType(String subType) {
+		this.subType = subType;
 	}
 
 	public String getStereotype() {
@@ -89,6 +81,22 @@ public class SysIdeprjCmpEo extends DevpBaseEo {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public long getPrdRid() {
+		return prdRid;
+	}
+
+	public void setPrdRid(long prdRid) {
+		this.prdRid = prdRid;
+	}
+
+	public long getParentRid() {
+		return parentRid;
+	}
+
+	public void setParentRid(long parentRid) {
+		this.parentRid = parentRid;
 	}
 
 	public int getSeq() {

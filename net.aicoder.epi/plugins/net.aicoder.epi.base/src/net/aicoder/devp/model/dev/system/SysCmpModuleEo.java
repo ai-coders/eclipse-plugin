@@ -1,24 +1,20 @@
-package net.aicoder.devp.model.product;
+package net.aicoder.devp.model.dev.system;
 
 import net.aicoder.devp.model.DevpBaseEo;
-import net.aicoder.devp.model.EtypeEnum;
 
-public class PrdPrdlineEo extends DevpBaseEo {
+public class SysCmpModuleEo extends DevpBaseEo {
 	private static final long serialVersionUID = 1L;
 
-	private String type; // 产品线类型
-	private String domain; // 领域
+	private String type; // 对应关系类型
 	private String stereotype; // 构造型
-	private String scope; // 访问控制范围
+	private String scope; // 范围
 	private String version; // 版本
 	private String phase; // 阶段
 	private String status; // 状态
-	private long parentRid; // 父产品线编号
+	private long prdRid; // 产品编号
+	private long elmRid; // 系统元素编号
+	private long mduRid; // 模块编号
 	private int seq; // 顺序号
-
-	static {
-		etype = EtypeEnum.PRDLINE;
-	}
 
 	public String getType() {
 		return type;
@@ -26,14 +22,6 @@ public class PrdPrdlineEo extends DevpBaseEo {
 
 	public void setType(String type) {
 		this.type = type;
-	}
-
-	public String getDomain() {
-		return domain;
-	}
-
-	public void setDomain(String domain) {
-		this.domain = domain;
 	}
 
 	public String getStereotype() {
@@ -76,12 +64,28 @@ public class PrdPrdlineEo extends DevpBaseEo {
 		this.status = status;
 	}
 
-	public long getParentRid() {
-		return parentRid;
+	public long getPrdRid() {
+		return prdRid;
 	}
 
-	public void setParentRid(long parentRid) {
-		this.parentRid = parentRid;
+	public void setPrdRid(long prdRid) {
+		this.prdRid = prdRid;
+	}
+
+	public long getElmRid() {
+		return elmRid;
+	}
+
+	public void setElmRid(long elmRid) {
+		this.elmRid = elmRid;
+	}
+
+	public long getMduRid() {
+		return mduRid;
+	}
+
+	public void setMduRid(long mduRid) {
+		this.mduRid = mduRid;
 	}
 
 	public int getSeq() {
@@ -91,4 +95,5 @@ public class PrdPrdlineEo extends DevpBaseEo {
 	public void setSeq(int seq) {
 		this.seq = seq;
 	}
+
 }

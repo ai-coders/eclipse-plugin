@@ -13,6 +13,8 @@ public abstract class DevpBaseEo implements IDevpEo {
 	private String name;
 	private String alias;
 	private String description;
+	
+	private int recordState;
 
 	private String createUid;
 	private String createUcode;
@@ -22,8 +24,6 @@ public abstract class DevpBaseEo implements IDevpEo {
 	private String modifyUcode;
 	private String modifyUname;
 	private Date modifyAt;
-	
-	
 
 	public DevpBaseEo() {
 		super();
@@ -79,6 +79,14 @@ public abstract class DevpBaseEo implements IDevpEo {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public int getRecordState() {
+		return recordState;
+	}
+
+	public void setRecordState(int recordState) {
+		this.recordState = recordState;
 	}
 
 	public String getCreateUid() {

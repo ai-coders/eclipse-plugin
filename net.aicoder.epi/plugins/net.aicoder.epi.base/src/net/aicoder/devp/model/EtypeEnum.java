@@ -1,40 +1,40 @@
 package net.aicoder.devp.model;
 
 public enum EtypeEnum {
-	_NONE(0), 
+	_NONE(""), 
 	
-	// ²úÆ·
-	PRDLINE(100100), //²úÆ·Ïß
-	PRODUCT(100200), //²úÆ·
-	MODULE(100300), //Ä£¿é
-	FUNCTION(100400), //¹¦ÄÜ
+	// ï¿½ï¿½Æ·
+	PRDLINE("PrdLine"), //ï¿½ï¿½Æ·ï¿½ï¿½
+	PRODUCT("Product"), //ï¿½ï¿½Æ·
+	MODULE("Module"), //Ä£ï¿½ï¿½
+	FUNCTION("Function"), //ï¿½ï¿½ï¿½ï¿½
 	
-	//// ÓÃÀý
-	USECASE(110100), //ÓÃÀý
+	//// ï¿½ï¿½ï¿½ï¿½
+	USECASE("UseCase"), //ï¿½ï¿½ï¿½ï¿½
 	
-	//// Ä£ÐÍ
-	MODEL(120100), //Ä£ÐÍ
+	//// Ä£ï¿½ï¿½
+	MODEL("Model"), //Ä£ï¿½ï¿½
 	
 	//// UI
-	PAGE(130100), //UI
-	UIELEMENT(130200), //UI Element
+	PAGE("Page"), //UI
+	UIELEMENT("UiElement"), //UI Element
 	
 	
 	// ÏµÍ³
-	SYSTEM(200100), //
-	COMPONENT(200200), //
+	SYSTEM("System"), //
+	COMPONENT("Component"), //
 	
-	// ¹¤³Ì
-	PROJECT(300100), //
-	SOURCECODE(300200), //source
+	// ï¿½ï¿½ï¿½ï¿½
+	PROJECT("Project"), //
+	SOURCECODE("SourceCode"), //source
 	;
-	private final int etype;
+	private final String etype;
 
-	private EtypeEnum(int etype) {
+	private EtypeEnum(String etype) {
 		this.etype = etype;
 	}
 	
-    public static EtypeEnum forInt(int etype) {
+    public static EtypeEnum forStr(String etype) {
         for (EtypeEnum type : values()) {
             if (type.etype == etype) {
                 return type;
@@ -43,7 +43,7 @@ public enum EtypeEnum {
         throw new IllegalArgumentException("Invalid Etype: " + etype);
     }
 	
-	public int getEtype() {
+	public String getEtype() {
 		return etype;
 	}
 }
