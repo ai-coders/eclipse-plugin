@@ -10,7 +10,7 @@ import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.editor.EpiFormPage;
 import net.aicoder.epi.base.view.element.table.EpiTable;
 import net.aicoder.epi.base.view.element.table.EpiTableDefiner;
-import net.aicoder.epi.devp.product.dataoper.ModuleDataoper;
+import net.aicoder.epi.devp.product.doper.ModuleDoper;
 
 public class PrdFunctionListPage extends EpiFormPage {
 	// 0-列名, 1-数据属性名称, 2-列显示的宽度, 3-数据类型, 4-数据格式, 5-是否隐藏的标志, 6-是否可编辑的标志
@@ -31,13 +31,13 @@ public class PrdFunctionListPage extends EpiFormPage {
 	private EpiTable table;
 	private EpiTableDefiner definer;
 	
-	private ModuleDataoper dataoper;
+	private ModuleDoper dataoper;
 
 	public PrdFunctionListPage(FormEditor editor) {
 		super(editor, PrdFunctionListPage.class.getName(), "功能清单");
 		this.editor = editor;
 		
-		dataoper = new ModuleDataoper();
+		dataoper = new ModuleDoper();
 	}
 	
 	@Override

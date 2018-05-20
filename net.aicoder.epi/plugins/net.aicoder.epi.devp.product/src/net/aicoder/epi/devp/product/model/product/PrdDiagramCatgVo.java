@@ -10,7 +10,7 @@ import net.aicoder.epi.devp.DevpConstant;
 
 public class PrdDiagramCatgVo extends BaseVo implements ITreeNode{
 	private static final long serialVersionUID = 1L;
-	private static final String ETYPE = DevpConstant.E_CATEGORY;
+	private static final String ETYPE = DevpConstant.CATEGORY;
 
 	private String type; // 产品类型
 	private String stereotype; // 构造型

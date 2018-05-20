@@ -1,17 +1,17 @@
-package net.aicoder.epi.devp.product.dataoper;
+package net.aicoder.epi.devp.product.doper;
 
 import java.util.List;
 
-import net.aicoder.epi.base.dataoper.BaseDataoper;
+import net.aicoder.epi.base.doper.BaseDoper;
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.view.adapter.EpiEditorInput;
 import net.aicoder.epi.base.view.adapter.EpiInput;
 import net.aicoder.epi.devp.product.dao.ProductDao;
 
-public class ProductDataoper extends BaseDataoper {
+public class ProductDoper extends BaseDoper {
 	private ProductDao productDao;
 	
-	public ProductDataoper() {
+	public ProductDoper() {
 		super();
 		productDao = new ProductDao();
 	}

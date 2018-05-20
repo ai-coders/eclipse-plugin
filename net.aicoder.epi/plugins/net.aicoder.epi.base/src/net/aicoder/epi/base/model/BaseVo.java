@@ -4,10 +4,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.aicoder.devp.model.EtypeEnum;
 import net.aicoder.tcom.tools.util.BeanUtil;
 
 public abstract class BaseVo implements IBaseVo {
 	private static final long serialVersionUID = 1L;
+	private static final String ETYPE = EtypeEnum.NONE.getEtype();
 
 	private StateFlagEnum dataState;
 
@@ -32,6 +34,11 @@ public abstract class BaseVo implements IBaseVo {
 
 	public BaseVo() {
 		super();
+	}
+
+	@Override
+	public String getEtype() {
+		return ETYPE;
 	}
 
 	public boolean putPropertyValue(String propertyName, Object value) {

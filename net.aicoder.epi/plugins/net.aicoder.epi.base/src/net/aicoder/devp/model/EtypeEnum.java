@@ -1,32 +1,32 @@
 package net.aicoder.devp.model;
 
 public enum EtypeEnum {
-	_NONE(""), 
+	NONE(""), 
 	
-	// ��Ʒ
-	PRDLINE("PrdLine"), //��Ʒ��
-	PRODUCT("Product"), //��Ʒ
-	MODULE("Module"), //ģ��
-	FUNCTION("Function"), //����
+	// 产品
+	PRDLINE("PrdLine"), //产品线
+	PRODUCT("Product"), //产品
+	MODULE("Module"), //功能模块
+	FUNCTION("Function"), //功能
 	
-	//// ����
-	USECASE("UseCase"), //����
+	// 系统
+	SYSTEM("System"), // 系统、子系统
+	SYSCMP("SysCmp"), // 组件
+	SYSIDEFLD("SysIdeFld"), // 工程目录
+	SYSIDEPRJ("SysIdePrj"), // 工程项目
+	SYSDPYENV("SysDpyEnv"), // 部署环境
 	
-	//// ģ��
-	MODEL("Model"), //ģ��
+	//// 用例
+	USECASE("UseCase"), //用例
+	
+	//// 模型
+	MODEL("Model"), //模型
 	
 	//// UI
 	PAGE("Page"), //UI
 	UIELEMENT("UiElement"), //UI Element
 	
 	
-	// ϵͳ
-	SYSTEM("System"), //
-	COMPONENT("Component"), //
-	
-	// ����
-	PROJECT("Project"), //
-	SOURCECODE("SourceCode"), //source
 	;
 	private final String etype;
 

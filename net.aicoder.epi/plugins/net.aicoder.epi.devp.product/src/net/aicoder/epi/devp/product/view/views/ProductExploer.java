@@ -19,7 +19,7 @@ import net.aicoder.epi.base.view.explorer.EpiExplorer;
 import net.aicoder.epi.base.view.explorer.EpiExplorerDefiner;
 import net.aicoder.epi.devp.DevpConstant;
 import net.aicoder.epi.devp.product.ProductImageConstant;
-import net.aicoder.epi.devp.product.dataoper.ProductDataoper;
+import net.aicoder.epi.devp.product.doper.ProductDoper;
 import net.aicoder.epi.devp.product.view.editors.ProductEditor;
 import net.aicoder.epi.util.ImageUtil;
 
@@ -30,19 +30,19 @@ public class ProductExploer extends EpiExplorer {
 	private static Object[][] viewDefine = {
 			{DevpConstant.E_PRDLINE, ProductImageConstant.getImage(ProductImageConstant.E_PRDLINE) , },
 			{DevpConstant.E_PRODUCT, ProductImageConstant.getImage(ProductImageConstant.E_PRODUCT) , null, null, ProductEditor.ID},
-			{DevpConstant.E_CATEGORY, ImageUtil.getImage(ISharedImages.IMG_OBJ_FOLDER) , },
+			{DevpConstant.CATEGORY, ImageUtil.getImage(ISharedImages.IMG_OBJ_FOLDER) , },
 			{DevpConstant.E_PRD_DEPLOY, ProductImageConstant.getImage(ProductImageConstant.E_PRD_DEPLOY) , null, null, ProductEditor.ID},
 			{DevpConstant.E_PRD_CPNT, ProductImageConstant.getImage(ProductImageConstant.E_PRD_CPNT) , null, null, ProductEditor.ID},
 			{DevpConstant.E_PRD_IDEPRJ, ProductImageConstant.getImage(ProductImageConstant.E_PRD_IDEPRJ) , null, null, ProductEditor.ID },
 	};
 	
 	private IEpiAction[] toolBarAactons;
-	private ProductDataoper dataoper;
+	private ProductDoper dataoper;
 
 	
 	public ProductExploer() {
 		super();
-		dataoper = new ProductDataoper();
+		dataoper = new ProductDoper();
 		
 		EpiExplorerDefiner definer = new ProductExploerDefiner(viewDefine);
 		definer.createAdapter(null);

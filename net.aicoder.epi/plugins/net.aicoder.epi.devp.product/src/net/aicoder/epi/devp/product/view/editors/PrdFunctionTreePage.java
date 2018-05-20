@@ -21,7 +21,7 @@ import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.editor.EpiFormPage;
 import net.aicoder.epi.base.view.element.tree.EpiTree;
 import net.aicoder.epi.base.view.element.tree.EpiTreeDefiner;
-import net.aicoder.epi.devp.product.dataoper.ModuleDataoper;
+import net.aicoder.epi.devp.product.doper.ModuleDoper;
 import net.aicoder.epi.devp.product.model.product.PrdModuleVo;
 
 public class PrdFunctionTreePage extends EpiFormPage {
@@ -44,12 +44,12 @@ public class PrdFunctionTreePage extends EpiFormPage {
 	private EpiTree tree;
 	private EpiTreeDefiner definer;
 	
-	private ModuleDataoper dataoper;
+	private ModuleDoper dataoper;
 
 	public PrdFunctionTreePage(FormEditor editor) {
 		super(editor, ID, "功能树");
 		this.editor = editor;
-		dataoper = new ModuleDataoper();
+		dataoper = new ModuleDoper();
 	}
 	
 	@Override
