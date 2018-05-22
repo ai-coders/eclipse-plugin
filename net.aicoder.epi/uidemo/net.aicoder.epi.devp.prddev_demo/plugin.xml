@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="net.aicoder.epi.devp.prddev.uidemo.editors.ModuleEditor"
+            id="net.aicoder.epi.devp.prddev.uidemo.editors.ModuleEditor"
+            name="XXX产品-功能模型">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="net.aicoder.epi.devp.prddev.uidemo.editors.SysCmpEditor"
+            id="net.aicoder.epi.devp.prddev.uidemo.editors.SysCmpEditor"
+            name="XXX产品-组件模型">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="net.aicoder.epi.devp.prddev.uidemo.editors.SysIdeEditor"
+            id="net.aicoder.epi.devp.prddev.uidemo.editors.SysIdeEditor"
+            name="XXX产品-开发模型">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="net.aicoder.epi.devp.prddev.uidemo.editors.SysDpyEditor"
+            id="net.aicoder.epi.devp.prddev.uidemo.editors.SysDpyEditor"
+            name="XXX产品-部署模型">
+      </editor>
+   </extension>
+   
+    <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="net.aicoder.epi.devp.prddev.uidemo.editors.SysCmpDgmEditor"
+            id="net.aicoder.epi.devp.prddev.uidemo.editors.SysCmpDgmEditor"
+            name="XXX产品-组件图">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="net.aicoder.epi.devp.prddev.uidemo.editors.SysDpyDgmEditor"
+            id="net.aicoder.epi.devp.prddev.uidemo.editors.SysDpyDgmEditor"
+            name="XXX产品-部署图">
+      </editor>
+   </extension>
+ 
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="Product DevExplorer"
+            inject="true"
+            icon="icons/sample.png"
+            class="net.aicoder.epi.devp.prddev.uidemo.views.ProductDevExplorer"
+            id="net.aicoder.epi.devp.prddev.uidemo.views.ProductDevExplorer">
+      </view>
+      <view
+            class="net.aicoder.epi.devp.prddev.uidemo.views.ProductDevExplorer"
+            id="net.aicoder.epi.devp.prddev.uidemo.views.ProductDevExplorer"
+            name="New ViewPart">
+      </view>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="产品构建(Demo)"
+            icon="icons/sample.png"
+            class="net.aicoder.epi.devp.prddev.uidemo.perspectives.PrddevPerspective"
+            id="net.aicoder.epi.devp.prddev.uidemo.perspectives.PrddevPerspective">
+      </perspective>
+   </extension>
+ 
+    <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+	<perspectiveExtension
+		targetID="net.aicoder.epi.devp.prddev.uidemo.perspectives.PrddevPerspective">
+            
+		<view
+                  closeable="true"
+                  standalone="false"
+                  moveable="true"
+                  visible="true"
+                  showTitle="true"
+                  ratio="0.25"
+                  relationship="left"
+                  relative="net.aicoder.epi.devp.prddev.uidemo.editors.ModuleEditor"
+                  id="net.aicoder.epi.devp.prddev.uidemo.views.ProductDevExplorer"/>
+		<view
+                  closeable="true"
+                  standalone="false"
+                  moveable="true"
+                  visible="true"
+                  showTitle="true"
+                  ratio="0.15"
+                  relationship="right"
+                  relative="net.aicoder.epi.devp.prddev.uidemo.editors.ModuleEditor"
+                  id="org.eclipse.ui.views.ContentOutline"/>
+	</perspectiveExtension>
+   </extension>
+  
+ </plugin>
