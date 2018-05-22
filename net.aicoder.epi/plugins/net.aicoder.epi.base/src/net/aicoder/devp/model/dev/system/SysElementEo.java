@@ -5,7 +5,7 @@ import net.aicoder.devp.model.DevpBaseEo;
 public class SysElementEo extends DevpBaseEo {
 	private static final long serialVersionUID = 1L;
 
-	private String elmFlag; // 系统元素所属类型标识,CMP-组件,IDE-开发,DPY-部署
+	private String elmFlag; // 系统元素所属类型标识: CMP-组件,IDE-开发,DPY-部署
 	private String type; // 类型
 	private String subType; // 子类型
 	private String stereotype; // 构造型
@@ -16,8 +16,9 @@ public class SysElementEo extends DevpBaseEo {
 	private long prdRid; // 产品编号
 	private long parentRid; // 父包编号
 	private int seq; // 顺序号
-	private int sharedComponent; // 是否为共享组件
-	private int sharedService; // 是否提供共享服务
+	private int sharedComponent; //是否为共享组件
+	private int sharedService; //是否提供共享服务
+	private String notes; // 备注
 
 	public String getElmFlag() {
 		return elmFlag;
@@ -121,6 +122,14 @@ public class SysElementEo extends DevpBaseEo {
 
 	public void setSharedService(int sharedService) {
 		this.sharedService = sharedService;
+	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 
 }

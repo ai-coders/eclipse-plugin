@@ -5,25 +5,25 @@ import net.aicoder.devp.model.DevpBaseEo;
 public class SysElmConnectorEo extends DevpBaseEo {
 	private static final long serialVersionUID = 1L;
 
-	private long sprdRid; // 来源产品编号
-	private long selmRid; // 来源系统元素编号
-	private long dprdRid; // 目标产品编号
-	private long delmRid; // 目标系统元素编号
-	private long selmInstRid; // 来源系统元素实例编号
-	private long delmInstRid; // 目标系统元素实例编号
-	private int seq; // 顺序号
-	private String type; // 对应关系类型
-	private String subType; // 对应关系子类型
-	private String stereotype; // 构造型
-	private String scope; // 范围
-	private String direction; // 方向
-	private String srcMulti; // 来源对应数量
-	private String srcRole; // 来源角色
-	private String srcRoleType; // 来源角色类型
-	private String destMulti; // 目标对应数量
-	private String destRole; // 目标角色
-	private String destRoleType; // 目标角色类型
-	private String attrRelation; // 属性对应关系
+	private long sprdRid; //来源产品编号
+	private long selmRid; //来源系统元素编号
+	private long dprdRid; //目标产品编号
+	private long delmRid; //目标系统元素编号
+	private long sinstRid; //来源系统元素实例编号
+	private long dinstRid; //目标系统元素实例编号
+	private int seq; //顺序号
+	private String type; //对应关系类型
+	private String subType; //对应关系子类型
+	private String stereotype; //构造型
+	private String scope; //范围
+	private String direction; //方向
+	private String srcMulti; //来源对应数量
+	private String srcRole; //来源角色
+	private String srcRoleType; //来源角色类型
+	private String destMulti; //目标对应数量
+	private String destRole; //目标角色
+	private String destRoleType; //目标角色类型
+	private String attrRelation; //属性对应关系
 
 	public long getSprdRid() {
 		return sprdRid;
@@ -57,20 +57,21 @@ public class SysElmConnectorEo extends DevpBaseEo {
 		this.delmRid = delmRid;
 	}
 
-	public long getSelmInstRid() {
-		return selmInstRid;
+
+	public long getSinstRid() {
+		return sinstRid;
 	}
 
-	public void setSelmInstRid(long selmInstRid) {
-		this.selmInstRid = selmInstRid;
+	public void setSinstRid(long sinstRid) {
+		this.sinstRid = sinstRid;
 	}
 
-	public long getDelmInstRid() {
-		return delmInstRid;
+	public long getDinstRid() {
+		return dinstRid;
 	}
 
-	public void setDelmInstRid(long delmInstRid) {
-		this.delmInstRid = delmInstRid;
+	public void setDinstRid(long dinstRid) {
+		this.dinstRid = dinstRid;
 	}
 
 	public int getSeq() {

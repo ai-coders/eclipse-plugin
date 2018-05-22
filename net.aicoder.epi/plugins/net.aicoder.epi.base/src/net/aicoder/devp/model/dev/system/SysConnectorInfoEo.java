@@ -2,13 +2,19 @@ package net.aicoder.devp.model.dev.system;
 
 import net.aicoder.devp.model.DevpBaseEo;
 
-public class SysElementInfoEo extends DevpBaseEo {
+public class SysConnectorInfoEo extends DevpBaseEo {
 	private static final long serialVersionUID = 1L;
 
 	private long prdRid; // 产品编号
-	private long elmRid; // 系统元素编号
-	private long instRid; // 系统元素实例编号
+	private long contRid; // 关联连接编号
+	private long sprdRid; // 来源产品编号
+	private long selmRid; // 来源系统元素编号
+	private long dprdRid; // 目标产品编号
+	private long delmRid; // 目标系统元素编号
+	private long sinstRid; // 来源系统元素实例编号
+	private long dinstRid; // 目标系统元素实例编号
 	private int seq; // 顺序号
+	private String type; // 设值方式
 	private String infoValue1; // 信息值1
 	private String infoValue2; // 信息值2
 	private String infoValue3; // 信息值3
@@ -24,20 +30,60 @@ public class SysElementInfoEo extends DevpBaseEo {
 		this.prdRid = prdRid;
 	}
 
-	public long getElmRid() {
-		return elmRid;
+	public long getContRid() {
+		return contRid;
 	}
 
-	public void setElmRid(long elmRid) {
-		this.elmRid = elmRid;
+	public void setContRid(long contRid) {
+		this.contRid = contRid;
 	}
 
-	public long getInstRid() {
-		return instRid;
+	public long getSprdRid() {
+		return sprdRid;
 	}
 
-	public void setInstRid(long instRid) {
-		this.instRid = instRid;
+	public void setSprdRid(long sprdRid) {
+		this.sprdRid = sprdRid;
+	}
+
+	public long getSelmRid() {
+		return selmRid;
+	}
+
+	public void setSelmRid(long selmRid) {
+		this.selmRid = selmRid;
+	}
+
+	public long getDprdRid() {
+		return dprdRid;
+	}
+
+	public void setDprdRid(long dprdRid) {
+		this.dprdRid = dprdRid;
+	}
+
+	public long getDelmRid() {
+		return delmRid;
+	}
+
+	public void setDelmRid(long delmRid) {
+		this.delmRid = delmRid;
+	}
+
+	public long getSinstRid() {
+		return sinstRid;
+	}
+
+	public void setSinstRid(long sinstRid) {
+		this.sinstRid = sinstRid;
+	}
+
+	public long getDinstRid() {
+		return dinstRid;
+	}
+
+	public void setDinstRid(long dinstRid) {
+		this.dinstRid = dinstRid;
 	}
 
 	public int getSeq() {
@@ -46,6 +92,14 @@ public class SysElementInfoEo extends DevpBaseEo {
 
 	public void setSeq(int seq) {
 		this.seq = seq;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getInfoValue1() {
@@ -95,5 +149,4 @@ public class SysElementInfoEo extends DevpBaseEo {
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
-
 }

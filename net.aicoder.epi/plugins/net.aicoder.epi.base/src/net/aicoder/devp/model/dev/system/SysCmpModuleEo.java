@@ -5,16 +5,16 @@ import net.aicoder.devp.model.DevpBaseEo;
 public class SysCmpModuleEo extends DevpBaseEo {
 	private static final long serialVersionUID = 1L;
 
-	private String type; // 对应关系类型
-	private String stereotype; // 构造型
-	private String scope; // 范围
-	private String version; // 版本
-	private String phase; // 阶段
-	private String status; // 状态
-	private long prdRid; // 产品编号
-	private long elmRid; // 系统元素编号
-	private long mduRid; // 模块编号
-	private int seq; // 顺序号
+	private String type; //对应关系类型
+	private String stereotype; //构造型
+	private String scope; //范围
+	private String version; //版本
+	private String phase; //阶段
+	private String status; //状态
+	private long prdRid; //产品编号
+	private long elmRid; //系统元素编号
+	private long mduRid; //模块编号
+	private int seq; //顺序号
 
 	public String getType() {
 		return type;
