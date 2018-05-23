@@ -12,17 +12,17 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            class="net.aicoder.epi.devp.prddev.uidemo.editors.SysCmpEditor"
-            id="net.aicoder.epi.devp.prddev.uidemo.editors.SysCmpEditor"
-            name="XXX产品-组件模型">
-      </editor>
-   </extension>
-   <extension
-         point="org.eclipse.ui.editors">
-      <editor
             class="net.aicoder.epi.devp.prddev.uidemo.editors.SysIdeEditor"
             id="net.aicoder.epi.devp.prddev.uidemo.editors.SysIdeEditor"
             name="XXX产品-开发模型">
+      </editor>
+   </extension>
+    <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="net.aicoder.epi.devp.prddev.uidemo.editors.SysCmpEditor"
+            id="net.aicoder.epi.devp.prddev.uidemo.editors.SysCmpEditor"
+            name="XXX产品-组件模型">
       </editor>
    </extension>
    <extension

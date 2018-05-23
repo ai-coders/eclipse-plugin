@@ -91,20 +91,6 @@ public class ProductDevExplorer extends ViewPart {
 					trtmNewTreeitem_1.setExpanded(true);
 				}
 				{
-					TreeItem trtmNewTreeitem_2 = new TreeItem(trtmNewTreeitem, SWT.NONE);
-					trtmNewTreeitem_2.setText("组件模型");
-					{
-						TreeItem trtmNewTreeitem_7 = new TreeItem(trtmNewTreeitem_2, SWT.NONE);
-						trtmNewTreeitem_7.setText("系统/子系统");
-						{
-							TreeItem trtmNewTreeitem_8 = new TreeItem(trtmNewTreeitem_7, SWT.NONE);
-							trtmNewTreeitem_8.setText("组件");
-						}
-						trtmNewTreeitem_7.setExpanded(true);
-					}
-					trtmNewTreeitem_2.setExpanded(true);
-				}
-				{
 					TreeItem trtmNewTreeitem_3 = new TreeItem(trtmNewTreeitem, SWT.NONE);
 					trtmNewTreeitem_3.setText("开发模型");
 					{
@@ -117,6 +103,20 @@ public class ProductDevExplorer extends ViewPart {
 						treeItem.setExpanded(true);
 					}
 					trtmNewTreeitem_3.setExpanded(true);
+				}
+				{
+					TreeItem trtmNewTreeitem_2 = new TreeItem(trtmNewTreeitem, SWT.NONE);
+					trtmNewTreeitem_2.setText("组件模型");
+					{
+						TreeItem trtmNewTreeitem_7 = new TreeItem(trtmNewTreeitem_2, SWT.NONE);
+						trtmNewTreeitem_7.setText("系统/子系统");
+						{
+							TreeItem trtmNewTreeitem_8 = new TreeItem(trtmNewTreeitem_7, SWT.NONE);
+							trtmNewTreeitem_8.setText("组件");
+						}
+						trtmNewTreeitem_7.setExpanded(true);
+					}
+					trtmNewTreeitem_2.setExpanded(true);
 				}
 				{
 					TreeItem trtmNewTreeitem_4 = new TreeItem(trtmNewTreeitem, SWT.NONE);
