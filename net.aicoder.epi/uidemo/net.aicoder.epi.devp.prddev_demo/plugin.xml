@@ -63,7 +63,7 @@
       <view
             class="net.aicoder.epi.devp.prddev.uidemo.views.ProductDevExplorer"
             id="net.aicoder.epi.devp.prddev.uidemo.views.ProductDevExplorer"
-            name="New ViewPart">
+            name="产品构建导航">
       </view>
    </extension>
 
