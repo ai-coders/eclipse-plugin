@@ -25,17 +25,4 @@
 		<nature>org.eclipse.pde.PluginNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>base_src</name>
-			<type>2</type>
-			<locationURI>base_src</locationURI>
-		</link>
-	</linkedResources>
-	<variableList>
-		<variable>
-			<name>base_src</name>
-			<value>$%7BPARENT-1-PROJECT_LOC%7D/net.aicoder.epi.base/src</value>
-		</variable>
-	</variableList>
 </projectDescription>

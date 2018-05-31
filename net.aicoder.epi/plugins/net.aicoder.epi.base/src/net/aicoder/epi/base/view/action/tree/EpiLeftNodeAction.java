@@ -78,14 +78,14 @@ public class EpiLeftNodeAction extends BaseAction {
 		IBaseVo newData = currData;
 
 		if (currData instanceof ITreeNode) {
-			ITreeNode parentData = ((ITreeNode) currData).getParentData();
+			ITreeNode parentData = ((ITreeNode) currData).getParentNode();
 			if (parentData != null) {
-				ITreeNode ppNode = parentData.getParentData();
+				ITreeNode ppNode = parentData.getParentNode();
 				if(ppNode != null && ppNode instanceof ITreeNode) {
 					List<IBaseVo> childrenList = parentData.getChildrenList();
 					childrenList.remove(currData);
 					List<IBaseVo> ppChildrenList = ppNode.getChildrenList();
-					((ITreeNode) currData).setParentData(ppNode);
+					((ITreeNode) currData).setParentNode(ppNode);
 					ppChildrenList.add(currData);
 				}
 			} else {

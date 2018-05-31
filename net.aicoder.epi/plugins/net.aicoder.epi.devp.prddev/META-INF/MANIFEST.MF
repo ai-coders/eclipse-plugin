@@ -3,18 +3,35 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Prddev
 Bundle-SymbolicName: net.aicoder.epi.devp.prddev;singleton:=true
 Bundle-Version: 1.0.0
-Bundle-Activator: net.aicoder.epi.devp.prddev.PrddevPlugin
 Bundle-Vendor: ai-coder
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
+Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
+ org.eclipse.ui,
  org.eclipse.ui.ide,
  org.eclipse.ui.navigator,
  org.eclipse.ui.navigator.resources,
  org.eclipse.ui.editors,
  org.eclipse.ui.forms,
  org.eclipse.help,
- org.eclipse.help.base
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+ org.eclipse.help.base,
+ net.aicoder.epi.lib,
+ net.aicoder.epi.base,
+ net.aicoder.epi.devp
 Automatic-Module-Name: net.aicoder.epi.devp.prddev
-Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: net.aicoder.epi.devp.prddev,
+ net.aicoder.epi.devp.prddev.dao.dev,
+ net.aicoder.epi.devp.prddev.dao.dev.funa,
+ net.aicoder.epi.devp.prddev.dao.dev.system,
+ net.aicoder.epi.devp.prddev.doper,
+ net.aicoder.epi.devp.prddev.doper.dev.system,
+ net.aicoder.epi.devp.prddev.model.dev,
+ net.aicoder.epi.devp.prddev.model.dev.funa,
+ net.aicoder.epi.devp.prddev.model.dev.system,
+ net.aicoder.epi.devp.prddev.model.product,
+ net.aicoder.epi.devp.prddev.view.editors.function,
+ net.aicoder.epi.devp.prddev.view.editors.product,
+ net.aicoder.epi.devp.prddev.view.editors.syscmp,
+ net.aicoder.epi.devp.prddev.view.editors.sysdpy,
+ net.aicoder.epi.devp.prddev.view.editors.syside,
+ net.aicoder.epi.devp.prddev.view.exploer

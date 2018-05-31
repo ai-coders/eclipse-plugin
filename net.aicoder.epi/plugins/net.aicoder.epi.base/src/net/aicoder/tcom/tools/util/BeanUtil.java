@@ -698,6 +698,9 @@ public class BeanUtil {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
 	public static String[] getPropertyNames(Object bean) {
+    	if(bean == null) {
+    		return null;
+    	}
         ArrayList propertyNameList = new ArrayList();
         String[] propertyNames = null;
         try {

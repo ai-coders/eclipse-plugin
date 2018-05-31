@@ -5,22 +5,32 @@ Bundle-SymbolicName: net.aicoder.epi.devp.product;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: net.aicoder.epi.devp.product.ProductPlugin
 Bundle-Vendor: AiCoder
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
- org.eclipse.jface.text,
+Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
- org.eclipse.ui.editors,
+ org.eclipse.ui,
  org.eclipse.ui.ide,
+ org.eclipse.ui.forms,
+ org.eclipse.ui.editors,
  org.eclipse.ui.console,
- org.eclipse.jdt.ui,
- net.aicoder.epi.base,
- net.aicoder.epi.devp,
- org.eclipse.help,
- org.eclipse.help.base,
  org.eclipse.ui.navigator,
  org.eclipse.ui.navigator.resources,
+ org.eclipse.jface.text,
+ org.eclipse.jdt.ui,
+ org.eclipse.help,
+ org.eclipse.help.base,
  org.apache.commons.logging,
- org.eclipse.ui.forms
+ net.aicoder.epi.lib,
+ net.aicoder.epi.base,
+ net.aicoder.epi.devp
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: net.aicoder.epi.devp.product
 Bundle-ActivationPolicy: lazy
+Export-Package: net.aicoder.epi.devp.product,
+ net.aicoder.epi.devp.product.dao,
+ net.aicoder.epi.devp.product.doper,
+ net.aicoder.epi.devp.product.model.product,
+ net.aicoder.epi.devp.product.model.uml,
+ net.aicoder.epi.devp.product.view.editors,
+ net.aicoder.epi.devp.product.view.properties,
+ net.aicoder.epi.devp.product.view.views,
+ net.aicoder.epi.sample.edittable

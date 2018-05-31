@@ -6,9 +6,10 @@ import java.util.List;
 import net.aicoder.epi.base.model.BaseVo;
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.model.ITreeNode;
+import net.aicoder.epi.base.model.TreeNodeVo;
 import net.aicoder.epi.devp.DevpConstant;
 
-public class PrdProductVo extends BaseVo implements ITreeNode{
+public class PrdProductVo extends TreeNodeVo{
 	private static final long serialVersionUID = 1L;
 	private static final String ETYPE = DevpConstant.E_PRODUCT;
 
@@ -27,12 +28,13 @@ public class PrdProductVo extends BaseVo implements ITreeNode{
 	}
 	
 	@Override
-	public void setParentData(ITreeNode parent) {
+	public void setParentNode(ITreeNode parent) {
 		this.setParentPrdline((PrdPrdlineVo)parent);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public ITreeNode getParentData() {
+	public TreeNodeVo getParentNode() {
 		return this.getParentPrdline();
 	}
 

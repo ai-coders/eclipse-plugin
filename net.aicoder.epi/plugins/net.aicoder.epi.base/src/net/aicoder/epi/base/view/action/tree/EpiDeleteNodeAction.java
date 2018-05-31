@@ -90,7 +90,7 @@ public class EpiDeleteNodeAction extends BaseAction {
 		for (IBaseVo item : items) {
 			if (item instanceof ITreeNode) {
 				ITreeNode node = (ITreeNode) item;
-				ITreeNode parent = node.getParentData();
+				ITreeNode parent = node.getParentNode();
 				if (parent != null) {
 					List<IBaseVo> childrenList = parent.getChildrenList();
 					for (IBaseVo child : childrenList) {

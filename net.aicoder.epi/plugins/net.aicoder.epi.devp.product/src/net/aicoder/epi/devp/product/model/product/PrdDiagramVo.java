@@ -1,14 +1,12 @@
 package net.aicoder.epi.devp.product.model.product;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import net.aicoder.epi.base.model.BaseVo;
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.model.ITreeNode;
-import net.aicoder.epi.devp.DevpConstant;
+import net.aicoder.epi.base.model.TreeNodeVo;
 
-public class PrdDiagramVo extends BaseVo implements ITreeNode{
+public class PrdDiagramVo extends TreeNodeVo{
 	private static final long serialVersionUID = 1L;
 	//private static final String ETYPE = DevpConstant.E_UML_DIAGRAM;
 
@@ -26,13 +24,14 @@ public class PrdDiagramVo extends BaseVo implements ITreeNode{
 	}
 
 	@Override
-	public void setParentData(ITreeNode parent) {
+	public void setParentNode(ITreeNode parent) {
 		this.setParentDiagramCatg((PrdDiagramCatgVo)parent);
 	}
 
 		
+	@SuppressWarnings("unchecked")
 	@Override
-	public ITreeNode getParentData() {
+	public TreeNodeVo getParentNode() {
 		return this.getParentDiagramCatg();
 	}
 

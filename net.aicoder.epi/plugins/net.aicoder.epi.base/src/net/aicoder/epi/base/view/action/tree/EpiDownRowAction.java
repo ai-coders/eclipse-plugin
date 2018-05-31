@@ -74,7 +74,7 @@ public class EpiDownRowAction extends BaseAction {
 		IBaseVo newData = currData;
 
 		if (currData instanceof ITreeNode) {
-			ITreeNode parentData = ((ITreeNode) currData).getParentData();
+			ITreeNode parentData = ((ITreeNode) currData).getParentNode();
 			if (parentData != null) {
 				List<IBaseVo> childrenList = parentData.getChildrenList();
 				int index = 0;

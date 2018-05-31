@@ -43,7 +43,7 @@ public enum EtypeEnum {
         throw new IllegalArgumentException("Invalid Etype: " + etype);
     }
 	
-	public String getEtype() {
+	public String etype() {
 		return etype;
 	}
 }

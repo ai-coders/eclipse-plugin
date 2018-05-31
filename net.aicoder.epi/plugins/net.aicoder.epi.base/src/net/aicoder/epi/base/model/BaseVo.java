@@ -9,7 +9,7 @@ import net.aicoder.tcom.tools.util.BeanUtil;
 
 public abstract class BaseVo implements IBaseVo {
 	private static final long serialVersionUID = 1L;
-	private static final String ETYPE = EtypeEnum.NONE.getEtype();
+	protected static String ETYPE = EtypeEnum.NONE.etype();
 
 	private StateFlagEnum dataState;
 

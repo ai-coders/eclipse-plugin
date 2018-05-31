@@ -7,12 +7,12 @@ import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.view.adapter.IEpiEditorInput;
 import net.aicoder.epi.base.view.adapter.IEpiInput;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
-import net.aicoder.epi.base.view.editor.EpiFormPage;
+import net.aicoder.epi.base.view.editor.BaseFormPage;
 import net.aicoder.epi.base.view.element.table.EpiTable;
 import net.aicoder.epi.base.view.element.table.EpiTableDefiner;
 import net.aicoder.epi.devp.product.doper.ModuleDoper;
 
-public class PrdFunctionListPage extends EpiFormPage {
+public class PrdFunctionListPage extends BaseFormPage {
 	// 0-列名, 1-数据属性名称, 2-列显示的宽度, 3-数据类型, 4-数据格式, 5-是否隐藏的标志, 6-是否可编辑的标志
 	private static Object[][] columnsDefine = {
 			{"Code", "code", -20, null, null, null, IColumnDefiner.EDITABLE },
@@ -41,7 +41,7 @@ public class PrdFunctionListPage extends EpiFormPage {
 	}
 	
 	@Override
-	protected void createControl(Composite parent) {
+	public void createControl(Composite parent) {
 		definer = new EpiTableDefiner(null, columnsDefine);
 		IEpiEditorInput editInput = (IEpiEditorInput)editor.getEditorInput();
 		IBaseVo product = editInput.getCurrentData();

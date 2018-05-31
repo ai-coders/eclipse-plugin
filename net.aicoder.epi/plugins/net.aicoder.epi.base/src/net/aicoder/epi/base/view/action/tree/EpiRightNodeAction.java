@@ -78,7 +78,7 @@ public class EpiRightNodeAction extends BaseAction {
 		IBaseVo newData = currData;
 
 		if (currData instanceof ITreeNode) {
-			ITreeNode parentData = ((ITreeNode) currData).getParentData();
+			ITreeNode parentData = ((ITreeNode) currData).getParentNode();
 			if (parentData != null) {
 				List<IBaseVo> childrenList = parentData.getChildrenList();
 				int index = 0;
@@ -93,7 +93,7 @@ public class EpiRightNodeAction extends BaseAction {
 						childrenList.remove(currData);
 						
 						ITreeNode newParent = (ITreeNode)newParentData;
-						((ITreeNode) currData).setParentData(newParent);
+						((ITreeNode) currData).setParentNode(newParent);
 						newParent.getChildrenList().add(currData);
 					}
 				}

@@ -18,13 +18,13 @@ import net.aicoder.epi.base.view.action.tree.EpiUpRowAction;
 import net.aicoder.epi.base.view.adapter.IEpiInput;
 import net.aicoder.epi.base.view.adapter.IEpiEditorInput;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
-import net.aicoder.epi.base.view.editor.EpiFormPage;
+import net.aicoder.epi.base.view.editor.BaseFormPage;
 import net.aicoder.epi.base.view.element.tree.EpiTree;
 import net.aicoder.epi.base.view.element.tree.EpiTreeDefiner;
 import net.aicoder.epi.devp.product.doper.ModuleDoper;
 import net.aicoder.epi.devp.product.model.product.PrdModuleVo;
 
-public class PrdFunctionTreePage extends EpiFormPage {
+public class PrdFunctionTreePage extends BaseFormPage {
 	public static String ID = PrdFunctionTreePage.class.getName();
 
 	// 0-列名, 1-数据属性名称, 2-列显示的宽度, 3-数据类型, 4-数据格式, 5-是否隐藏的标志, 6-是否可编辑的标志
@@ -53,7 +53,7 @@ public class PrdFunctionTreePage extends EpiFormPage {
 	}
 	
 	@Override
-	protected void createControl(Composite parent) {
+	public void createControl(Composite parent) {
 		definer = new EpiTreeDefiner(null, columnsDefine);
 		IEpiEditorInput editInput = (IEpiEditorInput)editor.getEditorInput();
 		IBaseVo product = editInput.getCurrentData();

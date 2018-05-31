@@ -11,10 +11,10 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.view.action.IEpiAction;
 import net.aicoder.epi.base.view.adapter.IEpiEditorInput;
-import net.aicoder.epi.base.view.editor.EpiFormPage;
+import net.aicoder.epi.base.view.editor.BaseFormPage;
 import net.aicoder.epi.sample.edittable.Ch9TableEditorComposite;
 
-public class PrdOverviewPage extends EpiFormPage {
+public class PrdOverviewPage extends BaseFormPage {
 	//private IEpiAction[] toolBarAactons;
 	ScrolledForm form;
 
@@ -23,8 +23,8 @@ public class PrdOverviewPage extends EpiFormPage {
 		creatToolBar();
 	}
 
-	@Override
-	protected void createFormContent(final IManagedForm managedForm) {
+/**		
+	public void createFormContent(final IManagedForm managedForm) {
 		form = managedForm.getForm();
 		FormToolkit toolkit = managedForm.getToolkit();
 		form.setText("产品总览");
@@ -35,24 +35,17 @@ public class PrdOverviewPage extends EpiFormPage {
 		
 		createContent(form, toolkit);
 	}
-/**		
 **/
 	private void creatToolBar() {
 	}
-
-	private void createContent(final ScrolledForm form, FormToolkit toolkit) {
-		IEpiEditorInput editorInput = (IEpiEditorInput) this.getEditor().getEditorInput();
-		IBaseVo currentData = editorInput.getCurrentData();
-		form.setText(currentData.getName());
-		Composite  composite = form.getBody();
-		composite.setLayout(new FillLayout());
-		
-		new Ch9TableEditorComposite(form.getBody());
-	}
 	
 	@Override
-	protected void createControl(Composite parent) {
-
+	public void createControl(Composite parent) {
+		IEpiEditorInput editorInput = (IEpiEditorInput) this.getEditor().getEditorInput();
+		IBaseVo currentData = editorInput.getCurrentData();
+		//((ScrolledForm)parent).setText(currentData.getName());
+		
+		new Ch9TableEditorComposite(parent);
 	}
 
 	@Override

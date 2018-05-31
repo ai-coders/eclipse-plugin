@@ -49,7 +49,7 @@ public class EpiTreeContentProvider implements ITreeContentProvider{
 	public Object getParent(Object element) {
 		Object parent = null;
 		if (element instanceof ITreeNode) {
-			parent = ((ITreeNode) element).getParentData();
+			parent = ((ITreeNode) element).getParentNode();
 		}
 		return parent;
 	}

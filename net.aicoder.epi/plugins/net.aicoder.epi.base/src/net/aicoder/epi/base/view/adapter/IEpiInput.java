@@ -13,11 +13,11 @@ public interface IEpiInput extends IAdaptable {
 	
 	public Object getParameter(String parameterName);
 	
-	public IBaseVo getCurrentData();
+	public <T extends IBaseVo> T getCurrentData();
 	
 	public void setCurrentData(IBaseVo currentData);
 	
-	public List<IBaseVo> getDataList();
+	public <T extends IBaseVo> List<T> getDataList();
 	
 	public void setDataList(List<IBaseVo> dataList);
 

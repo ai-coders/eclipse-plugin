@@ -34,6 +34,7 @@ public class EpiInput implements IEpiInput {
 		return this.parameterMap.get(parameterName);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public IBaseVo getCurrentData() {
 		return currentData;
@@ -45,6 +46,7 @@ public class EpiInput implements IEpiInput {
 	}
 
 	@Override
+	//public <T extends IBaseVo> List<T> getDataList() {
 	public List<IBaseVo> getDataList() {
 		return dataList;
 	}

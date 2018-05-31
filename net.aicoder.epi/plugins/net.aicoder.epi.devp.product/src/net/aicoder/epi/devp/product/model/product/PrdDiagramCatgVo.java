@@ -6,9 +6,10 @@ import java.util.List;
 import net.aicoder.epi.base.model.BaseVo;
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.model.ITreeNode;
+import net.aicoder.epi.base.model.TreeNodeVo;
 import net.aicoder.epi.devp.DevpConstant;
 
-public class PrdDiagramCatgVo extends BaseVo implements ITreeNode{
+public class PrdDiagramCatgVo extends TreeNodeVo {
 	private static final long serialVersionUID = 1L;
 	private static final String ETYPE = DevpConstant.CATEGORY;
 
@@ -23,12 +24,12 @@ public class PrdDiagramCatgVo extends BaseVo implements ITreeNode{
 	}
 	
 	@Override
-	public void setParentData(ITreeNode parentProduct) {
+	public void setParentNode(ITreeNode parentProduct) {
 		this.setParentProduct((PrdProductVo)parentProduct);
 	}
 
 	@Override
-	public ITreeNode getParentData() {
+	public TreeNodeVo getParentNode() {
 		return this.getParentProduct();
 	}
 

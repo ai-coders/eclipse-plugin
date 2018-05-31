@@ -52,6 +52,9 @@ public class EpiEditorInput extends EpiInput implements IEpiEditorInput {
 	}
 
 	public boolean equals(Object obj) {
+		if(this.name == null || obj == null) {
+			return false;
+		}
 		if (obj instanceof IEditorInput) {
 			return this.name.equals(((IEditorInput) obj).getName());
 		}

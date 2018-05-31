@@ -1,39 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="net.aicoder.epi.devp.prddev.view.editors.sysdpy.SysDpyEditor"
+            id="net.aicoder.epi.devp.prddev.view.editors.sysdpy.SysDpyEditor"
+            name="产品-部署图">
+      </editor>
+   </extension>
+ 
    <extension
          point="org.eclipse.ui.views">
-      <category
-            name="Sample Category"
-            id="net.aicoder.epi.devp.prddev">
-      </category>
       <view
-            name="Sample View"
+            name="Product DevExplorer"
             inject="true"
-            icon="icons/sample.png"
-            category="net.aicoder.epi.devp.prddev"
-            class="net.aicoder.epi.devp.prddev.views.SampleView"
-            id="net.aicoder.epi.devp.prddev.views.SampleView">
+            icon="icons/product/product.png"
+            class="net.aicoder.epi.devp.prddev.view.exploer.ProductDevExploer"
+            id="net.aicoder.epi.devp.prddev.view.exploer.ProductDevExplorer">
       </view>
    </extension>
+
    <extension
-         point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension
-            targetID="org.eclipse.jdt.ui.JavaPerspective">
-         <view
-               ratio="0.5"
-               relative="org.eclipse.ui.views.ProblemView"
-               relationship="right"
-               id="net.aicoder.epi.devp.prddev.views.SampleView">
-         </view>
-      </perspectiveExtension>
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="产品构建"
+            icon="icons/product/product.png"
+            class="net.aicoder.epi.base.view.EpiPerspective"
+            id="net.aicoder.epi.devp.prddev.view.perspectives.PrddevPerspective">
+      </perspective>
    </extension>
-   <extension
-         point="org.eclipse.help.contexts">
-      <contexts
-            file="contexts.xml">
-      </contexts>
+ 
+    <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+	<perspectiveExtension
+		targetID="net.aicoder.epi.devp.prddev.view.perspectives.PrddevPerspective">
+            
+		<view
+                  closeable="true"
+                  standalone="false"
+                  moveable="true"
+                  visible="true"
+                  showTitle="true"
+                  ratio="0.25"
+                  relationship="left"
+                  relative="net.aicoder.epi.devp.prddev.view.editors.sysdpy.SysDpyEditor"
+                  id="net.aicoder.epi.devp.prddev.view.exploer.ProductDevExplorer"/>
+		<view
+                  closeable="true"
+                  standalone="false"
+                  moveable="true"
+                  visible="true"
+                  showTitle="true"
+                  ratio="0.15"
+                  relationship="right"
+                  relative="net.aicoder.epi.devp.prddev.view.editors.sysdpy.SysDpyEditor"
+                  id="org.eclipse.ui.views.ContentOutline"/>
+	</perspectiveExtension>
    </extension>
 
 </plugin>

@@ -6,6 +6,8 @@ public final class DevpConstant {
 	public static final String CATEGORY_CMP = "CtgyCmp";
 	public static final String CATEGORY_IDE = "CtgyIde";
 	public static final String CATEGORY_DPY = "CtgyDpy";
+	
+	public static final String EXT_PRODUCT = "ExtProduct"; // 外部产品 External products
 
 	public static final String E_PRDLINE = "Prdline";
 	public static final String E_PRODUCT = "Product";

@@ -3,113 +3,11 @@
 <plugin>
 
    <extension
-         id="DevpBuilder"
-         name="Devp Project Builder"
-         point="org.eclipse.core.resources.builders">
-      <builder
-            hasNature="true">
-         <run
-               class="net.aicoder.epi.devp.builder.DevpBuilder">
-         </run>
-      </builder>
-   </extension>
-   <extension
-         id="DevpNature"
-         name="Devp Project Nature"
-         point="org.eclipse.core.resources.natures">
-      <runtime>
-         <run
-               class="net.aicoder.epi.devp.builder.DevpNature">
-         </run>
-      </runtime>
-      <builder
-            id="net.aicoder.epi.devp.DevpBuilder">
-      </builder>
-   </extension>
-   <extension
-         point="org.eclipse.ui.commands">
-      <category
-            name="Devp Project Nature commands"
-            id="net.aicoder.epi.devp.DevpNature.category">
-      </category>
-      <command
-            name="Add/RemoveDevp Project Nature"
-            defaultHandler="net.aicoder.epi.devp.builder.AddRemoveDevpNatureHandler"
-            categoryId="net.aicoder.epi.devp.DevpNature.category"
-            id="net.aicoder.epi.devp.addRemoveDevpNature">
-      </command>
-   </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="popup:org.eclipse.ui.projectConfigure?after=additions">
-         <command
-               commandId="net.aicoder.epi.devp.addRemoveDevpNature"
-               label="Disable Sample builder"
-               style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="selection">
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <adapt
-                           type="org.eclipse.core.resources.IProject">
-                        <test
-                              value="net.aicoder.epi.devp.DevpNature"
-                              property="org.eclipse.core.resources.projectNature">
-                        </test>
-                     </adapt>
-                  </iterate>
-               </with>
-            </visibleWhen>
-         </command>
-         <command
-               commandId="net.aicoder.epi.devp.addRemoveDevpNature"
-               label="Enable Sample builder"
-               style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="selection">
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <adapt
-                           type="org.eclipse.core.resources.IProject">
-                        <not>
-                           <test
-                                 value="net.aicoder.epi.devp.DevpNature"
-                                 property="org.eclipse.core.resources.projectNature">
-                           </test>
-                        </not>
-                     </adapt>
-                  </iterate>
-               </with>
-            </visibleWhen>
-         </command>
-      </menuContribution>
-   </extension>
-   <extension
-         id="xmlProblem"
-         name="XML Problem"
-         point="org.eclipse.core.resources.markers">
-      <super
-            type="org.eclipse.core.resources.problemmarker">
-      </super>
-      <persistent
-            value="true">
-      </persistent>
-   </extension>
-   <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            name="Devp Preferences"
-            class="net.aicoder.epi.devp.preferences.DevpPreferencePage"
-            id="net.aicoder.epi.devp.preferences.DevpPreferencePage">
+            name="Sample Preferences"
+            class="net.aicoder.epi.devp.preferences.SamplePreferencePage"
+            id="net.aicoder.epi.devp.preferences.SamplePreferencePage">
       </page>
    </extension>
    <extension
@@ -117,6 +15,39 @@
       <initializer
             class="net.aicoder.epi.devp.preferences.PreferenceInitializer">
       </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Sample Category"
+            id="net.aicoder.epi.devp">
+      </category>
+      <view
+            name="Sample View"
+            inject="true"
+            icon="icons/sample.png"
+            category="net.aicoder.epi.devp"
+            class="net.aicoder.epi.devp.views.SampleView"
+            id="net.aicoder.epi.devp.views.SampleView">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <view
+               ratio="0.5"
+               relative="org.eclipse.ui.views.ProblemView"
+               relationship="right"
+               id="net.aicoder.epi.devp.views.SampleView">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
    </extension>
 
 </plugin>
