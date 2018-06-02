@@ -27,7 +27,7 @@ public class EpiExplorerDefiner extends ViewDefiner {
 
 	@Override
 	public IEpiInput createAdapter(IBaseVo selectionElement) {
-		return getAdapter();
+		return getInput();
 	}
 
 	@Override

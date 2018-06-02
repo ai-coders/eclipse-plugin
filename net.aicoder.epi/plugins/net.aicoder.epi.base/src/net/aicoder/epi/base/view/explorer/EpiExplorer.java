@@ -55,7 +55,7 @@ public class EpiExplorer extends CommonNavigator implements IContextProvider, IV
 		viewer = this.getCommonViewer();
 		viewer.setContentProvider(definer.getContentProvider());
 		viewer.setLabelProvider(definer.getLabelProvider());
-		viewer.setInput(definer.getAdapter());
+		viewer.setInput(definer.getInput());
 		viewer.setSorter(definer.getSorter());
 
 		if (definer.hasOpenEditAction()) {

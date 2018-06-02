@@ -126,7 +126,7 @@ public class EpiTable extends Composite implements IViewElement {
 		} else {
 			viewer.setLabelProvider(definer.getLabelProvider());
 		}
-		viewer.setInput(definer.getAdapter());
+		viewer.setInput(definer.getInput());
 
 		if (definer.hasOpenEditAction()) {
 			hookDoubleClickAction();

@@ -58,7 +58,7 @@ public class PrdFunctionTreePage extends BaseFormPage {
 		IEpiEditorInput editInput = (IEpiEditorInput)editor.getEditorInput();
 		IBaseVo product = editInput.getCurrentData();
 		IEpiInput input = dataoper.loadModuleList(product);
-		definer.setAdapter(input);
+		definer.setInput(input);
 		tree = new EpiTree(parent, definer);
 	}
 

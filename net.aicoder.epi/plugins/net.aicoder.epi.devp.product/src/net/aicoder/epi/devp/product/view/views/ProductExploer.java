@@ -106,7 +106,7 @@ public class ProductExploer extends EpiExplorer {
 		@Override
 		public IEpiInput createAdapter(IBaseVo selectionElement) {
 			IEpiInput input = dataoper.loadProductList(selectionElement);
-			setAdapter(input);
+			setInput(input);
 			return input;
 		}
 

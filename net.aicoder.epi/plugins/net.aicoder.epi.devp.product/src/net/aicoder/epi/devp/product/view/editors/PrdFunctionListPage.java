@@ -46,7 +46,7 @@ public class PrdFunctionListPage extends BaseFormPage {
 		IEpiEditorInput editInput = (IEpiEditorInput)editor.getEditorInput();
 		IBaseVo product = editInput.getCurrentData();
 		IEpiInput input = dataoper.loadModuleList(product);
-		definer.setAdapter(input);
+		definer.setInput(input);
 		table = new EpiTable(parent, definer);
 	}
 }

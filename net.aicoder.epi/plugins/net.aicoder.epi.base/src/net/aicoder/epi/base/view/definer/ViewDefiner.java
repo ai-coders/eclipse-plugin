@@ -28,7 +28,7 @@ public abstract class ViewDefiner implements IViewDefiner {
 	private ILabelProvider labelProvider;
 	private ITableLabelProvider columnLabelProvider;
 
-	private IEpiInput adapter;
+	private IEpiInput input;
 	private IEpiEditorInput editorInput;
 
 	public ViewDefiner() {
@@ -120,13 +120,13 @@ public abstract class ViewDefiner implements IViewDefiner {
 	}
 
 	@Override
-	public IEpiInput getAdapter() {
-		return adapter;
+	public IEpiInput getInput() {
+		return input;
 	}
 
 	@Override
-	public void setAdapter(IEpiInput adapter) {
-		this.adapter = adapter;
+	public void setInput(IEpiInput adapter) {
+		this.input = adapter;
 	}
 
 	@Override

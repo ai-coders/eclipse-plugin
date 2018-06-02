@@ -38,9 +38,9 @@ public interface IViewDefiner {
 	
 	public List<IColumnDefiner> getColumnDefinerList();
 
-	public IEpiInput getAdapter();
+	public IEpiInput getInput();
 
-	public void setAdapter(IEpiInput adapter);
+	public void setInput(IEpiInput input);
 	
 	public boolean hasOpenEditAction();
 	

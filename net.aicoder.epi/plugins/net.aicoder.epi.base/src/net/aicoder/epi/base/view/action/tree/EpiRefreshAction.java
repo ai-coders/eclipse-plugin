@@ -45,7 +45,7 @@ public class EpiRefreshAction extends BaseAction {
 	public void run() {
 		TreeViewer viewer = epiTree.getViewer();
 		IViewDefiner definer = epiTree.getDefiner();
-		IEpiInput adapter = definer.getAdapter();
+		IEpiInput adapter = definer.getInput();
 
 		IEpiInput newAdapter = doRefresh(adapter);
 		if(newAdapter == null) {

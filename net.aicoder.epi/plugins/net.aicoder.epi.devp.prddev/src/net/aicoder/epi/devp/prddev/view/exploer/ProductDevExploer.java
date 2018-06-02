@@ -71,7 +71,7 @@ public class ProductDevExploer extends EpiExplorer{
 			currProduct.setName("PD_N1");
 
 			IEpiInput input = doper.loadProductList(currProduct);
-			setAdapter(input);
+			setInput(input);
 			return input;
 		}
 
