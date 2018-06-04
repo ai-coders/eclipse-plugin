@@ -3,6 +3,7 @@
 log/
 target/
 classes/
+bin/
 *.class
 !.mvn/wrapper/maven-wrapper.jar
 
