@@ -4,27 +4,36 @@ public enum EtypeEnum {
 	NONE(""), 
 	
 	// 产品
-	PRDLINE("PrdLine"), //产品线
-	PRODUCT("Product"), //产品
-	MODULE("Module"), //功能模块
-	FUNCTION("Function"), //功能
-	
-	// 系统
-	SYSTEM("System"), // 系统、子系统
-	SYSCMP("SysCmp"), // 组件
-	SYSIDEFLD("SysIdeFld"), // 工程目录
-	SYSIDEPRJ("SysIdePrj"), // 工程项目
-	SYSDPYENV("SysDpyEnv"), // 部署环境
-	
-	//// 用例
-	USECASE("UseCase"), //用例
+	PRD_LINE("PRD_LINE"), //产品线
+	PRODUCT("PRODUCT"), //产品
+	MODULE("MODULE"), //模块
+	FUNCTION("FUNCTION"), //功能
 	
 	//// 模型
-	MODEL("Model"), //模型
+	FUN_MODEL("FUN_MODEL"), //功能模型
+	CMP_MODEL("CMP_MODEL"), //组件模型
+	IDE_MODEL("CMP_MODEL"), //开发模型
+	DPY_MODEL("DPY_MODEL"), //部署模型
+	
+	// 系统
+	SYSTEM("SYSTEM"), // 系统
+	SUB_SYS("SUB_SYS"), // 子系统
+	SYS_CMP("SYS_CMP"), // 组件
+	SYS_IDE_FLD("SYS_IDE_FLD"), // 工程目录
+	SYS_IDE_PRJ("SYS_IDE_PRJ"), // 工程项目
+	SYS_DPY_ENV("SYS_DPY_ENV"), // 部署环境
+	SYS_RESOURCES("SYS_RESOURCES"), // 系统资源
+	
+	// 系统设计图
+	SYS_CMP_DGM("SYS_CMP_DGM"), // 组件图
+	SYS_DPY_DGM("SYS_DPY_DGM"), // 部署图
+	
+	//// 用例
+	USE_CASE("USE_CASE"), //用例
 	
 	//// UI
 	PAGE("Page"), //UI
-	UIELEMENT("UiElement"), //UI Element
+	UI_ELEMENT("UiElement"), //UI Element
 	
 	
 	;

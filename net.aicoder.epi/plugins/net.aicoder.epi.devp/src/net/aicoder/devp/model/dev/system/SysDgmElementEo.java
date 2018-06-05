@@ -1,8 +1,8 @@
 package net.aicoder.devp.model.dev.system;
 
-import net.aicoder.devp.model.DevpBaseEo;
+import net.aicoder.devp.model.BaseDevpEo;
 
-public class SysDgmElementEo extends DevpBaseEo {
+public class SysDgmElementEo extends BaseDevpEo {
 	private static final long serialVersionUID = 1L;
 
 	private long prdRid; // 产品编号

@@ -20,6 +20,7 @@ public class ProductDevDoper extends BaseDoper {
 		productDevDao = new ProductDevDao();
 	}
 	
+	//// loadProductList
 	public EpiInput loadProductList(IBaseVo currentData) {
 		EpiInput input = new EpiInput();
 		List<IBaseVo> elementList = new ArrayList<IBaseVo>(0);
@@ -96,4 +97,17 @@ public class ProductDevDoper extends BaseDoper {
 		}
 	}
 	
+	//// loadDevDgmList
+	public EpiInput loadDevDgmList(IBaseVo currSysElement) {
+		EpiInput input = new EpiInput();
+		List<IBaseVo> elementList = _loadDevDgmList(currSysElement);
+		input.setDataList(elementList);
+		return input;
+	}
+	
+	private List<IBaseVo> _loadDevDgmList(IBaseVo currSysElement){
+		return productDevDao.loadDevDgmList(currSysElement);
+	}
+	
+
 }

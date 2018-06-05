@@ -2,7 +2,7 @@ package net.aicoder.devp.model;
 
 import java.util.Date;
 
-public abstract class DevpBaseEo implements IDevpEo {
+public abstract class BaseDevpEo implements IDevpEo {
 	private static final long serialVersionUID = 1L;
 
 	protected static EtypeEnum etype;
@@ -25,7 +25,7 @@ public abstract class DevpBaseEo implements IDevpEo {
 	private String modifyUname;
 	private Date modifyAt;
 
-	public DevpBaseEo() {
+	public BaseDevpEo() {
 		super();
 	}
 

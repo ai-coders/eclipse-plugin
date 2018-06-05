@@ -39,16 +39,8 @@ public class EpiTabArea implements IEpiArea {
 	}
 	
 	private Control createAreaComposite(Composite parent, IEpiArea epiArea) {
-		if (epiArea instanceof EpiSashArea) {
-			epiArea.createControl(parent);
-			return epiArea.getControl();
-		}else {
-			EpiWithTitleArea areaComposite = new EpiWithTitleArea(parent, SWT.BORDER);
-			areaComposite.setTitleText(epiArea.getTitleText());
-			areaComposite.setTitleImage(epiArea.getTitleImage());
-			areaComposite.setArea(epiArea);
-			return areaComposite;
-		}
+		epiArea.createControl(parent);
+		return epiArea.getControl();
 	}
 
 	@Override

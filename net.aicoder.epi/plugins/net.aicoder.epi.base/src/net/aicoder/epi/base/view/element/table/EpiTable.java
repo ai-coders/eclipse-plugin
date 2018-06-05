@@ -56,7 +56,7 @@ public class EpiTable extends Composite implements IViewElement {
 		setLayout(new FillLayout());
 
 		table = new Table(this, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.FULL_SELECTION);
-		table.setLayout(new TableLayout());
+		// table.setLayout(new TableLayout());
 		viewer = new TableViewer(table);
 	}
 
@@ -68,7 +68,7 @@ public class EpiTable extends Composite implements IViewElement {
 		// SWT.FULL_SELECTION |SWT.HIDE_SELECTION);
 		table = new Table(this, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.FULL_SELECTION);
 		// table.setLayoutData(new GridData(GridData.FILL_BOTH));
-		table.setLayout(new TableLayout());
+		// table.setLayout(new TableLayout());
 		viewer = new TableViewer(table);
 		this.definer = definer;
 

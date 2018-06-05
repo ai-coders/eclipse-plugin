@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- <Properties tid="0" eid= "0" etype="DPY" ptype="type-subtype" version="1.0.0.0" > -->
-<Properties code="" name="" type="" image="" imageDis="" tooltip="" >
+<Properties code="" name="" type="" image="" tooltip="" >
 	<Action code="" name="" type="" image="" imageDis="" tooltip="" ></Action>
 	<Toolbar code="" name="" >
 		<Actions>

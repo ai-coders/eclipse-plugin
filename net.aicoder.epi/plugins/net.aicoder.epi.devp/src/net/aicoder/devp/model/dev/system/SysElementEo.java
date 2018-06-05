@@ -1,8 +1,8 @@
 package net.aicoder.devp.model.dev.system;
 
-import net.aicoder.devp.model.DevpBaseEo;
+import net.aicoder.devp.model.BaseDevpEo;
 
-public class SysElementEo extends DevpBaseEo {
+public class SysElementEo extends BaseDevpEo {
 	private static final long serialVersionUID = 1L;
 
 	private String elmFlag; // 系统元素所属类型标识: CMP-组件,IDE-开发,DPY-部署

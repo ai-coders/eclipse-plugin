@@ -16,8 +16,8 @@
             name="Product DevExplorer"
             inject="true"
             icon="icons/product/product.png"
-            class="net.aicoder.epi.devp.prddev.view.exploer.ProductDevExploer"
-            id="net.aicoder.epi.devp.prddev.view.exploer.ProductDevExplorer">
+            class="net.aicoder.epi.devp.prddev.view.views.ProductDevExploer"
+            id="net.aicoder.epi.devp.prddev.view.views.ProductDevExplorer">
       </view>
    </extension>
 
@@ -45,7 +45,7 @@
                   ratio="0.25"
                   relationship="left"
                   relative="net.aicoder.epi.devp.prddev.view.editors.sysdpy.SysDpyEditor"
-                  id="net.aicoder.epi.devp.prddev.view.exploer.ProductDevExplorer"/>
+                  id="net.aicoder.epi.devp.prddev.view.views.ProductDevExplorer"/>
 		<view
                   closeable="true"
                   standalone="false"

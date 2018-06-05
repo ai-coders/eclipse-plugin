@@ -1,11 +1,13 @@
 package net.aicoder.epi.devp.prddev.model.dev.system;
 
+import net.aicoder.epi.base.model.BaseVo;
 import net.aicoder.epi.base.model.TreeNodeVo;
+import net.aicoder.tcom.tools.util.AiStringUtil;
 
-public class SysElmCatgVo extends TreeNodeVo{ //BaseVo implements ITreeNode {
+public class SysDiagramVo extends BaseVo {
 	private static final long serialVersionUID = 1L;
 
-	private String elmFlag; // 系统元素所属类型标识: CMP-组件,IDE-开发,DPY-部署
+	private String dgmFlag; // 系统元素所属类型标识
 	private String type; // 类型
 	private String subType; // 子类型
 	private String stereotype; // 构造型
@@ -14,29 +16,52 @@ public class SysElmCatgVo extends TreeNodeVo{ //BaseVo implements ITreeNode {
 	private String phase; // 阶段
 	private String status; // 状态
 	private long prdRid; // 产品编号
-	private long parentRid; // 父包编号
+	private long elmRid; // 系统元素编号
 	private int seq; // 顺序号
-	private int sharedComponent; //是否为共享组件
-	private int sharedService; //是否提供共享服务
-	private String notes; // 备注
 
-/**	
-	private ITreeNode rootNode;
-	private ITreeNode parentNode;
-	private List<IBaseVo> childrenList = new ArrayList<IBaseVo>(0);
-**/
 	@Override
 	public String getEtype() {
-		return this.elmFlag;
+		return this.dgmFlag;
+	}
+
+	//// append properties
+	private SysElementVo sysElement;
+
+	public SysElementVo getSysElement() {
+		return sysElement;
+	}
+
+	public void setSysElement(SysElementVo sysElement) {
+		this.sysElement = sysElement;
+	}
+
+	public String getFullPath() {
+		StringBuffer strBuf = new StringBuffer();
+		getFullPath(sysElement, strBuf);
+		return strBuf.toString();
+	}
+
+	private void getFullPath(TreeNodeVo element, StringBuffer strBuf) {
+		if (element == null) {
+			return;
+		}
+		if (!AiStringUtil.isEmpty(element.getName())) {
+			if (strBuf.length() != 0) {
+				strBuf.append(".");
+			}
+			strBuf.append(element.getName());
+		}
+		TreeNodeVo parent = element.getParentNode();
+		getFullPath(parent, strBuf);
 	}
 
 	//// getter/setter
-	public String getElmFlag() {
-		return elmFlag;
+	public String getDgmFlag() {
+		return dgmFlag;
 	}
 
-	public void setElmFlag(String elmFlag) {
-		this.elmFlag = elmFlag;
+	public void setDgmFlag(String dgmFlag) {
+		this.dgmFlag = dgmFlag;
 	}
 
 	public String getType() {
@@ -103,12 +128,12 @@ public class SysElmCatgVo extends TreeNodeVo{ //BaseVo implements ITreeNode {
 		this.prdRid = prdRid;
 	}
 
-	public long getParentRid() {
-		return parentRid;
+	public long getElmRid() {
+		return elmRid;
 	}
 
-	public void setParentRid(long parentRid) {
-		this.parentRid = parentRid;
+	public void setElmRid(long elmRid) {
+		this.elmRid = elmRid;
 	}
 
 	public int getSeq() {
@@ -117,30 +142,6 @@ public class SysElmCatgVo extends TreeNodeVo{ //BaseVo implements ITreeNode {
 
 	public void setSeq(int seq) {
 		this.seq = seq;
-	}
-
-	public int getSharedComponent() {
-		return sharedComponent;
-	}
-
-	public void setSharedComponent(int sharedComponent) {
-		this.sharedComponent = sharedComponent;
-	}
-
-	public int getSharedService() {
-		return sharedService;
-	}
-
-	public void setSharedService(int sharedService) {
-		this.sharedService = sharedService;
-	}
-
-	public String getNotes() {
-		return notes;
-	}
-
-	public void setNotes(String notes) {
-		this.notes = notes;
 	}
 
 }

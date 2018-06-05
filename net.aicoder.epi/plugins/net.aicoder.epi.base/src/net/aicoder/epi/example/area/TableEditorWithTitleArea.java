@@ -6,13 +6,14 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 import net.aicoder.epi.base.view.element.area.BaseArea;
+import net.aicoder.epi.base.view.element.area.BaseWithTitleArea;
 
-public class TableEditorArea extends BaseArea {
-	public TableEditorArea() {
+public class TableEditorWithTitleArea extends BaseWithTitleArea {
+	public TableEditorWithTitleArea() {
 		super("TableEditorComposite",null);
 	}
 	
-	public TableEditorArea(String titleText, Image titleImage){
+	public TableEditorWithTitleArea(String titleText, Image titleImage){
 		super(titleText,titleImage);
 	}
 	

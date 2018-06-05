@@ -1,8 +1,8 @@
 package net.aicoder.devp.model.dev.system;
 
-import net.aicoder.devp.model.DevpBaseEo;
+import net.aicoder.devp.model.BaseDevpEo;
 
-public class SysElmConnectorEo extends DevpBaseEo {
+public class SysElmConnectorEo extends BaseDevpEo {
 	private static final long serialVersionUID = 1L;
 
 	private long sprdRid; //来源产品编号

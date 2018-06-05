@@ -6,17 +6,18 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-public abstract class BaseArea implements IEpiArea {
-	private Composite m_container;
+public abstract class BaseWithTitleArea implements IEpiArea {
+	private EpiWithTitleForm m_container;
 	private String titleText;
 	private Image titleImage;
+	private Control bodyControl;
 
 	//// Constructor
-	public BaseArea() {
+	public BaseWithTitleArea() {
 		super();
 	}
 
-	public BaseArea(String titleText, Image titleImage) {
+	public BaseWithTitleArea(String titleText, Image titleImage) {
 		super();
 		setTitleText(titleText);
 		setTitleImage(titleImage);
@@ -25,13 +26,22 @@ public abstract class BaseArea implements IEpiArea {
 	//// IEpiArea
 	@Override
 	public final void createControl(Composite parent) {
-		m_container = new Composite(parent, SWT.NONE);
-		m_container.setLayout(new FillLayout());
-		createAreaControl(m_container);
+		m_container = new EpiWithTitleForm(parent, SWT.BORDER);
+		//m_container.setLayout(new FillLayout());
+		m_container.setTitleText(titleText);
+		m_container.setTitleImage(titleImage);
+		
+		bodyControl = createAreaControl(m_container);
+		bodyControl.setLayoutData(new FillLayout());
+		m_container.setArea(this);
 	}
 	
 	//// abstract method
 	protected abstract Control createAreaControl(Composite parent);
+	
+	public Control getBodyControl() {
+		return bodyControl;
+	}
 
 	@Override
 	public Control getControl() {

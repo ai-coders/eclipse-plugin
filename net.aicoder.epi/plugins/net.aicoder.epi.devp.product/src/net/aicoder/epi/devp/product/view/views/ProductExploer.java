@@ -45,7 +45,7 @@ public class ProductExploer extends EpiExplorer {
 		dataoper = new ProductDoper();
 		
 		EpiExplorerDefiner definer = new ProductExploerDefiner(viewDefine);
-		definer.createAdapter(null);
+		definer.createInput(null);
 		this.setDefiner(definer);
 	}
 	
@@ -104,7 +104,7 @@ public class ProductExploer extends EpiExplorer {
 		}
 		
 		@Override
-		public IEpiInput createAdapter(IBaseVo selectionElement) {
+		public IEpiInput createInput(IBaseVo selectionElement) {
 			IEpiInput input = dataoper.loadProductList(selectionElement);
 			setInput(input);
 			return input;

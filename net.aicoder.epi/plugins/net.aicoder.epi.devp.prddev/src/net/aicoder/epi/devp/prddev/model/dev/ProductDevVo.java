@@ -31,39 +31,6 @@ public class ProductDevVo extends TreeNodeVo {
 		}
 	}
 
-/**	
-	//// Override
-	@Override
-	public long getRid() {
-		return this.product.getRid();
-	}
-
-	@Override
-	public long getTid() {
-		return this.product.getTid();
-	}
-
-	@Override
-	public String getName() {
-		return this.product.getName();
-	}
-	
-	@Override
-	public String getCode() {
-		return this.product.getCode();
-	}
-	
-	@Override
-	public String getAlias() {
-		return this.product.getAlias();
-	}
-
-	@Override
-	public String getDescription() {
-		return this.product.getDescription();
-	}
-**/
-	
 	//// getter/setter
 	public void setProduct(PrdProductVo product) {
 		this.product = product;

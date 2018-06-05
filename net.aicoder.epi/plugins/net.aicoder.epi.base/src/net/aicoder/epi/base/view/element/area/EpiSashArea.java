@@ -41,14 +41,17 @@ public final class EpiSashArea implements IEpiArea {
 	}
 	
 	private void createAreaComposite(Composite parent, IEpiArea epiArea) {
+		epiArea.createControl(m_sashForm);
+/**		
 		if (epiArea instanceof EpiSashArea) {
 			epiArea.createControl(m_sashForm);
 		}else {
-			EpiWithTitleArea areaComposite = new EpiWithTitleArea(m_sashForm, SWT.BORDER);
+			EpiWithTitleForm areaComposite = new EpiWithTitleForm(m_sashForm, SWT.BORDER);
 			areaComposite.setTitleText(epiArea.getTitleText());
 			areaComposite.setTitleImage(epiArea.getTitleImage());
 			areaComposite.setArea(epiArea);
 		}
+**/
 	}
 
 	@Override

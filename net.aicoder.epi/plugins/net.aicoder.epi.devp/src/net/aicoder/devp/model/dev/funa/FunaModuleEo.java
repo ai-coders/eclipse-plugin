@@ -1,28 +1,30 @@
-package net.aicoder.devp.model.dev.system;
+package net.aicoder.devp.model.dev.funa;
 
-import net.aicoder.devp.model.DevpBaseEo;
+import net.aicoder.devp.model.BaseDevpEo;
 
-public class SysDiagramEo extends DevpBaseEo {
+public class FunaModuleEo extends BaseDevpEo {
 	private static final long serialVersionUID = 1L;
 
-	private String dgmFlag; // 系统元素所属类型标识
+	private int mduFlag; // 模块标志,0:产品;1:模块;2:功能
 	private String type; // 类型
-	private String subType; // 子类型
 	private String stereotype; // 构造型
-	private String scope; // 范围
+	private String scope; // 访问控制范围
+	private String actor; // 使用者
+	private String priority; // 优先级
 	private String version; // 版本
 	private String phase; // 阶段
 	private String status; // 状态
 	private long prdRid; // 产品编号
-	private long elmRid; // 系统元素编号
+	private long parentRid; // 父模块编号
 	private int seq; // 顺序号
+	private String notes; // 备注
 
-	public String getDgmFlag() {
-		return dgmFlag;
+	public int getMduFlag() {
+		return mduFlag;
 	}
 
-	public void setDgmFlag(String dgmFlag) {
-		this.dgmFlag = dgmFlag;
+	public void setMduFlag(int mduFlag) {
+		this.mduFlag = mduFlag;
 	}
 
 	public String getType() {
@@ -31,14 +33,6 @@ public class SysDiagramEo extends DevpBaseEo {
 
 	public void setType(String type) {
 		this.type = type;
-	}
-
-	public String getSubType() {
-		return subType;
-	}
-
-	public void setSubType(String subType) {
-		this.subType = subType;
 	}
 
 	public String getStereotype() {
@@ -55,6 +49,22 @@ public class SysDiagramEo extends DevpBaseEo {
 
 	public void setScope(String scope) {
 		this.scope = scope;
+	}
+
+	public String getActor() {
+		return actor;
+	}
+
+	public void setActor(String actor) {
+		this.actor = actor;
+	}
+
+	public String getPriority() {
+		return priority;
+	}
+
+	public void setPriority(String priority) {
+		this.priority = priority;
 	}
 
 	public String getVersion() {
@@ -89,12 +99,12 @@ public class SysDiagramEo extends DevpBaseEo {
 		this.prdRid = prdRid;
 	}
 
-	public long getElmRid() {
-		return elmRid;
+	public long getParentRid() {
+		return parentRid;
 	}
 
-	public void setElmRid(long elmRid) {
-		this.elmRid = elmRid;
+	public void setParentRid(long parentRid) {
+		this.parentRid = parentRid;
 	}
 
 	public int getSeq() {
@@ -103,6 +113,14 @@ public class SysDiagramEo extends DevpBaseEo {
 
 	public void setSeq(int seq) {
 		this.seq = seq;
+	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 
 }

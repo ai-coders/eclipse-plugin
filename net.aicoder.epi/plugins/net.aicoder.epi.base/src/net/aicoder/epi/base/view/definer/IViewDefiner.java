@@ -48,7 +48,7 @@ public interface IViewDefiner {
 	
 	public void setEditorInput(IEpiEditorInput editorInput);
 	
-	public IEpiInput createAdapter(IBaseVo selectionElement);
+	public IEpiInput createInput(IBaseVo selectionElement);
 	
 	public IEpiEditorInput createEditorInput(IBaseVo selectionElement);
 	

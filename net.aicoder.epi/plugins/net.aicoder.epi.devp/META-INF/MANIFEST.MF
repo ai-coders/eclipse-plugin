@@ -15,7 +15,11 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: net.aicoder.epi.devp;singleton:=true
 Bundle-ActivationPolicy: lazy
-Export-Package: net.aicoder.epi.devp,
+Export-Package: net.aicoder.devp.model.alike,
+ net.aicoder.devp.model.dev.funa,
+ net.aicoder.devp.model.dev.system,
+ net.aicoder.devp.model.product,
+ net.aicoder.epi.devp,
  net.aicoder.epi.devp.builder,
  net.aicoder.epi.devp.model.alike,
  net.aicoder.epi.devp.preferences,

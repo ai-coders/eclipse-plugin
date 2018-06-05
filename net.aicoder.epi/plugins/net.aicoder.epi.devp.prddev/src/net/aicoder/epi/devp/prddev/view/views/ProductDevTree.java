@@ -1,14 +1,16 @@
-package net.aicoder.epi.devp.prddev.view.exploer;
+package net.aicoder.epi.devp.prddev.view.views;
 
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.ISharedImages;
 
 import net.aicoder.devp.model.EtypeEnum;
 import net.aicoder.epi.base.model.IBaseVo;
-import net.aicoder.epi.base.view.adapter.EpiEditorInput;
-import net.aicoder.epi.base.view.adapter.IEpiEditorInput;
 import net.aicoder.epi.base.view.adapter.IEpiInput;
-import net.aicoder.epi.base.view.explorer.EpiExplorer;
-import net.aicoder.epi.base.view.explorer.EpiExplorerDefiner;
+import net.aicoder.epi.base.view.element.area.BaseWithTitleArea;
+import net.aicoder.epi.base.view.element.tree.EpiTree;
+import net.aicoder.epi.base.view.element.tree.EpiTreeDefiner;
 import net.aicoder.epi.devp.DevpConstant;
 import net.aicoder.epi.devp.prddev.PrddevImageConstant;
 import net.aicoder.epi.devp.prddev.doper.ProductDevDoper;
@@ -20,8 +22,8 @@ import net.aicoder.epi.devp.prddev.view.editors.sysdpy.SysDpyEditor;
 import net.aicoder.epi.devp.prddev.view.editors.syside.SysIdeEditor;
 import net.aicoder.epi.util.ImageUtil;
 
-public class ProductDevExploer extends EpiExplorer{
-	public static String ID = ProductDevExploer.class.getName();
+public class ProductDevTree extends BaseWithTitleArea{
+	public static String ID = ProductDevTree.class.getName();
 
 	// 0-数据类型, 1-图片, 2-Text对应变量名(缺省为name), 3-Description对应变量名(缺省为description), 4-双击对应的动作
 	private static Object[][] viewDefine = {
@@ -47,41 +49,41 @@ public class ProductDevExploer extends EpiExplorer{
 			{DevpConstant.CATEGORY_DPY, ImageUtil.getImage(ISharedImages.IMG_OBJ_FOLDER) , null, null, SysDpyEditor.ID},
 			{EtypeEnum.SYS_DPY_ENV.etype(), PrddevImageConstant.getImage(PrddevImageConstant.E_PRD_IDEPRJ)},
 	};
-	
+
+	private EpiTree tree;
+	private EpiTreeDefiner definer;
 	private ProductDevDoper doper;
 	
-	public ProductDevExploer() {
+	public ProductDevTree() {
 		super();
 		doper = new ProductDevDoper();
-		ProductDevExploerDefiner definer = new ProductDevExploerDefiner(viewDefine);
-		definer.createInput(null);
-		this.setDefiner(definer);
+		//this.setTitleText("产品构建导航");
+		//this.setTitleImage(PrddevImageConstant.getImage(PrddevImageConstant.PRODUCT));
 	}
-	
-	class ProductDevExploerDefiner extends EpiExplorerDefiner{
-		public ProductDevExploerDefiner(Object[][] viewDefine) {
-			super(viewDefine);
-		}
+
+	@Override
+	public void setToolBar(IToolBarManager toolBarManager) {
+	}
+
+	@Override
+	protected Control createAreaControl(Composite parent) {
+		definer = new EpiTreeDefiner(viewDefine);
+		IEpiInput input = createInput(null);
+		definer.setInput(input);
 		
-		@Override
-		public IEpiInput createInput(IBaseVo selectionElement) {
-			PrdProductVo currProduct = new PrdProductVo();
-			currProduct.setRid(1001);
-			currProduct.setCode("PD_C1");
-			currProduct.setName("PD_N1");
-
-			IEpiInput input = doper.loadProductList(currProduct);
-			setInput(input);
-			return input;
-		}
-
-		@Override
-		public IEpiEditorInput createEditorInput(IBaseVo selectionElement) {
-			EpiEditorInput editorInput = new EpiEditorInput();
-			//doper.getSelectProductAsEditorInput(selectionElement);
-			setEditorInput(editorInput);
-			return editorInput;
-		}
+		tree = new EpiTree(parent, definer);
+		tree.getTree().setHeaderVisible(false);
+		tree.getTree().setLinesVisible(false);
+		return tree;
 	}
 	
+	private IEpiInput createInput(IBaseVo selectionElement) {
+		PrdProductVo currProduct = new PrdProductVo();
+		currProduct.setRid(1001);
+		currProduct.setCode("PD_C1");
+		currProduct.setName("PD_N1");
+
+		IEpiInput input = doper.loadProductList(currProduct);
+		return input;
+	}
 }
