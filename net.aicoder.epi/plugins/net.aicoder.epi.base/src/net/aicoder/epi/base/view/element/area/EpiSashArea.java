@@ -27,7 +27,7 @@ public final class EpiSashArea implements IEpiArea {
 	}
 
 	@Override
-	public void createControl(Composite parent) {
+	public final void createControl(Composite parent) {
 		{
 			m_sashForm = new EpiSashForm(parent, SWT.NONE);
 			setFixedOrientation(fixedOrientation);

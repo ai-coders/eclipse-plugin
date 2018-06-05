@@ -1,4 +1,4 @@
-package net.aicoder.epi.base.view.definer.parameter;
+package net.aicoder.epi.base.view.definer.property;
 
 import java.util.List;
 
@@ -8,13 +8,13 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(propOrder = {})
 public class PitemDefine {
-	private static final Log log = LogFactory.getLog(ParameterDefine.class);
+	//private static final Log log = LogFactory.getLog(PropertiesDefine.class);
 	
 	private String code;
 	private String name;
@@ -22,6 +22,7 @@ public class PitemDefine {
 	private String type;
 	private String image;
 	private String imageDis;
+	private String category;
 	
 	private String description;
 	private String checkRule;
@@ -84,6 +85,15 @@ public class PitemDefine {
 	@XmlAttribute
 	public void setImageDis(String imageDis) {
 		this.imageDis = imageDis;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	@XmlAttribute
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public String getDescription() {

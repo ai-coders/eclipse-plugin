@@ -1,4 +1,4 @@
-package net.aicoder.epi.base.view.definer.parameter;
+package net.aicoder.epi.base.view.definer.property;
 
 import java.util.List;
 
@@ -9,14 +9,14 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 @XmlAccessorType(XmlAccessType.PROPERTY)  
-@XmlRootElement(name = "Parameter")  
+@XmlRootElement(name = "Properties")  
 @XmlType(propOrder = {})  
-public class ParameterDefine {
-	private static final Log log = LogFactory.getLog(ParameterDefine.class);
+public class PropertiesDefine {
+	//private static final Log log = LogFactory.getLog(PropertiesDefine.class);
 	
 	private String code;
 	private String name;
@@ -31,7 +31,7 @@ public class ParameterDefine {
 	
 	private List<PitemDefine> pitemDefineList;
 	
-	public ParameterDefine() {
+	public PropertiesDefine() {
 		
 	}
 

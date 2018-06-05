@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Parameter tid="0" eid= "0" etype="DPY" ptype="type-subtype" version="1.0.0.0" >
-	<action code="" name="" type="" image="" image_dis="" tooltip="" ></action>
-	<toolbar code="" name="" >
-		<actions>
-		</actions>
-	</toolbar>
+<!-- <Properties tid="0" eid= "0" etype="DPY" ptype="type-subtype" version="1.0.0.0" > -->
+<Properties code="" name="" type="" image="" imageDis="" tooltip="" >
+	<Action code="" name="" type="" image="" imageDis="" tooltip="" ></Action>
+	<Toolbar code="" name="" >
+		<Actions>
+			<ActionItem></ActionItem>
+		</Actions>
+	</Toolbar>
 
-	<pitem code="" name="" alias="" category="" >
-		<data datatype="" format="" length="" precision="" scale="" >dafault_value</data>
-		<control type="" io_flag="" ref_objects="" ext_control=""></control>
-		<checkrule></checkrule>
-		<description>
-		</description>
+	<Pitem code="" name="" alias="" category="" >
+		<Data type="" format="" length="" precision="" scale="" >dafault_value</Data>
+		<Control type="" ioFlag="" refObjects="" extControl=""></Control>
+		<CheckRule>CheckRuleCheckRule</CheckRule>
+		<Description>DescriptionDescriptionDescription</Description>
 		
-		<sub_items>
-		</sub_items>
-	</pitem>
-</Parameter>
+		<SubItems>
+		</SubItems>
+	</Pitem>
+</Properties>
