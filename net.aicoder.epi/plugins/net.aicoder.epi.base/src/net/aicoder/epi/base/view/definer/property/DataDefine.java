@@ -1,10 +1,10 @@
-package net.aicoder.epi.base.view.definer.parameter;
+package net.aicoder.epi.base.view.definer.property;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlValue;
 
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(propOrder = {})
@@ -67,7 +67,7 @@ public class DataDefine {
 		return dafaultValue;
 	}
 
-	@XmlElement(name = "Data")
+	@XmlValue
 	public void setDafaultValue(String dafaultValue) {
 		this.dafaultValue = dafaultValue;
 	}
