@@ -28,8 +28,8 @@ public abstract class ViewDefiner implements IViewDefiner {
 	private ILabelProvider labelProvider;
 	private ITableLabelProvider columnLabelProvider;
 
-	private IEpiInput input;
-	private IEpiEditorInput editorInput;
+	//private IEpiInput input;
+	//private IEpiEditorInput editorInput;
 
 	public ViewDefiner() {
 		super();
@@ -118,7 +118,7 @@ public abstract class ViewDefiner implements IViewDefiner {
 	public List<IColumnDefiner> getColumnDefinerList() {
 		return columnDefinerList;
 	}
-
+/**
 	@Override
 	public IEpiInput getInput() {
 		return input;
@@ -138,7 +138,7 @@ public abstract class ViewDefiner implements IViewDefiner {
 	public void setEditorInput(IEpiEditorInput editorInput) {
 		this.editorInput = editorInput;
 	}
-	
+**/	
 	@Override
 	public void putCellEditorItems(String columnName, String[] cellEditorItems) {
 		cellEditorItemsMap.put(columnName, cellEditorItems);

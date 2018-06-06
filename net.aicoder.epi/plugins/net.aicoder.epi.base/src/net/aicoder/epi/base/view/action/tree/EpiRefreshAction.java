@@ -1,23 +1,16 @@
 package net.aicoder.epi.base.view.action.tree;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 
 import net.aicoder.epi.base.BaseImageConstant;
-import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.view.action.BaseAction;
-import net.aicoder.epi.base.view.adapter.EpiInput;
 import net.aicoder.epi.base.view.adapter.IEpiInput;
-import net.aicoder.epi.base.view.definer.IViewDefiner;
+import net.aicoder.epi.base.view.adapter.IViewContext;
 import net.aicoder.epi.base.view.element.tree.EpiTree;
-import net.aicoder.epi.base.view.element.tree.EpiTreeContentProvider;
 
 public class EpiRefreshAction extends BaseAction {
 	private static String actionText = "刷新记录";
@@ -44,15 +37,16 @@ public class EpiRefreshAction extends BaseAction {
 
 	public void run() {
 		TreeViewer viewer = epiTree.getViewer();
-		IViewDefiner definer = epiTree.getDefiner();
-		IEpiInput adapter = definer.getInput();
+		//IViewDefiner definer = epiTree.getDefiner();
+		IViewContext context = epiTree.getViewContext();
+		IEpiInput input = context.getInput();
 
-		IEpiInput newAdapter = doRefresh(adapter);
-		if(newAdapter == null) {
+		IEpiInput newInput = doRefresh(input);
+		if(newInput == null) {
 			return;
 		}
 		epiTree.refresh();
-		viewer.setInput(newAdapter);
+		viewer.setInput(newInput);
 		viewer.refresh();
 	}
 

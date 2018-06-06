@@ -6,7 +6,11 @@ import org.eclipse.swt.widgets.Control;
 
 import net.aicoder.devp.model.EtypeEnum;
 import net.aicoder.epi.base.model.IBaseVo;
+import net.aicoder.epi.base.view.adapter.EpiEditorInput;
+import net.aicoder.epi.base.view.adapter.IEpiEditorInput;
 import net.aicoder.epi.base.view.adapter.IEpiInput;
+import net.aicoder.epi.base.view.adapter.IViewContext;
+import net.aicoder.epi.base.view.adapter.ViewContext;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.element.area.BaseWithTitleArea;
 import net.aicoder.epi.base.view.element.table.EpiTable;
@@ -17,6 +21,7 @@ import net.aicoder.epi.devp.prddev.doper.ProductDevDoper;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysElementVo;
 import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
 import net.aicoder.epi.devp.prddev.view.editors.product.ProductEditor;
+import net.aicoder.epi.devp.prddev.view.views.ProductDevTree.ProductDevTreeContext;
 
 public class ProductDevDgmTable extends BaseWithTitleArea{
 	public static String ID = ProductDevDgmTable.class.getName();
@@ -34,6 +39,7 @@ public class ProductDevDgmTable extends BaseWithTitleArea{
 
 	private EpiTable table;
 	private EpiTableDefiner definer;
+	private IViewContext context;
 	private ProductDevDoper doper;
 	
 	public ProductDevDgmTable() {
@@ -45,23 +51,43 @@ public class ProductDevDgmTable extends BaseWithTitleArea{
 	@Override
 	protected Control createAreaControl(Composite parent) {
 		definer = new EpiTableDefiner(viewDefine, columnsDefine);
-		IEpiInput input = createInput(null);
-		definer.setInput(input);
-		table = new EpiTable(parent, definer);
+		//IEpiInput input = createInput(null);
+		//definer.setInput(input);
+		context = new ProductDevDgmTableContext();
+		table = new EpiTable(parent, definer,context);
 		return table;
-	}
-	
-	private IEpiInput createInput(IBaseVo selectionElement) {
-		SysElementVo currElm = new SysElementVo();
-		currElm.setRid(1001);
-		currElm.setCode("ELM_C1");
-		currElm.setName("ELM_N1");
-
-		IEpiInput input = doper.loadDevDgmList(currElm);
-		return input;
 	}
 
 	@Override
 	public void setToolBar(IToolBarManager toolBarManager) {
 	}
+	
+	@SuppressWarnings("unchecked")
+	class ProductDevDgmTableContext extends ViewContext{
+		public ProductDevDgmTableContext() {
+			super();
+			setInput(createInput(null));
+			IBaseVo currData = getInput().getCurrentData();
+			setEditorInput(createEditorInput(currData));
+		}
+		
+		@Override
+		public IEpiInput createInput(IBaseVo selectionElement) {
+			SysElementVo currElm = new SysElementVo();
+			currElm.setRid(1001);
+			currElm.setCode("ELM_C1");
+			currElm.setName("ELM_N1");
+
+			IEpiInput input = doper.loadDevDgmList(currElm);
+			return input;
+		}
+
+		@Override
+		public IEpiEditorInput createEditorInput(IBaseVo selectionElement) {
+			EpiEditorInput editorInput = new EpiEditorInput(selectionElement);
+			;
+			return editorInput;
+		}
+	}
+
 }

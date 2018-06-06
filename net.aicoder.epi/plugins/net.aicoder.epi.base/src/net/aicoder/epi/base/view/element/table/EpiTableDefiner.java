@@ -42,14 +42,4 @@ public class EpiTableDefiner extends ViewDefiner {
 		ILabelProvider lablerProvider = new EpiTableLabelProvider(this);
 		setLabelProvider(lablerProvider);
 	}
-
-	@Override
-	public IEpiInput createInput(IBaseVo selectionElement) {
-		return null;
-	}
-
-	@Override
-	public IEpiEditorInput createEditorInput(IBaseVo selectionElement) {
-		return null;
-	}
 }

@@ -13,6 +13,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -22,6 +23,7 @@ import org.eclipse.ui.navigator.CommonViewer;
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.model.StateFlagEnum;
 import net.aicoder.epi.base.view.IViewElement;
+import net.aicoder.epi.base.view.adapter.IViewContext;
 import net.aicoder.epi.base.view.definer.IViewDefiner;
 import net.aicoder.tcom.tools.util.AiStringUtil;
 
@@ -30,6 +32,7 @@ public class EpiExplorer extends CommonNavigator implements IContextProvider, IV
 
 	private EpiExplorerDefiner definer;
 	private CommonViewer viewer;
+	private IViewContext context;
 
 	private boolean editable = true;
 	private boolean dirty = false;
@@ -48,6 +51,12 @@ public class EpiExplorer extends CommonNavigator implements IContextProvider, IV
 		this.definer = definer;
 	}
 
+	public EpiExplorer(EpiExplorerDefiner definer, IViewContext context ) {
+		super();
+		this.definer = definer;
+		this.context = context;
+	}
+
 	@Override
 	public void createPartControl(Composite parent) {
 		super.createPartControl(parent);
@@ -55,7 +64,8 @@ public class EpiExplorer extends CommonNavigator implements IContextProvider, IV
 		viewer = this.getCommonViewer();
 		viewer.setContentProvider(definer.getContentProvider());
 		viewer.setLabelProvider(definer.getLabelProvider());
-		viewer.setInput(definer.getInput());
+		
+		viewer.setInput(context.getInput());
 		viewer.setSorter(definer.getSorter());
 
 		if (definer.hasOpenEditAction()) {
@@ -88,7 +98,8 @@ public class EpiExplorer extends CommonNavigator implements IContextProvider, IV
 				String editorId = definer.getViewItemDefiner(vo.getEtype()).getEditorId();
 				if (!AiStringUtil.isEmpty(editorId)) {
 					try {
-						page.openEditor(definer.createEditorInput(vo), editorId);
+						IEditorInput input = context.getEditorInput(vo);
+						page.openEditor(input, editorId);
 					} catch (PartInitException e) {
 						System.out.println(e);
 					}
@@ -250,4 +261,14 @@ public class EpiExplorer extends CommonNavigator implements IContextProvider, IV
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public IViewContext getViewContext() {
+		return context;
+	}
+
+	public void setViewContext(IViewContext context) {
+		this.context = context;
+		//viewer.setInput(context.getEditorInput());
+	}
+
 }

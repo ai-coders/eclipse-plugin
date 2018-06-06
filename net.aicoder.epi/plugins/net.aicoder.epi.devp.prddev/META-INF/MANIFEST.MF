@@ -34,4 +34,4 @@ Export-Package: net.aicoder.epi.devp.prddev,
  net.aicoder.epi.devp.prddev.view.editors.syscmp,
  net.aicoder.epi.devp.prddev.view.editors.sysdpy,
  net.aicoder.epi.devp.prddev.view.editors.syside,
- net.aicoder.epi.devp.prddev.view.exploer
+ net.aicoder.epi.devp.prddev.view.views

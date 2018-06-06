@@ -24,7 +24,7 @@ public class EpiExplorerDefiner extends ViewDefiner {
 		newLabelProvider();
 		newViewerSorter();
 	}
-
+/**
 	@Override
 	public IEpiInput createInput(IBaseVo selectionElement) {
 		return getInput();
@@ -34,7 +34,7 @@ public class EpiExplorerDefiner extends ViewDefiner {
 	public IEpiEditorInput createEditorInput(IBaseVo selectionElement) {
 		return getEditorInput();
 	}
-
+**/
 	private void newContentProvider() {
 		IContentProvider contentProvider = new EpiExplorerContentProvider(this);
 		setContentProvider(contentProvider);

@@ -41,6 +41,8 @@ public class ProductDevDownArea extends BaseArea {
 		
 		tabArea.setEpiAreas(areas);
 		tabArea.createControl(parent);
+		tabArea.getTabFolder().setSelection(0);
+		
 		return tabArea.getControl();
 	}
 	

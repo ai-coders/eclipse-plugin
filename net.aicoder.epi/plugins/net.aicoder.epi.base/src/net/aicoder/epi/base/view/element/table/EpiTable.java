@@ -14,7 +14,6 @@ import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
@@ -24,8 +23,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -33,6 +31,7 @@ import org.eclipse.ui.PlatformUI;
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.model.StateFlagEnum;
 import net.aicoder.epi.base.view.IViewElement;
+import net.aicoder.epi.base.view.adapter.IViewContext;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.tcom.tools.util.AiStringUtil;
 
@@ -40,8 +39,9 @@ public class EpiTable extends Composite implements IViewElement {
 	public final int EACH_CHAR_WIDTH = 10;
 
 	protected Table table;
-	private EpiTableDefiner definer;
 	protected TableViewer viewer;
+	private EpiTableDefiner definer;
+	private IViewContext context;
 
 	private boolean editable = true;
 	private boolean dirty = false;
@@ -50,18 +50,24 @@ public class EpiTable extends Composite implements IViewElement {
 	private List<IBaseVo> updatedDataList = new ArrayList<IBaseVo>(0);
 	
     private Set<TableItem> dirtyBackgroundSet = new HashSet<TableItem>(0);
-	
+
+ /**   
 	public EpiTable(Composite parent) {
 		super(parent, SWT.NULL);
-		setLayout(new FillLayout());
-
-		table = new Table(this, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.FULL_SELECTION);
-		// table.setLayout(new TableLayout());
-		viewer = new TableViewer(table);
+		initEpiTable();
 	}
-
-	public EpiTable(Composite parent, EpiTableDefiner definer) {
+**/
+	public EpiTable(Composite parent, EpiTableDefiner definer, IViewContext context) {
 		super(parent, SWT.NULL);
+		initEpiTable();
+
+		setDefiner(definer);
+		attachViewDefiner(definer);
+		seViewContext(context);
+		viewer.setInput(context.getInput());
+	}
+	
+	private void initEpiTable() {
 		setLayout(new FillLayout());
 
 		// table = new Table(this,SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL |
@@ -70,9 +76,6 @@ public class EpiTable extends Composite implements IViewElement {
 		// table.setLayoutData(new GridData(GridData.FILL_BOTH));
 		// table.setLayout(new TableLayout());
 		viewer = new TableViewer(table);
-		this.definer = definer;
-
-		attachViewDefiner(definer);
 	}
 
 	protected void attachViewDefiner(EpiTableDefiner definer) {
@@ -126,7 +129,7 @@ public class EpiTable extends Composite implements IViewElement {
 		} else {
 			viewer.setLabelProvider(definer.getLabelProvider());
 		}
-		viewer.setInput(definer.getInput());
+		//viewer.setInput(definer.getInput());
 
 		if (definer.hasOpenEditAction()) {
 			hookDoubleClickAction();
@@ -142,7 +145,8 @@ public class EpiTable extends Composite implements IViewElement {
 				String editorId = definer.getViewItemDefiner(vo.getEtype()).getEditorId();
 				if (!AiStringUtil.isEmpty(editorId)) {
 					try {
-						page.openEditor(definer.createEditorInput(vo), editorId);
+						IEditorInput input = context.getEditorInput(vo);
+						page.openEditor(input, editorId);
 					} catch (PartInitException e) {
 						System.out.println(e);
 					}
@@ -365,4 +369,14 @@ public class EpiTable extends Composite implements IViewElement {
 	public EpiTable getViewElement() {
 		return this;
 	}
+	
+	public IViewContext getViewContext() {
+		return context;
+	}
+
+	public void seViewContext(IViewContext context) {
+		this.context = context;
+		viewer.setInput(context.getEditorInput());
+	}
+
 }

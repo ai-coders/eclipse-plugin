@@ -8,6 +8,9 @@ import net.aicoder.epi.base.model.IBaseVo;
 
 public class EpiEditorInput extends EpiInput implements IEpiEditorInput {
 	private String name;
+	private String toolTipText;
+	private ImageDescriptor imageDescriptor;
+	private IPersistableElement persistableElement;
 
 	public EpiEditorInput() {
 		super();
@@ -15,19 +18,19 @@ public class EpiEditorInput extends EpiInput implements IEpiEditorInput {
 
 	public EpiEditorInput(IBaseVo currentData) {
 		super(currentData);
-		this.name = currentData.getName();
+		if(currentData!=null) {
+			this.name = currentData.getName();
+		}
 	}
 
 	@Override
 	public boolean exists() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public ImageDescriptor getImageDescriptor() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.imageDescriptor;
 	}
 
 	public void setName(String name) {
@@ -41,14 +44,12 @@ public class EpiEditorInput extends EpiInput implements IEpiEditorInput {
 
 	@Override
 	public IPersistableElement getPersistable() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.persistableElement;
 	}
 
 	@Override
 	public String getToolTipText() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.toolTipText;
 	}
 
 	public boolean equals(Object obj) {
@@ -61,4 +62,21 @@ public class EpiEditorInput extends EpiInput implements IEpiEditorInput {
 		return false;
 	}
 
+	//// getter/setter
+	public IPersistableElement getPersistableElement() {
+		return persistableElement;
+	}
+
+	public void setPersistableElement(IPersistableElement persistableElement) {
+		this.persistableElement = persistableElement;
+	}
+
+	public void setToolTipText(String toolTipText) {
+		this.toolTipText = toolTipText;
+	}
+
+	public void setImageDescriptor(ImageDescriptor imageDescriptor) {
+		this.imageDescriptor = imageDescriptor;
+	}
+	
 }

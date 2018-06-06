@@ -38,22 +38,22 @@ public interface IViewDefiner {
 	
 	public List<IColumnDefiner> getColumnDefinerList();
 
-	public IEpiInput getInput();
-
-	public void setInput(IEpiInput input);
-	
 	public boolean hasOpenEditAction();
-	
-	public IEpiEditorInput getEditorInput();
-	
-	public void setEditorInput(IEpiEditorInput editorInput);
-	
-	public IEpiInput createInput(IBaseVo selectionElement);
-	
-	public IEpiEditorInput createEditorInput(IBaseVo selectionElement);
 	
 	public void putCellEditorItems(String columnName, String[] cellEditorItems);
 	
 	public String[] getCellEditorItems(String columnName);
+	
+	//public IEpiInput getInput();
+
+	//public void setInput(IEpiInput input);
+	
+	//public IEpiEditorInput getEditorInput();
+	
+	//public void setEditorInput(IEpiEditorInput editorInput);
+	
+	//public IEpiInput createInput(IBaseVo selectionElement);
+	
+	//public IEpiEditorInput createEditorInput(IBaseVo selectionElement);
 
 }

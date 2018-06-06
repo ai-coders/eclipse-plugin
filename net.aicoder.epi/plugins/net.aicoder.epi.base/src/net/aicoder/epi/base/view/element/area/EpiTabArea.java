@@ -43,6 +43,10 @@ public class EpiTabArea implements IEpiArea {
 		return epiArea.getControl();
 	}
 
+	public CTabFolder getTabFolder() {
+		return this.tabFolder;
+	}
+	
 	@Override
 	public Control getControl() {
 		return tabFolder;

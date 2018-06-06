@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -30,6 +31,7 @@ import org.eclipse.ui.PlatformUI;
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.model.StateFlagEnum;
 import net.aicoder.epi.base.view.IViewElement;
+import net.aicoder.epi.base.view.adapter.IViewContext;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.element.table.EpiCellModifier;
 import net.aicoder.tcom.tools.util.AiStringUtil;
@@ -37,9 +39,10 @@ import net.aicoder.tcom.tools.util.AiStringUtil;
 public class EpiTree extends Composite implements IViewElement {
 	public final int EACH_CHAR_WIDTH = 10;
 	
-	private Tree tree;
 	private EpiTreeDefiner definer;
+	private Tree tree;
 	private TreeViewer viewer;
+	private IViewContext context;
 	
 	private boolean editable = true;
 	private boolean dirty = false;
@@ -48,27 +51,37 @@ public class EpiTree extends Composite implements IViewElement {
 	private List<IBaseVo> updatedDataList = new ArrayList<IBaseVo>(0);
 	
     private Set<TreeItem> dirtyBackgroundSet = new HashSet<TreeItem>(0);
-	
+/**	
 	public EpiTree(Composite parent) {
 		super(parent, SWT.NULL);
-		setLayout(new FillLayout());
-		
-		tree = new Tree(this,SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.FULL_SELECTION);
-		//tree.setLayout(new TableLayout());
-		//tree.setLayoutData(new GridData(GridData.FILL_BOTH));
-		viewer = new TreeViewer(tree);
+		initEpiTree();
 	}
 	
 	public EpiTree(Composite parent, EpiTreeDefiner definer) {
 		super(parent, SWT.NULL);
+		initEpiTree();
+		
+		this.definer = definer;
+		attachViewDefiner(definer);
+	}
+**/	
+	public EpiTree(Composite parent, EpiTreeDefiner definer, IViewContext context) {
+		super(parent, SWT.NULL);
+		initEpiTree();
+		
+		setDefiner(definer);
+		attachViewDefiner(definer);
+		seViewContext(context);
+		viewer.setInput(context.getInput());
+	}
+
+	private void initEpiTree() {
 		setLayout(new FillLayout());
 		
 		tree = new Tree(this,SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.FULL_SELECTION);
 		//tree.setLayout(new TableLayout());
 		//tree.setLayoutData(new GridData(GridData.FILL_BOTH)); //excption
 		viewer = new TreeViewer(tree);
-		
-		attachViewDefiner(definer);
 	}
 	
 
@@ -97,7 +110,8 @@ public class EpiTree extends Composite implements IViewElement {
 				String editorId = definer.getViewItemDefiner(vo.getEtype()).getEditorId();
 				if (!AiStringUtil.isEmpty(editorId)) {
 					try {
-						page.openEditor(definer.createEditorInput(vo), editorId);
+						IEditorInput input = context.getEditorInput(vo);
+						page.openEditor(input, editorId);
 					} catch (PartInitException e) {
 						System.out.println(e);
 					}
@@ -119,7 +133,7 @@ public class EpiTree extends Composite implements IViewElement {
 		}else {
 			viewer.setLabelProvider(definer.getLabelProvider());
 		}
-		viewer.setInput(definer.getInput());
+		//viewer.setInput(definer.getInput());
 
 		if (definer.hasOpenEditAction()) {
 			hookDoubleClickAction();
@@ -389,5 +403,14 @@ public class EpiTree extends Composite implements IViewElement {
 	@Override
 	public EpiTree getViewElement() {
 		return this;
+	}
+
+	public IViewContext getViewContext() {
+		return context;
+	}
+
+	public void seViewContext(IViewContext context) {
+		this.context = context;
+		viewer.setInput(context.getEditorInput());
 	}
 }

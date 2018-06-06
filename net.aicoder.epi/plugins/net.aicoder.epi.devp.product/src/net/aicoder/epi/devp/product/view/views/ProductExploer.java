@@ -105,6 +105,13 @@ public class ProductExploer extends EpiExplorer {
 	
 	@SuppressWarnings("unchecked")
 	class ProductExploerContext extends ViewContext{
+		public ProductExploerContext() {
+			super();
+			setInput(createInput(null));
+			IBaseVo currData = getInput().getCurrentData();
+			setEditorInput(createEditorInput(currData));
+		}
+		
 		@Override
 		public IEpiInput createInput(IBaseVo selectionElement) {
 			IEpiInput input = dataoper.loadProductList(selectionElement);
