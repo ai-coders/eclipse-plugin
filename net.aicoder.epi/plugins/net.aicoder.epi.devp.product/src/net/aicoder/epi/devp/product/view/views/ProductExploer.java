@@ -14,6 +14,8 @@ import net.aicoder.epi.base.view.action.EpiDeleteAction;
 import net.aicoder.epi.base.view.action.IEpiAction;
 import net.aicoder.epi.base.view.adapter.EpiEditorInput;
 import net.aicoder.epi.base.view.adapter.IEpiInput;
+import net.aicoder.epi.base.view.adapter.IViewContext;
+import net.aicoder.epi.base.view.adapter.ViewContext;
 import net.aicoder.epi.base.view.adapter.IEpiEditorInput;
 import net.aicoder.epi.base.view.explorer.EpiExplorer;
 import net.aicoder.epi.base.view.explorer.EpiExplorerDefiner;
@@ -43,10 +45,13 @@ public class ProductExploer extends EpiExplorer {
 	public ProductExploer() {
 		super();
 		dataoper = new ProductDoper();
+		EpiExplorerDefiner definer = new EpiExplorerDefiner(viewDefine);
 		
-		EpiExplorerDefiner definer = new ProductExploerDefiner(viewDefine);
-		definer.createInput(null);
+		IViewContext context = new ProductExploerContext();
+		//definer.createInput(null);
+		//this.setDefiner(context.getEditorInput(null));
 		this.setDefiner(definer);
+		this.setViewContext(context);
 	}
 	
 	@Override
@@ -98,11 +103,8 @@ public class ProductExploer extends EpiExplorer {
 		
 	}
 	
-	class ProductExploerDefiner extends EpiExplorerDefiner{
-		public ProductExploerDefiner(Object[][] viewDefine) {
-			super(viewDefine);
-		}
-		
+	@SuppressWarnings("unchecked")
+	class ProductExploerContext extends ViewContext{
 		@Override
 		public IEpiInput createInput(IBaseVo selectionElement) {
 			IEpiInput input = dataoper.loadProductList(selectionElement);

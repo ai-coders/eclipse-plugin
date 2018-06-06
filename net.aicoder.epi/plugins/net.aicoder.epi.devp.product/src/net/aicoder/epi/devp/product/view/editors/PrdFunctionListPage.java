@@ -6,6 +6,8 @@ import org.eclipse.ui.forms.editor.FormEditor;
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.view.adapter.IEpiEditorInput;
 import net.aicoder.epi.base.view.adapter.IEpiInput;
+import net.aicoder.epi.base.view.adapter.IViewContext;
+import net.aicoder.epi.base.view.adapter.ViewContext;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.editor.BaseFormPage;
 import net.aicoder.epi.base.view.element.table.EpiTable;
@@ -46,7 +48,9 @@ public class PrdFunctionListPage extends BaseFormPage {
 		IEpiEditorInput editInput = (IEpiEditorInput)editor.getEditorInput();
 		IBaseVo product = editInput.getCurrentData();
 		IEpiInput input = dataoper.loadModuleList(product);
-		definer.setInput(input);
-		table = new EpiTable(parent, definer);
+		IViewContext context = new ViewContext();
+		context.setInput(input);
+		//definer.setInput(input);
+		table = new EpiTable(parent, definer, context);
 	}
 }

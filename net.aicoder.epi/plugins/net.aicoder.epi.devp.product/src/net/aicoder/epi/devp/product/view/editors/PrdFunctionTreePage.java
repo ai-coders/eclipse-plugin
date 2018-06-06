@@ -16,6 +16,8 @@ import net.aicoder.epi.base.view.action.tree.EpiRefreshAction;
 import net.aicoder.epi.base.view.action.tree.EpiRightNodeAction;
 import net.aicoder.epi.base.view.action.tree.EpiUpRowAction;
 import net.aicoder.epi.base.view.adapter.IEpiInput;
+import net.aicoder.epi.base.view.adapter.IViewContext;
+import net.aicoder.epi.base.view.adapter.ViewContext;
 import net.aicoder.epi.base.view.adapter.IEpiEditorInput;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.editor.BaseFormPage;
@@ -58,8 +60,10 @@ public class PrdFunctionTreePage extends BaseFormPage {
 		IEpiEditorInput editInput = (IEpiEditorInput)editor.getEditorInput();
 		IBaseVo product = editInput.getCurrentData();
 		IEpiInput input = dataoper.loadModuleList(product);
-		definer.setInput(input);
-		tree = new EpiTree(parent, definer);
+		IViewContext context = new ViewContext();
+		context.setInput(input);
+		//definer.setInput(input);
+		tree = new EpiTree(parent, definer, context);
 	}
 
 	@Override
