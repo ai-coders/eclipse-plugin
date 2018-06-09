@@ -4,6 +4,7 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.ISharedImages;
@@ -45,7 +46,7 @@ public class SysDpyElmListArea extends BaseWithPropArea {
 	}
 	
 	@Override
-	protected IEpiArea createWorkArea(Composite parent) {
+	protected IEpiArea createWorkArea() {
 		int[] areaWeights = new int[2];
 		areaWeights[0] = 2;
 		areaWeights[1] = 1;
@@ -54,13 +55,9 @@ public class SysDpyElmListArea extends BaseWithPropArea {
 		epiAreas[0] = new SysDpyElmTreeTable();
 		epiAreas[1] = new SysDpyElmTreeTable();
 		
-		EpiSashArea sashArea = new EpiSashArea(this.getWorkbenchPart());
+		EpiSashArea sashArea = new EpiSashArea(this.getWorkbenchPart(), SWT.VERTICAL);
 		sashArea.setEpiAreas(epiAreas);
 		sashArea.setAreaWeights(areaWeights);
-		
-		sashArea.createControl(parent);
-		
-		//workArea = sashArea;
 
 /**		
 	    // add listeners

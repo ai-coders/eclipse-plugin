@@ -22,7 +22,7 @@ public abstract class BaseWithPropArea extends BaseArea {
 		
 		propsArea = new PropsArea(this.getWorkbenchPart());
 		IEpiArea[] areas = new IEpiArea[2];
-		areas[0] = createWorkArea(parent);
+		areas[0] = createWorkArea();
 		areas[1] = propsArea;
 		
 		EpiSashArea sashArea = new EpiSashArea(this.getWorkbenchPart());
@@ -32,10 +32,11 @@ public abstract class BaseWithPropArea extends BaseArea {
 		sashArea.setEpiAreas(areas);
 		sashArea.setAreaWeights(weights);
 		sashArea.createControl(parent);
+		
 		return sashArea.getControl();
 	}
 	
-	protected abstract IEpiArea createWorkArea(Composite parent);
+	protected abstract IEpiArea createWorkArea();
 	
 	public PropsArea getPropsArea() {
 		return propsArea;
