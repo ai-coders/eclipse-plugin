@@ -36,7 +36,7 @@ public class ProductDevDownArea extends BaseArea {
 		areas[0] = new ProductDevDgmTable();
 		areas[1] = new ProductDevSubElmTable();
 		
-		EpiTabArea tabArea = new EpiTabArea();
+		EpiTabArea tabArea = new EpiTabArea(this.getWorkbenchPart());
 		tabArea.setEpiAreas(areas);
 		tabArea.createControl(parent);
 		tabArea.getTabFolder().setSelection(0);

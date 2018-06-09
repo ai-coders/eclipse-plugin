@@ -7,6 +7,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IWorkbenchPart;
 
 import net.aicoder.devp.model.EtypeEnum;
 import net.aicoder.epi.base.model.IBaseVo;
@@ -37,12 +38,29 @@ import net.aicoder.epi.util.ImageUtil;
 public class SysDpyElmListArea extends BaseWithPropArea {
 	public static String ID = SysDpyElmListArea.class.getName();
 
-	private IEpiArea workArea;
-	//private PropsArea propsArea;
+	//private IEpiArea workArea;
+	//// Constructor
+	public SysDpyElmListArea(IWorkbenchPart workbenchPart) {
+		super(workbenchPart);
+	}
 	
 	@Override
-	protected IEpiArea createWorkArea() {
-		workArea = new SysDpyElmTreeTable();
+	protected IEpiArea createWorkArea(Composite parent) {
+		int[] areaWeights = new int[2];
+		areaWeights[0] = 2;
+		areaWeights[1] = 1;
+
+		IEpiArea[] epiAreas = new IEpiArea[2];
+		epiAreas[0] = new SysDpyElmTreeTable();
+		epiAreas[1] = new SysDpyElmTreeTable();
+		
+		EpiSashArea sashArea = new EpiSashArea(this.getWorkbenchPart());
+		sashArea.setEpiAreas(epiAreas);
+		sashArea.setAreaWeights(areaWeights);
+		
+		sashArea.createControl(parent);
+		
+		//workArea = sashArea;
 
 /**		
 	    // add listeners
@@ -54,7 +72,7 @@ public class SysDpyElmListArea extends BaseWithPropArea {
 	    });
 **/
 		
-		return workArea;
+		return sashArea;
 	}
 	
 	@Override

@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
+import org.eclipse.ui.IWorkbenchPart;
 
 import net.aicoder.epi.base.view.action.EpiAddAction;
 import net.aicoder.epi.base.view.action.EpiDeleteAction;
@@ -24,6 +25,11 @@ public class PropsArea extends BaseWithTitleArea {
 	private Tree tree;
 	private TreeViewer viewer;
 	private PropsInput propsInput;
+	
+	//// Constructor
+	public PropsArea(IWorkbenchPart workbenchPart) {
+		super(workbenchPart);
+	}
 
 	@Override
 	protected Control createAreaControl(Composite parent) {

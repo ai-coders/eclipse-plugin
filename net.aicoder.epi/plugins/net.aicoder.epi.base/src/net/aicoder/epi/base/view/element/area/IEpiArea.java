@@ -15,9 +15,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IEditorPart;
-
-import net.aicoder.epi.base.view.context.IViewContext;
+import org.eclipse.ui.IWorkbenchPart;
 
 /**
  * View-like page.
@@ -26,44 +24,47 @@ import net.aicoder.epi.base.view.context.IViewContext;
  * @coverage core.editor.structure
  */
 public interface IEpiArea {
-  /**
-   * Creates the {@link Control} for this page.
-   */
-  void createControl(Composite parent);
+	public IWorkbenchPart getWorkbenchPart();
 
-  /**
-   * @return the {@link Control} of this page, may be <code>null</code>.
-   */
-  Control getControl();
+	public void setWorkbenchPart(IWorkbenchPart workbenchPart);
+	
+	public IEditorInput getEditorInput();
 
-  /**
-   * Allows the page to make contributions to the given {@link IToolBarManager}. The contributions
-   * will be visible when the page is visible. This method is automatically called shortly after
-   * {@link #createControl(Composite)} is called.
-   */
-  void setToolBar(IToolBarManager toolBarManager);
+	public String getTitleText();
 
-  /**
-   * Asks this page to take focus.
-   */
-  public boolean setFocus();
-  
-  /**
-   * Disposes this page.
-   * <p>
-   * This is the last method called on the {@link IEpiArea}. Implementors should clean up any resources
-   * associated with the page.
-   * <p>
-   * Note that there is no guarantee that {@link #createControl(Composite)} has been called, so the
-   * control may never have been created.
-   */
-  void dispose();
+	public Image getTitleImage();
 
-  public String getTitleText();
-  
-  public Image getTitleImage();
-  
-  public IEditorPart getEditor();
-  
-  public void setEditor(IEditorPart editor);
+	/**
+	 * Creates the {@link Control} for this page.
+	 */
+	void createControl(Composite parent);
+
+	/**
+	 * @return the {@link Control} of this page, may be <code>null</code>.
+	 */
+	Control getControl();
+
+	/**
+	 * Allows the page to make contributions to the given {@link IToolBarManager}.
+	 * The contributions will be visible when the page is visible. This method is
+	 * automatically called shortly after {@link #createControl(Composite)} is
+	 * called.
+	 */
+	void setToolBar(IToolBarManager toolBarManager);
+
+	/**
+	 * Asks this page to take focus.
+	 */
+	public boolean setFocus();
+
+	/**
+	 * Disposes this page.
+	 * <p>
+	 * This is the last method called on the {@link IEpiArea}. Implementors should
+	 * clean up any resources associated with the page.
+	 * <p>
+	 * Note that there is no guarantee that {@link #createControl(Composite)} has
+	 * been called, so the control may never have been created.
+	 */
+	void dispose();
 }

@@ -2,31 +2,24 @@ package net.aicoder.epi.base.view.element.area;
 
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPart;
 
-import net.aicoder.epi.base.view.context.IViewContext;
-
-public final class EpiSashArea implements IEpiArea {
+public final class EpiSashArea extends AbstractBaseArea {
 	private EpiSashForm m_sashForm;
 	private IEpiArea[] epiAreas;
 	private int[] areaWeights;
 	private int fixedOrientation = 0;
 
-	private String titleText;
-	private Image titleImage;
-
 	//// Constructor
-	public EpiSashArea() {
-		super();
+	public EpiSashArea(IWorkbenchPart workbenchPart) {
+		super(workbenchPart);
 		this.fixedOrientation = 0;
 	}
 
-	public EpiSashArea(int fixedOrientation) {
-		super();
+	public EpiSashArea(IWorkbenchPart workbenchPart, int fixedOrientation) {
+		super(workbenchPart);
 		this.fixedOrientation = fixedOrientation;
 	}
 
@@ -37,7 +30,8 @@ public final class EpiSashArea implements IEpiArea {
 			setFixedOrientation(fixedOrientation);
 		}
 		for (IEpiArea epiArea : epiAreas) {
-			epiArea.setEditor(this.getEditor());
+			//epiArea.setEditor(this.getEditor());
+			epiArea.setWorkbenchPart(this.getWorkbenchPart());
 			createAreaComposite(parent, epiArea);
 		}
 		if(areaWeights != null) {
@@ -60,17 +54,7 @@ public final class EpiSashArea implements IEpiArea {
 	@Override
 	public void setToolBar(IToolBarManager toolBarManager) {
 	}
-
-	@Override
-	public String getTitleText() {
-		return titleText;
-	}
-
-	@Override
-	public Image getTitleImage() {
-		return titleImage;
-	}
-
+	
 	@Override
 	public boolean setFocus() {
 		return getControl().setFocus();
@@ -78,6 +62,8 @@ public final class EpiSashArea implements IEpiArea {
 
 	@Override
 	public void dispose() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	//// getter/setter
@@ -88,14 +74,6 @@ public final class EpiSashArea implements IEpiArea {
 	public void setFixedOrientation(int fixedOrientation) {
 		this.fixedOrientation = fixedOrientation;
 		m_sashForm.setFixedOrientation(fixedOrientation);
-	}
-
-	public void setTitleText(String titleText) {
-		this.titleText = titleText;
-	}
-
-	public void setTitleImage(Image titleImage) {
-		this.titleImage = titleImage;
 	}
 
 	public IEpiArea[] getEpiAreas() {
@@ -112,14 +90,5 @@ public final class EpiSashArea implements IEpiArea {
 
 	public void setAreaWeights(int[] areaWeights) {
 		this.areaWeights = areaWeights;
-	}
-
-	private IEditorPart editor;
-	public IEditorPart getEditor() {
-		return editor;
-	}
-
-	public void setEditor(IEditorPart editor) {
-		this.editor = editor;
 	}
 }

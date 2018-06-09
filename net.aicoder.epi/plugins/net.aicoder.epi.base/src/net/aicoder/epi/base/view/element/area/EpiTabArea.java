@@ -4,19 +4,19 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPart;
 
-public class EpiTabArea implements IEpiArea {
+public final class EpiTabArea extends AbstractBaseArea {
 	private CTabFolder tabFolder;
 	private CTabItem[] tabItems;
 	private IEpiArea[] epiAreas;
 	
-	private String titleText;
-	private Image titleImage;
+	//// Constructor
+	public EpiTabArea(IWorkbenchPart workbenchPart) {
+		super(workbenchPart);
+	}
 
 	@Override
 	public final void createControl(Composite parent) {
@@ -26,7 +26,8 @@ public class EpiTabArea implements IEpiArea {
 			tabItems = new CTabItem[epiAreasLength];
 			for(int tabIdx = 0; tabIdx<epiAreasLength; tabIdx++) {
 				IEpiArea epiArea = epiAreas[tabIdx];
-				epiArea.setEditor(this.getEditor());
+				//epiArea.setEditor(this.getEditor());
+				epiArea.setWorkbenchPart(this.getWorkbenchPart());
 				tabItems[tabIdx] = new CTabItem(tabFolder,SWT.NONE);
 				if(epiArea.getTitleText()!=null) {
 					tabItems[tabIdx].setText(epiArea.getTitleText());
@@ -68,39 +69,11 @@ public class EpiTabArea implements IEpiArea {
 	public void dispose() {
 	}
 
-	@Override
-	public String getTitleText() {
-		return titleText;
-	}
-
-	@Override
-	public Image getTitleImage() {
-		return titleImage;
-	}
-
-	public void setTitleText(String titleText) {
-		this.titleText = titleText;
-	}
-
-	public void setTitleImage(Image titleImage) {
-		this.titleImage = titleImage;
-	}
-
 	public IEpiArea[] getEpiAreas() {
 		return epiAreas;
 	}
 
 	public void setEpiAreas(IEpiArea[] epiAreas) {
 		this.epiAreas = epiAreas;
-	}
-
-	private IEditorPart editor;
-
-	public IEditorPart getEditor() {
-		return editor;
-	}
-
-	public void setEditor(IEditorPart editor) {
-		this.editor = editor;
 	}
 }

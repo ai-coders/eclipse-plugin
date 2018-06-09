@@ -16,11 +16,9 @@ import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.element.area.BaseWithTitleArea;
 import net.aicoder.epi.base.view.element.tree.EpiTree;
 import net.aicoder.epi.base.view.element.tree.EpiTreeDefiner;
-import net.aicoder.epi.devp.prddev.doper.ProductDevDoper;
 import net.aicoder.epi.devp.prddev.doper.dev.system.SysElementDoper;
 import net.aicoder.epi.devp.prddev.model.dev.ProductDevVo;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysElmCatgVo;
-import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
 
 public class SysDpyElmTreeTable extends BaseWithTitleArea{
 	public static String ID = SysDpyElmTreeTable.class.getName();
@@ -49,7 +47,7 @@ public class SysDpyElmTreeTable extends BaseWithTitleArea{
 	@Override
 	protected Control createAreaControl(Composite parent) {
 		definer = new EpiTreeDefiner(null, columnsDefine);
-		IEpiEditorInput editorInput = (IEpiEditorInput)this.getEditor().getEditorInput();
+		IEpiEditorInput editorInput = (IEpiEditorInput)this.getEditorInput();
 		IBaseVo elmCatg = editorInput.getCurrentData();
 		IBaseVo product = ((SysElmCatgVo)elmCatg).getParentNode();
 		List<IBaseVo> dataList = doper.listSysDpyElement((ProductDevVo)product);

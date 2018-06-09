@@ -40,7 +40,7 @@ public class UsingTabArea {
 		IEpiArea[] epiChildrenAreas = new TableEditorArea[2];
 		epiChildrenAreas[0] = new TableEditorArea();
 		epiChildrenAreas[1] = new TableEditorArea();
-		EpiTabArea epiTabArea = new EpiTabArea();
+		EpiTabArea epiTabArea = new EpiTabArea(null);
 		epiTabArea.setEpiAreas(epiChildrenAreas);
 		
 		//epiAreas[0].createControl(parent);
@@ -51,7 +51,7 @@ public class UsingTabArea {
 		
 		//EpiSashArea sashArea = new EpiSashArea(SWT.VERTICAL);
 		//EpiSashArea sashArea = new EpiSashArea(SWT.HORIZONTAL);
-		EpiSashArea sashArea = new EpiSashArea();
+		EpiSashArea sashArea = new EpiSashArea(null);
 		sashArea.setEpiAreas(epiAreas);
 		sashArea.setAreaWeights(areaWeights);
 		

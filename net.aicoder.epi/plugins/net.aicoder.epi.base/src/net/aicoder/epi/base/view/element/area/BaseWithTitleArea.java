@@ -5,13 +5,10 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPart;
 
-public abstract class BaseWithTitleArea implements IEpiArea {
+public abstract class BaseWithTitleArea extends AbstractBaseArea {
 	private EpiWithTitleForm m_container;
-	private String titleText;
-	private Image titleImage;
 	private Control bodyControl;
 
 	//// Constructor
@@ -19,10 +16,16 @@ public abstract class BaseWithTitleArea implements IEpiArea {
 		super();
 	}
 
+	public BaseWithTitleArea(IWorkbenchPart workbenchPart) {
+		super(workbenchPart);
+	}
+
 	public BaseWithTitleArea(String titleText, Image titleImage) {
-		super();
-		setTitleText(titleText);
-		setTitleImage(titleImage);
+		super(titleText,titleImage);
+	}
+
+	public BaseWithTitleArea(IWorkbenchPart workbenchPart, String titleText, Image titleImage) {
+		super(workbenchPart, titleText,titleImage);
 	}
 
 	//// IEpiArea
@@ -30,8 +33,8 @@ public abstract class BaseWithTitleArea implements IEpiArea {
 	public final void createControl(Composite parent) {
 		m_container = new EpiWithTitleForm(parent, SWT.BORDER);
 		//m_container.setLayout(new FillLayout());
-		m_container.setTitleText(titleText);
-		m_container.setTitleImage(titleImage);
+		m_container.setTitleText(this.getTitleText());
+		m_container.setTitleImage(this.getTitleImage());
 		
 		bodyControl = createAreaControl(m_container);
 		bodyControl.setLayoutData(new FillLayout());
@@ -61,34 +64,5 @@ public abstract class BaseWithTitleArea implements IEpiArea {
 		if (control != null && !control.isDisposed()) {
 			control.dispose();
 		}
-	}
-
-	//// getter/setter
-	@Override
-	public String getTitleText() {
-		return titleText;
-	}
-
-	public void setTitleText(String titleText) {
-		this.titleText = titleText;
-	}
-
-	@Override
-	public Image getTitleImage() {
-		return titleImage;
-	}
-
-	public void setTitleImage(Image titleImage) {
-		this.titleImage = titleImage;
-	}
-	
-
-	private IEditorPart editor;
-	public IEditorPart getEditor() {
-		return editor;
-	}
-
-	public void setEditor(IEditorPart editor) {
-		this.editor = editor;
 	}
 }

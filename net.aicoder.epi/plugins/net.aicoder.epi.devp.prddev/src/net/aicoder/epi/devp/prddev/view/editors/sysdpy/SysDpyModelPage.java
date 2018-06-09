@@ -13,7 +13,8 @@ import net.aicoder.epi.base.view.element.area.IEpiArea;
 public class SysDpyModelPage extends BaseFormPage {
 	public final static String ID = SysDpyModelPage.class.getName();
 	
-	private EpiSashArea sashArea;
+	//private EpiSashArea sashArea;
+	private SysDpyElmListArea viewArea;
 	
 	public SysDpyModelPage(FormEditor editor) {
 		super(editor,ID, "部署模型");
@@ -21,22 +22,12 @@ public class SysDpyModelPage extends BaseFormPage {
 	
 	@Override
 	public IEpiArea newPageArea() {
-		sashArea = new EpiSashArea(SWT.VERTICAL);
-		return sashArea;
+		viewArea = new SysDpyElmListArea(this.getEditor());
+		return viewArea;
 	}
 	
 	@Override
 	public void createControl(Composite parent) {
-		IEpiArea[] epiAreas = new IEpiArea[2];
-		epiAreas[0] = new SysDpyElmListArea();
-		epiAreas[1] = new SysDpyElmListArea();
-		
-		int[] areaWeights = new int[2];
-		areaWeights[0] = 3;
-		areaWeights[1] = 1;
-		
-		sashArea.setEpiAreas(epiAreas);
-		sashArea.setAreaWeights(areaWeights);
-		sashArea.createControl(parent);	
+		viewArea.createControl(parent);	
 	}
 }

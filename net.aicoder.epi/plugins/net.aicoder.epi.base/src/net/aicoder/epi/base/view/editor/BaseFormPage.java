@@ -33,8 +33,6 @@ public abstract class BaseFormPage extends FormPage implements IFormEditorPage{
 		super(editor, id, title);
 		initialize(editor);
 	}
-	
-	
 
 	//// Life cycle
 	@Override
@@ -91,7 +89,8 @@ public abstract class BaseFormPage extends FormPage implements IFormEditorPage{
 		super.initialize(editor);
 		pageArea = newPageArea();
 		if(pageArea != null) {
-			pageArea.setEditor(editor);
+			//pageArea.setEditor(editor);
+			pageArea.setWorkbenchPart(editor);
 		}
 	}
 	

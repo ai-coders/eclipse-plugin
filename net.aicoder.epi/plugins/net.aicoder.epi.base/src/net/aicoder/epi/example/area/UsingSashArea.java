@@ -39,7 +39,7 @@ public class UsingSashArea {
 		IEpiArea[] epiChildrenAreas = new TableEditorArea[2];
 		epiChildrenAreas[0] = new TableEditorArea();
 		epiChildrenAreas[1] = new TableEditorArea();
-		EpiSashArea epiAreas2 = new EpiSashArea(SWT.HORIZONTAL);
+		EpiSashArea epiAreas2 = new EpiSashArea(null,SWT.HORIZONTAL);
 		epiAreas2.setTitleText("EpiSashArea2");
 		epiAreas2.setEpiAreas(epiChildrenAreas);
 		epiAreas2.setAreaWeights(areaWeights);
@@ -52,7 +52,7 @@ public class UsingSashArea {
 		
 		//EpiSashArea sashArea = new EpiSashArea(SWT.VERTICAL);
 		//EpiSashArea sashArea = new EpiSashArea(SWT.HORIZONTAL);
-		EpiSashArea sashArea = new EpiSashArea();
+		EpiSashArea sashArea = new EpiSashArea(null);
 		sashArea.setEpiAreas(epiAreas);
 		sashArea.setAreaWeights(areaWeights);
 		

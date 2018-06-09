@@ -5,22 +5,30 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPart;
 
-public abstract class BaseArea implements IEpiArea {
+public abstract class BaseArea extends AbstractBaseArea {
 	private Composite m_container;
-	private String titleText;
-	private Image titleImage;
-
+	
 	//// Constructor
 	public BaseArea() {
 		super();
+	}
+
+	public BaseArea(IWorkbenchPart workbenchPart) {
+		this();
+		setWorkbenchPart(workbenchPart);
 	}
 
 	public BaseArea(String titleText, Image titleImage) {
 		super();
 		setTitleText(titleText);
 		setTitleImage(titleImage);
+	}
+	
+	public BaseArea(IWorkbenchPart workbenchPart, String titleText, Image titleImage) {
+		this(titleText, titleImage);
+		setWorkbenchPart(workbenchPart);
 	}
 
 	//// IEpiArea
@@ -50,33 +58,5 @@ public abstract class BaseArea implements IEpiArea {
 		if (control != null && !control.isDisposed()) {
 			control.dispose();
 		}
-	}
-
-	//// getter/setter
-	@Override
-	public String getTitleText() {
-		return titleText;
-	}
-
-	public void setTitleText(String titleText) {
-		this.titleText = titleText;
-	}
-
-	@Override
-	public Image getTitleImage() {
-		return titleImage;
-	}
-
-	public void setTitleImage(Image titleImage) {
-		this.titleImage = titleImage;
-	}
-
-	private IEditorPart editor;
-	public IEditorPart getEditor() {
-		return editor;
-	}
-
-	public void setEditor(IEditorPart editor) {
-		this.editor = editor;
 	}
 }
