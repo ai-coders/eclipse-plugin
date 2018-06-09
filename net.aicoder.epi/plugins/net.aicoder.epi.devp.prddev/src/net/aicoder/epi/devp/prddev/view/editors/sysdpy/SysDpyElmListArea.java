@@ -67,6 +67,31 @@ public class SysDpyElmListArea extends BaseWithPropArea {
 	        propsArea.setSelection(selection);
 	      }
 	    });
+	    
+	    		tree.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent event) {
+				final IBaseVo item = getSelectedItem();
+				IStatusLineManager statusLine = getViewSite().getActionBars().getStatusLineManager();
+				if (item != null) {
+					statusLine.setMessage(item.getCode() + "-" + item.getName());
+				}
+			}
+
+			public void widgetDefaultSelected(SelectionEvent event) { // ˫��չ��������
+				final IBaseVo item = getSelectedItem();
+				if (item != null && item.getEtype() == EtypeEnum.PRDLINE) {
+					TreeItem treeItem = (TreeItem) event.item;
+					if (treeItem != null && treeItem.getItemCount() > 0) {
+						boolean expanded = treeItem.getExpanded();
+						treeItem.setExpanded(!expanded);
+						// update the viewer
+						viewer.refresh(); // ��仰������5Сʱ,20180421 3:06
+					}
+				} else {
+					//openEditorAction.run();
+				}
+			}
+		});
 **/
 		
 		return sashArea;

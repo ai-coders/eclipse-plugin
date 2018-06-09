@@ -17,6 +17,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -82,6 +84,36 @@ public class EpiTree extends Composite implements IViewElement {
 		//tree.setLayout(new TableLayout());
 		//tree.setLayoutData(new GridData(GridData.FILL_BOTH)); //excption
 		viewer = new TreeViewer(tree);
+		
+		tree.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent event) {
+/**				
+				final IBaseVo item = getFirstSelectedItem();
+				IStatusLineManager statusLine = getViewSite().getActionBars().getStatusLineManager();
+				if (item != null) {
+					statusLine.setMessage(item.getCode() + "-" + item.getName());
+				}
+**/				
+			}
+
+			public void widgetDefaultSelected(SelectionEvent event) { // 双击展开、收缩
+				TreeItem treeItem = (TreeItem) event.item;
+				IBaseVo item = getFirstSelectedItem();
+				String editorId = definer.getViewItemDefiner(item.getEtype()).getEditorId();
+				if (AiStringUtil.isEmpty(editorId)) {
+					if (treeItem != null && treeItem.getItemCount() > 0) {
+						boolean expanded = treeItem.getExpanded();
+						treeItem.setExpanded(!expanded);
+						// update the viewer
+						viewer.refresh();
+					}
+				}else {
+					treeItem.setExpanded(false);
+					// update the viewer
+					viewer.refresh();
+				}
+			}
+		});
 	}
 	
 
@@ -413,4 +445,11 @@ public class EpiTree extends Composite implements IViewElement {
 		this.context = context;
 		viewer.setInput(context.getEditorInput());
 	}
+/**
+	@Override // from ISelectionListener
+	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
+		// TODO Auto-generated method stub
+		
+	}
+**/	
 }
