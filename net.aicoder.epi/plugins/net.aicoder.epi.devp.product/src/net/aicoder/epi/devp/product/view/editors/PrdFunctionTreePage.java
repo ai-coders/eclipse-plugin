@@ -15,12 +15,13 @@ import net.aicoder.epi.base.view.action.tree.EpiLeftNodeAction;
 import net.aicoder.epi.base.view.action.tree.EpiRefreshAction;
 import net.aicoder.epi.base.view.action.tree.EpiRightNodeAction;
 import net.aicoder.epi.base.view.action.tree.EpiUpRowAction;
-import net.aicoder.epi.base.view.adapter.IEpiInput;
-import net.aicoder.epi.base.view.adapter.IViewContext;
-import net.aicoder.epi.base.view.adapter.ViewContext;
-import net.aicoder.epi.base.view.adapter.IEpiEditorInput;
+import net.aicoder.epi.base.view.context.IEpiEditorInput;
+import net.aicoder.epi.base.view.context.IEpiInput;
+import net.aicoder.epi.base.view.context.IViewContext;
+import net.aicoder.epi.base.view.context.ViewContext;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.editor.BaseFormPage;
+import net.aicoder.epi.base.view.element.area.IEpiArea;
 import net.aicoder.epi.base.view.element.tree.EpiTree;
 import net.aicoder.epi.base.view.element.tree.EpiTreeDefiner;
 import net.aicoder.epi.devp.product.doper.ModuleDoper;
@@ -52,6 +53,11 @@ public class PrdFunctionTreePage extends BaseFormPage {
 		super(editor, ID, "功能树");
 		this.editor = editor;
 		dataoper = new ModuleDoper();
+	}
+	
+	@Override
+	public IEpiArea newPageArea() {
+		return null;
 	}
 	
 	@Override

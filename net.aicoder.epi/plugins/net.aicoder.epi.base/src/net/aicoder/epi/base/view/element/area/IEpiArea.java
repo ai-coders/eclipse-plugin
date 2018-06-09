@@ -14,6 +14,10 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+
+import net.aicoder.epi.base.view.context.IViewContext;
 
 /**
  * View-like page.
@@ -58,4 +62,8 @@ public interface IEpiArea {
   public String getTitleText();
   
   public Image getTitleImage();
+  
+  public IEditorPart getEditor();
+  
+  public void setEditor(IEditorPart editor);
 }

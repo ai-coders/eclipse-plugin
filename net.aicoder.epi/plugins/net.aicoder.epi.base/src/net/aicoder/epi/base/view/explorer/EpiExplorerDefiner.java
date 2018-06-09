@@ -5,8 +5,8 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ViewerSorter;
 
 import net.aicoder.epi.base.model.IBaseVo;
-import net.aicoder.epi.base.view.adapter.IEpiInput;
-import net.aicoder.epi.base.view.adapter.IEpiEditorInput;
+import net.aicoder.epi.base.view.context.IEpiEditorInput;
+import net.aicoder.epi.base.view.context.IEpiInput;
 import net.aicoder.epi.base.view.definer.ViewDefiner;
 
 @SuppressWarnings("deprecation")

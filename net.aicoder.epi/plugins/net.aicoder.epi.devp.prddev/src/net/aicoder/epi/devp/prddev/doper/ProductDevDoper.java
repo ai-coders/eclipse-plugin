@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.aicoder.epi.base.doper.BaseDoper;
 import net.aicoder.epi.base.model.IBaseVo;
-import net.aicoder.epi.base.view.adapter.EpiInput;
+import net.aicoder.epi.base.view.context.EpiInput;
 import net.aicoder.epi.devp.DevpConstant;
 import net.aicoder.epi.devp.prddev.dao.dev.ProductDevDao;
 import net.aicoder.epi.devp.prddev.model.dev.ProductDevVo;
@@ -63,6 +63,7 @@ public class ProductDevDoper extends BaseDoper {
 			elmCatg.setElmFlag(DevpConstant.CATEGORY_FUN);
 			elmCatg.setName("功能模型");
 			elmCatg.setCode("FunctionModel");
+			elmCatg.setParentNode(productDev);
 			productDev.getChildrenList().add(elmCatg);
 		}
 		
@@ -73,6 +74,7 @@ public class ProductDevDoper extends BaseDoper {
 			elmCatg.setElmFlag(DevpConstant.CATEGORY_CMP);
 			elmCatg.setName("组件模型");
 			elmCatg.setCode("ComponentModel");
+			elmCatg.setParentNode(productDev);
 			productDev.getChildrenList().add(elmCatg);
 		}
 		
@@ -83,6 +85,7 @@ public class ProductDevDoper extends BaseDoper {
 			elmCatg.setElmFlag(DevpConstant.CATEGORY_IDE);
 			elmCatg.setName("开发模型");
 			elmCatg.setCode("DevelopmentModel");
+			elmCatg.setParentNode(productDev);
 			productDev.getChildrenList().add(elmCatg);
 		}
 		
@@ -93,6 +96,7 @@ public class ProductDevDoper extends BaseDoper {
 			elmCatg.setElmFlag(DevpConstant.CATEGORY_DPY);
 			elmCatg.setName("部署模型");
 			elmCatg.setCode("DeploymentModel");
+			elmCatg.setParentNode(productDev);
 			productDev.getChildrenList().add(elmCatg);
 		}
 	}

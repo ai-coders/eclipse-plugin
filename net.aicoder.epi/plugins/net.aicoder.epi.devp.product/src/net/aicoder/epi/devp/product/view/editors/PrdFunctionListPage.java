@@ -4,12 +4,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.editor.FormEditor;
 
 import net.aicoder.epi.base.model.IBaseVo;
-import net.aicoder.epi.base.view.adapter.IEpiEditorInput;
-import net.aicoder.epi.base.view.adapter.IEpiInput;
-import net.aicoder.epi.base.view.adapter.IViewContext;
-import net.aicoder.epi.base.view.adapter.ViewContext;
+import net.aicoder.epi.base.view.context.IEpiEditorInput;
+import net.aicoder.epi.base.view.context.IEpiInput;
+import net.aicoder.epi.base.view.context.IViewContext;
+import net.aicoder.epi.base.view.context.ViewContext;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.editor.BaseFormPage;
+import net.aicoder.epi.base.view.element.area.IEpiArea;
 import net.aicoder.epi.base.view.element.table.EpiTable;
 import net.aicoder.epi.base.view.element.table.EpiTableDefiner;
 import net.aicoder.epi.devp.product.doper.ModuleDoper;
@@ -40,6 +41,11 @@ public class PrdFunctionListPage extends BaseFormPage {
 		this.editor = editor;
 		
 		dataoper = new ModuleDoper();
+	}
+	
+	@Override
+	public IEpiArea newPageArea() {
+		return null;
 	}
 	
 	@Override

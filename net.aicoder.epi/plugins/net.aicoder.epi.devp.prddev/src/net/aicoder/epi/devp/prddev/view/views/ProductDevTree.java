@@ -10,11 +10,11 @@ import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.view.action.EpiAddAction;
 import net.aicoder.epi.base.view.action.EpiDeleteAction;
 import net.aicoder.epi.base.view.action.IEpiAction;
-import net.aicoder.epi.base.view.adapter.EpiEditorInput;
-import net.aicoder.epi.base.view.adapter.IEpiEditorInput;
-import net.aicoder.epi.base.view.adapter.IEpiInput;
-import net.aicoder.epi.base.view.adapter.IViewContext;
-import net.aicoder.epi.base.view.adapter.ViewContext;
+import net.aicoder.epi.base.view.context.EpiEditorInput;
+import net.aicoder.epi.base.view.context.IEpiEditorInput;
+import net.aicoder.epi.base.view.context.IEpiInput;
+import net.aicoder.epi.base.view.context.IViewContext;
+import net.aicoder.epi.base.view.context.ViewContext;
 import net.aicoder.epi.base.view.element.area.BaseWithTitleArea;
 import net.aicoder.epi.base.view.element.tree.EpiTree;
 import net.aicoder.epi.base.view.element.tree.EpiTreeDefiner;
@@ -124,7 +124,7 @@ public class ProductDevTree extends BaseWithTitleArea {
 		@Override
 		public IEpiEditorInput createEditorInput(IBaseVo selectionElement) {
 			EpiEditorInput editorInput = new EpiEditorInput(selectionElement);
-			;
+			
 			return editorInput;
 		}
 	}

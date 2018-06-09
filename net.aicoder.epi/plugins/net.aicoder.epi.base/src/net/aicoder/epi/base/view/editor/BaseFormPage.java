@@ -11,10 +11,12 @@ import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 
 import net.aicoder.epi.base.view.action.IEpiAction;
+import net.aicoder.epi.base.view.element.area.IEpiArea;
 
 public abstract class BaseFormPage extends FormPage implements IFormEditorPage{
 	public static String ID = BaseFormPage.class.getName();
 	
+	protected IEpiArea pageArea;
 	protected int pageIndex;
 	protected String name;
 	protected Image image;
@@ -29,7 +31,10 @@ public abstract class BaseFormPage extends FormPage implements IFormEditorPage{
 
 	public BaseFormPage(FormEditor editor, String id, String title) {
 		super(editor, id, title);
+		initialize(editor);
 	}
+	
+	
 
 	//// Life cycle
 	@Override
@@ -38,7 +43,7 @@ public abstract class BaseFormPage extends FormPage implements IFormEditorPage{
 		form = managedForm.getForm();
 		Composite parent = form.getBody();
 		parent.setLayout(new FillLayout());
-
+		
 		createControl(parent);
 
 		toolBarAactons = makeToolBarAction();
@@ -82,8 +87,15 @@ public abstract class BaseFormPage extends FormPage implements IFormEditorPage{
 
 	//// IFormEditorPage
 	@Override
-	public void initialize(BaseFormEditor editor) {
+	public final void initialize(FormEditor editor) {
+		super.initialize(editor);
+		pageArea = newPageArea();
+		if(pageArea != null) {
+			pageArea.setEditor(editor);
+		}
 	}
+	
+	public abstract IEpiArea newPageArea();
 
 	@Override
 	public int getPageIndex() {

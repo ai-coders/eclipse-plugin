@@ -13,6 +13,9 @@ package net.aicoder.epi.base.view.editor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.forms.editor.FormEditor;
+
+import net.aicoder.epi.base.view.element.area.IEpiArea;
 
 /**
  * Interface for page in {@link AbstractXmlEditor}.
@@ -29,7 +32,9 @@ public interface IFormEditorPage {
   /**
    * Initialize this page for given {@link AbstractXmlEditor}.
    */
-  void initialize(BaseFormEditor editor);
+  void initialize(FormEditor editor);
+  
+  IEpiArea newPageArea();
 
   /**
    * Disposes this page.

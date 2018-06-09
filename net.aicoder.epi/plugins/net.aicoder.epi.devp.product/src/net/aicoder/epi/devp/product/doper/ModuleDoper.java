@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.aicoder.epi.base.doper.BaseDoper;
 import net.aicoder.epi.base.model.IBaseVo;
-import net.aicoder.epi.base.view.adapter.EpiInput;
+import net.aicoder.epi.base.view.context.EpiInput;
 import net.aicoder.epi.devp.product.dao.ModuleDao;
 
 public class ModuleDoper extends BaseDoper {

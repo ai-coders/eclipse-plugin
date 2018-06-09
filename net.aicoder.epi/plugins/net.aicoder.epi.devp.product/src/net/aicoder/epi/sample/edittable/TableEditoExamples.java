@@ -34,8 +34,17 @@ public class TableEditoExamples {
         
       // 创建table 和 tableItems  
       final Table table = new Table(shell, SWT.FULL_SELECTION| SWT.HIDE_SELECTION);  
+      
       TableColumn column1 = new TableColumn(table, SWT.NONE);  
       TableColumn column2 = new TableColumn(table, SWT.NONE);  
+      
+      column1.setText("属性名");
+      column1.setWidth(40);
+      column2.setText("属性值");
+      column2.setWidth(60);
+      table.setHeaderVisible(true);
+      table.setLinesVisible(true);
+     
       for (int i = 0; i < 10; i++) {  
           if (i % 2 == 1) {  
               TableItem item = new TableItem(table, SWT.NONE);  
@@ -122,7 +131,8 @@ public class TableEditoExamples {
 
           }  
       });  
-      shell.setSize(200, 200);  
+      
+      shell.setSize(600, 400);  
       shell.open();  
 
       while (!shell.isDisposed()) {  

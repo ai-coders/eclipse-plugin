@@ -13,7 +13,7 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            name="Product DevExplorer"
+            name="产品构建导航"
             inject="true"
             icon="icons/product/product.png"
             class="net.aicoder.epi.devp.prddev.view.views.ProductDevExploer"

@@ -6,6 +6,12 @@ import java.util.Date;
 public interface IBaseVo extends Serializable {
 	public boolean putPropertyValue(String propertyName, Object value);
 	
+	public Object getPropertyOrigValue(String propertyName);
+	
+	public Object getPropertyValue(String propertyName);
+	
+	public String getPropertyShowValue(String propertyName);
+	
 	public StateFlagEnum getDataState();
 	
 	public void setDataState(StateFlagEnum dataState);
@@ -67,4 +73,8 @@ public interface IBaseVo extends Serializable {
 	public IBaseVo getPreItemData();
 	
 	public void setPreItemData(IBaseVo preItemData);
+	
+	public String getPropsId();
+	
+	public String getParasId();
 }

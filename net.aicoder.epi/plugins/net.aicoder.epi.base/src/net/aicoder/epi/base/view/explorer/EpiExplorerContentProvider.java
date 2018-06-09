@@ -8,7 +8,7 @@ import org.eclipse.ui.navigator.ICommonContentProvider;
 
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.model.ITreeNode;
-import net.aicoder.epi.base.view.adapter.IEpiInput;
+import net.aicoder.epi.base.view.context.IEpiInput;
 import net.aicoder.epi.base.view.definer.IViewDefiner;
 
 public class EpiExplorerContentProvider implements ICommonContentProvider{

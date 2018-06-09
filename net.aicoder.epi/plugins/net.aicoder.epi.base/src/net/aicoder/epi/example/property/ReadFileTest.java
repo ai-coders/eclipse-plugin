@@ -4,7 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import net.aicoder.epi.base.BasePlugin;
-import net.aicoder.epi.base.view.definer.property.PropertiesDefine;
+import net.aicoder.epi.base.view.definer.property.PropsDefine;
 import net.aicoder.tcom.tools.util.JaxbUtil;
 
 public class ReadFileTest {
@@ -14,17 +14,17 @@ public class ReadFileTest {
 		String fileName = "net/aicoder/epi/example/property/0_dpy_type_subtype.xml";
 		String outStr = BasePlugin.readFile2String(fileName);
 		System.out.print(outStr);
-		PropertiesDefine propertiesDefine = loadProperitesDefine(outStr);
+		PropsDefine propertiesDefine = loadProperitesDefine(outStr);
 		dumpPropertiesDefine(propertiesDefine);
 	}
 	
-	private static PropertiesDefine loadProperitesDefine(String outStr) {
-		PropertiesDefine propertiesDefine = null;
-		propertiesDefine = JaxbUtil.convertToJavaBean(PropertiesDefine.class, outStr);
+	private static PropsDefine loadProperitesDefine(String outStr) {
+		PropsDefine propertiesDefine = null;
+		propertiesDefine = JaxbUtil.convertToJavaBean(PropsDefine.class, outStr);
 		return propertiesDefine;
 	}
 
-	private static void dumpPropertiesDefine(PropertiesDefine propertiesDefine) {
+	private static void dumpPropertiesDefine(PropsDefine propertiesDefine) {
 		String xmlStr = JaxbUtil.convertToXml(propertiesDefine);
 		log.debug("----Begine Dump propertiesDefine-----");
 		log.debug("\n" + xmlStr + "\n");

@@ -8,8 +8,8 @@ import org.eclipse.jface.viewers.TreeViewer;
 
 import net.aicoder.epi.base.BaseImageConstant;
 import net.aicoder.epi.base.view.action.BaseAction;
-import net.aicoder.epi.base.view.adapter.IEpiInput;
-import net.aicoder.epi.base.view.adapter.IViewContext;
+import net.aicoder.epi.base.view.context.IEpiInput;
+import net.aicoder.epi.base.view.context.IViewContext;
 import net.aicoder.epi.base.view.element.tree.EpiTree;
 
 public class EpiRefreshAction extends BaseAction {

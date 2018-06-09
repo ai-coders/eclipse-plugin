@@ -2,7 +2,7 @@ package net.aicoder.epi.base.view.element.table;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 
-import net.aicoder.epi.base.view.adapter.IEpiInput;
+import net.aicoder.epi.base.view.context.IEpiInput;
 import net.aicoder.epi.base.view.definer.IViewDefiner;
 
 public class EpiTableContentProvider implements IStructuredContentProvider {

@@ -1,4 +1,4 @@
-package net.aicoder.epi.base.view.element.tree;
+package net.aicoder.epi.base.view.property;
 
 import java.util.List;
 
@@ -8,18 +8,10 @@ import org.eclipse.jface.viewers.Viewer;
 
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.model.ITreeNode;
-import net.aicoder.epi.base.view.context.IEpiEditorInput;
 import net.aicoder.epi.base.view.context.IEpiInput;
-import net.aicoder.epi.base.view.definer.IViewDefiner;
 
-public class EpiTreeContentProvider implements ITreeContentProvider{
-	protected IViewDefiner viewDefiner;
+public class PropsContentProvider implements ITreeContentProvider{
 	protected TreeViewer viewer;
-	
-	public EpiTreeContentProvider(IViewDefiner viewDefiner) {
-		super();
-		setViewDefiner(viewDefiner);
-	}
 
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		this.viewer = (TreeViewer)viewer;
@@ -36,10 +28,10 @@ public class EpiTreeContentProvider implements ITreeContentProvider{
 	@Override
 	public Object[] getElements(Object input) {
 		Object[] elements = new Object[0];
-		if (input instanceof IEpiInput) {
-			IEpiInput adapter = (IEpiInput) input;
-			if(adapter != null) {
-				elements = adapter.getDataList().toArray();
+		if (input instanceof PropsInput) {
+			PropsInput propsInput = (PropsInput) input;
+			if(propsInput != null) {
+				elements = propsInput.getPropertyInfos();
 			}
 		}
 		return elements;
@@ -73,13 +65,5 @@ public class EpiTreeContentProvider implements ITreeContentProvider{
 			}
 		}
 		return children;
-	}
-
-	public IViewDefiner getViewDefiner() {
-		return viewDefiner;
-	}
-
-	public void setViewDefiner(IViewDefiner viewDefiner) {
-		this.viewDefiner = viewDefiner;
 	}
 }

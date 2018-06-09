@@ -9,8 +9,8 @@ import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 
-import net.aicoder.epi.base.view.adapter.IEpiInput;
-import net.aicoder.epi.base.view.adapter.IEpiEditorInput;
+import net.aicoder.epi.base.view.context.IEpiEditorInput;
+import net.aicoder.epi.base.view.context.IEpiInput;
 import net.aicoder.tcom.tools.util.AiStringUtil;
 
 public abstract class ViewDefiner implements IViewDefiner {

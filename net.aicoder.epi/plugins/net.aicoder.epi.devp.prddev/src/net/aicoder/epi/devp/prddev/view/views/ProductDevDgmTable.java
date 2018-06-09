@@ -6,11 +6,11 @@ import org.eclipse.swt.widgets.Control;
 
 import net.aicoder.devp.model.EtypeEnum;
 import net.aicoder.epi.base.model.IBaseVo;
-import net.aicoder.epi.base.view.adapter.EpiEditorInput;
-import net.aicoder.epi.base.view.adapter.IEpiEditorInput;
-import net.aicoder.epi.base.view.adapter.IEpiInput;
-import net.aicoder.epi.base.view.adapter.IViewContext;
-import net.aicoder.epi.base.view.adapter.ViewContext;
+import net.aicoder.epi.base.view.context.EpiEditorInput;
+import net.aicoder.epi.base.view.context.IEpiEditorInput;
+import net.aicoder.epi.base.view.context.IEpiInput;
+import net.aicoder.epi.base.view.context.IViewContext;
+import net.aicoder.epi.base.view.context.ViewContext;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.element.area.BaseWithTitleArea;
 import net.aicoder.epi.base.view.element.table.EpiTable;
@@ -33,8 +33,8 @@ public class ProductDevDgmTable extends BaseWithTitleArea{
 
 	// 0-列名, 1-数据属性名称, 2-列显示的宽度, 3-数据类型, 4-数据格式, 5-是否隐藏的标志, 6-是否可编辑的标志
 	private static Object[][] columnsDefine = {
-			{"Name", "name", -20, },
-			{"Path", "fullPath", },
+			{"名称", "name", -20, },
+			{"目录", "fullPath", },
 	};
 
 	private EpiTable table;

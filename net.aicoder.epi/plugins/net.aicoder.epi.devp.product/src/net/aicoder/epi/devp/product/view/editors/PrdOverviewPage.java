@@ -10,8 +10,9 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.view.action.IEpiAction;
-import net.aicoder.epi.base.view.adapter.IEpiEditorInput;
+import net.aicoder.epi.base.view.context.IEpiEditorInput;
 import net.aicoder.epi.base.view.editor.BaseFormPage;
+import net.aicoder.epi.base.view.element.area.IEpiArea;
 import net.aicoder.epi.sample.edittable.Ch9TableEditorComposite;
 
 public class PrdOverviewPage extends BaseFormPage {
@@ -22,6 +23,12 @@ public class PrdOverviewPage extends BaseFormPage {
 		super(editor, PrdOverviewPage.class.getName(), "产品总览");	
 		creatToolBar();
 	}
+	
+	@Override
+	public IEpiArea newPageArea() {
+		return null;
+	}
+	
 
 /**		
 	public void createFormContent(final IManagedForm managedForm) {

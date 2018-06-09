@@ -4,8 +4,8 @@ import java.util.List;
 
 import net.aicoder.epi.base.doper.BaseDoper;
 import net.aicoder.epi.base.model.IBaseVo;
-import net.aicoder.epi.base.view.adapter.EpiEditorInput;
-import net.aicoder.epi.base.view.adapter.EpiInput;
+import net.aicoder.epi.base.view.context.EpiEditorInput;
+import net.aicoder.epi.base.view.context.EpiInput;
 import net.aicoder.epi.devp.product.dao.ProductDao;
 
 public class ProductDoper extends BaseDoper {

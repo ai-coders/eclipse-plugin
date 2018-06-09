@@ -13,7 +13,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import net.aicoder.epi.base.BaseImageConstant;
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.view.action.BaseAction;
-import net.aicoder.epi.base.view.adapter.EpiInput;
+import net.aicoder.epi.base.view.context.EpiInput;
 import net.aicoder.epi.base.view.definer.IViewDefiner;
 import net.aicoder.epi.base.view.element.tree.EpiTree;
 import net.aicoder.epi.base.view.element.tree.EpiTreeContentProvider;

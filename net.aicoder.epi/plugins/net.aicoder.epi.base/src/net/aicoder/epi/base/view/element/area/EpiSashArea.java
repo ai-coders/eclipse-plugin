@@ -5,6 +5,10 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+
+import net.aicoder.epi.base.view.context.IViewContext;
 
 public final class EpiSashArea implements IEpiArea {
 	private EpiSashForm m_sashForm;
@@ -33,6 +37,7 @@ public final class EpiSashArea implements IEpiArea {
 			setFixedOrientation(fixedOrientation);
 		}
 		for (IEpiArea epiArea : epiAreas) {
+			epiArea.setEditor(this.getEditor());
 			createAreaComposite(parent, epiArea);
 		}
 		if(areaWeights != null) {
@@ -41,17 +46,10 @@ public final class EpiSashArea implements IEpiArea {
 	}
 	
 	private void createAreaComposite(Composite parent, IEpiArea epiArea) {
-		epiArea.createControl(m_sashForm);
-/**		
-		if (epiArea instanceof EpiSashArea) {
-			epiArea.createControl(m_sashForm);
-		}else {
-			EpiWithTitleForm areaComposite = new EpiWithTitleForm(m_sashForm, SWT.BORDER);
-			areaComposite.setTitleText(epiArea.getTitleText());
-			areaComposite.setTitleImage(epiArea.getTitleImage());
-			areaComposite.setArea(epiArea);
+		if(epiArea == null) {
+			return;
 		}
-**/
+		epiArea.createControl(m_sashForm);
 	}
 
 	@Override
@@ -114,5 +112,14 @@ public final class EpiSashArea implements IEpiArea {
 
 	public void setAreaWeights(int[] areaWeights) {
 		this.areaWeights = areaWeights;
+	}
+
+	private IEditorPart editor;
+	public IEditorPart getEditor() {
+		return editor;
+	}
+
+	public void setEditor(IEditorPart editor) {
+		this.editor = editor;
 	}
 }

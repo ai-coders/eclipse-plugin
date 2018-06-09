@@ -5,6 +5,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IEditorPart;
 
 public abstract class BaseArea implements IEpiArea {
 	private Composite m_container;
@@ -68,5 +69,14 @@ public abstract class BaseArea implements IEpiArea {
 
 	public void setTitleImage(Image titleImage) {
 		this.titleImage = titleImage;
+	}
+
+	private IEditorPart editor;
+	public IEditorPart getEditor() {
+		return editor;
+	}
+
+	public void setEditor(IEditorPart editor) {
+		this.editor = editor;
 	}
 }

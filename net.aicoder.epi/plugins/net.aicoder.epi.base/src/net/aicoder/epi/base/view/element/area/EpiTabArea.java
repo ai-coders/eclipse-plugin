@@ -7,6 +7,8 @@ import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
 
 public class EpiTabArea implements IEpiArea {
 	private CTabFolder tabFolder;
@@ -24,6 +26,7 @@ public class EpiTabArea implements IEpiArea {
 			tabItems = new CTabItem[epiAreasLength];
 			for(int tabIdx = 0; tabIdx<epiAreasLength; tabIdx++) {
 				IEpiArea epiArea = epiAreas[tabIdx];
+				epiArea.setEditor(this.getEditor());
 				tabItems[tabIdx] = new CTabItem(tabFolder,SWT.NONE);
 				if(epiArea.getTitleText()!=null) {
 					tabItems[tabIdx].setText(epiArea.getTitleText());
@@ -89,5 +92,15 @@ public class EpiTabArea implements IEpiArea {
 
 	public void setEpiAreas(IEpiArea[] epiAreas) {
 		this.epiAreas = epiAreas;
+	}
+
+	private IEditorPart editor;
+
+	public IEditorPart getEditor() {
+		return editor;
+	}
+
+	public void setEditor(IEditorPart editor) {
+		this.editor = editor;
 	}
 }

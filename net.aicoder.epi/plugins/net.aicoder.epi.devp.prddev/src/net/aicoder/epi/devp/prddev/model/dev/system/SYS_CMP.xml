@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <Properties tid="0" eid= "0" etype="DPY" ptype="type-subtype" version="1.0.0.0" > -->
+<Properties code="SYS_CMP" name="组件" type="SYS_CMP" image="icons/product/prd_deploy.png" tooltip="组件属性定义" >
+	<Pitem code="elmFlag" name="类型标识">
+		<Data>SYS_CMP</Data>
+		<Description>系统元素所属类型标识: CMP-组件,IDE-开发,DPY-部署</Description>
+	</Pitem>
+	<Pitem code="type" name="类型">
+	</Pitem>
+</Properties>

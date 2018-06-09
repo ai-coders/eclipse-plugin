@@ -20,6 +20,8 @@ public abstract class BaseVo implements IBaseVo {
 	private String alias;
 	private String description;
 
+	private String parasId;
+	
 	private String createUid;
 	private String createUcode;
 	private String createUname;
@@ -40,6 +42,11 @@ public abstract class BaseVo implements IBaseVo {
 	public String getEtype() {
 		return ETYPE;
 	}
+	
+	@Override
+	public String getPropsId() {
+		return getEtype();
+	}
 
 	public boolean putPropertyValue(String propertyName, Object value) {
 		boolean isModfiy = false;
@@ -49,11 +56,7 @@ public abstract class BaseVo implements IBaseVo {
 				BeanUtil.setPropertyValue(this, propertyName, value);
 				isModfiy = true;
 			} else {
-				if (originalPropertyValue.containsKey(propertyName)) {
-					origVlaue = originalPropertyValue.get(propertyName);
-				} else {
-					origVlaue = BeanUtil.getPropertyValue(this, propertyName);
-				}
+				origVlaue = getPropertyOrigValue(propertyName);
 				if (origVlaue == null) {
 					if (value != null) {
 						isModfiy = true;
@@ -74,6 +77,42 @@ public abstract class BaseVo implements IBaseVo {
 		return isModfiy;
 	}
 	
+	public Object getPropertyOrigValue(String propertyName) {
+		Object origVlaue = null;
+		try {
+			if (StateFlagEnum.INSERTED == dataState) {
+				//BeanUtil.setPropertyValue(this, propertyName, value);
+			} else {
+				if (originalPropertyValue.containsKey(propertyName)) {
+					origVlaue = originalPropertyValue.get(propertyName);
+				} else {
+					origVlaue = BeanUtil.getPropertyValue(this, propertyName);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return origVlaue;
+	}
+	
+	public Object getPropertyValue(String propertyName) {
+		Object value = null;
+		try {
+			value = BeanUtil.getPropertyValue(this, propertyName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return value;
+	}
+
+	public String getPropertyShowValue(String propertyName) {
+		String showValue = "";
+		Object value = getPropertyValue(propertyName);
+		if(value != null) {
+			showValue = value.toString();
+		}
+		return showValue;
+	}
 	
 	public StateFlagEnum getDataState() {
 		return dataState;
@@ -129,6 +168,14 @@ public abstract class BaseVo implements IBaseVo {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getParasId() {
+		return parasId;
+	}
+
+	public void setParasId(String parasId) {
+		this.parasId = parasId;
 	}
 
 	public String getCreateUid() {
