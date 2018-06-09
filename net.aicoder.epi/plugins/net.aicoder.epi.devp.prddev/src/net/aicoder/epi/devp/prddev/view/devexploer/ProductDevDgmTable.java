@@ -1,4 +1,4 @@
-package net.aicoder.epi.devp.prddev.view.views;
+package net.aicoder.epi.devp.prddev.view.devexploer;
 
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.widgets.Composite;
@@ -20,8 +20,8 @@ import net.aicoder.epi.devp.prddev.PrddevImageConstant;
 import net.aicoder.epi.devp.prddev.doper.ProductDevDoper;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysElementVo;
 import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
+import net.aicoder.epi.devp.prddev.view.devexploer.ProductDevTree.ProductDevTreeContext;
 import net.aicoder.epi.devp.prddev.view.editors.product.ProductEditor;
-import net.aicoder.epi.devp.prddev.view.views.ProductDevTree.ProductDevTreeContext;
 
 public class ProductDevDgmTable extends BaseWithTitleArea{
 	public static String ID = ProductDevDgmTable.class.getName();

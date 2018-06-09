@@ -16,8 +16,8 @@
             name="产品构建导航"
             inject="true"
             icon="icons/product/product.png"
-            class="net.aicoder.epi.devp.prddev.view.views.ProductDevExploer"
-            id="net.aicoder.epi.devp.prddev.view.views.ProductDevExplorer">
+            class="net.aicoder.epi.devp.prddev.view.devexploer.ProductDevExploer"
+            id="net.aicoder.epi.devp.prddev.view.devexploer.ProductDevExplorer">
       </view>
    </extension>
 
@@ -42,20 +42,10 @@
                   moveable="true"
                   visible="true"
                   showTitle="true"
-                  ratio="0.25"
+                  ratio="0.2"
                   relationship="left"
-                  relative="net.aicoder.epi.devp.prddev.view.editors.sysdpy.SysDpyEditor"
-                  id="net.aicoder.epi.devp.prddev.view.views.ProductDevExplorer"/>
-		<view
-                  closeable="true"
-                  standalone="false"
-                  moveable="true"
-                  visible="true"
-                  showTitle="true"
-                  ratio="0.15"
-                  relationship="right"
-                  relative="net.aicoder.epi.devp.prddev.view.editors.sysdpy.SysDpyEditor"
-                  id="org.eclipse.ui.views.ContentOutline"/>
+                  relative="org.eclipse.ui.editorss"
+                  id="net.aicoder.epi.devp.prddev.view.devexploer.ProductDevExplorer"/>
 	</perspectiveExtension>
    </extension>
 

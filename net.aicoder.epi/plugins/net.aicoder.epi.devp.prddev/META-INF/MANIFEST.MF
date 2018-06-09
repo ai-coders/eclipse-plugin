@@ -29,9 +29,9 @@ Export-Package: net.aicoder.epi.devp.prddev,
  net.aicoder.epi.devp.prddev.model.dev.funa,
  net.aicoder.epi.devp.prddev.model.dev.system,
  net.aicoder.epi.devp.prddev.model.product,
+ net.aicoder.epi.devp.prddev.view.devexploer,
  net.aicoder.epi.devp.prddev.view.editors.function,
  net.aicoder.epi.devp.prddev.view.editors.product,
  net.aicoder.epi.devp.prddev.view.editors.syscmp,
  net.aicoder.epi.devp.prddev.view.editors.sysdpy,
- net.aicoder.epi.devp.prddev.view.editors.syside,
- net.aicoder.epi.devp.prddev.view.views
+ net.aicoder.epi.devp.prddev.view.editors.syside

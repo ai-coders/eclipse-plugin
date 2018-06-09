@@ -1,4 +1,4 @@
-package net.aicoder.epi.devp.prddev.view.views;
+package net.aicoder.epi.devp.prddev.view.devexploer;
 
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.widgets.Composite;
