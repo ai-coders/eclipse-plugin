@@ -1,21 +1,11 @@
 package net.aicoder.epi.base;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.ILogListener;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -25,7 +15,6 @@ public class BasePlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "net.aicoder.epi.base"; //$NON-NLS-1$
-	public static final String FILE_ENCODING = "UTF-8";
 
 	// The shared instance
 	private static BasePlugin plugin;
@@ -45,6 +34,11 @@ public class BasePlugin extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		BundleResourceProvider.configureCleanUp(context);
+		addLogListener();
+		/*
+		 * if (EnvironmentUtils.IS_LINUX) { installPreferenceForwarder(); }
+		 */
 	}
 
 	/*
@@ -71,47 +65,111 @@ public class BasePlugin extends AbstractUIPlugin {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
 
-	public static String readFile2String(String fileName) {
-		String outStr = null;
-		URL fileUrl = getFileURL(fileName);
-		// bundle.getEntry(filePathName);
-		// bundle.getResource(),bundle.getEntry()区别，
-		// 个人理解 一个专门针对class 一个针对绝大部分资源文件，都可以获取插件依赖的相关文件
-		File file = null;
-		try {
-			file = new File(FileLocator.resolve(fileUrl).toURI());
-			Long filelength = file.length();
-			byte[] filecontent = new byte[filelength.intValue()];
-			FileInputStream in = new FileInputStream(file);
-			in.read(filecontent);
-			in.close();
-			outStr = new String(filecontent, FILE_ENCODING);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
+	////////////////////////////////////////////////////////////////////////////
+	//
+	// Logging
+	//
+	////////////////////////////////////////////////////////////////////////////
+	private static boolean m_displayExceptionOnConsole = true;
+
+	/**
+	 * Sets flag if {@link #log(Throwable)} should display exception on console.
+	 */
+	public static void setDisplayExceptionOnConsole(boolean displayExceptionOnConsole) {
+		m_displayExceptionOnConsole = displayExceptionOnConsole;
+	}
+
+	/**
+	 * Logs given {@link IStatus} into Eclipse .log.
+	 */
+	public static void log(IStatus status) {
+		BasePlugin pluginInstance = getDefault();
+		if (pluginInstance != null) {
+			pluginInstance.getLog().log(status);
+		}
+	}
+
+	/**
+	 * Logs {@link IStatus} with given message into Eclipse .log.
+	 */
+	public static void log(String message) {
+		log(new Status(IStatus.INFO, PLUGIN_ID, IStatus.INFO, message, null));
+	}
+
+	/**
+	 * Logs {@link IStatus} with given exception into Eclipse .log.
+	 */
+	public static void log(Throwable e) {
+		// print on console for easy debugging
+		if (m_displayExceptionOnConsole) {
 			e.printStackTrace();
 		}
-		return outStr;
+		// log into Eclipse .log
+		{
+			String message = e.getMessage();
+			if (message == null) {
+				message = e.getClass().getName();
+			}
+			String versionString = "V1.0";// ProductInfo.getProduct().getVersion().toString();
+			String buildString = "B1";// ProductInfo.getProduct().getBuild();
+			log("Designer [" + versionString + (versionString.endsWith(buildString) ? "" : "." + buildString) + "]: "
+					+ message, e);
+		}
 	}
-	
-	private static URL getFileURL(String fileName){
-		URL fileUrl = null;
-		//String fileFullPath = "platform:/plugin/" + PLUGIN_ID + "/" + fileName;
-		String protocol = "file:";
-		URL base = BasePlugin.class.getResource("");
-		String pluginsPath = base.getPath() + "../../../..";
-		String fileFullPath = protocol + pluginsPath  + "/" + fileName;;
-		try {
-			fileUrl = new URL(fileFullPath);
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} 
-		return fileUrl;
+
+	/**
+	 * Logs {@link IStatus} with given message and exception into Eclipse .log.
+	 */
+	public static void log(String message, Throwable e) {
+		log(createStatus(message, e));
 	}
-	
-	private static URL getFileURLByBundle(String fileName){
-		Bundle bundle = Platform.getBundle(PLUGIN_ID);
-		URL fileUrl = bundle.getResource(fileName);
-		return fileUrl;
+
+	/**
+	 * Creates {@link IStatus} for given message and exception.
+	 */
+	public static Status createStatus(String message, Throwable e) {
+		return new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, message, e) {
+			@Override
+			public boolean isMultiStatus() {
+				return true;
+			}
+		};
 	}
+
+	////////////////////////////////////////////////////////////////////////////
+	//
+	// Track last log entry
+	//
+	////////////////////////////////////////////////////////////////////////////
+	private IStatus m_lastStatus;
+
+	private void addLogListener() {
+		ILog log = getLog();
+		log.addLogListener(new ILogListener() {
+			public void logging(IStatus status, String plugin) {
+				setLastStatus(status);
+			}
+		});
+	}
+
+	private void setLastStatus(IStatus lastStatus) {
+		m_lastStatus = lastStatus;
+	}
+
+	private IStatus getLastStatus0() {
+		return m_lastStatus;
+	}
+
+	/**
+	 * @return the {@link IStatus} instance which was last logged by the eclipse
+	 *         log.
+	 */
+	public static IStatus getLastStatus() {
+		BasePlugin pluginInstance = getDefault();
+		if (pluginInstance != null) {
+			return pluginInstance.getLastStatus0();
+		}
+		return null;
+	}
+
 }

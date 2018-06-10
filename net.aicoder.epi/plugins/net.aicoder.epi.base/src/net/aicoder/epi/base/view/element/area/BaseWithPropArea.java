@@ -7,39 +7,39 @@ import org.eclipse.ui.IWorkbenchPart;
 import net.aicoder.epi.base.view.property.PropsArea;
 
 public abstract class BaseWithPropArea extends BaseArea {
+	private EpiSashArea sashArea;
 	protected PropsArea propsArea;
 	
 	//// Constructor
 	public BaseWithPropArea(IWorkbenchPart workbenchPart) {
 		super(workbenchPart);
+		initBaseWithPropArea();
 	}
 	
-	@Override
-	protected final Control createAreaControl(Composite parent) {
-		int[] weights = new int[2];
-		weights[0] = 2;
-		weights[1] = 1;
-		
+	private void initBaseWithPropArea() {
 		propsArea = new PropsArea(this.getWorkbenchPart());
 		IEpiArea[] areas = new IEpiArea[2];
-		areas[0] = createWorkArea();
+		areas[0] = newWorkArea();
 		areas[1] = propsArea;
 		
-		EpiSashArea sashArea = new EpiSashArea(this.getWorkbenchPart());
-		//sashArea.setEditor(this.getEditor());
-		//sashArea.setWorkbenchPart(this.getWorkbenchPart());
-
+		sashArea = new EpiSashArea(this.getWorkbenchPart());
 		sashArea.setEpiAreas(areas);
-		sashArea.setAreaWeights(weights);
-		sashArea.createControl(parent);
-		
-		return sashArea.getControl();
 	}
 	
-	protected abstract IEpiArea createWorkArea();
+	protected abstract IEpiArea newWorkArea();
+	
+	@Override
+	protected Control createAreaControl(Composite parent) {
+		int[] areaWeights = new int[2];
+		areaWeights[0] = 2;
+		areaWeights[1] = 1;
+		
+		sashArea.setAreaWeights(areaWeights);
+		sashArea.createControl(parent);
+		return sashArea.getControl();
+	}
 	
 	public PropsArea getPropsArea() {
 		return propsArea;
 	}
-
 }

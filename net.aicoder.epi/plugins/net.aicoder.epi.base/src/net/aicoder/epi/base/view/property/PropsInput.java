@@ -11,6 +11,7 @@ import net.aicoder.epi.base.view.definer.property.PitemDefine;
 import net.aicoder.epi.base.view.definer.property.PropsDefine;
 
 public class PropsInput implements IEpiInput {
+	private String pluginId;
 	private IBaseVo currentData;
 	private List<IBaseVo> dataList;
 
@@ -22,11 +23,18 @@ public class PropsInput implements IEpiInput {
 		super();
 	}
 
+	public PropsInput(String pluginId, IBaseVo currentData) {
+		super();
+		setPluginId(pluginId);
+		setCurrentData(currentData);
+	}
+/**
 	public PropsInput(IBaseVo currentData) {
 		super();
 		setCurrentData(currentData);
 	}
-
+*/
+	
 	//// Override
 	@Override
 	public void setParameter(String parameterName, Object parameterValue) {
@@ -49,7 +57,7 @@ public class PropsInput implements IEpiInput {
 		fullPropsInfoList.clear();
 		propsInfoList.clear();
 
-		define = PropsManager.getPropsDefine(currentData);
+		define = PropsManager.getPropsDefine(pluginId, currentData);
 		if (define == null) {
 			return;
 		}
@@ -75,6 +83,9 @@ public class PropsInput implements IEpiInput {
 		propInfo.setAlias(itemDefine.getAlias());
 		setPropInfoValue(element, propInfo);
 		
+		if(itemDefine.getSubItemsList() == null) {
+			return propInfo;
+		}
 		for (PitemDefine subItemDefine : itemDefine.getSubItemsList()) {
 			PropertyInfo subPropInfo = createPropertyInfo(element, subItemDefine);
 			if (subPropInfo != null) {
@@ -143,6 +154,14 @@ public class PropsInput implements IEpiInput {
 		return define;
 	}
 
+	public String getPluginId() {
+		return pluginId;
+	}
+
+	public void setPluginId(String pluginId) {
+		this.pluginId = pluginId;
+	}
+
 	public void setDefine(PropsDefine define) {
 		this.define = define;
 	}
@@ -152,10 +171,17 @@ public class PropsInput implements IEpiInput {
 	}
 
 	public PropertyInfo[] getPropertyInfos() {
-		if(propsInfoList.size() == 0) {
-			return new PropertyInfo[0];
+		int size = propsInfoList.size();
+		PropertyInfo[] propertyInfos = new PropertyInfo[0];
+		if(size == 0) {
+			return propertyInfos;
 		}else {
-			return (PropertyInfo[]) propsInfoList.toArray();
+			propertyInfos = new PropertyInfo[size];
+			int idx = 0;
+			for(PropertyInfo propertyInfo:propsInfoList) {
+				propertyInfos[idx++] = propertyInfo;
+			}
+			return propertyInfos;
 		}
 	}
 

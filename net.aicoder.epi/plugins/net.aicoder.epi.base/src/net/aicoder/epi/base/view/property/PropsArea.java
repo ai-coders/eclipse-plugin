@@ -4,6 +4,7 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -13,6 +14,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.IWorkbenchPart;
 
+import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.view.action.EpiAddAction;
 import net.aicoder.epi.base.view.action.EpiDeleteAction;
 import net.aicoder.epi.base.view.action.IEpiAction;
@@ -74,10 +76,14 @@ public class PropsArea extends BaseWithTitleArea {
 		toolBarManager.update(false);
 	}
 	
-	public void setSelection(ISelection selection) {
-		
+	public void setElementSelection(String pluginId, ISelection selection) {
+		Object item = ((IStructuredSelection)selection).getFirstElement();
+		IBaseVo currentData = (IBaseVo) item;
+		propsInput = new PropsInput(pluginId, currentData);
+		viewer.setInput(propsInput);
+		viewer.refresh();
 	}
-
+	
 	//// getter/setter
 	public PropsInput getPropsInput() {
 		return propsInput;

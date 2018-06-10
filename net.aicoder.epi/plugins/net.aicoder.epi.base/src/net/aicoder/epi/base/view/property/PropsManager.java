@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.FileLocator;
 
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.view.definer.property.PropsDefine;
+import net.aicoder.epi.util.FileUtil;
 import net.aicoder.tcom.tools.util.AiStringUtil;
 import net.aicoder.tcom.tools.util.JaxbUtil;
 
@@ -24,23 +25,23 @@ public final class PropsManager {
 	private static final Log log = LogFactory.getLog(PropsManager.class);
 	private static Map<String, PropsDefine> propsDefineMap = new HashMap<String, PropsDefine>(0);
 	
-	public static PropsDefine getPropsDefine(IBaseVo element) {
+	public static PropsDefine getPropsDefine(String pluginId,IBaseVo element) {
 		PropsDefine define = null;
 		String propsId = element.getPropsId();
 		if(!AiStringUtil.isEmpty(propsId)) {
 			if(propsDefineMap.containsKey(propsId)) {
 				define = propsDefineMap.get(propsId);
 			}else {
-				define = loadPropsDefine(element);
+				define = loadPropsDefine(pluginId, element);
 				propsDefineMap.put(propsId, define);
 			}
 		}
 		return define;
 	}
 	
-	private static PropsDefine loadPropsDefine(IBaseVo element) {
+	private static PropsDefine loadPropsDefine(String pluginId,IBaseVo element) {
 		PropsDefine define = null;
-		String xmlStr = readFile2String(element);
+		String xmlStr = readFile2String(pluginId,element);
 		if(xmlStr == null) {
 			return define;
 		}
@@ -50,49 +51,24 @@ public final class PropsManager {
 		return define;
 	}
 	
-	private static String readFile2String(IBaseVo element) {
+	private static String readFile2String(String pluginId, IBaseVo element) {
 		String xmlStr = null;
-		URL fileUrl = getFileURL(element);
-		if(fileUrl == null) {
-			return xmlStr;
-		}
-		
-		File file = null;
-		try {
-			file = new File(FileLocator.resolve(fileUrl).toURI());
-			Long filelength = file.length();
-			byte[] filecontent = new byte[filelength.intValue()];
-			FileInputStream in = new FileInputStream(file);
-			in.read(filecontent);
-			in.close();
-			xmlStr = new String(filecontent, FILE_ENCODING);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
-		System.out.print(xmlStr);
+		String fileName = getXmlFileName(element);
+		xmlStr = FileUtil.readFile2String(pluginId, fileName);
 		return xmlStr;
 	}
 	
 	
-	private static URL getFileURL(IBaseVo element){
+	private static String getXmlFileName(IBaseVo element){
 		String propsId = element.getPropsId();
-		if(!AiStringUtil.isEmpty(propsId)) {
+		if(AiStringUtil.isEmpty(propsId)) {
 			return null;
 		}
 
-		URL fileUrl = null;
-		String protocol = "file:";
 		URL base = element.getClass().getResource("");
 		String elementPath = base.getPath();
-		String fileFullPath = protocol + elementPath  + "/" + propsId + ".xml";;
-		try {
-			fileUrl = new URL(fileFullPath);
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} 
-		return fileUrl;
+		String fileFullPath = elementPath  + "/" + propsId + ".xml";;
+		return fileFullPath;
 	}
 	
 	private static void dumpPropsDefine(PropsDefine propsDefine) {

@@ -36,6 +36,7 @@ import net.aicoder.epi.base.view.IViewElement;
 import net.aicoder.epi.base.view.context.IViewContext;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.element.table.EpiCellModifier;
+import net.aicoder.epi.base.view.element.table.EpiSelectionProvider;
 import net.aicoder.tcom.tools.util.AiStringUtil;
 
 public class EpiTree extends Composite implements IViewElement {
@@ -45,6 +46,7 @@ public class EpiTree extends Composite implements IViewElement {
 	private Tree tree;
 	private TreeViewer viewer;
 	private IViewContext context;
+	private EpiSelectionProvider selectionProvider;
 	
 	private boolean editable = true;
 	private boolean dirty = false;
@@ -75,6 +77,7 @@ public class EpiTree extends Composite implements IViewElement {
 		attachViewDefiner(definer);
 		seViewContext(context);
 		viewer.setInput(context.getInput());
+		selectionProvider = new EpiSelectionProvider(viewer);
 	}
 
 	private void initEpiTree() {
@@ -445,11 +448,9 @@ public class EpiTree extends Composite implements IViewElement {
 		this.context = context;
 		viewer.setInput(context.getEditorInput());
 	}
-/**
-	@Override // from ISelectionListener
-	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
-		// TODO Auto-generated method stub
-		
+
+	public EpiSelectionProvider getSelectionProvider() {
+		return selectionProvider;
 	}
-**/	
+	
 }

@@ -14,6 +14,7 @@ import net.aicoder.epi.base.view.context.IViewContext;
 import net.aicoder.epi.base.view.context.ViewContext;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.element.area.BaseWithTitleArea;
+import net.aicoder.epi.base.view.element.table.EpiSelectionProvider;
 import net.aicoder.epi.base.view.element.tree.EpiTree;
 import net.aicoder.epi.base.view.element.tree.EpiTreeDefiner;
 import net.aicoder.epi.devp.prddev.doper.dev.system.SysElementDoper;
@@ -67,5 +68,7 @@ public class SysDpyElmTreeTable extends BaseWithTitleArea{
 		this.context = context;
 	}
 
-
+	public EpiSelectionProvider getSelectionProvider() {
+		return tree.getSelectionProvider();
+	}
 }
