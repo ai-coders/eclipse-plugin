@@ -18,6 +18,8 @@ public class PropsInput implements IEpiInput {
 	private PropsDefine define;
 	private List<PropertyInfo> fullPropsInfoList = new ArrayList<PropertyInfo>(0);
 	private List<PropertyInfo> propsInfoList = new ArrayList<PropertyInfo>(0);
+	
+	private boolean m_showAdvancedProperties = false;
 
 	public PropsInput() {
 		super();
@@ -176,6 +178,21 @@ public class PropsInput implements IEpiInput {
 				propertyInfos[idx++] = propertyInfo;
 			}
 			return propertyInfos;
+		}
+	}
+	
+	public void setShowAdvancedProperties(boolean showAdvancedProperties) {
+		m_showAdvancedProperties = showAdvancedProperties;
+		propsInfoList.clear();
+		for(PropertyInfo propertyInfo:fullPropsInfoList) {
+			if(m_showAdvancedProperties) {
+				propertyInfo.setShowAdvancedProperties(m_showAdvancedProperties);
+				propsInfoList.add(propertyInfo);
+			}else {
+				if (propertyInfo.getPropCtgy().priority() <= 0) {
+					propsInfoList.add(propertyInfo);
+				}
+			}
 		}
 	}
 

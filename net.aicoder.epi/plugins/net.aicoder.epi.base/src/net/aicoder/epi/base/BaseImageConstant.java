@@ -42,6 +42,12 @@ public final class BaseImageConstant {
 	public static final String E_PRD_IDEPRJ = "icons/product/prd_ideprj.gif";
 
 	public static final String E_MODULE = "icons/product/module.gif";
+	
+	//// property
+	public static final String PROPS_VIEW = "icons/property/properties_view.gif";
+	public static final String PROPS_FILTER_ADVANCED = "icons/property/filter_advanced_properties.gif";
+	public static final String PROPS_RESET_DEFAULT = "icons/property/properties_default.gif";
+	
 
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return BasePlugin.getImageDescriptor(path);
