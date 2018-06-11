@@ -27,7 +27,7 @@ import net.aicoder.epi.base.view.property.PropsArea;
 import net.aicoder.epi.devp.DevpConstant;
 import net.aicoder.epi.devp.prddev.PrddevImageConstant;
 import net.aicoder.epi.devp.prddev.PrddevPlugin;
-import net.aicoder.epi.devp.prddev.doper.ProductDevDoper;
+import net.aicoder.epi.devp.prddev.doper.dev.ProductDevDoper;
 import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
 import net.aicoder.epi.devp.prddev.view.editors.function.ModuleEditor;
 import net.aicoder.epi.devp.prddev.view.editors.product.ProductEditor;

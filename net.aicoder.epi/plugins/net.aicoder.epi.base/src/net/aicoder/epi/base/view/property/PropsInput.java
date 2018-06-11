@@ -28,12 +28,6 @@ public class PropsInput implements IEpiInput {
 		setPluginId(pluginId);
 		setCurrentData(currentData);
 	}
-/**
-	public PropsInput(IBaseVo currentData) {
-		super();
-		setCurrentData(currentData);
-	}
-*/
 	
 	//// Override
 	@Override

@@ -20,6 +20,7 @@ import net.aicoder.epi.base.view.element.tree.EpiTreeDefiner;
 import net.aicoder.epi.devp.prddev.doper.dev.system.SysElementDoper;
 import net.aicoder.epi.devp.prddev.model.dev.ProductDevVo;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysElmCatgVo;
+import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
 
 public class SysDpyElmTreeTable extends BaseWithTitleArea{
 	public static String ID = SysDpyElmTreeTable.class.getName();
@@ -49,9 +50,15 @@ public class SysDpyElmTreeTable extends BaseWithTitleArea{
 	protected Control createAreaControl(Composite parent) {
 		definer = new EpiTreeDefiner(null, columnsDefine);
 		IEpiEditorInput editorInput = (IEpiEditorInput)this.getEditorInput();
-		IBaseVo elmCatg = editorInput.getCurrentData();
-		IBaseVo product = ((SysElmCatgVo)elmCatg).getParentNode();
-		List<IBaseVo> dataList = doper.listSysDpyElement((ProductDevVo)product);
+		IBaseVo currentData = editorInput.getCurrentData();
+		PrdProductVo product = null;
+		if(currentData instanceof SysElmCatgVo) {
+			ProductDevVo productDev = (ProductDevVo) ((SysElmCatgVo)currentData).getParentNode();
+			product = productDev.getProduct();
+		}else if(currentData instanceof PrdProductVo){
+			product = (PrdProductVo)currentData;
+		}
+		List<IBaseVo> dataList = doper.listSysDpyElement(product);
 		IEpiInput input = new EpiInput();
 		input.setDataList(dataList);
 		context = new ViewContext();

@@ -17,7 +17,7 @@ import net.aicoder.epi.base.view.element.table.EpiTable;
 import net.aicoder.epi.base.view.element.table.EpiTableDefiner;
 import net.aicoder.epi.devp.DevpConstant;
 import net.aicoder.epi.devp.prddev.PrddevImageConstant;
-import net.aicoder.epi.devp.prddev.doper.ProductDevDoper;
+import net.aicoder.epi.devp.prddev.doper.dev.ProductDevDoper;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysElementVo;
 import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
 import net.aicoder.epi.devp.prddev.view.devexploer.ProductDevTree.ProductDevTreeContext;

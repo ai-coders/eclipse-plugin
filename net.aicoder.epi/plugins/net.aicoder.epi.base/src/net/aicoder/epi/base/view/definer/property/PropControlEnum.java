@@ -6,32 +6,32 @@ import net.aicoder.tcom.tools.util.AiStringUtil;
 public enum PropControlEnum {
 	NONE(""),
 
-	NORMAL("NORMAL"),
-	PREFERRED("PREFERRED"),
-	ADVANCED("ADVANCED"),
-	ADVANCED_REALLY("ADVANCED_REALLY"),
-	HIDDEN("HIDDEN"),
+	Text("Text"),
+	Date("Date"),
+	DateTime("DateTime"),
+	ComboBox("ComboBox"),
+	CheckBox("CheckBox"),
 	;
 	
-	private final String propCtgy;
+	private final String controlType;
 
-	private PropControlEnum(String propCtgy) {
-		this.propCtgy = propCtgy;
+	private PropControlEnum(String controlType) {
+		this.controlType = controlType;
 	}
 
-	public static PropControlEnum forStr(String propCtgy) {
-		if(AiStringUtil.isEmpty(propCtgy)) {
-			return PropControlEnum.NORMAL;
+	public static PropControlEnum forStr(String controlType) {
+		if(AiStringUtil.isEmpty(controlType)) {
+			return PropControlEnum.Text;
 		}
 		for (PropControlEnum type : values()) {
-			if (type.propCtgy.equalsIgnoreCase(propCtgy)) {
+			if (type.controlType.equalsIgnoreCase(controlType)) {
 				return type;
 			}
 		}
-		throw new IllegalArgumentException("Invalid Etype: " + propCtgy);
+		throw new IllegalArgumentException("Invalid Etype: " + controlType);
 	}
 
-	public String propCtgy() {
-		return propCtgy;
+	public String controlType() {
+		return controlType;
 	}
 }

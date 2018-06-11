@@ -6,13 +6,13 @@ import java.util.List;
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.model.TreeNodeVo;
 import net.aicoder.epi.base.view.definer.property.PitemDefine;
-import net.aicoder.epi.base.view.definer.property.PropCtgyEnum;
+import net.aicoder.epi.base.view.definer.property.PropCatgEnum;
 
 public class PropertyInfo extends TreeNodeVo {
 	private static final long serialVersionUID = 1L;
 	
 	private PitemDefine itemDefine;
-	private PropCtgyEnum propCtgy;
+	private PropCatgEnum propCtgy;
 
 	
 	private Object value;
@@ -28,10 +28,10 @@ public class PropertyInfo extends TreeNodeVo {
 	
 	public void setItemDefine(PitemDefine itemDefine) {
 		this.itemDefine = itemDefine;
-		propCtgy = PropCtgyEnum.forStr(itemDefine.getCategory());
+		propCtgy = PropCatgEnum.forStr(itemDefine.getCategory());
 	}
 	
-	public PropCtgyEnum getPropCtgy() {
+	public PropCatgEnum getPropCtgy() {
 		return propCtgy;
 	}
 

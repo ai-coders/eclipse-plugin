@@ -20,7 +20,7 @@ import net.aicoder.epi.base.view.element.tree.EpiTree;
 import net.aicoder.epi.base.view.element.tree.EpiTreeDefiner;
 import net.aicoder.epi.devp.DevpConstant;
 import net.aicoder.epi.devp.prddev.PrddevImageConstant;
-import net.aicoder.epi.devp.prddev.doper.ProductDevDoper;
+import net.aicoder.epi.devp.prddev.doper.dev.ProductDevDoper;
 import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
 import net.aicoder.epi.devp.prddev.view.editors.function.ModuleEditor;
 import net.aicoder.epi.devp.prddev.view.editors.product.ProductEditor;

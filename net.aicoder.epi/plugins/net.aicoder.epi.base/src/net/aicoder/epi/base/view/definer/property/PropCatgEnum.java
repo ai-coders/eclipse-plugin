@@ -3,7 +3,7 @@ package net.aicoder.epi.base.view.definer.property;
 import net.aicoder.devp.model.EtypeEnum;
 import net.aicoder.tcom.tools.util.AiStringUtil;
 
-public enum PropCtgyEnum {
+public enum PropCatgEnum {
 	NONE(""),
 
 	/**
@@ -33,15 +33,15 @@ public enum PropCtgyEnum {
 	
 	private final String propCtgy;
 
-	private PropCtgyEnum(String propCtgy) {
+	private PropCatgEnum(String propCtgy) {
 		this.propCtgy = propCtgy;
 	}
 
-	public static PropCtgyEnum forStr(String propCtgy) {
+	public static PropCatgEnum forStr(String propCtgy) {
 		if(AiStringUtil.isEmpty(propCtgy)) {
-			return PropCtgyEnum.NORMAL;
+			return PropCatgEnum.NORMAL;
 		}
-		for (PropCtgyEnum type : values()) {
+		for (PropCatgEnum type : values()) {
 			if (type.propCtgy.equalsIgnoreCase(propCtgy)) {
 				return type;
 			}

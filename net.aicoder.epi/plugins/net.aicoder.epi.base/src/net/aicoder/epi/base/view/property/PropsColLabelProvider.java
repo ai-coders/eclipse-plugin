@@ -8,6 +8,8 @@ import org.eclipse.swt.graphics.Image;
 
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.definer.IViewDefiner;
+import net.aicoder.epi.base.view.definer.property.PitemDefine;
+import net.aicoder.epi.base.view.definer.property.PropIoFlagEnum;
 import net.aicoder.tcom.tools.util.BeanUtil;
 
 public class PropsColLabelProvider implements  ITableLabelProvider {
@@ -25,7 +27,7 @@ public class PropsColLabelProvider implements  ITableLabelProvider {
 				PropertyInfo propertyInfo = (PropertyInfo)element;
 				switch(columnIndex) {
 				case 0:
-					text = propertyInfo.getName();
+					text = getPropertyName(propertyInfo);
 					break;
 				case 1:
 					text = propertyInfo.getShowValue();
@@ -34,6 +36,18 @@ public class PropsColLabelProvider implements  ITableLabelProvider {
 					break;
 				}
 			}
+		}
+		return text;
+	}
+	
+	private String getPropertyName(PropertyInfo propertyInfo) {
+		String text = "";
+		PitemDefine itemDefine = propertyInfo.getItemDefine();
+		String ioFlag = itemDefine.getControl().getIoFlag();
+		if(PropIoFlagEnum.NotNull.ioFlag().equalsIgnoreCase(ioFlag)) {
+			text = propertyInfo.getName() + "*";
+		}else {
+			text = propertyInfo.getName();
 		}
 		return text;
 	}
