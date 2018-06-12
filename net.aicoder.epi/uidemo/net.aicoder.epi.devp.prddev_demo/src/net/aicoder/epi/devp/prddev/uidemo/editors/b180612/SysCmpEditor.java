@@ -1,4 +1,4 @@
-package net.aicoder.epi.devp.prddev.uidemo.editors;
+package net.aicoder.epi.devp.prddev.uidemo.editors.b180612;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.SWT;
@@ -26,12 +26,12 @@ import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
-public class SysDpyEditorBak extends EditorPart {
+public class SysCmpEditor extends EditorPart {
 
-	public static final String ID = SysDpyEditorBak.class.getName(); //$NON-NLS-1$
+	public static final String ID = SysCmpEditor.class.getName(); //$NON-NLS-1$
 	private Table table;
 
-	public SysDpyEditorBak() {
+	public SysCmpEditor() {
 		super();
 	}
 
@@ -94,7 +94,7 @@ public class SysDpyEditorBak extends EditorPart {
 		tree.setLinesVisible(true);
 		
 		TreeColumn treeColumn = new TreeColumn(tree, SWT.NONE);
-		treeColumn.setWidth(159);
+		treeColumn.setWidth(139);
 		treeColumn.setText("名称*");
 		
 		TreeColumn trclmnNewColumn = new TreeColumn(tree, SWT.NONE);
@@ -113,33 +113,35 @@ public class SysDpyEditorBak extends EditorPart {
 		treeColumn_5.setWidth(70);
 		treeColumn_5.setText("子类型");
 		
-		TreeColumn treeColumn_3 = new TreeColumn(tree, SWT.NONE);
-		treeColumn_3.setWidth(100);
-		treeColumn_3.setText("版本");
+		TreeColumn treeColumn_8 = new TreeColumn(tree, SWT.NONE);
+		treeColumn_8.setWidth(62);
+		treeColumn_8.setText("版本");
 		
 		TreeColumn treeColumn_1 = new TreeColumn(tree, SWT.NONE);
 		treeColumn_1.setWidth(107);
 		treeColumn_1.setText("描述");
+		
+		TreeColumn treeColumn_3 = new TreeColumn(tree, SWT.NONE);
+		treeColumn_3.setWidth(77);
+		treeColumn_3.setText("共享组件");
+		
+		TreeColumn treeColumn_4 = new TreeColumn(tree, SWT.NONE);
+		treeColumn_4.setWidth(82);
+		treeColumn_4.setText("共享服务");
 		
 		TreeColumn trclmnNewColumn_2 = new TreeColumn(tree, SWT.NONE);
 		trclmnNewColumn_2.setWidth(139);
 		trclmnNewColumn_2.setText("备注");
 		
 		TreeItem trtmXxx = new TreeItem(tree, SWT.NONE);
-		trtmXxx.setText("XXX环境");
+		trtmXxx.setText("XXX系统");
 		
 		TreeItem trtmNewTreeitem = new TreeItem(trtmXxx, SWT.NONE);
-		trtmNewTreeitem.setText("XXX节点/设备");
+		trtmNewTreeitem.setText("XXX子系统");
 		
 		TreeItem trtmNewTreeitem_1 = new TreeItem(trtmNewTreeitem, SWT.NONE);
 		trtmNewTreeitem_1.setText("XXX组件");
-		
-		TreeItem trtmXxx_2 = new TreeItem(trtmNewTreeitem, SWT.NONE);
-		trtmXxx_2.setText("XXX组件(外部)");
 		trtmNewTreeitem.setExpanded(true);
-		
-		TreeItem trtmXxx_3 = new TreeItem(trtmXxx, SWT.NONE);
-		trtmXxx_3.setText("XXX资源");
 		trtmXxx.setExpanded(true);
 		
 		Label label = new Label(container, SWT.NONE);
@@ -214,7 +216,7 @@ public class SysDpyEditorBak extends EditorPart {
 		tableItem_1.setText("XXX组件");
 		
 		Label lblNewLabel = new Label(container, SWT.NONE);
-		lblNewLabel.setText("部署实例");
+		lblNewLabel.setText("组件对应功能模块");
 		FormData fd_lblNewLabel = new FormData();
 		fd_lblNewLabel.top = new FormAttachment(tree, 6);
 		fd_lblNewLabel.left = new FormAttachment(tree, 10, SWT.LEFT);

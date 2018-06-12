@@ -2,79 +2,105 @@ package net.aicoder.epi.base.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Map;
 
 public interface IBaseVo extends Serializable {
-	public boolean putPropertyValue(String propertyName, Object value);
+
+	StateFlagEnum getDataState();
+
+	void setDataState(StateFlagEnum dataState);
+
+	String getPropsId();
+
+	//// 属性定义
+	long getRid();
+
+	void setRid(long rid);
+
+	long getTid();
+
+	void setTid(long tid);
+
+	String getEtype();
+
+	void setEtype(String etype);
+
+	String getCode();
+
+	void setCode(String code);
+
+	String getName();
+
+	void setName(String name);
+
+	String getAlias();
+
+	void setAlias(String alias);
+
+	String getDescription();
+
+	void setDescription(String description);
+
+	int getRecordState();
+
+	void setRecordState(int recordState);
+
+	String getParasId();
+
+	void setParasId(String parasId);
+
+	String getCreateUid();
+
+	void setCreateUid(String createUid);
+
+	String getCreateUcode();
+
+	void setCreateUcode(String createUcode);
+
+	String getCreateUname();
+
+	void setCreateUname(String createUname);
+
+	Date getCreateAt();
+
+	void setCreateAt(Date createAt);
+
+	String getModifyUid();
+
+	void setModifyUid(String modifyUid);
+
+	String getModifyUcode();
+
+	void setModifyUcode(String modifyUcode);
+
+	String getModifyUname();
+
+	void setModifyUname(String modifyUname);
+
+	Date getModifyAt();
+
+	void setModifyAt(Date modifyAt);
+
+	Map<String, Object> getOriginalPropertyValue();
+
+	void setOriginalPropertyValue(Map<String, Object> originalPropertyValue);
+
+	//// 前置的元素引用，控制元素排列顺序时使用
+	IBaseVo getPreItemData();
+
+	void setPreItemData(IBaseVo preItemData);
+
+	//// property
+	boolean putPropertyValue(String propertyName, Object value);
+
+	Object getPropertyOrigValue(String propertyName);
+
+	Object getPropertyValue(String propertyName);
+
+	String getPropertyShowValue(String propertyName);
 	
-	public Object getPropertyOrigValue(String propertyName);
+	//// loaded state
+	public boolean isLoadedElement(String elementName);
 	
-	public Object getPropertyValue(String propertyName);
-	
-	public String getPropertyShowValue(String propertyName);
-	
-	public StateFlagEnum getDataState();
-	
-	public void setDataState(StateFlagEnum dataState);
-	
-	public String getEtype();
-	
-	public long getRid();
-
-	public void setRid(long rid);
-	
-	public long getTid();
-	
-	public void setTid(long tid);
-
-	public String getCode();
-
-	public void setCode(String code);
-
-	public String getName();
-
-	public void setName(String name);
-
-	public String getDescription();
-
-	public void setDescription(String description);
-
-	public String getCreateUid();
-
-	public void setCreateUid(String createUid);
-	
-	public String getCreateUcode();
-	
-	public void setCreateUcode(String createUcode);
-
-	public String getCreateUname();
-
-	public void setCreateUname(String createUname);
-
-	public Date getCreateAt();
-
-	public void setCreateAt(Date createAt);
-
-	public String getModifyUid();
-
-	public void setModifyUid(String modifyUid);
-	
-	public String getModifyUcode();
-	
-	public void setModifyUcode(String modifyUcode);
-
-	public String getModifyUname();
-
-	public void setModifyUname(String modifyUname);
-
-	public Date getModifyAt();
-
-	public void setModifyAt(Date modifyAt);
-	
-	public IBaseVo getPreItemData();
-	
-	public void setPreItemData(IBaseVo preItemData);
-	
-	public String getPropsId();
-	
-	public String getParasId();
+	public boolean isLoadedElement(String elementName, int pageNo);
 }

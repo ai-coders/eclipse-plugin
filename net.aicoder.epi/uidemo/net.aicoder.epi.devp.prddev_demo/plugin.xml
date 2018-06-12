@@ -88,20 +88,10 @@
                   moveable="true"
                   visible="true"
                   showTitle="true"
-                  ratio="0.25"
+                  ratio="0.2"
                   relationship="left"
-                  relative="net.aicoder.epi.devp.prddev.uidemo.editors.ModuleEditor"
+                  relative="org.eclipse.ui.editorss"
                   id="net.aicoder.epi.devp.prddev.uidemo.views.ProductDevExplorer"/>
-		<view
-                  closeable="true"
-                  standalone="false"
-                  moveable="true"
-                  visible="true"
-                  showTitle="true"
-                  ratio="0.15"
-                  relationship="right"
-                  relative="net.aicoder.epi.devp.prddev.uidemo.editors.ModuleEditor"
-                  id="org.eclipse.ui.views.ContentOutline"/>
 	</perspectiveExtension>
    </extension>
   

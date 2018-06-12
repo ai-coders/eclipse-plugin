@@ -25,6 +25,11 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.custom.TableTree;
+import org.eclipse.jface.viewers.TableTreeViewer;
 
 public class SysDpyEditor extends EditorPart {
 
@@ -46,7 +51,6 @@ public class SysDpyEditor extends EditorPart {
 		
 		ToolBar toolBar = new ToolBar(container, SWT.FLAT | SWT.RIGHT);
 		FormData fd_toolBar = new FormData();
-		fd_toolBar.right = new FormAttachment(0, 584);
 		fd_toolBar.top = new FormAttachment(0, 10);
 		fd_toolBar.left = new FormAttachment(0, 10);
 		toolBar.setLayoutData(fd_toolBar);
@@ -80,16 +84,21 @@ public class SysDpyEditor extends EditorPart {
 		ToolItem toolItem = new ToolItem(toolBar, SWT.NONE);
 		toolItem.setText("刷新");
 		
-		Tree tree = new Tree(container, SWT.BORDER);
-		FormData fd_tree = new FormData();
-		fd_tree.right = new FormAttachment(toolBar, 246, SWT.RIGHT);
-		fd_tree.bottom = new FormAttachment(toolBar, 263, SWT.BOTTOM);
-		fd_tree.top = new FormAttachment(toolBar, 6);
-		fd_tree.left = new FormAttachment(toolBar, 0, SWT.LEFT);
-		
 		ToolItem toolItem_7 = new ToolItem(toolBar, SWT.NONE);
 		toolItem_7.setText("保存");
-		tree.setLayoutData(fd_tree);
+		
+		Composite composite_cmp = new Composite(container, SWT.NONE);
+		fd_toolBar.right = new FormAttachment(composite_cmp, 0, SWT.RIGHT);
+		//composite_cmp.setLayoutData(new FormData());
+		FormData fd_composite_cmp = new FormData();
+		fd_composite_cmp.top = new FormAttachment(toolBar, 10);
+		fd_composite_cmp.right = new FormAttachment(0, 515);
+		fd_composite_cmp.left = new FormAttachment(0, 10);
+		composite_cmp.setLayoutData(fd_composite_cmp);
+	
+		Tree tree = new Tree(composite_cmp, SWT.BORDER);
+		tree.setLocation(0, 0);
+		tree.setSize(505, 187);
 		tree.setHeaderVisible(true);
 		tree.setLinesVisible(true);
 		
@@ -98,77 +107,210 @@ public class SysDpyEditor extends EditorPart {
 		treeColumn.setText("名称*");
 		
 		TreeColumn trclmnNewColumn = new TreeColumn(tree, SWT.NONE);
-		trclmnNewColumn.setWidth(82);
+		trclmnNewColumn.setWidth(58);
 		trclmnNewColumn.setText("代码");
 		
 		TreeColumn trclmnNewColumn_1 = new TreeColumn(tree, SWT.NONE);
-		trclmnNewColumn_1.setWidth(79);
+		trclmnNewColumn_1.setWidth(59);
 		trclmnNewColumn_1.setText("别名");
 		
 		TreeColumn treeColumn_2 = new TreeColumn(tree, SWT.NONE);
-		treeColumn_2.setWidth(44);
+		treeColumn_2.setWidth(69);
 		treeColumn_2.setText("类型");
 		
-		TreeColumn treeColumn_5 = new TreeColumn(tree, SWT.NONE);
-		treeColumn_5.setWidth(70);
-		treeColumn_5.setText("子类型");
-		
 		TreeColumn treeColumn_3 = new TreeColumn(tree, SWT.NONE);
-		treeColumn_3.setWidth(100);
+		treeColumn_3.setWidth(70);
 		treeColumn_3.setText("版本");
 		
 		TreeColumn treeColumn_1 = new TreeColumn(tree, SWT.NONE);
-		treeColumn_1.setWidth(107);
+		treeColumn_1.setWidth(81);
 		treeColumn_1.setText("描述");
 		
-		TreeColumn trclmnNewColumn_2 = new TreeColumn(tree, SWT.NONE);
-		trclmnNewColumn_2.setWidth(139);
-		trclmnNewColumn_2.setText("备注");
-		
 		TreeItem trtmXxx = new TreeItem(tree, SWT.NONE);
-		trtmXxx.setText("XXX环境");
+		trtmXxx.setText("XXX系统");
 		
 		TreeItem trtmNewTreeitem = new TreeItem(trtmXxx, SWT.NONE);
-		trtmNewTreeitem.setText("XXX节点/设备");
+		trtmNewTreeitem.setText("XXX前端");
 		
 		TreeItem trtmNewTreeitem_1 = new TreeItem(trtmNewTreeitem, SWT.NONE);
 		trtmNewTreeitem_1.setText("XXX组件");
-		
-		TreeItem trtmXxx_2 = new TreeItem(trtmNewTreeitem, SWT.NONE);
-		trtmXxx_2.setText("XXX组件(外部)");
 		trtmNewTreeitem.setExpanded(true);
 		
 		TreeItem trtmXxx_3 = new TreeItem(trtmXxx, SWT.NONE);
-		trtmXxx_3.setText("XXX资源");
+		trtmXxx_3.setText("XXX后端");
+		
+		TreeItem trtmXxx_2 = new TreeItem(trtmXxx_3, SWT.NONE);
+		trtmXxx_2.setText("XXX组件");
+		
+		TreeItem trtmNewTreeitem_2 = new TreeItem(trtmXxx_3, SWT.NONE);
+		trtmNewTreeitem_2.setText("XXX组件");
+		trtmXxx_3.setExpanded(true);
 		trtmXxx.setExpanded(true);
+		
+		Label lblNewLabel = new Label(container, SWT.NONE);
+		lblNewLabel.setText("关联资源");
+		FormData fd_lblNewLabel = new FormData();
+		fd_lblNewLabel.left = new FormAttachment(0, 10);
+		fd_lblNewLabel.top = new FormAttachment(composite_cmp, 14);
+		lblNewLabel.setLayoutData(fd_lblNewLabel);
+		
+		Button button_1 = new Button(container, SWT.NONE);
+		FormData fd_button_1 = new FormData();
+		fd_button_1.top = new FormAttachment(composite_cmp, 6);
+		button_1.setLayoutData(fd_button_1);
+		button_1.setText("+|-|...");
+		
+		Composite composite_ref = new Composite(container, SWT.NONE);
+		TableColumnLayout tcl_composite_ref = new TableColumnLayout();
+		composite_ref.setLayout(tcl_composite_ref);
+		FormData fd_composite_ref = new FormData();
+		fd_composite_ref.right = new FormAttachment(toolBar, 0, SWT.RIGHT);
+		fd_composite_ref.top = new FormAttachment(lblNewLabel, 6);
+		fd_composite_ref.left = new FormAttachment(0, 10);
+		fd_composite_ref.bottom = new FormAttachment(100, -46);
+		composite_ref.setLayoutData(fd_composite_ref);
+		
+		table = new Table(composite_ref, SWT.BORDER | SWT.FULL_SELECTION);
+		table.setHeaderVisible(true);
+		table.setLinesVisible(true);
+		
+		TableColumn tableColumn_5 = new TableColumn(table, SWT.NONE);
+		tcl_composite_ref.setColumnData(tableColumn_5, new ColumnPixelData(117, true, true));
+		tableColumn_5.setText("关联类型");
+		
+		TableColumn tableColumn_4 = new TableColumn(table, SWT.NONE);
+		tcl_composite_ref.setColumnData(tableColumn_4, new ColumnPixelData(91, true, true));
+		tableColumn_4.setText("关联名称");
+		
+		TableColumn tableColumn_3 = new TableColumn(table, SWT.NONE);
+		tcl_composite_ref.setColumnData(tableColumn_3, new ColumnPixelData(103, true, true));
+		tableColumn_3.setText("产品/资源类型");
+		
+		TableColumn tableColumn_1 = new TableColumn(table, SWT.NONE);
+		tcl_composite_ref.setColumnData(tableColumn_1, new ColumnPixelData(73, true, true));
+		tableColumn_1.setText("代码");
+		
+		TableColumn tableColumn = new TableColumn(table, SWT.NONE);
+		tcl_composite_ref.setColumnData(tableColumn, new ColumnPixelData(108, true, true));
+		tableColumn.setText("关联描述");
+		
+		TableItem tableItem = new TableItem(table, SWT.NONE);
+		tableItem.setText("安装到");
+		
+		TableItem tableItem_1 = new TableItem(table, SWT.NONE);
+		tableItem_1.setText("连接[-o)-]");
+		
+		TableItem tableItem_2 = new TableItem(table, SWT.NONE);
+		tableItem_2.setText("连接[-o]");
+		
+		TableItem tableItem_3 = new TableItem(table, SWT.NONE);
+		tableItem_3.setText("连接[)-]");
+		
+		Label label_1 = new Label(container, SWT.NONE);
+		FormData fd_label_1 = new FormData();
+		fd_label_1.left = new FormAttachment(toolBar, 6);
+		label_1.setLayoutData(fd_label_1);
+		label_1.setText("部署环境");
+		
+		Button btnNewButton = new Button(container, SWT.NONE);
+		FormData fd_btnNewButton = new FormData();
+		btnNewButton.setLayoutData(fd_btnNewButton);
+		btnNewButton.setText("+");
+		
+		Button button = new Button(container, SWT.NONE);
+		button.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+			}
+		});
+		FormData fd_button = new FormData();
+		button.setLayoutData(fd_button);
+		button.setText("+|-|...");
+		
+		Composite composite_dpy = new Composite(container, SWT.NONE);
+		fd_button.bottom = new FormAttachment(composite_dpy, -6);
+		fd_btnNewButton.right = new FormAttachment(composite_dpy, 0, SWT.RIGHT);
+		//fd_button.right = new FormAttachment(100, -304);
+		fd_button_1.right = new FormAttachment(composite_dpy, -82);
+		TreeColumnLayout tcl_composite_dpy = new TreeColumnLayout();
+		composite_dpy.setLayout(tcl_composite_dpy);
+		FormData fd_composite_dpy = new FormData();
+		fd_composite_dpy.bottom = new FormAttachment(100, -46);
+		fd_composite_dpy.top = new FormAttachment(0, 84);
+		fd_composite_dpy.left = new FormAttachment(composite_cmp, 6);
+		composite_dpy.setLayoutData(fd_composite_dpy);
+		
+		Tree tree_2 = new Tree(composite_dpy, SWT.BORDER);
+		tree_2.setHeaderVisible(true);
+		tree_2.setLinesVisible(true);
+		
+		TreeColumn trclmnNewColumn_2 = new TreeColumn(tree_2, SWT.NONE);
+		tcl_composite_dpy.setColumnData(trclmnNewColumn_2, new ColumnPixelData(83, true, true));
+		trclmnNewColumn_2.setText("名称*");
+		
+		TreeColumn treeColumn_4 = new TreeColumn(tree_2, SWT.NONE);
+		tcl_composite_dpy.setColumnData(treeColumn_4, new ColumnPixelData(57, true, true));
+		treeColumn_4.setText("代码");
+		
+		TreeColumn trclmnNewColumn_3 = new TreeColumn(tree_2, SWT.NONE);
+		tcl_composite_dpy.setColumnData(trclmnNewColumn_3, new ColumnPixelData(49, true, true));
+		trclmnNewColumn_3.setText("别名");
+		
+		TreeColumn treeColumn_5 = new TreeColumn(tree_2, SWT.NONE);
+		tcl_composite_dpy.setColumnData(treeColumn_5, new ColumnPixelData(47, true, true));
+		treeColumn_5.setText("类型");
+		
+		TreeColumn treeColumn_8 = new TreeColumn(tree_2, SWT.NONE);
+		tcl_composite_dpy.setColumnData(treeColumn_8, new ColumnPixelData(116, true, true));
+		treeColumn_8.setText("描述");
+		
+		TreeItem trtmXxx_4 = new TreeItem(tree_2, SWT.NONE);
+		trtmXxx_4.setText("XXX主机");
+		
+		TreeItem trtmNewTreeitem_3 = new TreeItem(trtmXxx_4, SWT.NONE);
+		trtmNewTreeitem_3.setText("Tomcat");
+		trtmXxx_4.setExpanded(true);
+		
+		TreeItem trtmNewTreeitem_4 = new TreeItem(tree_2, SWT.NONE);
+		trtmNewTreeitem_4.setText("第三方接口");
+		
+		TreeItem trtmNewTreeitem_5 = new TreeItem(tree_2, SWT.NONE);
+		trtmNewTreeitem_5.setText("XXX服务");
+		
+		TreeItem trtmNewTreeitem_6 = new TreeItem(tree_2, SWT.NONE);
+		trtmNewTreeitem_6.setText("DB");
+		
+		TreeItem trtmNewTreeitem_7 = new TreeItem(tree_2, SWT.NONE);
+		trtmNewTreeitem_7.setText("消息对列");
 		
 		Label label = new Label(container, SWT.NONE);
 		FormData fd_label = new FormData();
-		fd_label.top = new FormAttachment(tree, 0, SWT.TOP);
+		fd_label.top = new FormAttachment(0, 18);
 		label.setLayoutData(fd_label);
 		label.setText("属性值");
 		
-		Composite composite = new Composite(container, SWT.NONE);
-		fd_label.left = new FormAttachment(composite, 0, SWT.LEFT);
-		TreeColumnLayout tcl_composite = new TreeColumnLayout();
-		composite.setLayout(tcl_composite);
-		FormData fd_composite = new FormData();
-		fd_composite.bottom = new FormAttachment(100, -163);
-		fd_composite.top = new FormAttachment(label);
-		fd_composite.left = new FormAttachment(tree, 38);
-		fd_composite.right = new FormAttachment(100, 11);
-		composite.setLayoutData(fd_composite);
+		Composite composite_props = new Composite(container, SWT.NONE);
+		fd_button.right = new FormAttachment(composite_props, -10);
+		fd_label.left = new FormAttachment(composite_props, 0, SWT.LEFT);
+		//fd_composite_dpy.right = new FormAttachment(100, -304);
+		TreeColumnLayout tcl_composite_props = new TreeColumnLayout();
+		composite_props.setLayout(tcl_composite_props);
+		FormData fd_composite_props = new FormData();
+		fd_composite_props.bottom = new FormAttachment(composite_ref, 0, SWT.BOTTOM);
+		fd_composite_props.left = new FormAttachment(composite_dpy, 10, SWT.RIGHT);
+		//fd_composite_props.bottom = new FormAttachment(100, -135);
+		composite_props.setLayoutData(fd_composite_props);
 		
-		Tree tree_1 = new Tree(composite, SWT.BORDER);
+		Tree tree_1 = new Tree(composite_props, SWT.BORDER);
 		tree_1.setHeaderVisible(true);
 		tree_1.setLinesVisible(true);
 		
 		TreeColumn treeColumn_6 = new TreeColumn(tree_1, SWT.NONE);
-		tcl_composite.setColumnData(treeColumn_6, new ColumnPixelData(104, true, true));
+		tcl_composite_props.setColumnData(treeColumn_6, new ColumnPixelData(104, true, true));
 		treeColumn_6.setText("属性");
 		
 		TreeColumn treeColumn_7 = new TreeColumn(tree_1, SWT.NONE);
-		tcl_composite.setColumnData(treeColumn_7, new ColumnPixelData(103, true, true));
+		tcl_composite_props.setColumnData(treeColumn_7, new ColumnPixelData(130, true, true));
 		treeColumn_7.setText("值");
 		
 		TreeItem trtmXxx_1 = new TreeItem(tree_1, SWT.NONE);
@@ -177,48 +319,16 @@ public class SysDpyEditor extends EditorPart {
 		TreeItem treeItem = new TreeItem(trtmXxx_1, SWT.NONE);
 		treeItem.setText("属性11");
 		trtmXxx_1.setExpanded(true);
+		fd_composite_props.top = new FormAttachment(0, 48);
 		
-		Composite composite_1 = new Composite(container, SWT.NONE);
-		TableColumnLayout tcl_composite_1 = new TableColumnLayout();
-		composite_1.setLayout(tcl_composite_1);
-		FormData fd_composite_1 = new FormData();
-		fd_composite_1.right = new FormAttachment(0, 854);
-		fd_composite_1.top = new FormAttachment(tree, 33);
-		fd_composite_1.left = new FormAttachment(0, 10);
-		composite_1.setLayoutData(fd_composite_1);
-		
-		table = new Table(composite_1, SWT.BORDER | SWT.FULL_SELECTION);
-		table.setHeaderVisible(true);
-		table.setLinesVisible(true);
-		
-		TableColumn tableColumn_5 = new TableColumn(table, SWT.NONE);
-		tcl_composite_1.setColumnData(tableColumn_5, new ColumnPixelData(117, true, true));
-		tableColumn_5.setText("组件名");
-		
-		TableColumn tableColumn_4 = new TableColumn(table, SWT.NONE);
-		tcl_composite_1.setColumnData(tableColumn_4, new ColumnPixelData(150, true, true));
-		tableColumn_4.setText("功能模块(全路径)");
-		
-		TableColumn tableColumn_3 = new TableColumn(table, SWT.NONE);
-		tcl_composite_1.setColumnData(tableColumn_3, new ColumnPixelData(150, true, true));
-		tableColumn_3.setText("类型");
-		
-		TableColumn tableColumn = new TableColumn(table, SWT.NONE);
-		tcl_composite_1.setColumnData(tableColumn, new ColumnPixelData(150, true, true));
-		tableColumn.setText("关联关系描述");
-		
-		TableItem tableItem = new TableItem(table, SWT.NONE);
-		tableItem.setText("XXX组件");
-		
-		TableItem tableItem_1 = new TableItem(table, SWT.NONE);
-		tableItem_1.setText("XXX组件");
-		
-		Label lblNewLabel = new Label(container, SWT.NONE);
-		lblNewLabel.setText("部署实例");
-		FormData fd_lblNewLabel = new FormData();
-		fd_lblNewLabel.top = new FormAttachment(tree, 6);
-		fd_lblNewLabel.left = new FormAttachment(tree, 10, SWT.LEFT);
-		lblNewLabel.setLayoutData(fd_lblNewLabel);
+		Combo combo = new Combo(container, SWT.NONE);
+		fd_btnNewButton.top = new FormAttachment(combo, 0, SWT.TOP);
+		fd_label_1.top = new FormAttachment(combo, 0, SWT.TOP);
+		FormData fd_combo = new FormData();
+		fd_combo.right = new FormAttachment(btnNewButton, -6);
+		fd_combo.bottom = new FormAttachment(button, -2);
+		fd_combo.left = new FormAttachment(label_1, 6);
+		combo.setLayoutData(fd_combo);
 
 	}
 
