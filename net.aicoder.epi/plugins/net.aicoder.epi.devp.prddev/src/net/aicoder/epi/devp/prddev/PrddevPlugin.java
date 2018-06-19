@@ -58,4 +58,37 @@ public class PrddevPlugin extends AbstractUIPlugin {
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
+	
+	
+	public static Integer getInt(String name) {
+		return plugin.getPreferenceStore().getInt(name);
+	}
+	
+	public static void setInt(String name,Integer value) {
+		plugin.getPreferenceStore().setValue(name, value);
+	}
+	
+	public static String getValue(String name) {
+		return plugin.getPreferenceStore().getString(name);
+	}
+	
+	public static void setValue(String name,String value) {
+		plugin.getPreferenceStore().setValue(name, value);
+	}
+	
+	public static Boolean getBoolean(String name) {
+		return plugin.getPreferenceStore().getBoolean(name);
+	}
+	
+	public static void setBoolean(String name,Boolean value) {
+		plugin.getPreferenceStore().setValue(name, value);
+	}
+	
+	public static Double getDouble(String name) {
+		return plugin.getPreferenceStore().getDouble(name);
+	}
+	
+	public static void setDouble(String name,Double value) {
+		plugin.getPreferenceStore().setValue(name, value);
+	}
 }

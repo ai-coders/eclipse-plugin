@@ -14,7 +14,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.help,
  org.eclipse.help.base,
  org.apache.commons.logging,
- net.aicoder.epi.lib
+ net.aicoder.epi.lib;bundle-version="1.0.0"
 Automatic-Module-Name: net.aicoder.epi.base
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: net.aicoder.devp.model,
@@ -41,4 +41,5 @@ Export-Package: net.aicoder.devp.model,
  net.aicoder.epi.example.property,
  net.aicoder.epi.example.ref,
  net.aicoder.epi.util,
+ net.aicoder.epi.util.network,
  net.aicoder.tcom.tools.util

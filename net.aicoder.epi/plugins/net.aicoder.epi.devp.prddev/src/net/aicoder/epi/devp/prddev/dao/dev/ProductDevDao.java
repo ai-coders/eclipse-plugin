@@ -28,8 +28,8 @@ public class ProductDevDao extends BaseDao {
 		
 		PrdProductVo prd2 = new PrdProductVo();
 		prd2.setRid(90001);
-		prd2.setCode("Ext_PD_C1");
-		prd2.setName("Ext_PD_N1");
+		prd2.setCode("Ext_PD_C2");
+		prd2.setName("Ext_PD_N2");
 		productList.add(prd2);
 		
 		return productList;
@@ -56,7 +56,6 @@ public class ProductDevDao extends BaseDao {
 			vo.setName("ELM_DGM_N" + rid);
 			vo.setDgmFlag(EtypeEnum.SYS_DPY_DGM.etype());
 			vo.setSysElement((SysElementVo)sysElement);
-			
 			list.add(vo);
 		}
 		

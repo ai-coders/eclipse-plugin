@@ -4,10 +4,10 @@ import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 
+import net.aicoder.epi.base.view.definer.ViewDefiner;
 import net.aicoder.epi.base.view.element.table.EpiColumnLabelProvider;
-import net.aicoder.epi.base.view.element.table.EpiTableDefiner;
 
-public class EpiTreeDefiner extends EpiTableDefiner {
+public class EpiTreeDefiner extends ViewDefiner {
 	public EpiTreeDefiner() {
 		super();
 		newContentProvider();

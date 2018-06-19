@@ -8,6 +8,7 @@ public enum EtypeEnum {
 	PRODUCT("PRODUCT"), //产品
 	MODULE("MODULE"), //模块
 	FUNCTION("FUNCTION"), //功能
+	PRD_GROUP("PRD_GROUP"), //产品组
 	
 	//// 模型
 	FUN_MODEL("FUN_MODEL"), //功能模型

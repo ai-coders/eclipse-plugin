@@ -19,6 +19,13 @@
             class="net.aicoder.epi.devp.prddev.view.devexploer.ProductDevExploer"
             id="net.aicoder.epi.devp.prddev.view.devexploer.ProductDevExplorer">
       </view>
+      <view
+            class="net.aicoder.epi.devp.prddev.view.opsexploer.ProductOpsExploer"
+            icon="icons/product/product.png"
+            id="net.aicoder.epi.devp.prddev.view.opsexploer.ProductOpsExploer"
+            name="ProductOpsExploer"
+            restorable="true">
+      </view>
    </extension>
 
    <extension
@@ -28,6 +35,12 @@
             icon="icons/product/product.png"
             class="net.aicoder.epi.base.view.EpiPerspective"
             id="net.aicoder.epi.devp.prddev.view.perspectives.PrddevPerspective">
+      </perspective>
+      <perspective
+            class="net.aicoder.epi.base.view.EpiPerspective"
+            icon="icons/product/product.png"
+            id="net.aicoder.epi.devp.prddev.view.ProductOpsExploerPerspective"
+            name="ProductOpsExploer">
       </perspective>
    </extension>
  
@@ -47,6 +60,29 @@
                   relative="org.eclipse.ui.editorss"
                   id="net.aicoder.epi.devp.prddev.view.devexploer.ProductDevExplorer"/>
 	</perspectiveExtension>
+ <perspectiveExtension
+       targetID="net.aicoder.epi.devp.prddev.view.ProductOpsExploerPerspective">
+    <view
+          closeable="false"
+          id="net.aicoder.epi.devp.prddev.view.opsexploer.ProductOpsExploer"
+          minimized="false"
+          moveable="false"
+          ratio="0.2"
+          relationship="left"
+          relative="org.eclipse.ui.editorss"
+          showTitle="true"
+          standalone="false"
+          visible="true">
+    </view>
+ </perspectiveExtension>
    </extension>
+    <extension
+          point="org.eclipse.ui.preferencePages">
+       <page
+             class="net.aicoder.epi.devp.prddev.view.preferences.LoginPage"
+             id="net.aicoder.epi.devp.prddev.view.preferences.LoginPage"
+             name="登录">
+       </page>
+    </extension>
 
 </plugin>

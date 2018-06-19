@@ -3,7 +3,6 @@ package net.aicoder.epi.devp.prddev.view.editors.sysdpy;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.PartInitException;
 
-import net.aicoder.epi.base.view.context.IViewContext;
 import net.aicoder.epi.base.view.editor.BaseFormEditor;
 
 public class SysDpyEditor extends BaseFormEditor{
