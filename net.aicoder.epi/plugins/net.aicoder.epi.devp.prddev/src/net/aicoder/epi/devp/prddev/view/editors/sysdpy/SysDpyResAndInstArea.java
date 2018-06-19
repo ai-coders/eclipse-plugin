@@ -10,14 +10,14 @@ import net.aicoder.epi.base.view.element.area.EpiSashArea;
 import net.aicoder.epi.base.view.element.area.IEpiArea;
 
 /**
- * 部署模型-子区域-右边区域
+ * 部署模型-子区域-左边-下边区域
  * @author WANGQINGPING
  *
  */
-public class SysDpySubRightArea extends BaseArea{
-	public static final String ID = SysDpySubRightArea.class.getName();
-	private SysDpySubRightUpArea subRightUpArea; //上半区域
-	private SysDpySubRightDownArea subRightDownArea; //下半区域
+public class SysDpyResAndInstArea extends BaseArea{
+	public static final String ID = SysDpyResAndInstArea.class.getName();
+	private SysDpyResourcesTable subLeftDownAssociateArea;
+	private SysDpyResInstanceTreeTable subLeftDownInstanceArea;
 
 	@Override
 	public void setToolBar(IToolBarManager toolBarManager) {
@@ -30,17 +30,19 @@ public class SysDpySubRightArea extends BaseArea{
 		areaWeights[0] = 1;
 		areaWeights[1] = 1;
 		
-		subRightUpArea = new SysDpySubRightUpArea();
-		subRightDownArea = new SysDpySubRightDownArea();
+		subLeftDownAssociateArea = new SysDpyResourcesTable();
+		subLeftDownInstanceArea = new SysDpyResInstanceTreeTable();
 		IEpiArea[] epiAreas = new IEpiArea[2];
-		epiAreas[0] = subRightUpArea;
-		epiAreas[1] = subRightDownArea;
+		epiAreas[0] = subLeftDownAssociateArea;
+		epiAreas[1] = subLeftDownInstanceArea;
 		
-		EpiSashArea sashArea = new EpiSashArea(getWorkbenchPart(), SWT.VERTICAL);
+		EpiSashArea sashArea = new EpiSashArea(getWorkbenchPart(), SWT.HORIZONTAL);
 		sashArea.setEpiAreas(epiAreas);
 		sashArea.setAreaWeights(areaWeights);
 		
+		sashArea.createControl(parent);
+
 		return sashArea.getControl();
 	}
-	
+
 }

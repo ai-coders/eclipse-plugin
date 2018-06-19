@@ -34,8 +34,8 @@ import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
  * @author WANGQINGPING
  *
  */
-public class SysDpySubLeftUpArea extends BaseWithTitleArea{
-	public static String ID = SysDpySubLeftUpArea.class.getName();
+public class SysDpyCmpTreeTable extends BaseWithTitleArea{
+	public static String ID = SysDpyCmpTreeTable.class.getName();
 	private EpiTree tree;
 	private EpiTreeDefiner definer;
 	private IViewContext context;
@@ -52,7 +52,7 @@ public class SysDpySubLeftUpArea extends BaseWithTitleArea{
 	
 	
 	//构造
-	public SysDpySubLeftUpArea() {
+	public SysDpyCmpTreeTable() {
 		super();
 		doper = new SysElementDoper();
 	}

@@ -31,7 +31,7 @@ public abstract class BaseWithPropArea extends BaseArea {
 	@Override
 	protected Control createAreaControl(Composite parent) {
 		int[] areaWeights = new int[2];
-		areaWeights[0] = 2;
+		areaWeights[0] = 3;
 		areaWeights[1] = 1;
 		
 		sashArea.setAreaWeights(areaWeights);

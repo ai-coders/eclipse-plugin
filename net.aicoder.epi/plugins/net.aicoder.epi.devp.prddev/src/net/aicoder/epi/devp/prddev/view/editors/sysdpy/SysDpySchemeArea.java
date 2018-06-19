@@ -13,8 +13,8 @@ import net.aicoder.epi.base.view.element.area.BaseArea;
  * @author WANGQINGPING
  *
  */
-public class SysDpySubRightUpArea extends BaseArea{
-	public static final String ID = SysDpySubRightUpArea.class.getName();
+public class SysDpySchemeArea extends BaseArea{
+	public static final String ID = SysDpySchemeArea.class.getName();
 	
 
 	@Override

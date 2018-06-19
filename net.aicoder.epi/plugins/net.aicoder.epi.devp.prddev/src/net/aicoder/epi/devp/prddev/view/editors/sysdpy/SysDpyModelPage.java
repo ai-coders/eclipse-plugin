@@ -7,7 +7,7 @@ import net.aicoder.epi.base.view.element.area.IEpiArea;
 
 public class SysDpyModelPage extends BaseFormPage {
 	public final static String ID = SysDpyModelPage.class.getName();
-	private SysDpySubArea sysDpySubArea;
+	private SysDpyModelArea sysDpyModelArea;
 	
 	public SysDpyModelPage(FormEditor editor) {
 		super(editor, ID, "部署模型");
@@ -15,13 +15,13 @@ public class SysDpyModelPage extends BaseFormPage {
 
 	@Override
 	public IEpiArea newPageArea() {
-		sysDpySubArea = new SysDpySubArea(getEditor());
-		return sysDpySubArea;
+		sysDpyModelArea = new SysDpyModelArea(getEditor());
+		return sysDpyModelArea;
 	}
 
 	@Override
 	public void createControl(Composite parent) {
-		sysDpySubArea.createControl(parent);
+		sysDpyModelArea.createControl(parent);
 	}
 
 }

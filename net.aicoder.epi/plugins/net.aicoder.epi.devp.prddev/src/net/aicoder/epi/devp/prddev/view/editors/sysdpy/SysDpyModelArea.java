@@ -15,12 +15,12 @@ import net.aicoder.epi.base.view.element.area.IEpiArea;
  * @author WANGQINGPING
  *
  */
-public class SysDpySubArea extends BaseWithPropArea{
-	public final static String ID = SysDpySubArea.class.getName();
-	private SysDpySubLeftArea subLeftArea; //左边区域
-	private SysDpySubRightArea subRightArea; //右边区域
+public class SysDpyModelArea extends BaseWithPropArea{
+	public final static String ID = SysDpyModelArea.class.getName();
+	private SysDpyModelLeftArea subLeftArea; //左边区域
+	private SysDpyModelRightArea subRightArea; //右边区域
 
-	public SysDpySubArea(IWorkbenchPart workbenchPart) {
+	public SysDpyModelArea(IWorkbenchPart workbenchPart) {
 		super(workbenchPart);
 	}
 
@@ -31,19 +31,20 @@ public class SysDpySubArea extends BaseWithPropArea{
 
 	@Override
 	protected IEpiArea newWorkArea() {
-		int[] areaWeights = new int[2];
-		areaWeights[0] = 1;
-		areaWeights[1] = 1;
+//		int[] areaWeights = new int[2];
+//		areaWeights[0] = 1;
+//		areaWeights[1] = 1;
 		
-		subLeftArea = new SysDpySubLeftArea(); //左边区域
-		subRightArea = new SysDpySubRightArea(); //右边区域
+		subLeftArea = new SysDpyModelLeftArea(); //左边区域
+		subRightArea = new SysDpyModelRightArea(); //右边区域
 		IEpiArea[] epiAreas = new IEpiArea[2];
 		epiAreas[0] = subLeftArea;
 		epiAreas[1] = subRightArea;
 		
 		EpiSashArea sashArea = new EpiSashArea(getWorkbenchPart(), SWT.HORIZONTAL);
 		sashArea.setEpiAreas(epiAreas);
-		sashArea.setAreaWeights(areaWeights);
+//		sashArea.setAreaWeights(areaWeights);
+		
 		return sashArea;
 	}
 	

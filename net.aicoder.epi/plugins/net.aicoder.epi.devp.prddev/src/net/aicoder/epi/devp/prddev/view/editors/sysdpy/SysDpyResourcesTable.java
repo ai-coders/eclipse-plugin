@@ -31,8 +31,8 @@ import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
  * @author WANGQINGPING
  *
  */
-public class SysDpySubLeftDownAssociateArea extends BaseWithTitleArea{
-	public static final String ID = SysDpySubLeftDownAssociateArea.class.getName();		
+public class SysDpyResourcesTable extends BaseWithTitleArea{
+	public static final String ID = SysDpyResourcesTable.class.getName();		
 	private EpiTree tree;
 	private EpiTreeDefiner definer;
 	private IViewContext context;
@@ -47,7 +47,7 @@ public class SysDpySubLeftDownAssociateArea extends BaseWithTitleArea{
 	
 	
 	//Constructor
-	public SysDpySubLeftDownAssociateArea() {
+	public SysDpyResourcesTable() {
 		super("关联资源",null);
 		doper = new SysElementDoper();
 	}

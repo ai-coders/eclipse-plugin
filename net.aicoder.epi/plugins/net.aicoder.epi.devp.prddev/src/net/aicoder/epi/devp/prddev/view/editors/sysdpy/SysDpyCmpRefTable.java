@@ -27,27 +27,27 @@ import net.aicoder.epi.devp.prddev.model.dev.system.SysElmCatgVo;
 import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
 
 /**
- * 部署模型-子区域-左边-下边区域-实例资源
+ * 部署模型-子区域-右边区域-下边区域
  * @author WANGQINGPING
  *
  */
-public class SysDpySubLeftDownInstanceArea extends BaseWithTitleArea{
-	public static final String ID = SysDpySubLeftDownInstanceArea.class.getName();		
+public class SysDpyCmpRefTable extends BaseWithTitleArea {
+	public static final String ID = SysDpyCmpRefTable.class.getName();
 	private EpiTree tree;
 	private EpiTreeDefiner definer;
 	private IViewContext context;
 	private SysElementDoper doper;
-	
 	// 0-列名, 1-数据属性名称, 2-列显示的宽度, 3-数据类型, 4-数据格式, 5-是否隐藏的标志, 6-是否可编辑的标志
 	private static Object[][] columnsDefine = {
-		{"名称", "name", -20, null, null, null, IColumnDefiner.EDITABLE },
-		{"代码", "code", 20, null, null, null, IColumnDefiner.EDITABLE }
+		{"关联类型", "code", -20, null, null, null, IColumnDefiner.EDITABLE },
+		{"关联元素", "name", 20, null, null, null, IColumnDefiner.EDITABLE },
+		{"别名", "alias", },
+		{"类型", "type", },
+		{"描述", "description", 0, null, null, null, IColumnDefiner.EDITABLE }
 	};
-	
-	
-	
-	public SysDpySubLeftDownInstanceArea() {
-		super("资源实例",null);
+
+	public SysDpyCmpRefTable() {
+		super("XXX组件",null);
 		doper = new SysElementDoper();
 	}
 
@@ -83,8 +83,9 @@ public class SysDpySubLeftDownInstanceArea extends BaseWithTitleArea{
 		input.setDataList(dataList);
 		context = new ViewContext();
 		context.setInput(input);
+
 		tree = new EpiTree(parent, definer, context);
 		return tree;
 	}
-
+	
 }
