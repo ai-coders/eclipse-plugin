@@ -51,8 +51,8 @@ public class SysDpyEditor extends EditorPart {
 		
 		ToolBar toolBar = new ToolBar(container, SWT.FLAT | SWT.RIGHT);
 		FormData fd_toolBar = new FormData();
-		fd_toolBar.top = new FormAttachment(0, 10);
 		fd_toolBar.left = new FormAttachment(0, 10);
+		fd_toolBar.top = new FormAttachment(0, 10);
 		toolBar.setLayoutData(fd_toolBar);
 		
 		ToolItem toolItem_1 = new ToolItem(toolBar, SWT.NONE);
@@ -88,7 +88,6 @@ public class SysDpyEditor extends EditorPart {
 		toolItem_7.setText("保存");
 		
 		Composite composite_cmp = new Composite(container, SWT.NONE);
-		fd_toolBar.right = new FormAttachment(composite_cmp, 0, SWT.RIGHT);
 		//composite_cmp.setLayoutData(new FormData());
 		FormData fd_composite_cmp = new FormData();
 		fd_composite_cmp.top = new FormAttachment(toolBar, 10);
@@ -150,13 +149,13 @@ public class SysDpyEditor extends EditorPart {
 		Label lblNewLabel = new Label(container, SWT.NONE);
 		lblNewLabel.setText("关联资源");
 		FormData fd_lblNewLabel = new FormData();
-		fd_lblNewLabel.left = new FormAttachment(0, 10);
 		fd_lblNewLabel.top = new FormAttachment(composite_cmp, 14);
+		fd_lblNewLabel.left = new FormAttachment(0, 10);
 		lblNewLabel.setLayoutData(fd_lblNewLabel);
 		
 		Button button_1 = new Button(container, SWT.NONE);
 		FormData fd_button_1 = new FormData();
-		fd_button_1.top = new FormAttachment(composite_cmp, 6);
+		fd_button_1.left = new FormAttachment(lblNewLabel, 110);
 		button_1.setLayoutData(fd_button_1);
 		button_1.setText("+|-|...");
 		
@@ -164,7 +163,7 @@ public class SysDpyEditor extends EditorPart {
 		TableColumnLayout tcl_composite_ref = new TableColumnLayout();
 		composite_ref.setLayout(tcl_composite_ref);
 		FormData fd_composite_ref = new FormData();
-		fd_composite_ref.right = new FormAttachment(toolBar, 0, SWT.RIGHT);
+		fd_composite_ref.right = new FormAttachment(toolBar, -280, SWT.RIGHT);
 		fd_composite_ref.top = new FormAttachment(lblNewLabel, 6);
 		fd_composite_ref.left = new FormAttachment(0, 10);
 		fd_composite_ref.bottom = new FormAttachment(100, -46);
@@ -207,10 +206,11 @@ public class SysDpyEditor extends EditorPart {
 		tableItem_3.setText("连接[)-]");
 		
 		Label label_1 = new Label(container, SWT.NONE);
+		fd_toolBar.right = new FormAttachment(label_1, -6);
 		FormData fd_label_1 = new FormData();
-		fd_label_1.left = new FormAttachment(toolBar, 6);
+		fd_label_1.left = new FormAttachment(0, 521);
 		label_1.setLayoutData(fd_label_1);
-		label_1.setText("部署环境");
+		label_1.setText("部署方案");
 		
 		Button btnNewButton = new Button(container, SWT.NONE);
 		FormData fd_btnNewButton = new FormData();
@@ -227,17 +227,74 @@ public class SysDpyEditor extends EditorPart {
 		button.setLayoutData(fd_button);
 		button.setText("+|-|...");
 		
+		Label label_2 = new Label(container, SWT.NONE);
+		FormData fd_label_2 = new FormData();
+		fd_label_2.left = new FormAttachment(button_1, 15);
+		fd_label_2.bottom = new FormAttachment(lblNewLabel, 0, SWT.BOTTOM);
+		label_2.setLayoutData(fd_label_2);
+		label_2.setText("资源实例");
+		//fd_composite_inst.top = new FormAttachment(button_2, 1);
+		
+		Button btny = new Button(container, SWT.NONE);
+		fd_button_1.top = new FormAttachment(0, 244);
+		FormData fd_btny = new FormData();
+		fd_btny.right = new FormAttachment(composite_cmp, 0, SWT.RIGHT);
+		fd_btny.bottom = new FormAttachment(button_1, 0, SWT.BOTTOM);
+		btny.setLayoutData(fd_btny);
+		btny.setText("+|-|Y");
+		
+		Composite composite_inst = new Composite(container, SWT.NONE);
+		TreeColumnLayout tcl_composite_inst = new TreeColumnLayout();
+		composite_inst.setLayout(tcl_composite_inst);
+		FormData fd_composite_inst = new FormData();
+		fd_composite_inst.bottom = new FormAttachment(composite_ref, 0, SWT.BOTTOM);
+		fd_composite_inst.top = new FormAttachment(composite_ref, 0, SWT.TOP);
+		fd_composite_inst.right = new FormAttachment(toolBar, 0, SWT.RIGHT);
+		fd_composite_inst.left = new FormAttachment(composite_ref, 6);
+		composite_inst.setLayoutData(fd_composite_inst);
+		
+		Tree tree_3 = new Tree(composite_inst, SWT.BORDER);
+		tree_3.setHeaderVisible(true);
+		tree_3.setLinesVisible(true);
+		
+		TreeColumn treeColumn_9 = new TreeColumn(tree_3, SWT.NONE);
+		tcl_composite_inst.setColumnData(treeColumn_9, new ColumnPixelData(135, true, true));
+		treeColumn_9.setText("名称");
+		
+		TreeColumn treeColumn_10 = new TreeColumn(tree_3, SWT.NONE);
+		tcl_composite_inst.setColumnData(treeColumn_10, new ColumnPixelData(150, true, true));
+		treeColumn_10.setText("代码");
+		
+		TreeItem treeItem_1 = new TreeItem(tree_3, SWT.NONE);
+		treeItem_1.setText("主机1");
+		
+		TreeItem trtmTomcat = new TreeItem(treeItem_1, SWT.NONE);
+		trtmTomcat.setText("Tomcat");
+		treeItem_1.setExpanded(true);
+		
+		TreeItem trtmNewTreeitem_8 = new TreeItem(tree_3, SWT.NONE);
+		trtmNewTreeitem_8.setText("主机2");
+		
+		TreeItem trtmTomcat_1 = new TreeItem(trtmNewTreeitem_8, SWT.NONE);
+		trtmTomcat_1.setText("Tomcat");
+		trtmNewTreeitem_8.setExpanded(true);
+		
+		TreeItem trtmNewTreeitem_9 = new TreeItem(tree_3, SWT.NONE);
+		trtmNewTreeitem_9.setText("主机3");
+		
+		TreeItem trtmNewTreeitem_10 = new TreeItem(trtmNewTreeitem_9, SWT.NONE);
+		trtmNewTreeitem_10.setText("Tomcat");
+		trtmNewTreeitem_9.setExpanded(true);
+		
 		Composite composite_dpy = new Composite(container, SWT.NONE);
 		fd_button.bottom = new FormAttachment(composite_dpy, -6);
 		fd_btnNewButton.right = new FormAttachment(composite_dpy, 0, SWT.RIGHT);
-		//fd_button.right = new FormAttachment(100, -304);
-		fd_button_1.right = new FormAttachment(composite_dpy, -82);
 		TreeColumnLayout tcl_composite_dpy = new TreeColumnLayout();
 		composite_dpy.setLayout(tcl_composite_dpy);
 		FormData fd_composite_dpy = new FormData();
+		fd_composite_dpy.left = new FormAttachment(composite_cmp, 6);
 		fd_composite_dpy.bottom = new FormAttachment(100, -46);
 		fd_composite_dpy.top = new FormAttachment(0, 84);
-		fd_composite_dpy.left = new FormAttachment(composite_cmp, 6);
 		composite_dpy.setLayoutData(fd_composite_dpy);
 		
 		Tree tree_2 = new Tree(composite_dpy, SWT.BORDER);
@@ -245,12 +302,12 @@ public class SysDpyEditor extends EditorPart {
 		tree_2.setLinesVisible(true);
 		
 		TreeColumn trclmnNewColumn_2 = new TreeColumn(tree_2, SWT.NONE);
-		tcl_composite_dpy.setColumnData(trclmnNewColumn_2, new ColumnPixelData(83, true, true));
-		trclmnNewColumn_2.setText("名称*");
+		tcl_composite_dpy.setColumnData(trclmnNewColumn_2, new ColumnPixelData(115, true, true));
+		trclmnNewColumn_2.setText("关联类型");
 		
 		TreeColumn treeColumn_4 = new TreeColumn(tree_2, SWT.NONE);
-		tcl_composite_dpy.setColumnData(treeColumn_4, new ColumnPixelData(57, true, true));
-		treeColumn_4.setText("代码");
+		tcl_composite_dpy.setColumnData(treeColumn_4, new ColumnPixelData(86, true, true));
+		treeColumn_4.setText("关联元素");
 		
 		TreeColumn trclmnNewColumn_3 = new TreeColumn(tree_2, SWT.NONE);
 		tcl_composite_dpy.setColumnData(trclmnNewColumn_3, new ColumnPixelData(49, true, true));
@@ -265,23 +322,20 @@ public class SysDpyEditor extends EditorPart {
 		treeColumn_8.setText("描述");
 		
 		TreeItem trtmXxx_4 = new TreeItem(tree_2, SWT.NONE);
-		trtmXxx_4.setText("XXX主机");
-		
-		TreeItem trtmNewTreeitem_3 = new TreeItem(trtmXxx_4, SWT.NONE);
-		trtmNewTreeitem_3.setText("Tomcat");
+		trtmXxx_4.setText("安装到|Tomcat");
 		trtmXxx_4.setExpanded(true);
 		
 		TreeItem trtmNewTreeitem_4 = new TreeItem(tree_2, SWT.NONE);
-		trtmNewTreeitem_4.setText("第三方接口");
+		trtmNewTreeitem_4.setText("连接|第三方接口");
 		
 		TreeItem trtmNewTreeitem_5 = new TreeItem(tree_2, SWT.NONE);
-		trtmNewTreeitem_5.setText("XXX服务");
+		trtmNewTreeitem_5.setText("连接|XXX组件");
 		
 		TreeItem trtmNewTreeitem_6 = new TreeItem(tree_2, SWT.NONE);
-		trtmNewTreeitem_6.setText("DB");
+		trtmNewTreeitem_6.setText("连接|DB");
 		
 		TreeItem trtmNewTreeitem_7 = new TreeItem(tree_2, SWT.NONE);
-		trtmNewTreeitem_7.setText("消息对列");
+		trtmNewTreeitem_7.setText("连接|消息对列");
 		
 		Label label = new Label(container, SWT.NONE);
 		FormData fd_label = new FormData();
@@ -296,7 +350,8 @@ public class SysDpyEditor extends EditorPart {
 		TreeColumnLayout tcl_composite_props = new TreeColumnLayout();
 		composite_props.setLayout(tcl_composite_props);
 		FormData fd_composite_props = new FormData();
-		fd_composite_props.bottom = new FormAttachment(composite_ref, 0, SWT.BOTTOM);
+		fd_composite_props.bottom = new FormAttachment(100, -46);
+		fd_composite_props.top = new FormAttachment(label, 10);
 		fd_composite_props.left = new FormAttachment(composite_dpy, 10, SWT.RIGHT);
 		//fd_composite_props.bottom = new FormAttachment(100, -135);
 		composite_props.setLayoutData(fd_composite_props);
@@ -319,7 +374,6 @@ public class SysDpyEditor extends EditorPart {
 		TreeItem treeItem = new TreeItem(trtmXxx_1, SWT.NONE);
 		treeItem.setText("属性11");
 		trtmXxx_1.setExpanded(true);
-		fd_composite_props.top = new FormAttachment(0, 48);
 		
 		Combo combo = new Combo(container, SWT.NONE);
 		fd_btnNewButton.top = new FormAttachment(combo, 0, SWT.TOP);
@@ -329,6 +383,13 @@ public class SysDpyEditor extends EditorPart {
 		fd_combo.bottom = new FormAttachment(button, -2);
 		fd_combo.left = new FormAttachment(label_1, 6);
 		combo.setLayoutData(fd_combo);
+		
+		Label lblXxx = new Label(container, SWT.NONE);
+		FormData fd_lblXxx = new FormData();
+		fd_lblXxx.top = new FormAttachment(button, 5, SWT.TOP);
+		fd_lblXxx.right = new FormAttachment(label_1, 0, SWT.RIGHT);
+		lblXxx.setLayoutData(fd_lblXxx);
+		lblXxx.setText("XXX组件");
 
 	}
 
