@@ -42,6 +42,7 @@ public class EpiTable extends Composite implements IViewElement {
 	protected TableViewer viewer;
 	private EpiTableDefiner definer;
 	private IViewContext context;
+	private EpiSelectionProvider selectionProvider;
 
 	private boolean editable = true;
 	private boolean dirty = false;
@@ -65,6 +66,8 @@ public class EpiTable extends Composite implements IViewElement {
 		attachViewDefiner(definer);
 		seViewContext(context);
 		viewer.setInput(context.getInput());
+		
+		selectionProvider = new EpiSelectionProvider(viewer);
 	}
 	
 	private void initEpiTable() {
@@ -379,4 +382,8 @@ public class EpiTable extends Composite implements IViewElement {
 		viewer.setInput(context.getEditorInput());
 	}
 
+	public EpiSelectionProvider getSelectionProvider() {
+		return selectionProvider;
+	}
+	
 }
