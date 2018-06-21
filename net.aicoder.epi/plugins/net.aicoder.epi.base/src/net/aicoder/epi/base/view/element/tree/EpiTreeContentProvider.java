@@ -8,7 +8,6 @@ import org.eclipse.jface.viewers.Viewer;
 
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.model.ITreeNode;
-import net.aicoder.epi.base.view.context.IEpiEditorInput;
 import net.aicoder.epi.base.view.context.IEpiInput;
 import net.aicoder.epi.base.view.definer.IViewDefiner;
 
@@ -38,7 +37,7 @@ public class EpiTreeContentProvider implements ITreeContentProvider{
 		Object[] elements = new Object[0];
 		if (input instanceof IEpiInput) {
 			IEpiInput adapter = (IEpiInput) input;
-			if(adapter != null) {
+			if(adapter != null && adapter.getDataList() != null) {
 				elements = adapter.getDataList().toArray();
 			}
 		}
