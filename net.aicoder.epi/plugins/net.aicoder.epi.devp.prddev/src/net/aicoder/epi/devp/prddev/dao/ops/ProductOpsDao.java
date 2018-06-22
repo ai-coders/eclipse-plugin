@@ -29,6 +29,8 @@ public class ProductOpsDao extends BaseDao {
 		{
 			//产品分组1
 			ProductOpsVo prdGroupVo1 = new ProductOpsVo();
+			prdGroupVo1.setRid(100);
+			prdGroupVo1.setTid(1);
 			prdGroupVo1.setCode("Prd_Group_Code_1");
 			prdGroupVo1.setName("信息部产品分组");
 			prdGroupVo1.setEtype(EtypeEnum.PRD_GROUP.etype());
@@ -36,37 +38,31 @@ public class ProductOpsDao extends BaseDao {
 			{
 				//产品分组1-产品一
 				PrdProductVo prd = new PrdProductVo();
-				prd.setRid(10011);
+				prd.setRid(10);
+				prd.setTid(1);
 				prd.setCode("Product_Code_11");
 				prd.setName("仪器解析产品");
-				
-//				ProductOpsVo product = new ProductOpsVo(prd);
-//				product.setEtype(EtypeEnum.PRODUCT.etype());
-//				product.setParentNode(prdGroupVo1);
+				prd.setEtype("ASSET_BIZ_SW");
 				prdGroupVo1.getChildrenList().add(prd);
 			}
 			{
 				//产品分组1-产品二			
 				PrdProductVo prd = new PrdProductVo();
-				prd.setRid(10012);
+				prd.setRid(11);
+				prd.setTid(1);
 				prd.setCode("Product_Code_12");
 				prd.setName("好医生产品");
-				
-//				ProductOpsVo product = new ProductOpsVo(prd);
-//				product.setEtype(EtypeEnum.PRODUCT.etype());
-//				product.setParentNode(prdGroupVo1);
+				prd.setEtype("ASSET_BIZ_SW");
 				prdGroupVo1.getChildrenList().add(prd);
 			}
 			{
 				//产品分组1-产品三
 				PrdProductVo prd = new PrdProductVo();
-				prd.setRid(10013);
+				prd.setRid(12);
+				prd.setTid(1);
 				prd.setCode("Product_Code_13");
 				prd.setName("记事本产品");
-				
-//				ProductOpsVo product = new ProductOpsVo(prd);
-//				product.setEtype(EtypeEnum.PRODUCT.etype());
-//				product.setParentNode(prdGroupVo1);
+				prd.setEtype("ASSET_BIZ_SW");
 				prdGroupVo1.getChildrenList().add(prd);
 			}
 		}
@@ -74,6 +70,8 @@ public class ProductOpsDao extends BaseDao {
 		{
 			//产品分组2
 			ProductOpsVo prdGroupVo2 = new ProductOpsVo();
+			prdGroupVo2.setRid(101);
+			prdGroupVo2.setTid(1);
 			prdGroupVo2.setCode("Prd_Group_Code_2");
 			prdGroupVo2.setName("实验室产品分组");
 			prdGroupVo2.setEtype(EtypeEnum.PRD_GROUP.etype());
@@ -81,37 +79,31 @@ public class ProductOpsDao extends BaseDao {
 			{
 				//产品分组2-产品一
 				PrdProductVo prd = new PrdProductVo();
-				prd.setRid(10021);
+				prd.setRid(13);
+				prd.setTid(1);
 				prd.setCode("Product_Code_21");
 				prd.setName("微生物产品");
-
-//				ProductOpsVo product = new ProductOpsVo(prd);
-//				product.setEtype(EtypeEnum.PRODUCT.etype());
-//				product.setParentNode(prdGroupVo2);
+				prd.setEtype("ASSET_BIZ_SW");
 				prdGroupVo2.getChildrenList().add(prd);
 			}
 			{
 				//产品分组2-产品二
 				PrdProductVo prd = new PrdProductVo();
-				prd.setRid(10022);
+				prd.setRid(14);
+				prd.setTid(1);
 				prd.setCode("Product_Code_22");
 				prd.setName("高血压产品");
-				
-//				ProductOpsVo product = new ProductOpsVo(prd);
-//				product.setEtype(EtypeEnum.PRODUCT.etype());
-//				product.setParentNode(prdGroupVo2);
+				prd.setEtype("ASSET_BIZ_SW");
 				prdGroupVo2.getChildrenList().add(prd);
 			}
 			{
 				//产品分组2-产品三
 				PrdProductVo prd = new PrdProductVo();
-				prd.setRid(10023);
+				prd.setRid(15);
+				prd.setTid(1);
 				prd.setCode("Product_Code_23");
 				prd.setName("血常规产品");
-				
-//				ProductOpsVo product = new ProductOpsVo(prd);
-//				product.setEtype(EtypeEnum.PRODUCT.etype());
-//				product.setParentNode(prdGroupVo2);
+				prd.setEtype("ASSET_BIZ_SW");
 				prdGroupVo2.getChildrenList().add(prd);
 			}
 		}
