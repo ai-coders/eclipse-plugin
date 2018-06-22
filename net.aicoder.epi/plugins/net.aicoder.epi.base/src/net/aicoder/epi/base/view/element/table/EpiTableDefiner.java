@@ -35,11 +35,15 @@ public class EpiTableDefiner extends ViewDefiner {
 	}
 
 	private void newLabelProvider() {
+/**		
 		if (this.getColumnDefinerList().size() != 0) {
 			ITableLabelProvider columnLablerProvider = new EpiColumnLabelProvider(this);
 			setColumnLabelProvider(columnLablerProvider);
 		}
 		ILabelProvider lablerProvider = new EpiTableLabelProvider(this);
 		setLabelProvider(lablerProvider);
+**/
+		ITableLabelProvider columnLablerProvider = new EpiColumnLabelProvider(this);
+		setColumnLabelProvider(columnLablerProvider);
 	}
 }
