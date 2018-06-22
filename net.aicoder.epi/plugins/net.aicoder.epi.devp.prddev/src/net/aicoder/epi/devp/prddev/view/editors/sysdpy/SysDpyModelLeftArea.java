@@ -10,14 +10,14 @@ import net.aicoder.epi.base.view.element.area.EpiSashArea;
 import net.aicoder.epi.base.view.element.area.IEpiArea;
 
 /**
- * 部署模型-子区域-左边区域
+ * 部署模型-左边区域
  * @author WANGQINGPING
  *
  */
 public class SysDpyModelLeftArea extends BaseArea{
 	public static final String ID = SysDpyModelLeftArea.class.getName();
-	private SysDpyCmpTreeTable subLeftUpArea; //上半区域
-	private SysDpyResAndInstArea subLeftDownArea; //下半区域
+	private SysDpyCmpTreeTable sysDpyCmpTreeTable;
+	private SysDpyResAndInstArea sysDpyResAndInstArea;
 	
 	@Override
 	public void setToolBar(IToolBarManager toolBarManager) {
@@ -26,23 +26,41 @@ public class SysDpyModelLeftArea extends BaseArea{
 
 	@Override
 	protected Control createAreaControl(Composite parent) {
+	
 //		int[] areaWeights = new int[2];
 //		areaWeights[0] = 1;
 //		areaWeights[1] = 1;
 		
-		subLeftUpArea = new SysDpyCmpTreeTable();
-		subLeftDownArea = new SysDpyResAndInstArea();
+		
+		sysDpyCmpTreeTable = new SysDpyCmpTreeTable();
+		sysDpyResAndInstArea = new SysDpyResAndInstArea();
 		IEpiArea[] epiAreas = new IEpiArea[2];
-		epiAreas[0] = subLeftUpArea;
-		epiAreas[1] = subLeftDownArea;
+		epiAreas[0] = sysDpyCmpTreeTable;
+		epiAreas[1] = sysDpyResAndInstArea;
 		
 		EpiSashArea sashArea = new EpiSashArea(getWorkbenchPart(), SWT.VERTICAL);
 		sashArea.setEpiAreas(epiAreas);
 //		sashArea.setAreaWeights(areaWeights);
-		
 		sashArea.createControl(parent);
 		
 		return sashArea.getControl();
+	}
+
+	
+	public SysDpyCmpTreeTable getSysDpyCmpTreeTable() {
+		return sysDpyCmpTreeTable;
+	}
+
+	public void setSysDpyCmpTreeTable(SysDpyCmpTreeTable sysDpyCmpTreeTable) {
+		this.sysDpyCmpTreeTable = sysDpyCmpTreeTable;
+	}
+
+	public SysDpyResAndInstArea getSysDpyResAndInstArea() {
+		return sysDpyResAndInstArea;
+	}
+
+	public void setSysDpyResAndInstArea(SysDpyResAndInstArea sysDpyResAndInstArea) {
+		this.sysDpyResAndInstArea = sysDpyResAndInstArea;
 	}
 
 }
