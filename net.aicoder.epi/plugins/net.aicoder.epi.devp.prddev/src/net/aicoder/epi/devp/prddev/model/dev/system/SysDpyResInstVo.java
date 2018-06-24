@@ -1,13 +1,13 @@
-package net.aicoder.epi.devp.prddev.model.ops;
+package net.aicoder.epi.devp.prddev.model.dev.system;
 
 import net.aicoder.epi.base.model.TreeNodeVo;
 
 /**
- * 系统组件实体
+ * 资源实例实体
  * @author WANGQINGPING
  *
  */
-public class SysCmpVo extends TreeNodeVo{
+public class SysDpyResInstVo extends TreeNodeVo{
 	private static final long serialVersionUID = 1L;
 	private String type; // 类型
 	private String subType; // 子类型
@@ -17,12 +17,13 @@ public class SysCmpVo extends TreeNodeVo{
 	private String phase; // 阶段
 	private String status; // 状态
 	private String notes; // 备注
-	private int installable; //可安装组件
-	private int sharedComponent; //共享组件
-	private int sharedService; //共享服务
 	private long prdRid; // 产品编号
+	private long resRid; // 关联资源编号
 	private long parentRid; // 父包编号
 	private int seq; // 顺序号
+	private long assetRid; // 关联IT资产编号
+	private String assetEtype; // 关联IT资产元素类型
+	private String assetTypeCode; // 关联IT资产类型代码
 	
 	
 	public String getType() {
@@ -73,29 +74,17 @@ public class SysCmpVo extends TreeNodeVo{
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
-	public int getInstallable() {
-		return installable;
-	}
-	public void setInstallable(int installable) {
-		this.installable = installable;
-	}
-	public int getSharedComponent() {
-		return sharedComponent;
-	}
-	public void setSharedComponent(int sharedComponent) {
-		this.sharedComponent = sharedComponent;
-	}
-	public int getSharedService() {
-		return sharedService;
-	}
-	public void setSharedService(int sharedService) {
-		this.sharedService = sharedService;
-	}
 	public long getPrdRid() {
 		return prdRid;
 	}
 	public void setPrdRid(long prdRid) {
 		this.prdRid = prdRid;
+	}
+	public long getResRid() {
+		return resRid;
+	}
+	public void setResRid(long resRid) {
+		this.resRid = resRid;
 	}
 	public long getParentRid() {
 		return parentRid;
@@ -108,6 +97,24 @@ public class SysCmpVo extends TreeNodeVo{
 	}
 	public void setSeq(int seq) {
 		this.seq = seq;
+	}
+	public long getAssetRid() {
+		return assetRid;
+	}
+	public void setAssetRid(long assetRid) {
+		this.assetRid = assetRid;
+	}
+	public String getAssetEtype() {
+		return assetEtype;
+	}
+	public void setAssetEtype(String assetEtype) {
+		this.assetEtype = assetEtype;
+	}
+	public String getAssetTypeCode() {
+		return assetTypeCode;
+	}
+	public void setAssetTypeCode(String assetTypeCode) {
+		this.assetTypeCode = assetTypeCode;
 	}
 	
 }

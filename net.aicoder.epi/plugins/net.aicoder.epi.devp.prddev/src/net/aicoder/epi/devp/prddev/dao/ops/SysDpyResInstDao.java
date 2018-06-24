@@ -5,8 +5,8 @@ import java.util.List;
 
 import net.aicoder.epi.base.dao.BaseDao;
 import net.aicoder.epi.base.model.IBaseVo;
-import net.aicoder.epi.devp.prddev.model.ops.SysDpyResInstVo;
-import net.aicoder.epi.devp.prddev.model.ops.SysDpyResourcesVo;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyResInstVo;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyResourcesVo;
 
 public class SysDpyResInstDao extends BaseDao{
 

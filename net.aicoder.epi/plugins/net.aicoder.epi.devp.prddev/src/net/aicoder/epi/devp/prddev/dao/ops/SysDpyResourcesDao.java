@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.aicoder.epi.base.dao.BaseDao;
 import net.aicoder.epi.base.model.IBaseVo;
-import net.aicoder.epi.devp.prddev.model.ops.SysDpyResourcesVo;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyResourcesVo;
 import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
 
 public class SysDpyResourcesDao extends BaseDao{

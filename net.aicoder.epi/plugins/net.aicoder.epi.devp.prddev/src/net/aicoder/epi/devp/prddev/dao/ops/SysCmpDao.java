@@ -3,9 +3,10 @@ package net.aicoder.epi.devp.prddev.dao.ops;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.aicoder.devp.model.EtypeEnum;
 import net.aicoder.epi.base.dao.BaseDao;
 import net.aicoder.epi.base.model.IBaseVo;
-import net.aicoder.epi.devp.prddev.model.ops.SysCmpVo;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysCmpVo;
 import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
 
 public class SysCmpDao extends BaseDao{
@@ -24,6 +25,7 @@ public class SysCmpDao extends BaseDao{
 		{
 			//LIS系统
 			SysCmpVo sysCmpVo = new SysCmpVo();
+			sysCmpVo.setEtype(EtypeEnum.SYSTEM.etype());
 			sysCmpVo.setName(pVo.getName()+"LIS系统");
 			sysCmpVo.setCode("LIS_Sys_Code_1");
 			sysCmpVo.setAlias("LIS系统");
@@ -35,6 +37,7 @@ public class SysCmpDao extends BaseDao{
 			{
 				//LIS前端
 				SysCmpVo sysCmpVoFore = new SysCmpVo();
+				sysCmpVoFore.setEtype(EtypeEnum.SUB_SYS.etype());
 				sysCmpVoFore.setName("LIS前端");
 				sysCmpVoFore.setCode("LIS_Sys_Code_11");
 				sysCmpVoFore.setAlias("LIS前端");
@@ -45,6 +48,7 @@ public class SysCmpDao extends BaseDao{
 				
 				//组件
 				SysCmpVo sysCmpVoSub = new SysCmpVo();
+				sysCmpVoSub.setEtype(EtypeEnum.SYS_CMP.etype());
 				sysCmpVoSub.setName("LIS组件");
 				sysCmpVoSub.setCode("LIS_Sys_Code_111");
 				sysCmpVoSub.setAlias("LIS组件");
@@ -56,6 +60,7 @@ public class SysCmpDao extends BaseDao{
 			{
 				//LIS后端
 				SysCmpVo sysCmpVoBack = new SysCmpVo();
+				sysCmpVoBack.setEtype(EtypeEnum.SUB_SYS.etype());
 				sysCmpVoBack.setName("LIS后端");
 				sysCmpVoBack.setCode("LIS_Sys_Code_12");
 				sysCmpVoBack.setAlias("LIS后端");
@@ -66,6 +71,7 @@ public class SysCmpDao extends BaseDao{
 				
 				//组件
 				SysCmpVo sysCmpVoSub = new SysCmpVo();
+				sysCmpVoSub.setEtype(EtypeEnum.SYS_CMP.etype());
 				sysCmpVoSub.setName("LIS后端组件");
 				sysCmpVoSub.setCode("LIS_Sys_Code_122");
 				sysCmpVoSub.setAlias("LIS后端组件");
@@ -76,6 +82,7 @@ public class SysCmpDao extends BaseDao{
 				
 				//组件
 				SysCmpVo sysCmpVoSub2 = new SysCmpVo();
+				sysCmpVoSub2.setEtype(EtypeEnum.SYS_CMP.etype());
 				sysCmpVoSub2.setName("LIS测试组件");
 				sysCmpVoSub2.setCode("LIS_Sys_Code_123");
 				sysCmpVoSub2.setAlias("LIS测试组件");
@@ -99,6 +106,7 @@ public class SysCmpDao extends BaseDao{
 			{
 				//NotePad前端
 				SysCmpVo sysCmpVoFore = new SysCmpVo();
+				sysCmpVoFore.setEtype(EtypeEnum.SUB_SYS.etype());
 				sysCmpVoFore.setName("NotePad前端");
 				sysCmpVoFore.setCode("LIS_Sys_Code_21");
 				sysCmpVoFore.setAlias("NotePad前端");
@@ -109,6 +117,7 @@ public class SysCmpDao extends BaseDao{
 				
 				//组件
 				SysCmpVo sysCmpVoSub = new SysCmpVo();
+				sysCmpVoSub.setEtype(EtypeEnum.SYS_CMP.etype());
 				sysCmpVoSub.setName("NotePad组件");
 				sysCmpVoSub.setCode("LIS_Sys_Code_211");
 				sysCmpVoSub.setAlias("NotePad组件");
@@ -120,6 +129,7 @@ public class SysCmpDao extends BaseDao{
 			{
 				//NotePad后端
 				SysCmpVo sysCmpVoBack = new SysCmpVo();
+				sysCmpVoBack.setEtype(EtypeEnum.SUB_SYS.etype());
 				sysCmpVoBack.setName("NotePad后端");
 				sysCmpVoBack.setCode("LIS_Sys_Code_22");
 				sysCmpVoBack.setAlias("NotePad后端");
@@ -130,6 +140,7 @@ public class SysCmpDao extends BaseDao{
 				
 				//组件
 				SysCmpVo sysCmpVoSub = new SysCmpVo();
+				sysCmpVoSub.setEtype(EtypeEnum.SYS_CMP.etype());
 				sysCmpVoSub.setName("NotePad后端组件");
 				sysCmpVoSub.setCode("LIS_Sys_Code_222");
 				sysCmpVoSub.setAlias("NotePad后端组件");
@@ -140,6 +151,7 @@ public class SysCmpDao extends BaseDao{
 				
 				//组件
 				SysCmpVo sysCmpVoSub2 = new SysCmpVo();
+				sysCmpVoSub2.setEtype(EtypeEnum.SYS_CMP.etype());
 				sysCmpVoSub2.setName("NotePad测试组件");
 				sysCmpVoSub2.setCode("LIS_Sys_Code_223");
 				sysCmpVoSub2.setAlias("NotePad测试组件");
@@ -152,6 +164,8 @@ public class SysCmpDao extends BaseDao{
 		{
 			//Message系统
 			SysCmpVo sysCmpVo = new SysCmpVo();
+			sysCmpVo.setEtype(EtypeEnum.SYSTEM.etype());
+			sysCmpVo.setName(pVo.getName()+"NotePad系统");
 			sysCmpVo.setName(pVo.getName()+"Message系统");
 			sysCmpVo.setCode("LIS_Sys_Code_3");
 			sysCmpVo.setAlias("Message系统");
@@ -163,6 +177,7 @@ public class SysCmpDao extends BaseDao{
 			{
 				//Message前端
 				SysCmpVo sysCmpVoFore = new SysCmpVo();
+				sysCmpVoFore.setEtype(EtypeEnum.SUB_SYS.etype());
 				sysCmpVoFore.setName("Message前端");
 				sysCmpVoFore.setCode("LIS_Sys_Code_31");
 				sysCmpVoFore.setAlias("Message前端");
@@ -173,6 +188,7 @@ public class SysCmpDao extends BaseDao{
 				
 				//组件
 				SysCmpVo sysCmpVoSub = new SysCmpVo();
+				sysCmpVoSub.setEtype(EtypeEnum.SYS_CMP.etype());
 				sysCmpVoSub.setName("Message组件");
 				sysCmpVoSub.setCode("LIS_Sys_Code_311");
 				sysCmpVoSub.setAlias("Message组件");
@@ -184,6 +200,7 @@ public class SysCmpDao extends BaseDao{
 			{
 				//Message后端
 				SysCmpVo sysCmpVoBack = new SysCmpVo();
+				sysCmpVoBack.setEtype(EtypeEnum.SUB_SYS.etype());
 				sysCmpVoBack.setName("Message后端");
 				sysCmpVoBack.setCode("LIS_Sys_Code_32");
 				sysCmpVoBack.setAlias("Message后端");
@@ -194,6 +211,7 @@ public class SysCmpDao extends BaseDao{
 				
 				//组件
 				SysCmpVo sysCmpVoSub = new SysCmpVo();
+				sysCmpVoSub.setEtype(EtypeEnum.SYS_CMP.etype());
 				sysCmpVoSub.setName("Message后端组件");
 				sysCmpVoSub.setCode("LIS_Sys_Code_322");
 				sysCmpVoSub.setAlias("Message后端组件");
@@ -204,6 +222,7 @@ public class SysCmpDao extends BaseDao{
 				
 				//组件
 				SysCmpVo sysCmpVoSub2 = new SysCmpVo();
+				sysCmpVoSub2.setEtype(EtypeEnum.SYS_CMP.etype());
 				sysCmpVoSub2.setName("Message测试组件");
 				sysCmpVoSub2.setCode("LIS_Sys_Code_323");
 				sysCmpVoSub2.setAlias("NotePad测试组件");

@@ -1,14 +1,15 @@
-package net.aicoder.epi.devp.prddev.model.ops;
+package net.aicoder.epi.devp.prddev.model.dev.system;
 
-import net.aicoder.epi.base.model.BaseVo;
+import net.aicoder.epi.base.model.TreeNodeVo;
 
 /**
- * 关联资源实体
+ * 系统组件实体
  * @author WANGQINGPING
  *
  */
-public class SysDpyResourcesVo extends BaseVo{
+public class SysCmpVo extends TreeNodeVo{
 	private static final long serialVersionUID = 1L;
+	
 	private String type; // 类型
 	private String subType; // 子类型
 	private String stereotype; // 构造型
@@ -17,9 +18,12 @@ public class SysDpyResourcesVo extends BaseVo{
 	private String phase; // 阶段
 	private String status; // 状态
 	private String notes; // 备注
+	private int installable; //可安装组件
+	private int sharedComponent; //共享组件
+	private int sharedService; //共享服务
 	private long prdRid; // 产品编号
+	private long parentRid; // 父包编号
 	private int seq; // 顺序号
-	
 	
 	
 	public String getType() {
@@ -70,11 +74,35 @@ public class SysDpyResourcesVo extends BaseVo{
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
+	public int getInstallable() {
+		return installable;
+	}
+	public void setInstallable(int installable) {
+		this.installable = installable;
+	}
+	public int getSharedComponent() {
+		return sharedComponent;
+	}
+	public void setSharedComponent(int sharedComponent) {
+		this.sharedComponent = sharedComponent;
+	}
+	public int getSharedService() {
+		return sharedService;
+	}
+	public void setSharedService(int sharedService) {
+		this.sharedService = sharedService;
+	}
 	public long getPrdRid() {
 		return prdRid;
 	}
 	public void setPrdRid(long prdRid) {
 		this.prdRid = prdRid;
+	}
+	public long getParentRid() {
+		return parentRid;
+	}
+	public void setParentRid(long parentRid) {
+		this.parentRid = parentRid;
 	}
 	public int getSeq() {
 		return seq;
@@ -82,6 +110,5 @@ public class SysDpyResourcesVo extends BaseVo{
 	public void setSeq(int seq) {
 		this.seq = seq;
 	}
-
 	
 }

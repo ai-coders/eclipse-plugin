@@ -21,8 +21,8 @@ import net.aicoder.epi.base.view.element.table.EpiTable;
 import net.aicoder.epi.base.view.element.table.EpiTableDefiner;
 import net.aicoder.epi.devp.prddev.doper.dev.system.SysElementDoper;
 import net.aicoder.epi.devp.prddev.model.dev.ProductDevVo;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysCmpVo;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysElmCatgVo;
-import net.aicoder.epi.devp.prddev.model.ops.SysCmpVo;
 import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
 
 /**

@@ -9,16 +9,16 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbenchPart;
 
-import net.aicoder.epi.base.view.element.area.BaseWithPropArea;
 import net.aicoder.epi.base.view.element.area.EpiSashArea;
 import net.aicoder.epi.base.view.element.area.IEpiArea;
+import net.aicoder.epi.devp.prddev.view.property.PrddevWithPropArea;
 
 /**
  * 部署模型-内容(左/右区域)
  * @author WANGQINGPING
  *
  */
-public class SysDpyModelArea extends BaseWithPropArea{
+public class SysDpyModelArea extends PrddevWithPropArea {
 	public final static String ID = SysDpyModelArea.class.getName();
 	private SysDpyModelLeftArea modelLeftArea; //左边区域
 	private SysDpyModelRightArea modelRightArea; //右边区域
@@ -54,14 +54,17 @@ public class SysDpyModelArea extends BaseWithPropArea{
 	@Override
 	protected Control createAreaControl(Composite parent) {
 		Control control = super.createAreaControl(parent);
+		
 		//此监听点击系统树表[组件]->刷新右边区域[xxx组件列表]数据
 		getModelLeftArea().getSysDpyCmpTreeTable().getSelectionProvider().addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				ISelection selection = event.getSelection();
 				getModelRightArea().getSysDpyCmpRefTable().setSelection(selection);
+				setElementSelection(selection);
 			}
 		});
+		
 		return control;
 	}
 

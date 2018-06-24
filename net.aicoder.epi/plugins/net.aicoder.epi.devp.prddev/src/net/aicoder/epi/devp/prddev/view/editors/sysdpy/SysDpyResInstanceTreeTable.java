@@ -20,7 +20,7 @@ import net.aicoder.epi.base.view.element.table.EpiSelectionProvider;
 import net.aicoder.epi.base.view.element.tree.EpiTree;
 import net.aicoder.epi.base.view.element.tree.EpiTreeDefiner;
 import net.aicoder.epi.devp.prddev.doper.ops.SysDpyResInstDoper;
-import net.aicoder.epi.devp.prddev.model.ops.SysDpyResourcesVo;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyResourcesVo;
 
 /**
  * 部署模型-资源实例(树表)
