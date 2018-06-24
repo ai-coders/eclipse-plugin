@@ -1,4 +1,4 @@
-package net.aicoder.epi.base.view.definer.property;
+package net.aicoder.epi.base.model.property;
 
 import net.aicoder.devp.model.EtypeEnum;
 import net.aicoder.tcom.tools.util.AiStringUtil;

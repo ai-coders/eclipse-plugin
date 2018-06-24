@@ -1,6 +1,8 @@
-package net.aicoder.epi.base.view.definer.property;
+package net.aicoder.epi.base.model.property;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -12,12 +14,12 @@ import javax.xml.bind.annotation.XmlType;
 //import org.apache.commons.logging.Log;
 //import org.apache.commons.logging.LogFactory;
 
-@XmlAccessorType(XmlAccessType.PROPERTY)  
-@XmlRootElement(name = "Properties")  
-@XmlType(propOrder = {})  
+@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlRootElement(name = "Properties")
+@XmlType(propOrder = {})
 public class PropsDefine {
-	//private static final Log log = LogFactory.getLog(PropertiesDefine.class);
-	
+	// private static final Log log = LogFactory.getLog(PropertiesDefine.class);
+
 	private String code;
 	private String name;
 	private String alias;
@@ -25,14 +27,15 @@ public class PropsDefine {
 	private String image;
 	private String imageDis;
 	private String tooltip;
-	
-	//private List<ActionDefine> actionDefineList;
-	//private List<ToolbarDefine> toolbarDefineList;
-	
+
+	// private List<ActionDefine> actionDefineList;
+	// private List<ToolbarDefine> toolbarDefineList;
+
 	private List<PitemDefine> pitemDefineList;
-	
+	private Map<String, PitemDefine> pitemDefineMap = new HashMap<String, PitemDefine>(0);
+
 	public PropsDefine() {
-		
+		super();
 	}
 
 	//// getter/setter
@@ -106,5 +109,38 @@ public class PropsDefine {
 	@XmlElement(name = "Pitem")
 	public void setPitemDefineList(List<PitemDefine> pitemDefineList) {
 		this.pitemDefineList = pitemDefineList;
+	}
+	
+	public PitemDefine getPitemDefine(String propertyName) {
+		PitemDefine pitemDefine = null;
+		if(pitemDefineMap.containsKey(propertyName)) {
+			pitemDefine = pitemDefineMap.get(propertyName);
+		}
+		return pitemDefine;
+	}
+	
+	
+	public void buildPitemDefineMap() {
+		pitemDefineMap.clear();
+		if (pitemDefineList != null) {
+			for (PitemDefine pitemDefine : pitemDefineList) {
+				if (pitemDefine != null) {
+					pitemDefineMap.put(pitemDefine.getCode(), pitemDefine);
+					buildSubItemsMap(pitemDefine);
+				}
+			}
+		}
+	}
+	
+	private void buildSubItemsMap(PitemDefine subPpitemDefine) {
+		List<PitemDefine> subItemsList = subPpitemDefine.getSubItemsList();
+		if (subItemsList != null) {
+			for (PitemDefine pitemDefine : subItemsList) {
+				if (pitemDefine != null) {
+					pitemDefineMap.put(pitemDefine.getCode(), pitemDefine);
+					buildSubItemsMap(pitemDefine);
+				}
+			}
+		}
 	}
 }

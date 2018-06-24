@@ -6,10 +6,10 @@ import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
 
+import net.aicoder.epi.base.model.property.PitemDefine;
+import net.aicoder.epi.base.model.property.PropIoFlagEnum;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.definer.IViewDefiner;
-import net.aicoder.epi.base.view.definer.property.PitemDefine;
-import net.aicoder.epi.base.view.definer.property.PropIoFlagEnum;
 import net.aicoder.tcom.tools.util.BeanUtil;
 
 public class PropsColLabelProvider implements  ITableLabelProvider {

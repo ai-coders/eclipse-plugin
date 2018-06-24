@@ -5,8 +5,8 @@ import java.util.List;
 
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.model.TreeNodeVo;
-import net.aicoder.epi.base.view.definer.property.PitemDefine;
-import net.aicoder.epi.base.view.definer.property.PropCatgEnum;
+import net.aicoder.epi.base.model.property.PitemDefine;
+import net.aicoder.epi.base.model.property.PropCatgEnum;
 
 public class PropertyInfo extends TreeNodeVo {
 	private static final long serialVersionUID = 1L;

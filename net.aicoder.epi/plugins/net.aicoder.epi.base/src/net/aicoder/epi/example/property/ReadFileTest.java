@@ -4,7 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import net.aicoder.epi.base.BasePlugin;
-import net.aicoder.epi.base.view.definer.property.PropsDefine;
+import net.aicoder.epi.base.model.property.PropsDefine;
 import net.aicoder.epi.util.FileUtil;
 import net.aicoder.tcom.tools.util.JaxbUtil;
 

@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.aicoder.epi.base.model.IBaseVo;
+import net.aicoder.epi.base.model.property.PitemDefine;
+import net.aicoder.epi.base.model.property.PropsDefine;
 import net.aicoder.epi.base.view.context.IEpiInput;
-import net.aicoder.epi.base.view.definer.property.PitemDefine;
-import net.aicoder.epi.base.view.definer.property.PropsDefine;
 
 public class PropsInput implements IEpiInput {
 	private String pluginId;

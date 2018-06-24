@@ -1,20 +1,14 @@
 package net.aicoder.epi.base.view.property;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.eclipse.core.runtime.FileLocator;
 
 import net.aicoder.epi.base.model.IBaseVo;
-import net.aicoder.epi.base.view.definer.property.PropsDefine;
+import net.aicoder.epi.base.model.property.PropsDefine;
 import net.aicoder.epi.util.FileUtil;
 import net.aicoder.tcom.tools.util.AiStringUtil;
 import net.aicoder.tcom.tools.util.JaxbUtil;
@@ -46,6 +40,7 @@ public final class PropsManager {
 			return define;
 		}
 		define = JaxbUtil.convertToJavaBean(PropsDefine.class, xmlStr);
+		define.buildPitemDefineMap();
 		dumpPropsDefine(define);
 		
 		return define;

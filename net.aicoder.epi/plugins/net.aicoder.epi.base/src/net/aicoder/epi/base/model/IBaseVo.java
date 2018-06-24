@@ -2,7 +2,7 @@ package net.aicoder.epi.base.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Map;
+//import java.util.Map;
 
 public interface IBaseVo extends Serializable {
 
@@ -81,9 +81,9 @@ public interface IBaseVo extends Serializable {
 
 	void setModifyAt(Date modifyAt);
 
-	Map<String, Object> getOriginalPropertyValue();
+	//Map<String, Object> getOriginalPropertyValue();
 
-	void setOriginalPropertyValue(Map<String, Object> originalPropertyValue);
+	//void setOriginalPropertyValue(Map<String, Object> originalPropertyValue);
 
 	//// 前置的元素引用，控制元素排列顺序时使用
 	IBaseVo getPreItemData();
