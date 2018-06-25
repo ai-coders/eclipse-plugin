@@ -10,6 +10,7 @@ import net.aicoder.epi.base.model.property.PitemDefine;
 import net.aicoder.epi.base.model.property.PropIoFlagEnum;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.definer.IViewDefiner;
+import net.aicoder.tcom.tools.util.AiStringUtil;
 import net.aicoder.tcom.tools.util.BeanUtil;
 
 public class PropsColLabelProvider implements ITableLabelProvider {
@@ -47,11 +48,14 @@ public class PropsColLabelProvider implements ITableLabelProvider {
 		if (itemDefine != null && itemDefine.getControl() != null) {
 			ioFlag = itemDefine.getControl().getIoFlag();
 		}
-		if (PropIoFlagEnum.NotNull.ioFlag().equalsIgnoreCase(ioFlag)) {
-			text = propertyInfo.getName() + "*";
-		} else {
+		if(AiStringUtil.isEmpty(propertyInfo.getCode())) {
 			text = propertyInfo.getName();
+		}else {
+			text = propertyInfo.getName() + "(" + propertyInfo.getCode()  + ")";
 		}
+		if (PropIoFlagEnum.NotNull.ioFlag().equalsIgnoreCase(ioFlag)) {
+			text = "*" + text;
+		} 
 		return text;
 	}
 

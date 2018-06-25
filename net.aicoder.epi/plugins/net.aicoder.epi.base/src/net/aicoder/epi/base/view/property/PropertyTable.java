@@ -25,10 +25,16 @@ public class PropertyTable extends Composite {
 
 		{
 			TreeColumn column = new TreeColumn(tree, SWT.LEFT);
-			column.setText("属性名");
+			column.setText("属性名称");
 			column.setWidth(200);
 		}
-
+/**
+		{
+			TreeColumn column = new TreeColumn(tree, SWT.LEFT);
+			column.setText("属性代码");
+			column.setWidth(100);
+		}
+**/
 		{
 			TreeColumn column = new TreeColumn(tree, SWT.LEFT);
 			column.setText("属性值");
