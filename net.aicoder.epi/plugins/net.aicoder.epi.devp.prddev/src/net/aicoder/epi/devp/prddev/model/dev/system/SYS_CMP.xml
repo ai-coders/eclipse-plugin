@@ -28,4 +28,13 @@
    <Pitem code="modifyUcode" name="修改用户代码" category="Advanced"><Data type="String"  length="50"></Data><Control ioFlag="Display"></Control><CheckRule></CheckRule></Pitem>
    <Pitem code="modifyUname" name="修改用户姓名" category="Advanced"><Data type="String"  length="50"></Data><Control ioFlag="Display"></Control><CheckRule></CheckRule></Pitem>
    <Pitem code="modifyAt" name="修改时间" category="Advanced"><Data type="Timestamp"></Data><Control ioFlag="Display"></Control><CheckRule></CheckRule></Pitem>
+   <Pitem code="" name="SVN定义"><Control ioFlag="Display"></Control>
+<!--
+	<SubItems>
+   </SubItems>
+ -->   
+   <Pitem code="Info:svnUrl" name="SVN地址"><Data type="String"  length="50"></Data><Control ioFlag="NotNull"></Control><CheckRule></CheckRule></Pitem>
+   <Pitem code="Info:svnUser" name="SVN用户"><Data type="String"  length="50"></Data><CheckRule></CheckRule></Pitem>
+   <Pitem code="Info:svnPassword" name="SVN密码"><Data type="String"  length="50"></Data><CheckRule></CheckRule></Pitem>
+   </Pitem>
 </Properties>

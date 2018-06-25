@@ -5,17 +5,23 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.aicoder.epi.base.model.BaseVo;
+import net.aicoder.epi.base.model.ExtInfosDefine;
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.model.property.PitemDefine;
 import net.aicoder.epi.base.model.property.PropsDefine;
 import net.aicoder.epi.base.view.context.IEpiInput;
+import net.aicoder.tcom.tools.util.AiStringUtil;
 
 public class PropsInput implements IEpiInput {
-	private String pluginId;
+	//private String pluginId;
 	private IBaseVo currentData;
 	private List<IBaseVo> dataList;
 
-	private PropsDefine define;
+	private IPropsManager propsManager;
+	private ExtInfosDefine extInfosDefine;
+	private PropsDefine propsDefine;
+	
 	private List<PropertyInfo> fullPropsInfoList = new ArrayList<PropertyInfo>(0);
 	private List<PropertyInfo> propsInfoList = new ArrayList<PropertyInfo>(0);
 	
@@ -24,13 +30,17 @@ public class PropsInput implements IEpiInput {
 	public PropsInput() {
 		super();
 	}
-
-	public PropsInput(String pluginId, IBaseVo currentData) {
+	
+	public PropsInput(IPropsManager propsManager) {
 		super();
-		setPluginId(pluginId);
+		this.propsManager = propsManager;
+	}
+
+	public PropsInput(IPropsManager propsManager, IBaseVo currentData) {
+		this(propsManager);
 		setCurrentData(currentData);
 	}
-	
+
 	//// Override
 	@Override
 	public void setParameter(String parameterName, Object parameterValue) {
@@ -52,12 +62,17 @@ public class PropsInput implements IEpiInput {
 		this.currentData = currentData;
 		fullPropsInfoList.clear();
 		propsInfoList.clear();
-
-		define = PropsManager.getPropsDefine(pluginId, currentData);
-		if (define == null) {
+		
+		if(propsManager != null) {
+			extInfosDefine = propsManager.getExtInfosDefine(currentData);
+			((BaseVo)currentData).setExtInfosDefine(extInfosDefine);
+			propsManager.loadEelementInfos((BaseVo)currentData);
+			propsDefine = propsManager.getPropsDefine(currentData);
+		}
+		if (propsDefine == null) {
 			return;
 		}
-		for (PitemDefine itemDefine : define.getPitemDefineList()) {
+		for (PitemDefine itemDefine : propsDefine.getPitemDefineList()) {
 			PropertyInfo propInfo = createPropertyInfo(currentData, itemDefine);
 			if (propInfo != null) {
 				fullPropsInfoList.add(propInfo);
@@ -87,7 +102,7 @@ public class PropsInput implements IEpiInput {
 			if (subPropInfo != null) {
 				propInfo.getFullChildrenList().add(subPropInfo);
 				if (subPropInfo.getPropCtgy().priority() <= 0) {
-					propInfo.getChildrenList().add(propInfo);
+					propInfo.getChildrenList().add(subPropInfo);
 				}
 			}
 		}
@@ -97,7 +112,10 @@ public class PropsInput implements IEpiInput {
 	private void setPropInfoValue(IBaseVo element, PropertyInfo propInfo) {
 		PitemDefine itemDefine = propInfo.getItemDefine();
 		String propertyName = itemDefine.getCode();
-		
+		if(AiStringUtil.isEmpty(propertyName)) {
+			return;
+		}
+
 		Object origValue = null;
 		origValue = element.getPropertyOrigValue(propertyName);
 		if (origValue != null) {
@@ -146,20 +164,20 @@ public class PropsInput implements IEpiInput {
 	}
 
 	//// getter/setter
-	public PropsDefine getDefine() {
-		return define;
+	public PropsDefine getPropsDefine() {
+		return propsDefine;
 	}
 
-	public String getPluginId() {
-		return pluginId;
+	public ExtInfosDefine getExtInfosDefine() {
+		return extInfosDefine;
 	}
 
-	public void setPluginId(String pluginId) {
-		this.pluginId = pluginId;
+	public void setExtInfosDefine(ExtInfosDefine extInfosDefine) {
+		this.extInfosDefine = extInfosDefine;
 	}
 
 	public void setDefine(PropsDefine define) {
-		this.define = define;
+		this.propsDefine = define;
 	}
 
 	public List<PropertyInfo> getFullPropsInfoList() {

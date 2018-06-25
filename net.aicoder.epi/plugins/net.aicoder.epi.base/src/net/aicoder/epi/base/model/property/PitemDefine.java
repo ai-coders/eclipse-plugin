@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 
 //import org.apache.commons.logging.Log;
@@ -136,7 +137,8 @@ public class PitemDefine {
 		return subItemsList;
 	}
 
-	@XmlElement(name = "SubItems")
+	@XmlElement(name = "Pitem")
+	//@XmlElementWrapper(name = "SubItems") 
 	public void setSubItemsList(List<PitemDefine> subItemsList) {
 		this.subItemsList = subItemsList;
 	}

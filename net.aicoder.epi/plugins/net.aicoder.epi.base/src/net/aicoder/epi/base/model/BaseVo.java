@@ -4,11 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.aicoder.epi.base.model.property.DataDefine;
-import net.aicoder.epi.base.model.property.PitemDefine;
-import net.aicoder.epi.base.model.property.PropsDefine;
 import net.aicoder.tcom.tools.util.AiStringUtil;
-//import net.aicoder.devp.model.EtypeEnum;
 import net.aicoder.tcom.tools.util.BeanUtil;
 
 public class BaseVo extends AbstractBaseVo {
@@ -17,8 +13,7 @@ public class BaseVo extends AbstractBaseVo {
 
 	private static final long serialVersionUID = 1L;
 
-	private PropsDefine propsDefine;
-
+	private ExtInfosDefine extInfosDefine;
 	private Map<String, ElementInfo> elementInfoMap = new HashMap<String, ElementInfo>(0);
 
 	private Map<String, Object> propertyOriginalValueMap = new HashMap<String, Object>(0);
@@ -31,10 +26,13 @@ public class BaseVo extends AbstractBaseVo {
 	}
 
 	public void putElementInfos(List<ElementInfo> elementInfoList) {
+		elementInfoMap.clear();
+		LoadElementState loadElementState = new LoadElementState(PROP_INFO_PREFIX);
+		putLoadElementState(loadElementState);
+		
 		if (elementInfoList == null) {
 			return;
 		}
-		elementInfoMap.clear();
 		for (ElementInfo info : elementInfoList) {
 			if (info != null) {
 				elementInfoMap.put(info.getCode(), info);
@@ -70,10 +68,14 @@ public class BaseVo extends AbstractBaseVo {
 		}
 
 		ElementInfo info = getElementInfo(propertyName);
-		if (info == null) {
-			info = newElementInfo(propertyName);
+		if (info == null && extInfosDefine != null) {
+			String infoCode = propertyName2InfoCode(propertyName);
+			info = extInfosDefine.newElementInfo(infoCode);
+			elementInfoMap.put(info.getCode(), info);
 		}
-		info.setInfoValue(strValue);
+		if(info != null) {
+			info.setInfoValue(strValue);
+		}
 	}
 	
 	public boolean isExtInfo(String propertyName) {
@@ -82,7 +84,7 @@ public class BaseVo extends AbstractBaseVo {
 		String prefix = "";
 		int prefixLen = PROP_INFO_PREFIX.length();
 		if (!AiStringUtil.isEmpty(propertyName) && propertyName.length() > prefixLen) {
-			prefix = propertyName.substring(0, prefixLen - 1);
+			prefix = propertyName.substring(0, prefixLen);
 			if (PROP_INFO_PREFIX.equalsIgnoreCase(prefix)) {
 				isExtElementInfo = true;
 			}
@@ -112,43 +114,6 @@ public class BaseVo extends AbstractBaseVo {
 		return propertyName;
 	}
 
-	private ElementInfo newElementInfo(String propertyName) {
-		String infoCode = propertyName2InfoCode(propertyName);
-		
-		ElementInfo info = new ElementInfo();
-		info.setTid(this.getTid());
-		info.setEtype(this.getEtype());
-		info.setObjRid(this.getRid());
-		info.setCode(infoCode);
-
-		PitemDefine pitemDefine;
-		if (propsDefine != null) {
-			pitemDefine = propsDefine.getPitemDefine(propertyName);
-			if (pitemDefine != null) {
-				info.setName(pitemDefine.getName());
-				info.setAlias(pitemDefine.getAlias());
-				DataDefine data = pitemDefine.getData();
-				if (data != null) {
-					info.setInfoValue(data.getDafaultValue());
-				}
-			}
-		}
-		info.setCode(propertyName);
-		elementInfoMap.put(info.getCode(), info);
-		return info;
-	}
-
-/**
-	//@Override
-	public Map<String, Object> getOriginalPropertyValue() {
-		return propertyOriginalValueMap;
-	}
-
-	//@Override
-	public void setOriginalPropertyValue(Map<String, Object> originalPropertyValue) {
-		this.propertyOriginalValueMap = originalPropertyValue;
-	}
-**/
 	//// 前置的元素引用，控制元素排列顺序时使用
 	@Override
 	public IBaseVo getPreItemData() {
@@ -274,13 +239,14 @@ public class BaseVo extends AbstractBaseVo {
 		}
 		return isLoaded;
 	}
-
-	public PropsDefine getPropsDefine() {
-		return propsDefine;
+	
+	//// getter/setter
+	public ExtInfosDefine getExtInfosDefine() {
+		return extInfosDefine;
 	}
 
-	public void setPropsDefine(PropsDefine propsDefine) {
-		this.propsDefine = propsDefine;
+	public void setExtInfosDefine(ExtInfosDefine extInfosDefine) {
+		this.extInfosDefine = extInfosDefine;
 	}
 
 	@Override

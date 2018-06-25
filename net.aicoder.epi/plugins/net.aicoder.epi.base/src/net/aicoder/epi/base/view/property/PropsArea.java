@@ -15,8 +15,8 @@ import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.view.element.area.BaseWithTitleArea;
 
 public class PropsArea extends BaseWithTitleArea {
-	// private Map<String, PropertiesDefine> propertiesDefineMap = new
-	// HashMap<String, PropertiesDefine>(0);
+	private IPropsManager propsManager;
+	//private IExtInfosManager extInfosManager;
 
 	private PropertyTable propertyTable;
 	private PropsInput propsInput;
@@ -31,23 +31,26 @@ public class PropsArea extends BaseWithTitleArea {
 	@Override
 	protected Control createAreaControl(Composite parent) {
 		propertyTable = new PropertyTable(parent);
+		propsInput = new PropsInput(propsManager);
 
 		createActons();
 
 		return propertyTable;
 	}
 
-	public void setElementSelection(String pluginId, ISelection selection) {
+	//public void setElementSelection(String pluginId, ISelection selection) {
+	public void setElementSelection(ISelection selection) {
 		Object item = ((IStructuredSelection) selection).getFirstElement();
 		IBaseVo currentData = (IBaseVo) item;
-		propsInput = new PropsInput(pluginId, currentData);
+		//propsInput = new PropsInput(propsManager, currentData);
+		propsInput.setCurrentData(currentData);
 		propertyTable.setPropsInput(propsInput);
 
 		updateUI();
 	}
 
 	private void updateUI() {
-
+		propertyTable.setShowAdvancedProperties(show);
 		propertyTable.refresh();
 	}
 
@@ -100,15 +103,23 @@ public class PropsArea extends BaseWithTitleArea {
 		return propsInput;
 	}
 
+	public IPropsManager getPropsManager() {
+		return propsManager;
+	}
+
+	public void setPropsManager(IPropsManager propsManager) {
+		this.propsManager = propsManager;
+	}
+
 	//// Action: Filter advanced properties
 	private Action m_showAdvancedPropertiesAction;
+	boolean show = false;
 
 	/**
 	 * Creates the {@link #m_showAdvancedPropertiesAction}.
 	 */
 	private void create_showAdvancedPropertiesAction() {
 		m_showAdvancedPropertiesAction = new Action("", IAction.AS_CHECK_BOX) {
-			boolean show = false;
 			@Override
 			public void run() {
 				show = m_showAdvancedPropertiesAction.isChecked();

@@ -12,7 +12,7 @@ import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.definer.IViewDefiner;
 import net.aicoder.tcom.tools.util.BeanUtil;
 
-public class PropsColLabelProvider implements  ITableLabelProvider {
+public class PropsColLabelProvider implements ITableLabelProvider {
 
 	@Override
 	public Image getColumnImage(Object element, int columnIndex) {
@@ -22,10 +22,10 @@ public class PropsColLabelProvider implements  ITableLabelProvider {
 	@Override
 	public String getColumnText(Object element, int columnIndex) {
 		String text = "";
-		if(element != null) {
-			if(element instanceof PropertyInfo) {
-				PropertyInfo propertyInfo = (PropertyInfo)element;
-				switch(columnIndex) {
+		if (element != null) {
+			if (element instanceof PropertyInfo) {
+				PropertyInfo propertyInfo = (PropertyInfo) element;
+				switch (columnIndex) {
 				case 0:
 					text = getPropertyName(propertyInfo);
 					break;
@@ -39,14 +39,17 @@ public class PropsColLabelProvider implements  ITableLabelProvider {
 		}
 		return text;
 	}
-	
+
 	private String getPropertyName(PropertyInfo propertyInfo) {
 		String text = "";
 		PitemDefine itemDefine = propertyInfo.getItemDefine();
-		String ioFlag = itemDefine.getControl().getIoFlag();
-		if(PropIoFlagEnum.NotNull.ioFlag().equalsIgnoreCase(ioFlag)) {
+		String ioFlag = "";
+		if (itemDefine != null && itemDefine.getControl() != null) {
+			ioFlag = itemDefine.getControl().getIoFlag();
+		}
+		if (PropIoFlagEnum.NotNull.ioFlag().equalsIgnoreCase(ioFlag)) {
 			text = propertyInfo.getName() + "*";
-		}else {
+		} else {
 			text = propertyInfo.getName();
 		}
 		return text;
@@ -61,18 +64,18 @@ public class PropsColLabelProvider implements  ITableLabelProvider {
 	@Override
 	public void addListener(ILabelProviderListener arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void removeListener(ILabelProviderListener arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

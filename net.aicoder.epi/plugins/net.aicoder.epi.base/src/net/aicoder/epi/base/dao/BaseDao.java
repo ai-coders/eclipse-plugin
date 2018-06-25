@@ -1,6 +1,8 @@
 package net.aicoder.epi.base.dao;
 
 public abstract class BaseDao{
+	public static Long PLATFORM_COMMON_TID = 101l;
+	
 	private long uid = 1;
 	private String userCode = "AI0000001";
 	private String userName = "Stone.Shi";
