@@ -3,6 +3,7 @@ package net.aicoder.epi.devp.prddev.doper.dev.system;
 import java.util.List;
 
 import net.aicoder.epi.base.doper.BaseDoper;
+import net.aicoder.epi.base.model.BaseVo;
 import net.aicoder.epi.base.model.ElementInfo;
 import net.aicoder.epi.base.model.ElementInfoDefine;
 import net.aicoder.epi.base.model.ExtInfosDefine;
@@ -34,6 +35,9 @@ public class SysPropsDoper  extends BaseDoper {
 	
 	public List<ElementInfo> listElementInfo(IBaseVo element){
 		if(element == null) {
+			return null;
+		}
+		if(element.isLoadedElement(BaseVo.PROP_INFO_PREFIX)) {
 			return null;
 		}
 		List<ElementInfo> list = sysPropsDao.listElementInfo(element);

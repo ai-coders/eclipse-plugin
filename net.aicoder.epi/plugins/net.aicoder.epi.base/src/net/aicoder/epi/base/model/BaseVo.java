@@ -8,10 +8,10 @@ import net.aicoder.tcom.tools.util.AiStringUtil;
 import net.aicoder.tcom.tools.util.BeanUtil;
 
 public class BaseVo extends AbstractBaseVo {
+	private static final long serialVersionUID = 1L;
+
 	// BaseVo有2类属性：一类为BaseVo对象自身的属性;另一类为扩展属性，即保存的ElementInfo扩展表中，属性名称为Info:xxx，必须带有前缀"Info:"
 	public static final String PROP_INFO_PREFIX = "Info:";
-
-	private static final long serialVersionUID = 1L;
 
 	private ExtInfosDefine extInfosDefine;
 	private Map<String, ElementInfo> elementInfoMap = new HashMap<String, ElementInfo>(0);
@@ -26,13 +26,14 @@ public class BaseVo extends AbstractBaseVo {
 	}
 
 	public void putElementInfos(List<ElementInfo> elementInfoList) {
-		elementInfoMap.clear();
-		LoadElementState loadElementState = new LoadElementState(PROP_INFO_PREFIX);
-		putLoadElementState(loadElementState);
-		
-		if (elementInfoList == null) {
+		if(elementInfoList == null) {
 			return;
 		}
+		elementInfoMap.clear();
+		LoadElementState loadElementState = new LoadElementState(PROP_INFO_PREFIX);
+		loadElementState.setStartRecNo(0);
+		putLoadElementState(loadElementState);
+
 		for (ElementInfo info : elementInfoList) {
 			if (info != null) {
 				elementInfoMap.put(info.getCode(), info);

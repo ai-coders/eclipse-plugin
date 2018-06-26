@@ -91,8 +91,6 @@ public class SysDpyResourcesTable extends BaseWithTitleArea{
 	
 	public void setSelection(ISelection selection) {
 		//刷新列表数据
-		
-		
 	}
 
 

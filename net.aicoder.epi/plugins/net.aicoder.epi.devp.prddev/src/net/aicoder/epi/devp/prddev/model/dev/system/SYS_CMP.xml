@@ -6,7 +6,7 @@
    <Pitem code="code" name="系统元素代码"><Data type="String"  length="50"></Data><Control></Control><CheckRule></CheckRule></Pitem>
    <Pitem code="alias" name="系统元素别名"><Data type="String"  length="50"></Data><Control></Control><CheckRule></CheckRule></Pitem>
    <Pitem code="description" name="系统元素描述"><Data type="String"  length="255"></Data><Control></Control><CheckRule></CheckRule></Pitem>
-   <Pitem code="type" name="类型"><Data type="String"  length="32"></Data><Control type="ComboBox" refObjects="comboObjects-type"></Control><CheckRule></CheckRule><Description>SYS-系统/目录，SUB-子系统/子目录，CMPELM-组件,IDEPRJ-开发工程,ENV-环境</Description></Pitem>
+   <Pitem code="type" name="类型"><Data type="String"  length="32"></Data><Control type="ComboBox" refObjects="cmpType"></Control><CheckRule></CheckRule><Description>SYS-系统/目录，SUB-子系统/子目录，CMPELM-组件,IDEPRJ-开发工程,ENV-环境</Description></Pitem>
    <Pitem code="subType" name="子类型"><Data type="String"  length="32"></Data><Control type="ComboBox" refObjects="comboObjects-sub_type"></Control><CheckRule></CheckRule><Description>ENV：NODE,DEVICE,EXEENV,DOCKER</Description></Pitem>
    <Pitem code="stereotype" name="构造型" category="Hidden"><Data type="String"  length="32"></Data><Control></Control><CheckRule></CheckRule></Pitem>
    <Pitem code="scope" name="范围"><Data type="String"  length="32"></Data><Control type="ComboBox" refObjects="comboObjects-scope"></Control><CheckRule></CheckRule><Description>访问控制范围:产品内可见，同模块可见，模块内可见</Description></Pitem>

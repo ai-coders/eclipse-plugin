@@ -6,11 +6,11 @@ import net.aicoder.tcom.tools.util.AiStringUtil;
 public enum PropControlEnum {
 	NONE(""),
 
-	Text("Text"),
-	Date("Date"),
-	DateTime("DateTime"),
-	ComboBox("ComboBox"),
-	CheckBox("CheckBox"),
+	Text("TEXT"),
+	Date("DATE"),
+	DateTime("DATETIME"),
+	ComboBox("COMBOBOX"),
+	CheckBox("CHECKBOX"),
 	;
 	
 	private final String controlType;

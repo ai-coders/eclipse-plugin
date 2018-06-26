@@ -31,7 +31,12 @@ public abstract class BaseFormPage extends FormPage implements IFormEditorPage{
 
 	public BaseFormPage(FormEditor editor, String id, String title) {
 		super(editor, id, title);
-		initialize(editor);
+		pageArea = newPageArea();
+		if(pageArea != null) {
+			//pageArea.setEditor(editor);
+			pageArea.setWorkbenchPart(editor);
+		}
+		//initialize(editor);
 	}
 
 	//// Life cycle
@@ -84,16 +89,6 @@ public abstract class BaseFormPage extends FormPage implements IFormEditorPage{
 	}
 
 	//// IFormEditorPage
-	@Override
-	public final void initialize(FormEditor editor) {
-		super.initialize(editor);
-		pageArea = newPageArea();
-		if(pageArea != null) {
-			//pageArea.setEditor(editor);
-			pageArea.setWorkbenchPart(editor);
-		}
-	}
-	
 	public abstract IEpiArea newPageArea();
 
 	@Override

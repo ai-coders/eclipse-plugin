@@ -213,5 +213,9 @@ public class PropsInput implements IEpiInput {
 			}
 		}
 	}
+	
+	public IPropsManager getPropsManager() {
+		return this.propsManager;
+	}
 
 }

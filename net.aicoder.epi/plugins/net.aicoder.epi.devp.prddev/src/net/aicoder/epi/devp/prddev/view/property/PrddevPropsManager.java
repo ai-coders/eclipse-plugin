@@ -28,6 +28,8 @@ public final class PrddevPropsManager implements IPropsManager {
 	private static Map<String, PropsDefine> propsDefineMap = new HashMap<String, PropsDefine>(0);
 	private static Map<String, ExtInfosDefine> extInfosDefineMap = new HashMap<String, ExtInfosDefine>(0);
 	
+	private static Map<String, Object> refObjectsMap = new HashMap<String, Object>(0);
+	
 	private static SysPropsDoper doper = new SysPropsDoper();
 	
 	@Override
@@ -90,6 +92,25 @@ public final class PrddevPropsManager implements IPropsManager {
 			}
 		}
 		return define;
+	}
+	
+	@Override
+	public void clearRefObjects() {
+		refObjectsMap.clear();
+	}
+	
+	@Override
+	public void putRefObjects(String refObjectsCode, Object refObjects) {
+		refObjectsMap.put(refObjectsCode, refObjects);
+	}
+	
+	@Override
+	public Object getRefObjects(String refObjectsCode) {
+		Object refObjects = null;
+		if(refObjectsMap.containsKey(refObjectsCode)) {
+			refObjects = refObjectsMap.get(refObjectsCode);
+		}
+		return refObjects;
 	}
 	
 	private static PropsDefine loadPropsDefine(String pluginId,IBaseVo element) {

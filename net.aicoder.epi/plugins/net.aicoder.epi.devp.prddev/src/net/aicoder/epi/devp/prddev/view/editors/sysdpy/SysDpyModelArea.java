@@ -11,6 +11,8 @@ import org.eclipse.ui.IWorkbenchPart;
 
 import net.aicoder.epi.base.view.element.area.EpiSashArea;
 import net.aicoder.epi.base.view.element.area.IEpiArea;
+import net.aicoder.epi.base.view.property.IPropsManager;
+import net.aicoder.epi.devp.prddev.doper.dev.DropdownOptionsDoper;
 import net.aicoder.epi.devp.prddev.view.property.PrddevWithPropArea;
 
 /**
@@ -20,16 +22,14 @@ import net.aicoder.epi.devp.prddev.view.property.PrddevWithPropArea;
  */
 public class SysDpyModelArea extends PrddevWithPropArea {
 	public final static String ID = SysDpyModelArea.class.getName();
+	private IPropsManager propsManager;
+	private DropdownOptionsDoper dropdownOptionsDoper;
+
 	private SysDpyModelLeftArea modelLeftArea; //左边区域
 	private SysDpyModelRightArea modelRightArea; //右边区域
-
+	
 	public SysDpyModelArea(IWorkbenchPart workbenchPart) {
 		super(workbenchPart);
-	}
-
-	@Override
-	public void setToolBar(IToolBarManager toolBarManager) {
-		
 	}
 
 	@Override
@@ -46,8 +46,13 @@ public class SysDpyModelArea extends PrddevWithPropArea {
 		
 		EpiSashArea sashArea = new EpiSashArea(getWorkbenchPart(), SWT.HORIZONTAL);
 		sashArea.setEpiAreas(epiAreas);
-//		sashArea.setAreaWeights(areaWeights);		
-
+//		sashArea.setAreaWeights(areaWeights);
+		
+		propsManager = this.getPropsManager();
+		propsManager.clearRefObjects();
+		
+		initDropdownOptions();
+		
 		return sashArea;
 	}
 	
@@ -67,7 +72,22 @@ public class SysDpyModelArea extends PrddevWithPropArea {
 		
 		return control;
 	}
+	
+	@Override
+	public void setToolBar(IToolBarManager toolBarManager) {
+		
+	}
 
+	private void initDropdownOptions() {
+		dropdownOptionsDoper = new DropdownOptionsDoper();
+		{
+			String refObjectsCode = "cmpType";
+			Object refObjects = dropdownOptionsDoper.listDropdownOption(refObjectsCode);
+			propsManager.putRefObjects(refObjectsCode, refObjects);
+		}
+	}
+
+	//// getter/setter
 	public SysDpyModelLeftArea getModelLeftArea() {
 		return modelLeftArea;
 	}

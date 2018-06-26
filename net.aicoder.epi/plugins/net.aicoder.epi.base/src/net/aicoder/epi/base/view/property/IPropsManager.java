@@ -12,4 +12,8 @@ public interface IPropsManager {
 	public void loadEelementInfos(BaseVo element);
 	
 	public PropsDefine getPropsDefine(IBaseVo element);
+	
+	public void clearRefObjects();
+	public void putRefObjects(String refObjectsCode, Object refObjects);
+	public Object getRefObjects(String refObjectsCode);
 }

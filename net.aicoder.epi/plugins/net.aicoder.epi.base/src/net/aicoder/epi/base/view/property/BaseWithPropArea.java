@@ -53,4 +53,8 @@ public abstract class BaseWithPropArea extends BaseArea {
 	public PropsArea getPropsArea() {
 		return propsArea;
 	}
+	
+	public IPropsManager getPropsManager() {
+		return propsManager;
+	}
 }
