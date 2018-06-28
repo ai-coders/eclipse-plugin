@@ -1,7 +1,5 @@
 package net.aicoder.epi.base.view.context;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import org.eclipse.core.runtime.IAdaptable;
@@ -20,10 +18,12 @@ public interface IEpiInput extends IAdaptable {
 	public <T extends IBaseVo> List<T> getDataList();
 	
 	public void setDataList(List<IBaseVo> dataList);
-
+	
+/**
 	public void addPropertyChangeListener(PropertyChangeListener listener);
 	
 	public void firePropertyChange(PropertyChangeEvent event);
 	
 	public void removePropertyChangeListener(PropertyChangeListener listener);
+**/	
 }

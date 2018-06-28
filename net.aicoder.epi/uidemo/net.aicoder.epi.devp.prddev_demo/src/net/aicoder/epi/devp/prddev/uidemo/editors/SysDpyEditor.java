@@ -390,6 +390,13 @@ public class SysDpyEditor extends EditorPart {
 		fd_lblXxx.right = new FormAttachment(label_1, 0, SWT.RIGHT);
 		lblXxx.setLayoutData(fd_lblXxx);
 		lblXxx.setText("XXX组件");
+		
+		Button btnCheckButton = new Button(container, SWT.CHECK);
+		FormData fd_btnCheckButton = new FormData();
+		fd_btnCheckButton.bottom = new FormAttachment(100, -10);
+		fd_btnCheckButton.left = new FormAttachment(0, 28);
+		btnCheckButton.setLayoutData(fd_btnCheckButton);
+		btnCheckButton.setText("Check Button");
 
 	}
 

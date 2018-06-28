@@ -51,7 +51,7 @@ public class PropsArea extends BaseWithTitleArea {
 
 	private void updateUI() {
 		propertyTable.setShowAdvancedProperties(show);
-		propertyTable.refresh();
+		//propertyTable.refresh();
 	}
 
 	//// Actions

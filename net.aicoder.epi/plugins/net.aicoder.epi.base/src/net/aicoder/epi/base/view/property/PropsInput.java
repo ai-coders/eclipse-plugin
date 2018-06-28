@@ -1,7 +1,5 @@
 package net.aicoder.epi.base.view.property;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,13 +8,11 @@ import net.aicoder.epi.base.model.ExtInfosDefine;
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.model.property.PitemDefine;
 import net.aicoder.epi.base.model.property.PropsDefine;
-import net.aicoder.epi.base.view.context.IEpiInput;
-import net.aicoder.tcom.tools.util.AiStringUtil;
+import net.aicoder.epi.base.view.context.EpiInput;
 
-public class PropsInput implements IEpiInput {
-	//private String pluginId;
-	private IBaseVo currentData;
-	private List<IBaseVo> dataList;
+public class PropsInput extends EpiInput{ //implements IEpiInput {
+	//private IBaseVo currentData;
+	//private List<IBaseVo> dataList;
 
 	private IPropsManager propsManager;
 	private ExtInfosDefine extInfosDefine;
@@ -51,15 +47,10 @@ public class PropsInput implements IEpiInput {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T extends IBaseVo> T getCurrentData() {
-		return (T) this.currentData;
-	}
-
 	@Override
 	public void setCurrentData(IBaseVo currentData) {
-		this.currentData = currentData;
+		super.setCurrentData(currentData);
+		
 		fullPropsInfoList.clear();
 		propsInfoList.clear();
 		
@@ -88,11 +79,14 @@ public class PropsInput implements IEpiInput {
 			return null;
 		}
 		PropertyInfo propInfo = new PropertyInfo();
+		propInfo.setCurrentData(element);
+		propInfo.setPropsManager(propsManager);
+		
 		propInfo.setItemDefine(itemDefine);
 		propInfo.setCode(itemDefine.getCode());
 		propInfo.setName(itemDefine.getName());
 		propInfo.setAlias(itemDefine.getAlias());
-		setPropInfoValue(element, propInfo);
+		//setPropInfoValue(element, propInfo);
 		
 		if(itemDefine.getSubItemsList() == null) {
 			return propInfo;
@@ -109,6 +103,7 @@ public class PropsInput implements IEpiInput {
 		return propInfo;
 	}
 
+/**	
 	private void setPropInfoValue(IBaseVo element, PropertyInfo propInfo) {
 		PitemDefine itemDefine = propInfo.getItemDefine();
 		String propertyName = itemDefine.getCode();
@@ -128,41 +123,8 @@ public class PropsInput implements IEpiInput {
 		String showValue = element.getPropertyShowValue(propertyName);
 		propInfo.setShowValue(showValue);
 	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T extends IBaseVo> List<T> getDataList() {
-		return (List<T>) this.dataList;
-	}
-
-	@Override
-	public void setDataList(List<IBaseVo> dataList) {
-		this.dataList = dataList;
-	}
-
-	@Override
-	public <T> T getAdapter(Class<T> adapter) {
-		return null;
-	}
-
-	@Override
-	public void addPropertyChangeListener(PropertyChangeListener listener) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void firePropertyChange(PropertyChangeEvent event) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void removePropertyChangeListener(PropertyChangeListener listener) {
-		// TODO Auto-generated method stub
-
-	}
-
+**/
+	
 	//// getter/setter
 	public PropsDefine getPropsDefine() {
 		return propsDefine;

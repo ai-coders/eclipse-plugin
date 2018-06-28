@@ -24,8 +24,20 @@ public class BaseVo extends AbstractBaseVo {
 	public BaseVo() {
 		super();
 	}
+	
+	@Override
+	public StateFlagEnum getDataState(String propertyCode) {
+		StateFlagEnum dataState = super.getDataState();
+		if(this.isExtInfo(propertyCode)) {
+			ElementInfo elementInfo = getElementInfo(propertyCode);
+			if(elementInfo != null) {
+				dataState = elementInfo.getDataState();
+			}
+		}
+		return dataState;
+	}
 
-	public void putElementInfos(List<ElementInfo> elementInfoList) {
+	public void settElementInfos(List<ElementInfo> elementInfoList) {
 		if(elementInfoList == null) {
 			return;
 		}
@@ -41,8 +53,8 @@ public class BaseVo extends AbstractBaseVo {
 		}
 	}
 
-	public ElementInfo getElementInfo(String propertyName) {
-		String infoCode = propertyName2InfoCode(propertyName);
+	public ElementInfo getElementInfo(String propertyCode) {
+		String infoCode = propertyCode2InfoCode(propertyCode);
 		
 		ElementInfo info = null;
 		if (elementInfoMap.containsKey(infoCode)) {
@@ -51,10 +63,10 @@ public class BaseVo extends AbstractBaseVo {
 		return info;
 	}
 
-	public Object getElementInfoValue(String propertyName) {
-		//String infoCode = propertyName2InfoCode(propertyName);
+	public Object getElementInfoValue(String propertyCode) {
+		//String infoCode = propertyCode2InfoCode(propertyCode);
 		Object value = null;
-		ElementInfo info = getElementInfo(propertyName);
+		ElementInfo info = getElementInfo(propertyCode);
 
 		if (info != null) {
 			value = info.getInfoValue();
@@ -62,15 +74,15 @@ public class BaseVo extends AbstractBaseVo {
 		return value;
 	}
 
-	public void setElementInfoValue(String propertyName, Object value) {
+	public void setElementInfoValue(String propertyCode, Object value) {
 		String strValue = null;
 		if (value != null) {
 			strValue = value.toString();
 		}
 
-		ElementInfo info = getElementInfo(propertyName);
+		ElementInfo info = getElementInfo(propertyCode);
 		if (info == null && extInfosDefine != null) {
-			String infoCode = propertyName2InfoCode(propertyName);
+			String infoCode = propertyCode2InfoCode(propertyCode);
 			info = extInfosDefine.newElementInfo(infoCode);
 			elementInfoMap.put(info.getCode(), info);
 		}
@@ -79,13 +91,13 @@ public class BaseVo extends AbstractBaseVo {
 		}
 	}
 	
-	public boolean isExtInfo(String propertyName) {
+	public static boolean isExtInfo(String propertyCode) {
 		boolean isExtElementInfo = false;
 		
 		String prefix = "";
 		int prefixLen = PROP_INFO_PREFIX.length();
-		if (!AiStringUtil.isEmpty(propertyName) && propertyName.length() > prefixLen) {
-			prefix = propertyName.substring(0, prefixLen);
+		if (!AiStringUtil.isEmpty(propertyCode) && propertyCode.length() > prefixLen) {
+			prefix = propertyCode.substring(0, prefixLen);
 			if (PROP_INFO_PREFIX.equalsIgnoreCase(prefix)) {
 				isExtElementInfo = true;
 			}
@@ -94,25 +106,25 @@ public class BaseVo extends AbstractBaseVo {
 		return isExtElementInfo;
 	}
 
-	public String propertyName2InfoCode(String propertyName) {
+	public static String propertyCode2InfoCode(String propertyCode) {
 		String infoCode = "";
 		int prefixLen = PROP_INFO_PREFIX.length();
-		if(isExtInfo(propertyName)) {
-			infoCode = propertyName.substring(prefixLen).trim();
+		if(isExtInfo(propertyCode)) {
+			infoCode = propertyCode.substring(prefixLen).trim();
 		}else {
-			infoCode = propertyName;
+			infoCode = propertyCode;
 		}
 		return infoCode;
 	}
 	
-	public String infoCode2PropertyName(String infoCode) {
-		String propertyName = "";
+	public static String infoCode2propertyCode(String infoCode) {
+		String propertyCode = "";
 		if(isExtInfo(infoCode)) {
-			propertyName = infoCode;
+			propertyCode = infoCode;
 		}else {
-			propertyName = PROP_INFO_PREFIX + infoCode;
+			propertyCode = PROP_INFO_PREFIX + infoCode;
 		}
-		return propertyName;
+		return propertyCode;
 	}
 
 	//// 前置的元素引用，控制元素排列顺序时使用
@@ -128,19 +140,19 @@ public class BaseVo extends AbstractBaseVo {
 
 	//// property
 	@Override
-	public boolean putPropertyValue(String propertyName, Object value) {
+	public boolean putPropertyValue(String propertyCode, Object value) {
 		boolean isModfiy = false;
 		Object origVlaue;
 		try {
 			if (StateFlagEnum.INSERTED == getDataState()) {
-				if(isExtInfo(propertyName)) {
-					setElementInfoValue(propertyName, value);
+				if(isExtInfo(propertyCode)) {
+					setElementInfoValue(propertyCode, value);
 				}else {
-					BeanUtil.setPropertyValue(this, propertyName, value);
+					BeanUtil.setPropertyValue(this, propertyCode, value);
 				}
 				isModfiy = true;
 			} else {
-				origVlaue = getPropertyOrigValue(propertyName);
+				origVlaue = getPropertyOrigValue(propertyCode);
 				if (origVlaue == null) {
 					if (value != null) {
 						isModfiy = true;
@@ -151,11 +163,11 @@ public class BaseVo extends AbstractBaseVo {
 					}
 				}
 				if (isModfiy) {
-					propertyOriginalValueMap.put(propertyName, origVlaue);
-					if(isExtInfo(propertyName)) {
-						setElementInfoValue(propertyName, value);
+					propertyOriginalValueMap.put(propertyCode, origVlaue);
+					if(isExtInfo(propertyCode)) {
+						setElementInfoValue(propertyCode, value);
 					}else {
-						BeanUtil.setPropertyValue(this, propertyName, value);
+						BeanUtil.setPropertyValue(this, propertyCode, value);
 					}
 				}
 			}
@@ -166,20 +178,20 @@ public class BaseVo extends AbstractBaseVo {
 	}
 
 	@Override
-	public Object getPropertyOrigValue(String propertyName) {
+	public Object getPropertyOrigValue(String propertyCode) {
 		Object origVlaue = null;
 		try {
 			if (StateFlagEnum.INSERTED == getDataState()) {
-				// BeanUtil.setPropertyValue(this, propertyName, value);
+				// BeanUtil.setPropertyValue(this, propertyCode, value);
 			} else {
-				if (propertyOriginalValueMap.containsKey(propertyName)) {
-					origVlaue = propertyOriginalValueMap.get(propertyName);
+				if (propertyOriginalValueMap.containsKey(propertyCode)) {
+					origVlaue = propertyOriginalValueMap.get(propertyCode);
 				} else {
-					//origVlaue = BeanUtil.getPropertyValue(this, propertyName);
-					if(isExtInfo(propertyName)) {
-						origVlaue = getElementInfoValue(propertyName);
+					//origVlaue = BeanUtil.getPropertyValue(this, propertyCode);
+					if(isExtInfo(propertyCode)) {
+						origVlaue = getElementInfoValue(propertyCode);
 					}else {
-						origVlaue = BeanUtil.getPropertyValue(this, propertyName);
+						origVlaue = BeanUtil.getPropertyValue(this, propertyCode);
 					}
 				}
 			}
@@ -190,14 +202,14 @@ public class BaseVo extends AbstractBaseVo {
 	}
 
 	@Override
-	public Object getPropertyValue(String propertyName) {
+	public Object getPropertyValue(String propertyCode) {
 		Object value = null;
 		try {
-			//value = BeanUtil.getPropertyValue(this, propertyName);
-			if(isExtInfo(propertyName)) {
-				value = getElementInfoValue(propertyName);
+			//value = BeanUtil.getPropertyValue(this, propertyCode);
+			if(isExtInfo(propertyCode)) {
+				value = getElementInfoValue(propertyCode);
 			}else {
-				value = BeanUtil.getPropertyValue(this, propertyName);
+				value = BeanUtil.getPropertyValue(this, propertyCode);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -206,9 +218,9 @@ public class BaseVo extends AbstractBaseVo {
 	}
 
 	@Override
-	public String getPropertyShowValue(String propertyName) {
+	public String getPropertyShowValue(String propertyCode) {
 		String showValue = "";
-		Object value = getPropertyValue(propertyName);
+		Object value = getPropertyValue(propertyCode);
 		if (value != null) {
 			showValue = value.toString();
 		}
@@ -254,4 +266,5 @@ public class BaseVo extends AbstractBaseVo {
 	public String toString() {
 		return this.getName();
 	}
+	
 }

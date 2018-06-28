@@ -1,11 +1,18 @@
 package net.aicoder.epi.base.model;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.Date;
-//import java.util.Map;
 
 public interface IBaseVo extends Serializable {
 
+	//boolean isInitFlag();
+	
+	//void setInitFlag(boolean initFlag);
+	
+	StateFlagEnum getDataState(String propertyCode);
+	
 	StateFlagEnum getDataState();
 
 	void setDataState(StateFlagEnum dataState);
@@ -91,16 +98,38 @@ public interface IBaseVo extends Serializable {
 	void setPreItemData(IBaseVo preItemData);
 
 	//// property
-	boolean putPropertyValue(String propertyName, Object value);
+	/**
+	 * 单纯向属性设，而不需要跟踪属性是否变化的情景下使用
+	 * @param propertyCode
+	 * @param value
+	 */
+	void setPropertyValue(String propertyCode, Object value);
+	
+	/**
+	 * 需要跟踪属性是否变化的情景下使用，设置属性值时会同步记录原始的数值，并且触发属性变易事件
+	 * @param propertyCode
+	 * @param value
+	 * @return 属性是否被修改，即新值是否与属性的原始值是否一致
+	 */
+	boolean putPropertyValue(String propertyCode, Object value);
 
-	Object getPropertyOrigValue(String propertyName);
+	Object getPropertyOrigValue(String propertyCode);
 
-	Object getPropertyValue(String propertyName);
+	Object getPropertyValue(String propertyCode);
 
-	String getPropertyShowValue(String propertyName);
+	String getPropertyShowValue(String propertyCode);
 	
 	//// loaded state
 	public boolean isLoadedElement(String elementName);
 	
 	public boolean isLoadedElement(String elementName, int pageNo);
+	
+	///////////////////////
+	public void addPropertyChangeListener(PropertyChangeListener listener);
+	
+	public void firePropertyChange(PropertyChangeEvent event);
+	
+	public void removePropertyChangeListener(PropertyChangeListener listener);
+	
+	public void removeAllPropertyChangeListener();
 }

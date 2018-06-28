@@ -14,6 +14,7 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
@@ -21,7 +22,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
 
-import net.aicoder.epi.base.model.IBaseVo;
+import net.aicoder.epi.base.model.BooleanItem;
 import net.aicoder.epi.base.model.OptionItem;
 import net.aicoder.epi.base.model.property.PitemDefine;
 import net.aicoder.epi.base.model.property.PropControlEnum;
@@ -85,8 +86,17 @@ public class PropertyTable extends Composite {
 	}
 
 	public void refresh() {
+		//
+		resetTreeItems();
 		viewer.expandAll();
 		viewer.refresh();
+	}
+	
+	// 依据是否可以修改，显示不同底色
+	private void resetTreeItems() {
+		for(TreeItem treeItem: tree.getItems()) {
+			
+		}
 	}
 
 	public PropertyInfo getFirstSelectedItem() {
@@ -106,8 +116,7 @@ public class PropertyTable extends Composite {
 	public void setShowAdvancedProperties(boolean showAdvancedProperties) {
 		m_showAdvancedProperties = showAdvancedProperties;
 		propsInput.setShowAdvancedProperties(m_showAdvancedProperties);
-		viewer.expandAll();
-		viewer.refresh();
+		refresh();
 	}
 
 	//// Modify
@@ -122,18 +131,18 @@ public class PropertyTable extends Composite {
 		tree.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				// Clean up any previous editor control
+				// Identify the selected row
+				final TreeItem treeItem = (TreeItem) e.item;
 				Control oldEditor = editor.getEditor();
 				if (oldEditor != null) {
 					oldEditor.dispose();
 				}
-				// Identify the selected row
-				final TreeItem item = (TreeItem) e.item;
-				if (item == null) {
+				if (treeItem == null) {
 					return;
 				}
 
 				PropertyInfo selectedProperty = getFirstSelectedItem();
-				resetPropertyEditor(item, selectedProperty);
+				resetPropertyEditor(treeItem, selectedProperty);
 			}
 		});
 	}
@@ -189,6 +198,7 @@ public class PropertyTable extends Composite {
 			resetComboBoxEditor(treeItem, selectedProperty);
 			break;
 		case CheckBox:
+			resetCheckBoxEditor(treeItem, selectedProperty);
 			break;
 		default:
 			break;
@@ -202,13 +212,9 @@ public class PropertyTable extends Composite {
 			public void modifyText(ModifyEvent me) {
 				Text text = (Text) editor.getEditor();
 				String value = text.getText();
-				String showVlaue = value;
-				editor.getItem().setText(VALUE_COLUMN_NO, value);
 				selectedProperty.setValue(value);
-				selectedProperty.setShowValue(showVlaue);
-				IBaseVo currentData = propsInput.getCurrentData();
-				String propertyName = selectedProperty.getCode();
-				currentData.putPropertyValue(propertyName, value);
+				
+				editor.getItem().setText(VALUE_COLUMN_NO, value);
 			}
 		});
 		newEditor.selectAll();
@@ -217,34 +223,22 @@ public class PropertyTable extends Composite {
 	}
 
 	private void resetComboBoxEditor(TreeItem treeItem, PropertyInfo selectedProperty) {
-		PitemDefine itemDefine = selectedProperty.getItemDefine();
-		String refObjectsCode = "";
-		if (itemDefine != null && itemDefine.getControl() != null) {
-			refObjectsCode = itemDefine.getControl().getRefObjects();
-		}
-		if (AiStringUtil.isEmpty(refObjectsCode)) {
+		List<OptionItem> comboBoxItemList = selectedProperty.getComboBoxItemList();
+		if(comboBoxItemList == null) {
 			return;
 		}
-		IPropsManager propsManager = propsInput.getPropsManager();
-		if (propsManager == null) {
-			return;
-		}
-		Object refObjects = propsManager.getRefObjects(refObjectsCode);
-		if (refObjects == null || !(refObjects instanceof List<?>)) {
-			return;
-		}
-
+		
 		final CCombo newEditor = new CCombo(tree, SWT.READ_ONLY);
-		for (Object optionItem : (List<?>) refObjects) {
-			newEditor.add(((OptionItem) optionItem).getValue());
+		for (OptionItem optionItem : comboBoxItemList) {
+			newEditor.add(optionItem.getValue());
 		}
 		// Select the previously selected item from the cell
 		newEditor.select(newEditor.indexOf(treeItem.getText(VALUE_COLUMN_NO)));
 
 		// Compute the width for the editor Also, compute the column width, so that the
 		// dropdown fits
-		//editor.minimumWidth = newEditor.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
-		//tree.getColumn(VALUE_COLUMN_NO).setWidth(editor.minimumWidth);
+		// editor.minimumWidth = newEditor.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
+		// tree.getColumn(VALUE_COLUMN_NO).setWidth(editor.minimumWidth);
 
 		// Set the focus on the dropdown and set into the editor
 		newEditor.setFocus();
@@ -256,20 +250,48 @@ public class PropertyTable extends Composite {
 			public void widgetSelected(SelectionEvent event) {
 				treeItem.setText(col, newEditor.getText());
 				int selectionIndex = newEditor.getSelectionIndex();
-				
-				OptionItem optionItem = (OptionItem)((List<?>) refObjects).get(selectionIndex);
+
+				OptionItem optionItem = selectedProperty.getComboBoxOptionItem(selectionIndex);
 				Object value = optionItem.getCode();
-				String showVlaue = newEditor.getText();
 				selectedProperty.setValue(value);
-				selectedProperty.setShowValue(showVlaue);
-				IBaseVo currentData = propsInput.getCurrentData();
-				String propertyName = selectedProperty.getCode();
-				currentData.putPropertyValue(propertyName, value);				
-				
+
 				// They selected an item; end the editing session
 				newEditor.dispose();
 			}
 		});
+	}
+
+	// 这个有Bug
+	private void resetCheckBoxEditor(TreeItem treeItem, PropertyInfo selectedProperty) {
+		final Button newEditor = new Button(tree, SWT.CHECK);
+		BooleanItem booleanItem = selectedProperty.getCheckBoxBooleanItem();
+		newEditor.setSelection(booleanItem.isBooleanValue());
+		newEditor.setText(booleanItem.getShowValue());
+
+		newEditor.setFocus();
+		editor.setEditor(newEditor, treeItem, VALUE_COLUMN_NO);
+
+		// Add a listener to set the selected item back into the cell
+		final int col = VALUE_COLUMN_NO;
+		newEditor.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent event) {
+				treeItem.setText(col, "");
+				boolean selected = newEditor.getSelection();
+
+				BooleanItem optionItem = selectedProperty.getCheckBoxBooleanItem(selected);
+				Object value = optionItem.getDataValue();
+				String showVlaue = optionItem.getShowValue();
+				newEditor.setText(showVlaue);
+				treeItem.setText(col, newEditor.getText());
+				
+				selectedProperty.setValue(value);
+				//selectedProperty.setShowValue(showVlaue);
+
+				// They selected an item; end the editing session
+				// newEditor.dispose();
+			}
+		});		
+		
 	}
 
 }

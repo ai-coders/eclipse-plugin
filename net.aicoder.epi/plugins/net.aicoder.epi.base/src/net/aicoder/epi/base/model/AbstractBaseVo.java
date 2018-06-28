@@ -1,5 +1,8 @@
 package net.aicoder.epi.base.model;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +12,8 @@ import net.aicoder.tcom.tools.util.BeanUtil;
 
 public abstract class AbstractBaseVo implements IBaseVo {
 	private static final long serialVersionUID = 1L;
+	
+	//private boolean initFlag = false; // 是否为对象初始化，如从服务端获取数据后设值时需要将标识设为true，后续客户端修改的信息才可以体现出属性是否修改
 
 	private StateFlagEnum dataState; // 只在客户端使用，不持久化
 
@@ -37,6 +42,21 @@ public abstract class AbstractBaseVo implements IBaseVo {
 
 	public AbstractBaseVo() {
 		super();
+	}
+/**
+	@Override
+	public boolean isInitFlag() {
+		return initFlag;
+	}
+
+	@Override
+	public void setInitFlag(boolean initFlag) {
+		this.initFlag = initFlag;
+	}
+**/
+	@Override
+	public StateFlagEnum getDataState(String propertyCode) {
+		return dataState;
 	}
 
 	@Override
@@ -224,17 +244,7 @@ public abstract class AbstractBaseVo implements IBaseVo {
 	public void setModifyAt(Date modifyAt) {
 		this.modifyAt = modifyAt;
 	}
-/**
-	@Override
-	public Map<String, Object> getOriginalPropertyValue() {
-		return propertyOriginalValueMap;
-	}
 
-	@Override
-	public void setOriginalPropertyValue(Map<String, Object> originalPropertyValue) {
-		this.propertyOriginalValueMap = originalPropertyValue;
-	}
-**/
 	//// 前置的元素引用，控制元素排列顺序时使用
 	@Override
 	public IBaseVo getPreItemData() {
@@ -248,15 +258,41 @@ public abstract class AbstractBaseVo implements IBaseVo {
 
 	//// property
 	@Override
-	public boolean putPropertyValue(String propertyName, Object value) {
+	public void setPropertyValue(String propertyCode, Object value) { // 只能给跟踪属性变更的情景下使用
+		try {
+			BeanUtil.setPropertyValue(this, propertyCode, value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
+	
+	@Override
+	public boolean putPropertyValue(String propertyCode, Object value) { // 只能给跟踪属性变更的情景下使用
 		boolean isModfiy = false;
 		Object origVlaue;
 		try {
+			origVlaue = getPropertyOrigValue(propertyCode);
+			if (origVlaue == null) {
+				if (value != null) {
+					isModfiy = true;
+				}
+			} else {
+				if (!origVlaue.equals(value)) {
+					isModfiy = true;
+				}
+			}
+			if (isModfiy) {
+				propertyOriginalValueMap.put(propertyCode, origVlaue);
+				BeanUtil.setPropertyValue(this, propertyCode, value);
+				PropertyChangeEvent event = new PropertyChangeEvent(this, propertyCode, origVlaue, value);
+				firePropertyChange(event);
+			}
+/**			
 			if (StateFlagEnum.INSERTED == dataState) {
-				BeanUtil.setPropertyValue(this, propertyName, value);
+				BeanUtil.setPropertyValue(this, propertyCode, value);
 				isModfiy = true;
 			} else {
-				origVlaue = getPropertyOrigValue(propertyName);
+				origVlaue = getPropertyOrigValue(propertyCode);
 				if (origVlaue == null) {
 					if (value != null) {
 						isModfiy = true;
@@ -267,10 +303,11 @@ public abstract class AbstractBaseVo implements IBaseVo {
 					}
 				}
 				if (isModfiy) {
-					propertyOriginalValueMap.put(propertyName, origVlaue);
-					BeanUtil.setPropertyValue(this, propertyName, value);
+					propertyOriginalValueMap.put(propertyCode, origVlaue);
+					BeanUtil.setPropertyValue(this, propertyCode, value);
 				}
 			}
+**/			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -278,18 +315,25 @@ public abstract class AbstractBaseVo implements IBaseVo {
 	}
 
 	@Override
-	public Object getPropertyOrigValue(String propertyName) {
+	public Object getPropertyOrigValue(String propertyCode) {
 		Object origVlaue = null;
 		try {
-			if (StateFlagEnum.INSERTED == dataState) {
-				// BeanUtil.setPropertyValue(this, propertyName, value);
+			if (propertyOriginalValueMap.containsKey(propertyCode)) {
+				origVlaue = propertyOriginalValueMap.get(propertyCode);
 			} else {
-				if (propertyOriginalValueMap.containsKey(propertyName)) {
-					origVlaue = propertyOriginalValueMap.get(propertyName);
+				origVlaue = BeanUtil.getPropertyValue(this, propertyCode);
+			}
+/**			
+			if (StateFlagEnum.INSERTED == dataState) {
+				// BeanUtil.setPropertyValue(this, propertyCode, value);
+			} else {
+				if (propertyOriginalValueMap.containsKey(propertyCode)) {
+					origVlaue = propertyOriginalValueMap.get(propertyCode);
 				} else {
-					origVlaue = BeanUtil.getPropertyValue(this, propertyName);
+					origVlaue = BeanUtil.getPropertyValue(this, propertyCode);
 				}
 			}
+**/			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -297,10 +341,10 @@ public abstract class AbstractBaseVo implements IBaseVo {
 	}
 
 	@Override
-	public Object getPropertyValue(String propertyName) {
+	public Object getPropertyValue(String propertyCode) {
 		Object value = null;
 		try {
-			value = BeanUtil.getPropertyValue(this, propertyName);
+			value = BeanUtil.getPropertyValue(this, propertyCode);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -308,9 +352,9 @@ public abstract class AbstractBaseVo implements IBaseVo {
 	}
 
 	@Override
-	public String getPropertyShowValue(String propertyName) {
+	public String getPropertyShowValue(String propertyCode) {
 		String showValue = "";
-		Object value = getPropertyValue(propertyName);
+		Object value = getPropertyValue(propertyCode);
 		if (value != null) {
 			showValue = value.toString();
 		}
@@ -346,5 +390,33 @@ public abstract class AbstractBaseVo implements IBaseVo {
 	@Override
 	public String toString() {
 		return this.getName();
+	}
+	
+	/////////////////////////////////////////////////////////////////////////////
+	private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
+
+	@Override
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		changeSupport.addPropertyChangeListener(listener);
+	}
+
+	@Override
+	public void firePropertyChange(PropertyChangeEvent event) {
+		changeSupport.firePropertyChange(event);
+	}
+
+	@Override
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
+		changeSupport.removePropertyChangeListener(listener);
+	}
+
+	@Override
+	public void removeAllPropertyChangeListener() {
+		PropertyChangeListener[] listeners = changeSupport.getPropertyChangeListeners();
+		if(listeners != null) {
+			for(PropertyChangeListener listener:listeners) {
+				changeSupport.removePropertyChangeListener(listener);
+			}
+		}
 	}
 }
