@@ -20,9 +20,9 @@ import net.aicoder.epi.base.view.element.tree.EpiTreeContentProvider;
 
 public class EpiAddChildAction extends BaseAction {
 	private static String actionText = "添加子记录";
-	private static ImageDescriptor actionImageDescriptor = BaseImageConstant
-			.getImageDescriptor(BaseImageConstant.A_ADD_CHILD);
+	private static ImageDescriptor actionImageDescriptor = BaseImageConstant.getImageDescriptor(BaseImageConstant.A_ADD_CHILD);
 	private static String toolTipText = "新增子记录!";
+	private static String visibleWhenCount = "*";
 	
 	private EpiTree epiTree;
 
@@ -40,6 +40,7 @@ public class EpiAddChildAction extends BaseAction {
 		super(actionText, actionImageDescriptor);
 		setToolTipText(toolTipText);
 		setTree(tree);
+		setVisibleWhenCount(visibleWhenCount);
 	}
 
 	public void run() {
@@ -50,7 +51,7 @@ public class EpiAddChildAction extends BaseAction {
 		if (currData == null) {
 			Object input = viewer.getInput();
 			Object[] rootNodes = ((EpiTreeContentProvider) definer.getContentProvider()).getElements(input);
-			if (rootNodes != null) {
+			if (rootNodes != null && rootNodes.length > 0) {
 				currData = (IBaseVo) rootNodes[0];
 			}
 		}

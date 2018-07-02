@@ -46,9 +46,15 @@ public class EpiFilterAction extends BaseAction{
 		//filter action process
 //		MessageDialog messageDialog = new MessageDialog(parentShell, dialogTitle, dialogTitleImage, dialogMessage, dialogImageType, dialogButtonLabels, defaultIndex)
 		
-		System.out.println("发起过滤动作");
+		doFilterAction();
+		tree.getViewer().refresh();
 	}
 
+
+	protected void doFilterAction() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	public EpiTree getTree() {
 		return tree;
