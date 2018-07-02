@@ -4,6 +4,7 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -65,6 +66,8 @@ public class SysDpyModelArea extends PrddevWithPropArea {
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				ISelection selection = event.getSelection();
+				if(((StructuredSelection)selection).getFirstElement() == null) return;
+				
 				getModelRightArea().getSysDpyCmpRefTable().setSelection(selection);
 				setElementSelection(selection);
 			}
