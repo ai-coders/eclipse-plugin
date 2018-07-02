@@ -23,6 +23,12 @@ public final class BaseImageConstant {
 
 	public static final String A_UP = "icons/actions/up.png";
 	public static final String A_UP_DIS = "icons/actions/up_dis.png";
+	
+	public static final String A_UPGRADE = "icons/actions/upgrade.png";
+	public static final String A_UPGRADE_DIS = "icons/actions/upgrade.png";
+	
+	public static final String A_DEGRADE = "icons/actions/degrade.png";
+	public static final String A_DEGRADE_DIS = "icons/actions/degrade.png";
 
 	public static final String A_DOWN = "icons/actions/down.png";
 	public static final String A_DOWN_DIS = "icons/actions/down_dis.png";
