@@ -26,6 +26,10 @@ public class ProductOpsDoper extends BaseDoper{
 	 * @return
 	 */
 	public EpiInput loadProductGroupList(IBaseVo baseVo) {
+//		if(baseVo == null) return null;
+//		ExtInfosDefine eid = new ExtInfosDefine();
+//		eid.setEtype(baseVo.getEtype());
+		
 		List<IBaseVo> loadProductGroupList = productOpsDao.loadProductGroupList(baseVo);
 		EpiInput epiInput = new EpiInput();
 		epiInput.setDataList(loadProductGroupList);
