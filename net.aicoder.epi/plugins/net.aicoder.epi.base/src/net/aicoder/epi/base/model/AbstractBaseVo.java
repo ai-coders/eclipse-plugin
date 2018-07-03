@@ -36,9 +36,9 @@ public abstract class AbstractBaseVo implements IBaseVo {
 	private String modifyUname;
 	private Date modifyAt;
 
-	private IBaseVo preItemData;
-	private Map<String, Object> propertyOriginalValueMap = new HashMap<String, Object>(0);
-	private Map<String, LoadElementState> loadElementStateMap = new HashMap<String, LoadElementState>(0);
+	//private IBaseVo preItemData;
+	protected Map<String, Object> propertyOriginalValueMap = new HashMap<String, Object>(0);
+	//private Map<String, LoadElementState> loadElementStateMap = new HashMap<String, LoadElementState>(0);
 
 	public AbstractBaseVo() {
 		super();
@@ -248,12 +248,11 @@ public abstract class AbstractBaseVo implements IBaseVo {
 	//// 前置的元素引用，控制元素排列顺序时使用
 	@Override
 	public IBaseVo getPreItemData() {
-		return preItemData;
+		return null;
 	}
 
 	@Override
 	public void setPreItemData(IBaseVo preItemData) {
-		this.preItemData = preItemData;
 	}
 
 	//// property
@@ -283,6 +282,7 @@ public abstract class AbstractBaseVo implements IBaseVo {
 			}
 			if (isModfiy) {
 				propertyOriginalValueMap.put(propertyCode, origVlaue);
+				//putPropertyOrigValue(propertyCode, origVlaue);
 				BeanUtil.setPropertyValue(this, propertyCode, value);
 				PropertyChangeEvent event = new PropertyChangeEvent(this, propertyCode, origVlaue, value);
 				firePropertyChange(event);
@@ -339,7 +339,7 @@ public abstract class AbstractBaseVo implements IBaseVo {
 		}
 		return origVlaue;
 	}
-
+	
 	@Override
 	public Object getPropertyValue(String propertyCode) {
 		Object value = null;
@@ -360,7 +360,18 @@ public abstract class AbstractBaseVo implements IBaseVo {
 		}
 		return showValue;
 	}
-
+	
+	@Override
+	public boolean isLoadedElement(String elementName) {
+		return true;
+	}
+	
+	@Override
+	public boolean isLoadedElement(String elementName, int pageNo) {
+		return true;
+	}
+	
+/**
 	public void putLoadElementState(LoadElementState loadElementState) {
 		if (loadElementState == null) {
 			return;
@@ -386,7 +397,8 @@ public abstract class AbstractBaseVo implements IBaseVo {
 		}
 		return isLoaded;
 	}
-
+**/
+	
 	@Override
 	public String toString() {
 		return this.getName();

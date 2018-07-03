@@ -9,7 +9,7 @@ public class ExtInfosDefine {
 
 	private Map<String, ElementInfoDefine> elementInfoDefineMap = new HashMap<String, ElementInfoDefine>(0);
 
-	public void putElementInfosDefine(List<ElementInfoDefine> commonInfoDefineList) {
+	public void initElementInfosDefine(List<ElementInfoDefine> commonInfoDefineList) {
 		if (commonInfoDefineList == null) {
 			return;
 		}
@@ -21,7 +21,7 @@ public class ExtInfosDefine {
 		}
 	}
 
-	public void putElementInfosDefine(List<ElementInfoDefine> commonInfoDefineList,
+	public void initElementInfosDefine(List<ElementInfoDefine> commonInfoDefineList,
 			List<ElementInfoDefine> tenantInfoDefineList) {
 		if (commonInfoDefineList == null && tenantInfoDefineList == null) {
 			return;
@@ -70,6 +70,17 @@ public class ExtInfosDefine {
 		}
 		return elementInfo;
 	}
+	
+	public Object getElementInfoDefaultValue(String infoCode) {
+		Object defaultValue = null;
+		
+		ElementInfoDefine elementInfoDefine = getElementInfoDefine(infoCode);
+		if(elementInfoDefine != null) {
+			defaultValue = elementInfoDefine.getInfoValue();
+		}
+		
+		return defaultValue;
+	}
 
 	public String getEtype() {
 		return etype;
@@ -78,7 +89,7 @@ public class ExtInfosDefine {
 	public void setEtype(String etype) {
 		this.etype = etype;
 	}
-
+/**
 	public Map<String, ElementInfoDefine> getElementInfoDefineMap() {
 		return elementInfoDefineMap;
 	}
@@ -86,4 +97,5 @@ public class ExtInfosDefine {
 	public void setElementInfoDefineMap(Map<String, ElementInfoDefine> elementInfoDefineMap) {
 		this.elementInfoDefineMap = elementInfoDefineMap;
 	}
+**/	
 }

@@ -28,7 +28,7 @@ public class SysPropsDoper  extends BaseDoper {
 		
 		List<ElementInfoDefine> commonInfoDefineList = sysPropsDao.listCommonExtInfoDefine(element);
 		List<ElementInfoDefine> tenantInfoDefineList = sysPropsDao.listTenantExtInfoDefine(element);
-		extInfosDefine.putElementInfosDefine(commonInfoDefineList, tenantInfoDefineList);
+		extInfosDefine.initElementInfosDefine(commonInfoDefineList, tenantInfoDefineList);
 		
 		return extInfosDefine;		
 	}

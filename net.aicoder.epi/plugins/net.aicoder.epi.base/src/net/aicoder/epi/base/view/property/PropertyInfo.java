@@ -146,6 +146,9 @@ public class PropertyInfo extends TreeNodeVo {
 		}
 
 		String propertyCode = itemDefine.getCode();
+		if(AiStringUtil.isEmpty(propertyCode)) {
+			return showValue;
+		}
 		String controlType = "";
 		if (itemDefine.getControl() != null) {
 			controlType = itemDefine.getControl().getType();

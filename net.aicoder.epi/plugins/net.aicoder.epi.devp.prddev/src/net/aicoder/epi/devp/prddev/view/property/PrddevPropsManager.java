@@ -51,7 +51,7 @@ public final class PrddevPropsManager implements IPropsManager {
 			return;
 		}
 		List<ElementInfo> elementInfoList = doper.listElementInfo(element);
-		element.settElementInfos(elementInfoList);
+		element.initElementInfos(elementInfoList);
 	}
 	
 	private static ExtInfosDefine _getExtInfosDefine(IBaseVo element) {
