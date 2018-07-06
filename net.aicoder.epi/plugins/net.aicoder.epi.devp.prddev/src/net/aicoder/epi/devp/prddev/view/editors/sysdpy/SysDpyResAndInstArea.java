@@ -8,9 +8,9 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-import net.aicoder.epi.base.view.element.area.BaseArea;
-import net.aicoder.epi.base.view.element.area.EpiSashArea;
-import net.aicoder.epi.base.view.element.area.IEpiArea;
+import net.aicoder.epi.base.view.part.area.BaseArea;
+import net.aicoder.epi.base.view.part.area.SashArea;
+import net.aicoder.epi.base.view.part.area.IArea;
 
 /**
  * 部署模型-关联资源和资源实例(区域)
@@ -28,20 +28,21 @@ public class SysDpyResAndInstArea extends BaseArea{
 	}
 
 	@Override
-	protected Control createAreaControl(Composite parent) {
+	//protected Control createAreaControl(Composite parent) {
+	public void assembleControl(Composite parent) {
 		int[] areaWeights = new int[2];
 		areaWeights[0] = 1;
 		areaWeights[1] = 1;
 		
 		sysDpyResourcesTable = new SysDpyResourcesTable();
 		sysDpyResInstanceTreeTable = new SysDpyResInstanceTreeTable();
-		IEpiArea[] epiAreas = new IEpiArea[2];
+		IArea[] epiAreas = new IArea[2];
 		epiAreas[0] = sysDpyResourcesTable;
 		epiAreas[1] = sysDpyResInstanceTreeTable;
 		
-		EpiSashArea sashArea = new EpiSashArea(getWorkbenchPart(), SWT.HORIZONTAL);
-		sashArea.setEpiAreas(epiAreas);
-		sashArea.setAreaWeights(areaWeights);
+		SashArea sashArea = new SashArea(getWorkbenchPart(), SWT.HORIZONTAL);
+		sashArea.setAreas(epiAreas);
+		sashArea.setWeights(areaWeights);
 		sashArea.createControl(parent);
 
 		//点选“关联资源”的记录时，维护当前关联资源的“资源实例”；
@@ -56,7 +57,7 @@ public class SysDpyResAndInstArea extends BaseArea{
 				sysDpyResInstanceTreeTable.setSelection(selection);
 			}
 		});
-		return sashArea.getControl();
+		//return sashArea.getControl();
 	}
 
 	

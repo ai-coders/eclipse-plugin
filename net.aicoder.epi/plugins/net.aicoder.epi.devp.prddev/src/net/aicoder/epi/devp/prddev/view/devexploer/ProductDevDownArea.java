@@ -8,12 +8,12 @@ import org.eclipse.ui.ISharedImages;
 import net.aicoder.devp.model.EtypeEnum;
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.view.context.IEpiInput;
-import net.aicoder.epi.base.view.element.area.BaseArea;
-import net.aicoder.epi.base.view.element.area.BaseWithTitleArea;
-import net.aicoder.epi.base.view.element.area.EpiTabArea;
-import net.aicoder.epi.base.view.element.area.IEpiArea;
-import net.aicoder.epi.base.view.element.tree.EpiTree;
-import net.aicoder.epi.base.view.element.tree.EpiTreeDefiner;
+import net.aicoder.epi.base.view.control.tree.EpiTree;
+import net.aicoder.epi.base.view.control.tree.EpiTreeDefiner;
+import net.aicoder.epi.base.view.part.area.BaseArea;
+import net.aicoder.epi.base.view.part.area.BaseTitleArea;
+import net.aicoder.epi.base.view.part.area.TabArea;
+import net.aicoder.epi.base.view.part.area.IArea;
 import net.aicoder.epi.devp.DevpConstant;
 import net.aicoder.epi.devp.prddev.PrddevImageConstant;
 import net.aicoder.epi.devp.prddev.doper.dev.ProductDevDoper;
@@ -29,19 +29,24 @@ import net.aicoder.epi.util.ImageUtil;
 
 public class ProductDevDownArea extends BaseArea {
 	public static String ID = ProductDevDownArea.class.getName();
-
+	private TabArea tabArea;
+	
 	@Override
-	protected Control createAreaControl(Composite parent) {
-		IEpiArea[] areas = new IEpiArea[2];
+	public void initArea() {
+		IArea[] areas = new IArea[2];
 		areas[0] = new ProductDevDgmTable();
 		areas[1] = new ProductDevSubElmTable();
 		
-		EpiTabArea tabArea = new EpiTabArea(this.getWorkbenchPart());
-		tabArea.setEpiAreas(areas);
+		tabArea = new TabArea(this.getWorkbenchPart());
+		tabArea.setEpiAreas(areas);		
+	}
+
+	@Override
+	//protected Control createAreaControl(Composite parent) {
+	public void assembleControl(Composite parent) {
 		tabArea.createControl(parent);
 		tabArea.getTabFolder().setSelection(0);
-		
-		return tabArea.getControl();
+		//return tabArea.getControl();
 	}
 	
 	@Override

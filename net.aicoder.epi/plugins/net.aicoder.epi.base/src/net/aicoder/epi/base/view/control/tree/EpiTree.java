@@ -1,4 +1,4 @@
-package net.aicoder.epi.base.view.element.table;
+package net.aicoder.epi.base.view.control.tree;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -14,15 +14,17 @@ import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TextCellEditor;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeColumn;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
@@ -30,115 +32,110 @@ import org.eclipse.ui.PlatformUI;
 
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.model.StateFlagEnum;
-import net.aicoder.epi.base.view.IViewElement;
 import net.aicoder.epi.base.view.context.IViewContext;
+import net.aicoder.epi.base.view.control.table.EpiCellModifier;
+import net.aicoder.epi.base.view.control.table.EpiSelectionProvider;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
+import net.aicoder.epi.base.view.part.IViewElement;
 import net.aicoder.tcom.tools.util.AiStringUtil;
 
-public class EpiTable extends Composite implements IViewElement {
+public class EpiTree extends Composite implements IViewElement {
 	public final int EACH_CHAR_WIDTH = 10;
-
-	protected Table table;
-	protected TableViewer viewer;
-	private EpiTableDefiner definer;
+	
+	private EpiTreeDefiner definer;
+	private Tree tree;
+	private TreeViewer viewer;
 	private IViewContext context;
 	private EpiSelectionProvider selectionProvider;
-
+	
 	private boolean editable = true;
 	private boolean dirty = false;
 	private List<IBaseVo> insertedDataList = new ArrayList<IBaseVo>(0);
 	private List<IBaseVo> deletedDataList = new ArrayList<IBaseVo>(0);
 	private List<IBaseVo> updatedDataList = new ArrayList<IBaseVo>(0);
 	
-    private Set<TableItem> dirtyBackgroundSet = new HashSet<TableItem>(0);
-
- /**   
-	public EpiTable(Composite parent) {
+    private Set<TreeItem> dirtyBackgroundSet = new HashSet<TreeItem>(0);
+/**	
+	public EpiTree(Composite parent) {
 		super(parent, SWT.NULL);
-		initEpiTable();
+		initEpiTree();
 	}
-**/
-	public EpiTable(Composite parent, EpiTableDefiner definer, IViewContext context) {
+	
+	public EpiTree(Composite parent, EpiTreeDefiner definer) {
 		super(parent, SWT.NULL);
-		initEpiTable();
-
+		initEpiTree();
+		
+		this.definer = definer;
+		attachViewDefiner(definer);
+	}
+**/	
+	public EpiTree(Composite parent, EpiTreeDefiner definer, IViewContext context) {
+		super(parent, SWT.NULL);
+		initEpiTree();
+		
 		setDefiner(definer);
 		attachViewDefiner(definer);
 		seViewContext(context);
 		viewer.setInput(context.getInput());
-		
 		selectionProvider = new EpiSelectionProvider(viewer);
 	}
-	
-	private void initEpiTable() {
+
+	private void initEpiTree() {
 		setLayout(new FillLayout());
+		
+		tree = new Tree(this,SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.FULL_SELECTION);
+		//tree.setLayout(new TableLayout());
+		//tree.setLayoutData(new GridData(GridData.FILL_BOTH)); //excption
+		viewer = new TreeViewer(tree);
+		
+		tree.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent event) {
+/**				
+				final IBaseVo item = getFirstSelectedItem();
+				IStatusLineManager statusLine = getViewSite().getActionBars().getStatusLineManager();
+				if (item != null) {
+					statusLine.setMessage(item.getCode() + "-" + item.getName());
+				}
+**/				
+			}
 
-		// table = new Table(this,SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL |
-		// SWT.FULL_SELECTION |SWT.HIDE_SELECTION);
-		table = new Table(this, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.FULL_SELECTION);
-		// table.setLayoutData(new GridData(GridData.FILL_BOTH));
-		// table.setLayout(new TableLayout());
-		viewer = new TableViewer(table);
+			public void widgetDefaultSelected(SelectionEvent event) { // 双击展开、收缩
+				TreeItem treeItem = (TreeItem) event.item;
+				IBaseVo item = getFirstSelectedItem();
+				String editorId = definer.getViewItemDefiner(item.getEtype()).getEditorId();
+				if (AiStringUtil.isEmpty(editorId)) {
+					if (treeItem != null && treeItem.getItemCount() > 0) {
+						boolean expanded = treeItem.getExpanded();
+						treeItem.setExpanded(!expanded);
+						// update the viewer
+						viewer.refresh();
+					}
+				}else {
+					treeItem.setExpanded(false);
+					// update the viewer
+					viewer.refresh();
+				}
+			}
+		});
 	}
+	
 
-	protected void attachViewDefiner(EpiTableDefiner definer) {
+	// 设置: Provider(双击事件), 列配置, CellEditors, 菜单
+	protected void attachViewDefiner(EpiTreeDefiner definer) {
 		this.definer = definer;
-
-		attachTableColumns();
-		attachTableViewer();
-		if (isEditable()) {
+		
+		attachTreeViewer();
+		attachTreeColumns();
+		if(isEditable()) {
 			attachCellEditors();
 		}
-
-		table.setHeaderVisible(true);
-		table.setLinesVisible(true);
-		// GridLayoutFactory.fillDefaults().generateLayout(parent); //
-		// 这句话非常害人，每级的Layout自己处理，不要在下一级处理
+		attachMenus();
+		
+		tree.setHeaderVisible(true);
+		tree.setLinesVisible(true);
 	}
-
-	private void attachTableColumns() {
-		if (definer.getColumnDefinerList().size() == 0) {
-			return;
-		}
-		// TableLayout layout = new TableLayout();
-		for (IColumnDefiner columnDefiner : definer.getColumnDefinerList()) {
-			TableColumn column = new TableColumn(table, SWT.LEFT);
-			String columnName = columnDefiner.getColumnName();
-			column.setText(columnName);
-
-			int columnLenath = columnDefiner.getColumnLength();
-			if (columnLenath == 0) {
-				column.setWidth(EACH_CHAR_WIDTH * 10);
-			} else if (columnLenath < 0) {
-				column.setWidth(EACH_CHAR_WIDTH * columnLenath * -1);
-				column.setResizable(false);
-			} else {
-				column.setWidth(EACH_CHAR_WIDTH * columnLenath);
-			}
-			// layout.addColumnData(new ColumnWeightData(50, 75, true));
-
-			boolean isHidden = columnDefiner.ishHidden();
-			if (isHidden) {
-				column.setWidth(0);
-			}
-		}
-		// tree.setLayout(layout);
-	}
-
-	private void attachTableViewer() {
-		viewer.setContentProvider(definer.getContentProvider());
-		if (definer.getColumnLabelProvider() != null) {
-			viewer.setLabelProvider(definer.getColumnLabelProvider());
-		} else {
-			viewer.setLabelProvider(definer.getLabelProvider());
-		}
-		//viewer.setInput(definer.getInput());
-
-		if (definer.hasOpenEditAction()) {
-			hookDoubleClickAction();
-		}
-	}
-
+	
+	//// private methods
 	private void hookDoubleClickAction() {
 		Action openEditorAction = new Action() {
 			public void run() {
@@ -163,12 +160,56 @@ public class EpiTable extends Composite implements IViewElement {
 			}
 		});
 	}
+	
+	private void attachTreeViewer() {
+		viewer.setContentProvider(definer.getContentProvider());
+		if(definer.getColumnLabelProvider()!=null) {
+			viewer.setLabelProvider(definer.getColumnLabelProvider());
+		}else {
+			viewer.setLabelProvider(definer.getLabelProvider());
+		}
+		//viewer.setInput(definer.getInput());
 
+		if (definer.hasOpenEditAction()) {
+			hookDoubleClickAction();
+		}
+	}
+	
+	private void attachTreeColumns() {
+		if (definer.getColumnDefinerList().size() == 0) {
+			return;
+		}
+		// TableLayout layout = new TableLayout();
+		for (IColumnDefiner columnDefiner : definer.getColumnDefinerList()) {
+			TreeColumn column = new TreeColumn(tree, SWT.LEFT);
+			String columnName = columnDefiner.getColumnName();
+			column.setText(columnName);
+
+			int columnLenath = columnDefiner.getColumnLength();
+			if (columnLenath == 0) {
+				column.setWidth(EACH_CHAR_WIDTH * 10);
+			} else if (columnLenath < 0) {
+				column.setWidth(EACH_CHAR_WIDTH * columnLenath * -1);
+				column.setResizable(false);
+			} else {
+				column.setWidth(EACH_CHAR_WIDTH * columnLenath);
+			}
+			// layout.addColumnData(new ColumnWeightData(50, 75, true));
+
+			boolean isHidden = columnDefiner.ishHidden();
+			if (isHidden) {
+				column.setWidth(0);
+			}
+		}
+		// tree.setLayout(layout);
+	}
+	
 	private void attachCellEditors() {
 		int columnDefinerNum = definer.getColumnDefinerList().size();
 		if (columnDefinerNum == 0) {
 			return;
 		}
+		//ICellModifier cellModifier = new EpiCellModifier(definer, viewer);
 		ICellModifier cellModifier = new EpiCellModifier(this);
 		viewer.setCellModifier(cellModifier);
 
@@ -181,15 +222,15 @@ public class EpiTable extends Composite implements IViewElement {
 			boolean isColumnEditable = columnDefiner.isEditable();
 			if (isColumnEditable) {
 				if (dataType == null) {
-					cellEditors[colIdx] = new TextCellEditor(table);
+					cellEditors[colIdx] = new TextCellEditor(tree);
 				} else {
 					switch (dataType) {
 					case IColumnDefiner.CE_COMBOBOX:
 						String[] items = definer.getCellEditorItems(columnName);
-						cellEditors[colIdx] = new ComboBoxCellEditor(table, items);
+						cellEditors[colIdx] = new ComboBoxCellEditor(tree, items);
 						break;
 					default:
-						cellEditors[colIdx] = new TextCellEditor(table);
+						cellEditors[colIdx] = new TextCellEditor(tree);
 						break;
 					}
 				}
@@ -202,7 +243,11 @@ public class EpiTable extends Composite implements IViewElement {
 		viewer.setCellEditors(cellEditors);
 		viewer.setColumnProperties(columnProperties);
 	}
-
+	
+	private void attachMenus(){
+		
+	}
+	
 	@Override
 	public void setDirtyBackground(String property) {
 		IColumnDefiner columnDefiner = definer.getColumnDefiner(property);
@@ -213,22 +258,43 @@ public class EpiTable extends Composite implements IViewElement {
 	
 	@Override
 	public void setDirtyBackground(int columnIndex) {
-		TableItem treeItem0 = this.getSelectedTableItem();
+		TreeItem treeItem0 = this.getSelectedTreeItem();
 		if (treeItem0 != null) {
 			Display display = Display.getCurrent();
 			treeItem0.setBackground(columnIndex, display.getSystemColor(SWT.COLOR_YELLOW));
 			dirtyBackgroundSet.add(treeItem0);
 		}
 	}
+	
+/**
+	public void setDirtyBackground(TreeItem item, int columnIndex)
+	{
+		if (item != null) 
+		{
+			Display display = Display.getCurrent();
+			item.setBackground(columnIndex, display.getSystemColor(SWT.COLOR_YELLOW));			
+			dirtyBackgroundSet.add(item);
+		}
+	}
+
+	public void removeDirtyBackground(TreeItem item, int columnIndex) {
+		if (item != null) {
+			Display display = Display.getCurrent();
+			item.setBackground(columnIndex, display.getSystemColor(SWT.COLOR_WHITE));
+			
+			//dirtyBackgroundSet.remove(item);
+		}
+	}
+**/	
 
 	protected void revertToOriginalBackground()
 	{
 		Display display = Display.getCurrent();
-		int columns = table.getColumnCount();
-		Iterator<TableItem> iter = dirtyBackgroundSet.iterator();
+		int columns = tree.getColumnCount();
+		Iterator<TreeItem> iter = dirtyBackgroundSet.iterator();
 		while(iter.hasNext())
 		{
-			TableItem item = iter.next();
+			TreeItem item = iter.next();
 			for (int i=0;i<columns;i++)
 			{
 				item.setBackground(i, display.getSystemColor(SWT.COLOR_WHITE));
@@ -242,21 +308,22 @@ public class EpiTable extends Composite implements IViewElement {
 		super.dispose();
 	}
  	    
-	//// getter/setter
-	public Table getTable() {
-		return table;
+	//// Getter/Setter
+	public Tree getTree() {
+		return tree;
 	}
 	
-	public TableItem getSelectedTableItem() {
-		TableItem[] items;
-		TableItem treeItem0 = null;
-		items = table.getSelection();
-		if(items != null) {
+	public TreeItem getSelectedTreeItem() {
+		TreeItem[] items;
+		TreeItem treeItem0 = null;
+		items = tree.getSelection();
+		if(items != null && items.length > 0) {
 			treeItem0 = items[0];
 		}
 		return treeItem0;
 	}
-	
+
+	@Override
 	public IBaseVo getFirstSelectedItem() {
 		IBaseVo item = null;
 		IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
@@ -266,7 +333,7 @@ public class EpiTable extends Composite implements IViewElement {
 		item = (IBaseVo) selection.getFirstElement();
 		return item;
 	}
-
+	
 	@SuppressWarnings("rawtypes")
 	public IBaseVo[] getSelectedItems() {
 		IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
@@ -276,30 +343,30 @@ public class EpiTable extends Composite implements IViewElement {
 		IBaseVo[] items = new IBaseVo[selection.size()];
 		Iterator iter = selection.iterator();
 		int index = 0;
-		while (iter.hasNext()) {
-			items[index++] = (IBaseVo) iter.next();
+		while(iter.hasNext()) {
+			items[index++] = (IBaseVo)iter.next();
 		}
 		return items;
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	@Override
-	public TableViewer getViewer() {
-		return viewer;
-	}
-
-	public void setViewer(TableViewer viewer) {
-		this.viewer = viewer;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public EpiTableDefiner getDefiner() {
+	public EpiTreeDefiner getDefiner() {
 		return definer;
 	}
 
-	public void setDefiner(EpiTableDefiner definer) {
-		this.definer = definer;
+	public void setDefiner(EpiTreeDefiner treeDefiner) {
+		this.definer = treeDefiner;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public TreeViewer getViewer() {
+		return viewer;
+	}
+
+	public void setViewer(TreeViewer viewer) {
+		this.viewer = viewer;
 	}
 
 	public boolean isEditable() {
@@ -359,20 +426,20 @@ public class EpiTable extends Composite implements IViewElement {
 		}
 	}
 
-	public void revert() {
+	public void refresh() {
 		insertedDataList.clear();
 		deletedDataList.clear();
 		updatedDataList.clear();
+        revertToOriginalBackground();
 		setDirty(false);
-		revertToOriginalBackground();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public EpiTable getViewElement() {
+	public EpiTree getViewElement() {
 		return this;
 	}
-	
+
 	public IViewContext getViewContext() {
 		return context;
 	}

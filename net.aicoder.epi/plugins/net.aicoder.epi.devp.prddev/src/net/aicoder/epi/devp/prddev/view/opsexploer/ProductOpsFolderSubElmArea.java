@@ -11,9 +11,9 @@ import net.aicoder.epi.base.view.context.EpiInput;
 import net.aicoder.epi.base.view.context.IEpiEditorInput;
 import net.aicoder.epi.base.view.context.IEpiInput;
 import net.aicoder.epi.base.view.context.ViewContext;
-import net.aicoder.epi.base.view.element.area.BaseWithTitleArea;
-import net.aicoder.epi.base.view.element.table.EpiTable;
-import net.aicoder.epi.base.view.element.table.EpiTableDefiner;
+import net.aicoder.epi.base.view.control.table.EpiTable;
+import net.aicoder.epi.base.view.control.table.EpiTableDefiner;
+import net.aicoder.epi.base.view.part.area.BaseTitleArea;
 import net.aicoder.epi.devp.DevpConstant;
 import net.aicoder.epi.devp.prddev.PrddevImageConstant;
 import net.aicoder.epi.devp.prddev.doper.ops.ProductOpsDoper;
@@ -25,7 +25,7 @@ import net.aicoder.epi.devp.prddev.view.editors.product.ProductEditor;
  * @author WANGQINGPING
  *
  */
-public class ProductOpsFolderSubElmArea extends BaseWithTitleArea {
+public class ProductOpsFolderSubElmArea extends BaseTitleArea {
 	public static final String ID = ProductOpsFolderSubElmArea.class.getName();
 	private ProductOpsDoper productOpsDoper;
 	
@@ -55,12 +55,13 @@ public class ProductOpsFolderSubElmArea extends BaseWithTitleArea {
 	}
 
 	@Override
-	protected Control createAreaControl(Composite parent) {
+	//protected Control createAreaControl(Composite parent) {
+	public void assembleControl(Composite parent) {
 		EpiTableDefiner tableDefiner = new EpiTableDefiner(viewDefine, columnsDefine);
 		ProductSubElmTableAreaContext productSubElmTableAreaContext = new ProductSubElmTableAreaContext();
 		
 		EpiTable epiTable = new EpiTable(parent, tableDefiner, productSubElmTableAreaContext);
-		return epiTable;
+		//return epiTable;
 	}
 	
 	

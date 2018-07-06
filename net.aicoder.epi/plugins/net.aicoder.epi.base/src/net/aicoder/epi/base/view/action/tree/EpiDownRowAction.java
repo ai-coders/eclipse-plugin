@@ -13,7 +13,7 @@ import net.aicoder.epi.base.BaseImageConstant;
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.model.ITreeNode;
 import net.aicoder.epi.base.view.action.BaseAction;
-import net.aicoder.epi.base.view.element.tree.EpiTree;
+import net.aicoder.epi.base.view.control.tree.EpiTree;
 
 public class EpiDownRowAction extends BaseAction {
 	private static String actionText = "记录下移";

@@ -1,30 +1,30 @@
-package net.aicoder.epi.base.view;
+package net.aicoder.epi.base.view.part;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.part.ViewPart;
 
-import net.aicoder.epi.base.view.element.area.IEpiArea;
+import net.aicoder.epi.base.view.part.area.IArea;
 
 public abstract class BaseViewPart extends ViewPart {
-	protected IEpiArea pageArea;
+	protected IArea pageArea;
 	private Composite parent;
 
 	//// Constructor
 	public BaseViewPart() {
 		super();
-		initialize(this);
+		initialize();
 	}
 
-	public final void initialize(IViewPart viewPart) {
+	private void initialize() {
 		pageArea = newPageArea();
 		if(pageArea != null) {
-			pageArea.setWorkbenchPart(viewPart);
+			pageArea.setWorkbenchPart(this);
 		}
 	}
 	
-	public abstract IEpiArea newPageArea();
+	protected abstract IArea newPageArea();
 
 	@Override
 	public final void createPartControl(Composite parent) {
@@ -32,7 +32,6 @@ public abstract class BaseViewPart extends ViewPart {
 		createControl(parent);
 	}
 
-	//@Override
 	public abstract void createControl(Composite parent);
 	
 	public Control getControl() {

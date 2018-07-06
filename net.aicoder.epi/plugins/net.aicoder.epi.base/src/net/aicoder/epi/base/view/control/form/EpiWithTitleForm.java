@@ -8,7 +8,7 @@
  * Contributors:
  *    Google, Inc. - initial API and implementation
  *******************************************************************************/
-package net.aicoder.epi.base.view.element.area;
+package net.aicoder.epi.base.view.control.form;
 
 //import org.eclipse.wb.core.controls.CImageLabel;
 //import org.eclipse.wb.internal.core.utils.check.Assert;
@@ -24,6 +24,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ToolBar;
 
 import net.aicoder.epi.base.view.control.CImageLabel;
+import net.aicoder.epi.base.view.part.area.BaseTitleArea;
+import net.aicoder.epi.base.view.part.area.IArea;
 import net.aicoder.epi.base.view.util.GridDataFactory;
 import net.aicoder.epi.base.view.util.GridLayoutFactory;
 
@@ -37,7 +39,7 @@ public final class EpiWithTitleForm extends Composite {
 	private final CImageLabel m_title;
 	private final ToolBarManager m_toolBarManager;
 	private final ToolBar m_toolBar;
-	private IEpiArea m_page;
+	private IArea m_page;
 
 	////////////////////////////////////////////////////////////////////////////
 	//
@@ -93,7 +95,7 @@ public final class EpiWithTitleForm extends Composite {
 	/**
 	 * Sets the {@link IPage} to display.
 	 */
-	public void setArea(IEpiArea page) {
+	public void setArea(IArea page) {
 		//Assert.isNull(m_page);
 		if(m_page != null) {
 			return;
@@ -105,8 +107,8 @@ public final class EpiWithTitleForm extends Composite {
 			m_page.createControl(this);
 		}
 		Control control = null;
-		if(page instanceof BaseWithTitleArea) {
-			control = ((BaseWithTitleArea)m_page).getBodyControl();
+		if(page instanceof BaseTitleArea) {
+			control = ((BaseTitleArea)m_page).getBodyComposite();
 		}else {
 			control = m_page.getControl();
 		}

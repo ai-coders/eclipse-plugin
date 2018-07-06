@@ -1,4 +1,4 @@
-package net.aicoder.epi.base.view.editor;
+package net.aicoder.epi.base.view.part.editor;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IEditorInput;

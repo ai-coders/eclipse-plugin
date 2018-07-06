@@ -5,10 +5,10 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-import net.aicoder.epi.base.view.element.area.BaseArea;
-import net.aicoder.epi.base.view.element.area.BaseWithTitleArea;
+import net.aicoder.epi.base.view.part.area.BaseArea;
+import net.aicoder.epi.base.view.part.area.BaseTitleArea;
 
-public class TableEditorWithTitleArea extends BaseWithTitleArea {
+public class TableEditorWithTitleArea extends BaseTitleArea {
 	public TableEditorWithTitleArea() {
 		super("TableEditorComposite",null);
 	}
@@ -22,7 +22,14 @@ public class TableEditorWithTitleArea extends BaseWithTitleArea {
 	}
 
 	@Override
-	protected Control createAreaControl(Composite parent) {
-		return (new TableEditorComposite(parent));
+	//protected Control createAreaControl(Composite parent) {
+	public void assembleControl(Composite parent) {
+		//return (new TableEditorComposite(parent));
+		new TableEditorComposite(parent);
 	}
+	
+	@Override
+	public void attachEvent() {
+	}
+
 }

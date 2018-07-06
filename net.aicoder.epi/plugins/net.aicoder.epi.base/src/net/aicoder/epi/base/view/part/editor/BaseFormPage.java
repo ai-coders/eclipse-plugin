@@ -1,4 +1,4 @@
-package net.aicoder.epi.base.view.editor;
+package net.aicoder.epi.base.view.part.editor;
 
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.graphics.Image;
@@ -11,12 +11,12 @@ import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 
 import net.aicoder.epi.base.view.action.IEpiAction;
-import net.aicoder.epi.base.view.element.area.IEpiArea;
+import net.aicoder.epi.base.view.part.area.IArea;
 
 public abstract class BaseFormPage extends FormPage implements IFormEditorPage{
 	public static String ID = BaseFormPage.class.getName();
 	
-	protected IEpiArea pageArea;
+	protected IArea pageArea;
 	protected int pageIndex;
 	protected String name;
 	protected Image image;
@@ -89,7 +89,7 @@ public abstract class BaseFormPage extends FormPage implements IFormEditorPage{
 	}
 
 	//// IFormEditorPage
-	public abstract IEpiArea newPageArea();
+	public abstract IArea newPageArea();
 
 	@Override
 	public int getPageIndex() {

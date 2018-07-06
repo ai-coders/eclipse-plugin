@@ -1,11 +1,11 @@
-package net.aicoder.epi.base.view.element.area;
+package net.aicoder.epi.base.view.part.area;
 
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPart;
 
-public abstract class AbstractBaseArea implements IEpiArea {
+public abstract class AbstractBaseArea implements IArea {
 	private IWorkbenchPart workbenchPart;
 	private String titleText;
 	private Image titleImage;

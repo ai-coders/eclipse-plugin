@@ -1,4 +1,4 @@
-package net.aicoder.epi.base.view.element.area;
+package net.aicoder.epi.base.view.part.area;
 
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
@@ -8,24 +8,30 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbenchPart;
 
-public final class EpiTabArea extends AbstractBaseArea {
+public class TabArea extends AbstractBaseArea {
+	protected IArea[] areas;
+
 	private CTabFolder tabFolder;
 	private CTabItem[] tabItems;
-	private IEpiArea[] epiAreas;
 	
 	//// Constructor
-	public EpiTabArea(IWorkbenchPart workbenchPart) {
+	public TabArea(IWorkbenchPart workbenchPart) {
 		super(workbenchPart);
+		initArea();
+	}
+	
+	@Override
+	public void initArea() {
 	}
 
 	@Override
 	public final void createControl(Composite parent) {
 		tabFolder = new CTabFolder(parent,SWT.NONE);
-		if(epiAreas!=null && epiAreas.length >0) {
-			int epiAreasLength = epiAreas.length;
+		if(areas!=null && areas.length >0) {
+			int epiAreasLength = areas.length;
 			tabItems = new CTabItem[epiAreasLength];
 			for(int tabIdx = 0; tabIdx<epiAreasLength; tabIdx++) {
-				IEpiArea epiArea = epiAreas[tabIdx];
+				IArea epiArea = areas[tabIdx];
 				//epiArea.setEditor(this.getEditor());
 				epiArea.setWorkbenchPart(this.getWorkbenchPart());
 				tabItems[tabIdx] = new CTabItem(tabFolder,SWT.NONE);
@@ -40,12 +46,23 @@ public final class EpiTabArea extends AbstractBaseArea {
 				tabItems[tabIdx].setControl(control);
 			}
 		}
+		
+		attachEvent();
 	}
 	
-	private Control createAreaComposite(Composite parent, IEpiArea epiArea) {
+	private Control createAreaComposite(Composite parent, IArea epiArea) {
 		epiArea.createControl(parent);
 		return epiArea.getControl();
 	}
+	
+	@Override
+	public final void assembleControl(Composite parent) {
+	}
+
+	@Override
+	public void attachEvent() {
+	}
+
 
 	public CTabFolder getTabFolder() {
 		return this.tabFolder;
@@ -69,11 +86,11 @@ public final class EpiTabArea extends AbstractBaseArea {
 	public void dispose() {
 	}
 
-	public IEpiArea[] getEpiAreas() {
-		return epiAreas;
+	public IArea[] getEpiAreas() {
+		return areas;
 	}
 
-	public void setEpiAreas(IEpiArea[] epiAreas) {
-		this.epiAreas = epiAreas;
+	public void setEpiAreas(IArea[] epiAreas) {
+		this.areas = epiAreas;
 	}
 }

@@ -22,9 +22,9 @@ import org.eclipse.ui.navigator.CommonViewer;
 
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.model.StateFlagEnum;
-import net.aicoder.epi.base.view.IViewElement;
 import net.aicoder.epi.base.view.context.IViewContext;
 import net.aicoder.epi.base.view.definer.IViewDefiner;
+import net.aicoder.epi.base.view.part.IViewElement;
 import net.aicoder.tcom.tools.util.AiStringUtil;
 
 public class EpiExplorer extends CommonNavigator implements IContextProvider, IViewElement {

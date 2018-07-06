@@ -20,11 +20,11 @@ import net.aicoder.epi.base.view.context.IEpiEditorInput;
 import net.aicoder.epi.base.view.context.IEpiInput;
 import net.aicoder.epi.base.view.context.IViewContext;
 import net.aicoder.epi.base.view.context.ViewContext;
+import net.aicoder.epi.base.view.control.table.EpiSelectionProvider;
+import net.aicoder.epi.base.view.control.tree.EpiTree;
+import net.aicoder.epi.base.view.control.tree.EpiTreeDefiner;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
-import net.aicoder.epi.base.view.element.area.BaseWithTitleArea;
-import net.aicoder.epi.base.view.element.table.EpiSelectionProvider;
-import net.aicoder.epi.base.view.element.tree.EpiTree;
-import net.aicoder.epi.base.view.element.tree.EpiTreeDefiner;
+import net.aicoder.epi.base.view.part.area.BaseTitleArea;
 import net.aicoder.epi.devp.prddev.doper.ops.SysCmpDoper;
 import net.aicoder.epi.devp.prddev.model.dev.ProductDevVo;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysElmCatgVo;
@@ -35,7 +35,7 @@ import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
  * @author WANGQINGPING
  *
  */
-public class SysDpyCmpTreeTable extends BaseWithTitleArea{
+public class SysDpyCmpTreeTable extends BaseTitleArea{
 	public static String ID = SysDpyCmpTreeTable.class.getName();
 	private EpiTree tree;
 	private EpiTreeDefiner definer;
@@ -81,7 +81,8 @@ public class SysDpyCmpTreeTable extends BaseWithTitleArea{
 	}
 
 	@Override
-	protected Control createAreaControl(Composite parent) {
+	//protected Control createAreaControl(Composite parent) {
+	public void assembleControl(Composite parent) {
 		IEpiEditorInput editorInput = (IEpiEditorInput)this.getEditorInput();
 		IBaseVo currentData = editorInput.getCurrentData();
 		PrdProductVo product = null;
@@ -102,7 +103,7 @@ public class SysDpyCmpTreeTable extends BaseWithTitleArea{
 		context.setInput(input);
 		tree = new EpiTree(parent, definer, context);
 
-		return tree;
+		//return tree;
 	}
 	
 	public EpiSelectionProvider getSelectionProvider() {
@@ -111,9 +112,6 @@ public class SysDpyCmpTreeTable extends BaseWithTitleArea{
 	
 	public void setSelection(ISelection selection) {
 		//刷新树表数据
-
-		
-		
 	}
 
 }

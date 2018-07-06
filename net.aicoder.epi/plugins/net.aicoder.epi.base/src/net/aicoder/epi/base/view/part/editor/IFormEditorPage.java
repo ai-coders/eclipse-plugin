@@ -8,14 +8,14 @@
  * Contributors:
  *    Google, Inc. - initial API and implementation
  *******************************************************************************/
-package net.aicoder.epi.base.view.editor;
+package net.aicoder.epi.base.view.part.editor;
 
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.forms.editor.FormEditor;
 
-import net.aicoder.epi.base.view.element.area.IEpiArea;
+import net.aicoder.epi.base.view.part.area.IArea;
 
 /**
  * Interface for page in {@link AbstractXmlEditor}.
@@ -34,7 +34,7 @@ public interface IFormEditorPage {
    */
   void initialize(FormEditor editor);
   
-  IEpiArea newPageArea();
+  IArea newPageArea();
 
   /**
    * Disposes this page.

@@ -4,7 +4,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 
 import net.aicoder.epi.base.BaseImageConstant;
 import net.aicoder.epi.base.view.action.BaseAction;
-import net.aicoder.epi.base.view.element.tree.EpiTree;
+import net.aicoder.epi.base.view.control.tree.EpiTree;
 
 /**
  * Tree 过滤 action

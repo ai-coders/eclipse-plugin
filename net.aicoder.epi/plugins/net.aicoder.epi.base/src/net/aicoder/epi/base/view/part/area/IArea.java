@@ -8,7 +8,7 @@
  * Contributors:
  *    Google, Inc. - initial API and implementation
  *******************************************************************************/
-package net.aicoder.epi.base.view.element.area;
+package net.aicoder.epi.base.view.part.area;
 
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.graphics.Image;
@@ -23,7 +23,9 @@ import org.eclipse.ui.IWorkbenchPart;
  * @author scheglov_ke
  * @coverage core.editor.structure
  */
-public interface IEpiArea {
+public interface IArea {
+	public void initArea();
+	
 	public IWorkbenchPart getWorkbenchPart();
 
 	public void setWorkbenchPart(IWorkbenchPart workbenchPart);
@@ -38,7 +40,11 @@ public interface IEpiArea {
 	 * Creates the {@link Control} for this page.
 	 */
 	void createControl(Composite parent);
-
+	
+	void assembleControl(Composite parent);
+	
+	void attachEvent();	
+	
 	/**
 	 * @return the {@link Control} of this page, may be <code>null</code>.
 	 */
@@ -60,7 +66,7 @@ public interface IEpiArea {
 	/**
 	 * Disposes this page.
 	 * <p>
-	 * This is the last method called on the {@link IEpiArea}. Implementors should
+	 * This is the last method called on the {@link IArea}. Implementors should
 	 * clean up any resources associated with the page.
 	 * <p>
 	 * Note that there is no guarantee that {@link #createControl(Composite)} has

@@ -8,11 +8,11 @@ import net.aicoder.epi.base.view.context.IEpiEditorInput;
 import net.aicoder.epi.base.view.context.IEpiInput;
 import net.aicoder.epi.base.view.context.IViewContext;
 import net.aicoder.epi.base.view.context.ViewContext;
+import net.aicoder.epi.base.view.control.table.EpiTable;
+import net.aicoder.epi.base.view.control.table.EpiTableDefiner;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
-import net.aicoder.epi.base.view.editor.BaseFormPage;
-import net.aicoder.epi.base.view.element.area.IEpiArea;
-import net.aicoder.epi.base.view.element.table.EpiTable;
-import net.aicoder.epi.base.view.element.table.EpiTableDefiner;
+import net.aicoder.epi.base.view.part.area.IArea;
+import net.aicoder.epi.base.view.part.editor.BaseFormPage;
 import net.aicoder.epi.devp.product.doper.ModuleDoper;
 
 public class PrdFunctionListPage extends BaseFormPage {
@@ -44,7 +44,7 @@ public class PrdFunctionListPage extends BaseFormPage {
 	}
 	
 	@Override
-	public IEpiArea newPageArea() {
+	public IArea newPageArea() {
 		return null;
 	}
 	

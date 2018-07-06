@@ -5,13 +5,13 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-import net.aicoder.epi.base.view.element.area.BaseArea;
-import net.aicoder.epi.base.view.element.area.EpiTabArea;
-import net.aicoder.epi.base.view.element.area.IEpiArea;
+import net.aicoder.epi.base.view.part.area.BaseArea;
+import net.aicoder.epi.base.view.part.area.TabArea;
+import net.aicoder.epi.base.view.part.area.IArea;
 
 public class ProductOpsFolderArea extends BaseArea{
 	public static final String ID = ProductOpsFolderArea.class.getName();
-	private IEpiArea[] epiAreas;
+	private IArea[] epiAreas;
 	
 	@Override
 	public void setToolBar(IToolBarManager toolBarManager) {
@@ -19,17 +19,18 @@ public class ProductOpsFolderArea extends BaseArea{
 	}
 
 	@Override
-	protected Control createAreaControl(Composite parent) {
-		epiAreas = new IEpiArea[1];
+	//protected Control createAreaControl(Composite parent) {
+	public void assembleControl(Composite parent) {
+		epiAreas = new IArea[1];
 		epiAreas[0] = new ProductOpsFolderDesDgmArea();
 //		epiAreas[1] = new ProductOpsFolderSubElmArea(); //目前没有子元素,后期会扩充
 		
-		EpiTabArea tabArea = new EpiTabArea(this.getWorkbenchPart());
+		TabArea tabArea = new TabArea(this.getWorkbenchPart());
 		tabArea.setEpiAreas(epiAreas);
 		tabArea.createControl(parent);
 		tabArea.getTabFolder().setSelection(0);
 	
-		return tabArea.getControl();
+		//return tabArea.getControl();
 	}
 	
 	public void setElementSelection(ISelection selection) {

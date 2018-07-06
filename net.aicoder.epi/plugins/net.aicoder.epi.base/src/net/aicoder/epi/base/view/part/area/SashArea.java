@@ -1,18 +1,19 @@
-package net.aicoder.epi.base.view.element.area;
+package net.aicoder.epi.base.view.part.area;
 
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbenchPart;
 
-public final class EpiSashArea extends AbstractBaseArea {
-	private Composite m_container;
+import net.aicoder.epi.base.view.control.form.EpiSashForm;
+
+public class SashArea extends AbstractBaseArea {
+	protected IArea[] areas;
+	protected int[] weights;
+	protected int fixedOrientation = 0;
+
 	private EpiSashForm m_sashForm;
-	private IEpiArea[] epiAreas;
-	private int[] areaWeights;
-	private int fixedOrientation = 0;
 
 	//// Constructor
 	/**
@@ -20,9 +21,10 @@ public final class EpiSashArea extends AbstractBaseArea {
 	 * @param workbenchPart，被调用的EditorPart或ViewPart
 	 * 区域的排列会依据长宽比例自动调整
 	 */
-	public EpiSashArea(IWorkbenchPart workbenchPart) {
+	public SashArea(IWorkbenchPart workbenchPart) {
 		super(workbenchPart);
 		this.fixedOrientation = 0;
+		initArea();
 	}
 
 	/**
@@ -32,35 +34,46 @@ public final class EpiSashArea extends AbstractBaseArea {
 	 * fixedOrientation = SWT.VERTICAL，则区域为固定的纵向排列
 	 * fixedOrientation = SWT.HORIZONTAL，则区域为固定的横向排列
 	 */
-	public EpiSashArea(IWorkbenchPart workbenchPart, int fixedOrientation) {
-		super(workbenchPart);
+	public SashArea(IWorkbenchPart workbenchPart, int fixedOrientation) {
+		this(workbenchPart);
 		this.fixedOrientation = fixedOrientation;
+		initArea();
+	}
+	
+	@Override
+	public void initArea() {
 	}
 
 	@Override
 	public final void createControl(Composite parent) {
-		m_container = new Composite(parent, SWT.NONE);
-		m_container.setLayout(new FillLayout());
-		{
-			m_sashForm = new EpiSashForm(m_container, SWT.NONE);
-			setFixedOrientation(fixedOrientation);
-		}
-		for (IEpiArea epiArea : epiAreas) {
-			if(this.getWorkbenchPart()!=null) {
+		m_sashForm = new EpiSashForm(parent, SWT.NONE);
+		setFixedOrientation(fixedOrientation);
+		for (IArea epiArea : areas) {
+			if (this.getWorkbenchPart() != null) {
 				epiArea.setWorkbenchPart(this.getWorkbenchPart());
 			}
-			createAreaComposite(parent, epiArea);
+			createAreaComposite(epiArea);
 		}
-		if(areaWeights != null) {
-			m_sashForm.setWeights(areaWeights);
+		if (weights != null) {
+			m_sashForm.setWeights(weights);
 		}
+		
+		attachEvent();
 	}
-	
-	private void createAreaComposite(Composite parent, IEpiArea epiArea) {
-		if(epiArea == null) {
+
+	private void createAreaComposite(IArea epiArea) {
+		if (epiArea == null) {
 			return;
 		}
 		epiArea.createControl(m_sashForm);
+	}
+	
+	@Override
+	public final void assembleControl(Composite parent) {
+	}
+
+	@Override
+	public void attachEvent() {
 	}
 
 	@Override
@@ -71,7 +84,7 @@ public final class EpiSashArea extends AbstractBaseArea {
 	@Override
 	public void setToolBar(IToolBarManager toolBarManager) {
 	}
-	
+
 	@Override
 	public boolean setFocus() {
 		return getControl().setFocus();
@@ -79,8 +92,6 @@ public final class EpiSashArea extends AbstractBaseArea {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	//// getter/setter
@@ -90,22 +101,24 @@ public final class EpiSashArea extends AbstractBaseArea {
 
 	public void setFixedOrientation(int fixedOrientation) {
 		this.fixedOrientation = fixedOrientation;
-		m_sashForm.setFixedOrientation(fixedOrientation);
+		if(m_sashForm != null) {
+			m_sashForm.setFixedOrientation(fixedOrientation);
+		}
 	}
 
-	public IEpiArea[] getEpiAreas() {
-		return epiAreas;
+	public IArea[] getAreas() {
+		return areas;
 	}
 
-	public void setEpiAreas(IEpiArea[] epiAreas) {
-		this.epiAreas = epiAreas;
-	}
-	
-	public int[] getAreaWeights() {
-		return areaWeights;
+	public void setAreas(IArea[] areas) {
+		this.areas = areas;
 	}
 
-	public void setAreaWeights(int[] areaWeights) {
-		this.areaWeights = areaWeights;
+	public int[] getWeights() {
+		return weights;
+	}
+
+	public void setWeights(int[] weights) {
+		this.weights = weights;
 	}
 }

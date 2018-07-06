@@ -12,9 +12,9 @@ import org.eclipse.ui.IWorkbenchPart;
 
 import net.aicoder.epi.base.BaseImageConstant;
 import net.aicoder.epi.base.model.IBaseVo;
-import net.aicoder.epi.base.view.element.area.BaseWithTitleArea;
+import net.aicoder.epi.base.view.part.area.BaseTitleArea;
 
-public class PropsArea extends BaseWithTitleArea {
+public class PropsArea extends BaseTitleArea {
 	private IPropsManager propsManager;
 	//private IExtInfosManager extInfosManager;
 
@@ -28,6 +28,7 @@ public class PropsArea extends BaseWithTitleArea {
 		super(workbenchPart);
 	}
 
+/**	
 	@Override
 	protected Control createAreaControl(Composite parent) {
 		propertyTable = new PropertyTable(parent);
@@ -37,8 +38,20 @@ public class PropsArea extends BaseWithTitleArea {
 
 		return propertyTable;
 	}
+**/
+	
+	@Override
+	public final void assembleControl(Composite parent) {
+		propertyTable = new PropertyTable(parent);
+		propsInput = new PropsInput(propsManager);
 
-	//public void setElementSelection(String pluginId, ISelection selection) {
+		createActons();
+	}
+
+	@Override
+	public void attachEvent() {
+	}
+
 	public void setElementSelection(ISelection selection) {
 		Object item = ((IStructuredSelection) selection).getFirstElement();
 		IBaseVo currentData = (IBaseVo) item;

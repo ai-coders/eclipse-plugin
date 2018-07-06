@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
-import net.aicoder.epi.base.view.element.table.EpiCellModifier;
+import net.aicoder.epi.base.view.control.table.EpiCellModifier;
 
 public class TableDataTableCursor extends TableCursor {
     

@@ -10,7 +10,7 @@ import net.aicoder.epi.base.BaseImageConstant;
 import net.aicoder.epi.base.view.action.BaseAction;
 import net.aicoder.epi.base.view.context.IEpiInput;
 import net.aicoder.epi.base.view.context.IViewContext;
-import net.aicoder.epi.base.view.element.tree.EpiTree;
+import net.aicoder.epi.base.view.control.tree.EpiTree;
 
 public class EpiRefreshAction extends BaseAction {
 	private static String actionText = "刷新记录";

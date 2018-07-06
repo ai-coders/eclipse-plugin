@@ -5,9 +5,9 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.widgets.Composite;
 
-import net.aicoder.epi.base.view.BaseViewPart;
-import net.aicoder.epi.base.view.element.area.EpiSashArea;
-import net.aicoder.epi.base.view.element.area.IEpiArea;
+import net.aicoder.epi.base.view.part.BaseViewPart;
+import net.aicoder.epi.base.view.part.area.SashArea;
+import net.aicoder.epi.base.view.part.area.IArea;
 
 /**
  * 产品发布导航-视图页面
@@ -16,11 +16,11 @@ import net.aicoder.epi.base.view.element.area.IEpiArea;
  */
 public class ProductOpsExploer extends BaseViewPart{
 	public static final String ID = ProductOpsExploer.class.getName();	
-	private EpiSashArea epiSashArea;
+	private SashArea epiSashArea;
 
 	@Override
-	public IEpiArea newPageArea() {
-		epiSashArea = new EpiSashArea(this);
+	public IArea newPageArea() {
+		epiSashArea = new SashArea(this);
 		return epiSashArea;
 	}
 
@@ -30,11 +30,11 @@ public class ProductOpsExploer extends BaseViewPart{
 		weights[0] = 2;
 		weights[1] = 1;
 		
-		IEpiArea[] epiAreas = new IEpiArea[2];
+		IArea[] epiAreas = new IArea[2];
 		epiAreas[0] = new ProductOpsTreeArea();
 		epiAreas[1] = new ProductOpsFolderArea();
-		epiSashArea.setEpiAreas(epiAreas);
-		epiSashArea.setAreaWeights(weights);
+		epiSashArea.setAreas(epiAreas);
+		epiSashArea.setWeights(weights);
 		epiSashArea.createControl(parent);
 		
 		((ProductOpsTreeArea)epiAreas[0]).getSelectionProvider().addSelectionChangedListener(new ISelectionChangedListener() {

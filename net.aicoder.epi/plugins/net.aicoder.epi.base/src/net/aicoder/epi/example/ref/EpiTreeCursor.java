@@ -19,8 +19,8 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
-import net.aicoder.epi.base.view.element.table.EpiCellModifier;
-import net.aicoder.epi.base.view.element.tree.EpiTree;
+import net.aicoder.epi.base.view.control.table.EpiCellModifier;
+import net.aicoder.epi.base.view.control.tree.EpiTree;
 
 public class EpiTreeCursor extends TreeCursor {
 	private EpiTree epiTree;

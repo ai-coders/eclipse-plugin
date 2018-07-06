@@ -15,10 +15,10 @@ import net.aicoder.epi.base.view.context.EpiInput;
 import net.aicoder.epi.base.view.context.IEpiEditorInput;
 import net.aicoder.epi.base.view.context.IEpiInput;
 import net.aicoder.epi.base.view.context.ViewContext;
-import net.aicoder.epi.base.view.element.area.BaseWithTitleArea;
-import net.aicoder.epi.base.view.element.table.EpiSelectionProvider;
-import net.aicoder.epi.base.view.element.tree.EpiTree;
-import net.aicoder.epi.base.view.element.tree.EpiTreeDefiner;
+import net.aicoder.epi.base.view.control.table.EpiSelectionProvider;
+import net.aicoder.epi.base.view.control.tree.EpiTree;
+import net.aicoder.epi.base.view.control.tree.EpiTreeDefiner;
+import net.aicoder.epi.base.view.part.area.BaseTitleArea;
 import net.aicoder.epi.devp.prddev.PrddevImageConstant;
 import net.aicoder.epi.devp.prddev.doper.ops.ProductOpsDoper;
 import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
@@ -29,7 +29,7 @@ import net.aicoder.epi.devp.prddev.view.editors.sysdpy.SysDpyEditor;
  * @author WANGQINGPING
  *
  */
-public class ProductOpsTreeArea extends BaseWithTitleArea{
+public class ProductOpsTreeArea extends BaseTitleArea{
 	public static final String ID = ProductOpsTreeArea.class.getName();
 	private ProductOpsDoper productOpsDoper;
 	private EpiTree tree;
@@ -56,13 +56,14 @@ public class ProductOpsTreeArea extends BaseWithTitleArea{
 	}
 
 	@Override
-	protected Control createAreaControl(Composite parent) {
+	//protected Control createAreaControl(Composite parent) {
+	public void assembleControl(Composite parent) {
 		EpiTreeDefiner treeDefiner = new EpiTreeDefiner(viewDefine);
 		ProductOpsTreeAreaContext productOpsTreeContext = new ProductOpsTreeAreaContext();
 		tree = new EpiTree(parent, treeDefiner, productOpsTreeContext);
 		tree.getTree().setHeaderVisible(false);
 		tree.getTree().setLinesVisible(false);
-		return tree;
+		//return tree;
 	}
 	
 	public EpiSelectionProvider getSelectionProvider() {

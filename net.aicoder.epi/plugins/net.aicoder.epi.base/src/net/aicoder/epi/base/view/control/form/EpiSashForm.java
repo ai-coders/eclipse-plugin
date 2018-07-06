@@ -8,7 +8,7 @@
  * Contributors:
  *    Google, Inc. - initial API and implementation
  *******************************************************************************/
-package net.aicoder.epi.base.view.element.area;
+package net.aicoder.epi.base.view.control.form;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;

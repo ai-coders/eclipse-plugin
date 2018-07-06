@@ -11,10 +11,10 @@ import net.aicoder.epi.base.view.context.IEpiEditorInput;
 import net.aicoder.epi.base.view.context.IEpiInput;
 import net.aicoder.epi.base.view.context.IViewContext;
 import net.aicoder.epi.base.view.context.ViewContext;
+import net.aicoder.epi.base.view.control.table.EpiTable;
+import net.aicoder.epi.base.view.control.table.EpiTableDefiner;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
-import net.aicoder.epi.base.view.element.area.BaseWithTitleArea;
-import net.aicoder.epi.base.view.element.table.EpiTable;
-import net.aicoder.epi.base.view.element.table.EpiTableDefiner;
+import net.aicoder.epi.base.view.part.area.BaseTitleArea;
 import net.aicoder.epi.devp.DevpConstant;
 import net.aicoder.epi.devp.prddev.PrddevImageConstant;
 import net.aicoder.epi.devp.prddev.doper.dev.ProductDevDoper;
@@ -23,7 +23,7 @@ import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
 import net.aicoder.epi.devp.prddev.view.devexploer.ProductDevTree.ProductDevTreeContext;
 import net.aicoder.epi.devp.prddev.view.editors.product.ProductEditor;
 
-public class ProductDevDgmTable extends BaseWithTitleArea{
+public class ProductDevDgmTable extends BaseTitleArea{
 	public static String ID = ProductDevDgmTable.class.getName();
 	// 0-数据类型, 1-图片, 2-Text对应变量名(缺省为name), 3-Description对应变量名(缺省为description), 4-双击对应的动作
 	private static Object[][] viewDefine = {
@@ -49,13 +49,14 @@ public class ProductDevDgmTable extends BaseWithTitleArea{
 	}
 
 	@Override
-	protected Control createAreaControl(Composite parent) {
+	//protected Control createAreaControl(Composite parent) {
+	public void assembleControl(Composite parent) {
 		definer = new EpiTableDefiner(viewDefine, columnsDefine);
 		//IEpiInput input = createInput(null);
 		//definer.setInput(input);
 		context = new ProductDevDgmTableContext();
 		table = new EpiTable(parent, definer,context);
-		return table;
+		//return table;
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package net.aicoder.epi.base.view.element.table;
+package net.aicoder.epi.base.view.control.table;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 

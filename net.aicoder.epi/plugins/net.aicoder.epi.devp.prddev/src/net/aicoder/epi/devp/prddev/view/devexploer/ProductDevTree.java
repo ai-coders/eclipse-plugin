@@ -15,9 +15,9 @@ import net.aicoder.epi.base.view.context.IEpiEditorInput;
 import net.aicoder.epi.base.view.context.IEpiInput;
 import net.aicoder.epi.base.view.context.IViewContext;
 import net.aicoder.epi.base.view.context.ViewContext;
-import net.aicoder.epi.base.view.element.area.BaseWithTitleArea;
-import net.aicoder.epi.base.view.element.tree.EpiTree;
-import net.aicoder.epi.base.view.element.tree.EpiTreeDefiner;
+import net.aicoder.epi.base.view.control.tree.EpiTree;
+import net.aicoder.epi.base.view.control.tree.EpiTreeDefiner;
+import net.aicoder.epi.base.view.part.area.BaseTitleArea;
 import net.aicoder.epi.devp.DevpConstant;
 import net.aicoder.epi.devp.prddev.PrddevImageConstant;
 import net.aicoder.epi.devp.prddev.doper.dev.ProductDevDoper;
@@ -29,7 +29,7 @@ import net.aicoder.epi.devp.prddev.view.editors.sysdpy.SysDpyEditor;
 import net.aicoder.epi.devp.prddev.view.editors.syside.SysIdeEditor;
 import net.aicoder.epi.util.ImageUtil;
 
-public class ProductDevTree extends BaseWithTitleArea {
+public class ProductDevTree extends BaseTitleArea {
 	public static String ID = ProductDevTree.class.getName();
 
 	// 0-数据类型, 1-图片, 2-Text对应变量名(缺省为name), 3-Description对应变量名(缺省为description),
@@ -86,19 +86,16 @@ public class ProductDevTree extends BaseWithTitleArea {
 	}
 
 	@Override
-	protected Control createAreaControl(Composite parent) {
+	//protected Control createAreaControl(Composite parent) {
+	public void assembleControl(Composite parent) {
 		definer = new EpiTreeDefiner(viewDefine);
 		
 		context = new ProductDevTreeContext();
-		//IEpiInput input = createInput(null);
-		// definer.setInput(input);
-		//IEpiEditorInput editorInput = createEditorInput(null);
-		// definer.setEditorInput(editorInput);
 
 		tree = new EpiTree(parent, definer, context);
 		tree.getTree().setHeaderVisible(false);
 		tree.getTree().setLinesVisible(false);
-		return tree;
+		//return tree;
 	}
 
 	@SuppressWarnings("unchecked")

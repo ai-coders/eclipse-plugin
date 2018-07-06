@@ -9,11 +9,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbenchPart;
 
-import net.aicoder.epi.base.view.element.area.EpiSashArea;
-import net.aicoder.epi.base.view.element.area.IEpiArea;
+import net.aicoder.epi.base.view.part.area.SashArea;
+import net.aicoder.epi.base.view.part.area.IArea;
 import net.aicoder.epi.base.view.property.IPropsManager;
 import net.aicoder.epi.devp.prddev.doper.dev.DropdownOptionsDoper;
+import net.aicoder.epi.devp.prddev.view.property.PrddevPropsManager;
 import net.aicoder.epi.devp.prddev.view.property.PrddevWithPropArea;
+import net.aicoder.epi.example.area.TableEditorArea;
 
 /**
  * 部署模型-内容(左/右区域)
@@ -22,63 +24,103 @@ import net.aicoder.epi.devp.prddev.view.property.PrddevWithPropArea;
  */
 public class SysDpyModelArea extends PrddevWithPropArea {
 	public final static String ID = SysDpyModelArea.class.getName();
-	private IPropsManager propsManager;
 	private DropdownOptionsDoper dropdownOptionsDoper;
 
-	private SysDpyModelLeftArea modelLeftArea; //左边区域
-	private SysDpyModelRightArea modelRightArea; //右边区域
-	
+	private SysDpyCmpTreeTable sysDpyCmpTreeTable; // 左-上
+	private SysDpyResAndInstArea sysDpyResAndInstArea; // 左-下
+
+	private SysDpySchemeArea sysDpySchemeArea; // 右-上
+	private SysDpyCmpRefTable sysDpyCmpRefTable; // 右-下
+
 	public SysDpyModelArea(IWorkbenchPart workbenchPart) {
 		super(workbenchPart);
+		
+		initDropdownOptions();
 	}
 
 	@Override
-	protected IEpiArea newWorkArea() {
-//		int[] areaWeights = new int[2];
-//		areaWeights[0] = 1;
-//		areaWeights[1] = 1;
-		
-		modelLeftArea = new SysDpyModelLeftArea(); //左边区域
-		modelRightArea = new SysDpyModelRightArea(); //右边区域
-		IEpiArea[] epiAreas = new IEpiArea[2];
-		epiAreas[0] = modelLeftArea;
-		epiAreas[1] = modelRightArea;
-		
-		EpiSashArea sashArea = new EpiSashArea(getWorkbenchPart(), SWT.HORIZONTAL);
-		sashArea.setEpiAreas(epiAreas);
-//		sashArea.setAreaWeights(areaWeights);
-		
-		propsManager = this.getPropsManager();
-		propsManager.clearRefObjects();
-		
-		initDropdownOptions();
-		
+	protected IArea newWorkArea() {
+		int[] weights = new int[2];
+		weights[0] = 2;
+		weights[1] = 1;
+
+		IArea[] areas = new IArea[2];
+		areas[0] = newLeftWorkArea(); //左边区域
+		areas[1] = newRightWorkArea(); //右边区域
+		//areas[0] = new TableEditorArea(); //左边区域
+		//areas[1] = new TableEditorArea(); //右边区域
+
+		//SashArea sashArea = new SashArea(getWorkbenchPart(), SWT.HORIZONTAL);
+		SashArea sashArea = new SashArea(getWorkbenchPart());
+		sashArea.setAreas(areas);
+		sashArea.setWeights(weights);
+		sashArea.setFixedOrientation(SWT.HORIZONTAL);
+
+		return sashArea;
+	}
+
+	private IArea newLeftWorkArea() {
+		int[] weights = new int[2];
+		weights[0] = 1;
+		weights[1] = 1;
+
+		sysDpyCmpTreeTable = new SysDpyCmpTreeTable();
+		sysDpyResAndInstArea = new SysDpyResAndInstArea();
+
+		IArea[] areas = new IArea[2];
+		areas[0] = sysDpyCmpTreeTable;
+		areas[1] = sysDpyResAndInstArea;
+		//areas[0] = new TableEditorArea();
+		//areas[1] = new TableEditorArea();
+
+		SashArea sashArea = new SashArea(getWorkbenchPart());
+		sashArea.setAreas(areas);
+		sashArea.setWeights(weights);
+		sashArea.setFixedOrientation(SWT.VERTICAL);
+
+		return sashArea;
+	}
+
+	private IArea newRightWorkArea() {
+		int[] weights = new int[2];
+		weights[0] = 1;
+		weights[1] = 15;
+
+		sysDpySchemeArea = new SysDpySchemeArea();
+		sysDpyCmpRefTable = new SysDpyCmpRefTable();
+
+		IArea[] areas = new IArea[2];
+		areas[0] = sysDpySchemeArea;
+		areas[1] = sysDpyCmpRefTable;
+
+		SashArea sashArea = new SashArea(getWorkbenchPart());
+		sashArea.setAreas(areas);
+		sashArea.setWeights(weights);
+		sashArea.setFixedOrientation(SWT.VERTICAL);
+
 		return sashArea;
 	}
 	
 	@Override
-	protected Control createAreaControl(Composite parent) {
-		Control control = super.createAreaControl(parent);
-		
-		//此监听点击系统树表[组件]->刷新右边区域[xxx组件列表]数据
-		getModelLeftArea().getSysDpyCmpTreeTable().getSelectionProvider().addSelectionChangedListener(new ISelectionChangedListener() {
+	public void attachEvent() {
+		sysDpyCmpTreeTable.getSelectionProvider().addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				ISelection selection = event.getSelection();
-				getModelRightArea().getSysDpyCmpRefTable().setSelection(selection);
+				//sysDpyResAndInstArea.setSelection(selection);
 				setElementSelection(selection);
 			}
 		});
-		
-		return control;
 	}
-	
+
 	@Override
 	public void setToolBar(IToolBarManager toolBarManager) {
-		
 	}
 
 	private void initDropdownOptions() {
+		propsManager = this.getPropsManager();
+		propsManager.clearRefObjects();
+
 		dropdownOptionsDoper = new DropdownOptionsDoper();
 		{
 			String refObjectsCode = "cmpType";
@@ -87,21 +129,35 @@ public class SysDpyModelArea extends PrddevWithPropArea {
 		}
 	}
 
-	//// getter/setter
-	public SysDpyModelLeftArea getModelLeftArea() {
-		return modelLeftArea;
+	public SysDpyCmpTreeTable getSysDpyCmpTreeTable() {
+		return sysDpyCmpTreeTable;
 	}
 
-	public void setModelLeftArea(SysDpyModelLeftArea modelLeftArea) {
-		this.modelLeftArea = modelLeftArea;
+	public void setSysDpyCmpTreeTable(SysDpyCmpTreeTable sysDpyCmpTreeTable) {
+		this.sysDpyCmpTreeTable = sysDpyCmpTreeTable;
 	}
 
-	public SysDpyModelRightArea getModelRightArea() {
-		return modelRightArea;
+	public SysDpyResAndInstArea getSysDpyResAndInstArea() {
+		return sysDpyResAndInstArea;
 	}
 
-	public void setModelRightArea(SysDpyModelRightArea modelRightArea) {
-		this.modelRightArea = modelRightArea;
+	public void setSysDpyResAndInstArea(SysDpyResAndInstArea sysDpyResAndInstArea) {
+		this.sysDpyResAndInstArea = sysDpyResAndInstArea;
 	}
 
+	public SysDpySchemeArea getSysDpySchemeArea() {
+		return sysDpySchemeArea;
+	}
+
+	public void setSysDpySchemeArea(SysDpySchemeArea sysDpySchemeArea) {
+		this.sysDpySchemeArea = sysDpySchemeArea;
+	}
+
+	public SysDpyCmpRefTable getSysDpyCmpRefTable() {
+		return sysDpyCmpRefTable;
+	}
+
+	public void setSysDpyCmpRefTable(SysDpyCmpRefTable sysDpyCmpRefTable) {
+		this.sysDpyCmpRefTable = sysDpyCmpRefTable;
+	}
 }

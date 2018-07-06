@@ -14,9 +14,9 @@ import net.aicoder.epi.base.BaseImageConstant;
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.view.action.BaseAction;
 import net.aicoder.epi.base.view.context.EpiInput;
+import net.aicoder.epi.base.view.control.tree.EpiTree;
+import net.aicoder.epi.base.view.control.tree.EpiTreeContentProvider;
 import net.aicoder.epi.base.view.definer.IViewDefiner;
-import net.aicoder.epi.base.view.element.tree.EpiTree;
-import net.aicoder.epi.base.view.element.tree.EpiTreeContentProvider;
 
 public class EpiAddChildAction extends BaseAction {
 	private static String actionText = "添加子记录";

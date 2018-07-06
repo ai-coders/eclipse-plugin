@@ -8,9 +8,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import net.aicoder.epi.base.view.element.area.EpiSashArea;
-import net.aicoder.epi.base.view.element.area.EpiTabArea;
-import net.aicoder.epi.base.view.element.area.IEpiArea;
+import net.aicoder.epi.base.view.part.area.SashArea;
+import net.aicoder.epi.base.view.part.area.TabArea;
+import net.aicoder.epi.base.view.part.area.IArea;
 
 public class UsingTabArea {
 	public static void main(String[] args) {
@@ -37,23 +37,23 @@ public class UsingTabArea {
 		//areaWeights[2] = 3;
 
 		//new TableEditorComposite(parent);
-		IEpiArea[] epiChildrenAreas = new TableEditorArea[2];
+		IArea[] epiChildrenAreas = new TableEditorArea[2];
 		epiChildrenAreas[0] = new TableEditorArea();
 		epiChildrenAreas[1] = new TableEditorArea();
-		EpiTabArea epiTabArea = new EpiTabArea(null);
+		TabArea epiTabArea = new TabArea(null);
 		epiTabArea.setEpiAreas(epiChildrenAreas);
 		
 		//epiAreas[0].createControl(parent);
 		
-		IEpiArea[] epiAreas = new IEpiArea[2];
+		IArea[] epiAreas = new IArea[2];
 		epiAreas[0] = new TableEditorArea();
 		epiAreas[1] = epiTabArea;
 		
 		//EpiSashArea sashArea = new EpiSashArea(SWT.VERTICAL);
 		//EpiSashArea sashArea = new EpiSashArea(SWT.HORIZONTAL);
-		EpiSashArea sashArea = new EpiSashArea(null);
-		sashArea.setEpiAreas(epiAreas);
-		sashArea.setAreaWeights(areaWeights);
+		SashArea sashArea = new SashArea(null);
+		sashArea.setAreas(epiAreas);
+		sashArea.setWeights(areaWeights);
 		
 		sashArea.createControl(parent);
 	}

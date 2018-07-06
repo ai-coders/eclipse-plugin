@@ -1,4 +1,4 @@
-package net.aicoder.epi.base.view;
+package net.aicoder.epi.base.view.part;
 
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.widgets.TreeItem;

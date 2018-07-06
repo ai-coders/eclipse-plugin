@@ -12,8 +12,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
-import net.aicoder.epi.base.view.element.area.BaseArea;
-import net.aicoder.epi.base.view.element.table.EpiSelectionProvider;
+import net.aicoder.epi.base.view.control.table.EpiSelectionProvider;
+import net.aicoder.epi.base.view.part.area.BaseArea;
 
 /**
  * 部署模型-部署方案(视图)
@@ -30,21 +30,23 @@ public class SysDpySchemeArea extends BaseArea{
 	}
 
 	@Override
-	protected Control createAreaControl(Composite parent) {
+	//protected Control createAreaControl(Composite parent) {
+	public void assembleControl(Composite parent) {
+		Composite composite = new Composite(parent, SWT.NONE);
 		//选择“部署方案”，也可点选“+”增加或删除部署方案；(部署方案为一整套开发、测试或生产的配套部署)
 		//依据所选择的部署方案，显示对应的资源实例以及以下“XXX组件”所对应的实例关联设置
 		FillLayout fillLayout = new FillLayout(SWT.HORIZONTAL);
-		parent.setLayout(fillLayout);
-		parent.setBounds(0, 0, 40, 12);
+		composite.setLayout(fillLayout);
+		composite.setBounds(0, 0, 40, 12);
 
 		
 		//文本
-		Label label = new Label(parent, SWT.LEFT|SWT.CENTER);
+		Label label = new Label(composite, SWT.LEFT|SWT.CENTER);
 		label.setText("部署方案");
 		label.setBounds(0, 0, 15, 8);
 		
 		//下拉选择
-		Combo combo = new Combo(parent, SWT.LEFT|SWT.CENTER);
+		Combo combo = new Combo(composite, SWT.LEFT|SWT.CENTER);
 		String[] items = new String[] {"仪器解析部署方案","好医生部署方案","记事本部署方案"};
 		combo.setItems(items);
 		combo.addSelectionListener(new SelectionListener() {
@@ -63,7 +65,7 @@ public class SysDpySchemeArea extends BaseArea{
 		
 		
 		//添加按钮
-		Button addBtn = new Button(parent, SWT.CENTER);
+		Button addBtn = new Button(composite, SWT.CENTER);
 		addBtn.setText("+");
 		addBtn.setBounds(0, 0, 10, 10);
 		addBtn.addSelectionListener(new SelectionListener() {
@@ -81,10 +83,7 @@ public class SysDpySchemeArea extends BaseArea{
 			}
 		});
 		
-		
-		
-		
-		return parent;
+		//return composite;
 	}
 	
 	

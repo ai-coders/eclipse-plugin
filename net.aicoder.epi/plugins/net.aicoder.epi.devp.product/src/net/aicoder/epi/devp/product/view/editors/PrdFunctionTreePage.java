@@ -19,11 +19,11 @@ import net.aicoder.epi.base.view.context.IEpiEditorInput;
 import net.aicoder.epi.base.view.context.IEpiInput;
 import net.aicoder.epi.base.view.context.IViewContext;
 import net.aicoder.epi.base.view.context.ViewContext;
+import net.aicoder.epi.base.view.control.tree.EpiTree;
+import net.aicoder.epi.base.view.control.tree.EpiTreeDefiner;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
-import net.aicoder.epi.base.view.editor.BaseFormPage;
-import net.aicoder.epi.base.view.element.area.IEpiArea;
-import net.aicoder.epi.base.view.element.tree.EpiTree;
-import net.aicoder.epi.base.view.element.tree.EpiTreeDefiner;
+import net.aicoder.epi.base.view.part.area.IArea;
+import net.aicoder.epi.base.view.part.editor.BaseFormPage;
 import net.aicoder.epi.devp.product.doper.ModuleDoper;
 import net.aicoder.epi.devp.product.model.product.PrdModuleVo;
 
@@ -56,7 +56,7 @@ public class PrdFunctionTreePage extends BaseFormPage {
 	}
 	
 	@Override
-	public IEpiArea newPageArea() {
+	public IArea newPageArea() {
 		return null;
 	}
 	

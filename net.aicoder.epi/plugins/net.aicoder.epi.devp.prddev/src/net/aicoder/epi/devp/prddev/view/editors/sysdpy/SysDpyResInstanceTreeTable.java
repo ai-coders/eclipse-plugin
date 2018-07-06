@@ -14,11 +14,11 @@ import net.aicoder.epi.base.view.action.tree.EpiSaveAction;
 import net.aicoder.epi.base.view.context.IEpiInput;
 import net.aicoder.epi.base.view.context.IViewContext;
 import net.aicoder.epi.base.view.context.ViewContext;
+import net.aicoder.epi.base.view.control.table.EpiSelectionProvider;
+import net.aicoder.epi.base.view.control.tree.EpiTree;
+import net.aicoder.epi.base.view.control.tree.EpiTreeDefiner;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
-import net.aicoder.epi.base.view.element.area.BaseWithTitleArea;
-import net.aicoder.epi.base.view.element.table.EpiSelectionProvider;
-import net.aicoder.epi.base.view.element.tree.EpiTree;
-import net.aicoder.epi.base.view.element.tree.EpiTreeDefiner;
+import net.aicoder.epi.base.view.part.area.BaseTitleArea;
 import net.aicoder.epi.devp.prddev.doper.ops.SysDpyResInstDoper;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyResourcesVo;
 
@@ -27,7 +27,7 @@ import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyResourcesVo;
  * @author WANGQINGPING
  *
  */
-public class SysDpyResInstanceTreeTable extends BaseWithTitleArea{
+public class SysDpyResInstanceTreeTable extends BaseTitleArea{
 	public static final String ID = SysDpyResInstanceTreeTable.class.getName();		
 	private EpiTree tree;
 	private EpiTreeDefiner definer;
@@ -63,11 +63,12 @@ public class SysDpyResInstanceTreeTable extends BaseWithTitleArea{
 	}
 
 	@Override
-	protected Control createAreaControl(Composite parent) {
+	//protected Control createAreaControl(Composite parent) {
+	public void assembleControl(Composite parent) {
 		definer = new EpiTreeDefiner(null, columnsDefine);
 		context = new ViewContext();
 		tree = new EpiTree(parent, definer, context);
-		return tree;
+		//return tree;
 	}
 
 	public EpiSelectionProvider getSelectionProvider() {

@@ -1,13 +1,13 @@
-package net.aicoder.epi.base.view.element.table;
+package net.aicoder.epi.base.view.control.table;
 
 import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.widgets.Item;
 
 import net.aicoder.epi.base.model.IBaseVo;
-import net.aicoder.epi.base.view.IViewElement;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.definer.IViewDefiner;
+import net.aicoder.epi.base.view.part.IViewElement;
 import net.aicoder.tcom.tools.util.BeanUtil;
 
 public class EpiCellModifier implements ICellModifier {

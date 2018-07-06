@@ -5,7 +5,7 @@ import org.eclipse.ui.ISharedImages;
 
 import net.aicoder.epi.base.BaseImageConstant;
 import net.aicoder.epi.base.view.action.BaseAction;
-import net.aicoder.epi.base.view.element.tree.EpiTree;
+import net.aicoder.epi.base.view.control.tree.EpiTree;
 
 public class EpiSaveAction extends BaseAction {
 	private static String actionText = "保存";
