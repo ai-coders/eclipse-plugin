@@ -3,10 +3,16 @@ package net.aicoder.epi.devp.prddev.dao.ops;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+
 import net.aicoder.epi.base.dao.BaseDao;
 import net.aicoder.epi.base.model.IBaseVo;
-import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyResInstVo;
-import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyResourcesVo;
+import net.aicoder.epi.devp.prddev.model.ops.SysDpyResInstVo;
+import net.aicoder.epi.devp.prddev.model.ops.SysDpyResourcesVo;
+import net.aicoder.epi.devp.prddev.model.ops.SysDpySchemaVo;
+import net.aicoder.epi.util.network.NetworkConstant;
+import net.aicoder.epi.util.network.NetworkHelper;
 
 public class SysDpyResInstDao extends BaseDao{
 
@@ -16,8 +22,26 @@ public class SysDpyResInstDao extends BaseDao{
 	
 	public List<IBaseVo> loadSysDypResInstList(IBaseVo baseVo){
 		List<IBaseVo> sysDpyResInstList = new ArrayList<>();
-		if(!(baseVo instanceof SysDpyResourcesVo)) return sysDpyResInstList;
 		
+		MultiValueMap<String, String> request = new LinkedMultiValueMap<>();
+		if(baseVo instanceof SysDpyResourcesVo) {
+			SysDpyResourcesVo sdrv = (SysDpyResourcesVo) baseVo;
+			request.add("sessionId", "123456789");
+			request.add("res_id", String.valueOf(sdrv.getRid()));
+			request.add("prd_rid", String.valueOf(sdrv.getPrdRid()));
+		}else if(baseVo instanceof SysDpySchemaVo) {
+			SysDpySchemaVo sdsv = (SysDpySchemaVo) baseVo;
+			request.add("sessionId", "123456789");
+			request.add("scheme_rid", String.valueOf(sdsv.getRid()));
+			request.add("prd_rid", String.valueOf(sdsv.getPrdRid()));
+		}
+
+		
+		String resultJson = NetworkHelper.postForObject(NetworkConstant.PRODUCTOPS_SYS_DPY_RES_INST, request, String.class);
+		System.out.println(resultJson);
+		
+//		ResponseResult<List<SysDpyResInstVo>> resultObj = JSON.parseObject(resultJson,new TypeReference<ResponseResult<List<SysDpyResInstVo>>>(){});
+//		if(resultObj == null || resultObj.getData() == null || resultObj.getData().size() == 0) return sysDpyResInstList;													
 		{
 			SysDpyResInstVo sdriv = new SysDpyResInstVo();
 			sdriv.setName("主机1");
@@ -55,6 +79,16 @@ public class SysDpyResInstDao extends BaseDao{
 		}
 		
 		return sysDpyResInstList;
+	}
+	
+	
+	public List<IBaseVo> loadSysDypResInstFilterList(IBaseVo baseVo) {
+		List<IBaseVo> sysDpyResInstFilterList = new ArrayList<>();
+		
+		
+		
+		
+		return sysDpyResInstFilterList;
 	}
 	
 }

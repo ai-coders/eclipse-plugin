@@ -28,8 +28,8 @@ public class SysDpySchemaDao extends BaseDao {
 		super();
 	}
 	
-	public List<SysDpySchemaVo> loadSysDpySchemaList(IBaseVo baseVo){
-		List<SysDpySchemaVo> sysDpySchemaVos = new ArrayList<>();
+	public List<IBaseVo> loadSysDpySchemaList(IBaseVo baseVo){
+		List<IBaseVo> sysDpySchemaVos = new ArrayList<>();
 		if(!(baseVo instanceof PrdProductVo)) return sysDpySchemaVos;
 		PrdProductVo pVo = (PrdProductVo)baseVo;
 		
@@ -42,8 +42,10 @@ public class SysDpySchemaDao extends BaseDao {
 		ResponseResult<List<SysDpySchemaVo>> resultObj = JSON.parseObject(resultJson,new TypeReference<ResponseResult<List<SysDpySchemaVo>>>(){});
 		if(resultObj == null || resultObj.getData() == null || resultObj.getData().size() == 0) return sysDpySchemaVos;
 		
-		
-		sysDpySchemaVos = resultObj.getData();
+		List<SysDpySchemaVo> data = resultObj.getData();
+		for (SysDpySchemaVo sysDpySchemaVo : data) {
+			sysDpySchemaVos.add(sysDpySchemaVo);
+		}
 		
 		return sysDpySchemaVos;
 	}
