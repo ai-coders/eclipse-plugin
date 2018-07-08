@@ -1,10 +1,12 @@
 package net.aicoder.epi.devp.prddev.view.editors.sysdpy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
@@ -36,11 +38,12 @@ import net.aicoder.epi.base.view.element.area.BaseWithTitleArea;
 import net.aicoder.epi.base.view.element.table.EpiSelectionProvider;
 import net.aicoder.epi.base.view.element.tree.EpiTree;
 import net.aicoder.epi.base.view.element.tree.EpiTreeDefiner;
+import net.aicoder.epi.devp.prddev.doper.ops.OpsAssetCmdbDoper;
 import net.aicoder.epi.devp.prddev.doper.ops.SysDpyResInstDoper;
+import net.aicoder.epi.devp.prddev.model.ops.OpsAssetCmdbVo;
 import net.aicoder.epi.devp.prddev.model.ops.SysDpyResInstVo;
 import net.aicoder.epi.devp.prddev.model.ops.SysDpyResourcesVo;
 import net.aicoder.epi.devp.prddev.model.ops.SysDpySchemaVo;
-import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
 
 /**
  * 部署模型-资源应用场景(树表)
@@ -52,11 +55,15 @@ public class SysDpyResInstanceTreeTable extends BaseWithTitleArea{
 	private EpiTree tree;
 	private EpiTreeDefiner definer;
 	private IViewContext context;
-	private SysDpyResInstDoper doper;
-	private PrdProductVo currentProduct;//当前产品
-	private SysDpyResourcesVo currentDpyResources;//当前关联资源
-	private SysDpyResInstVo currentDpyResIns;//当前关联应用场景
-	private SysDpySchemaVo currentDpySchema;//当前部署方案
+	private SysDpyResInstDoper doper;//资源应用场景
+	private OpsAssetCmdbDoper doperOps;//IT资产
+//	private SysDpyResInstVo currentSysDpyResIns;//当前操作资源应用场景对象引用
+//	private PrdProductVo currentPrdProduct;//当前操作产品对象引用
+	private SysDpyResourcesVo currentSysDpyResources;//当前关联资源对象引用
+	private SysDpySchemaVo currentSysDpySchema;//当前部署方案对象引用
+	private int currentHandlerRole = 0;//默认0,关联资源1,部署方案2
+	private SysDpyResInsAddDialogType sysDpyResInsAddDialogType = SysDpyResInsAddDialogType.NONE;//当前资源使用场景添加弹框的操作类型
+	
 	
 	// 0-列名, 1-数据属性名称, 2-列显示的宽度, 3-数据类型, 4-数据格式, 5-是否隐藏的标志, 6-是否可编辑的标志
 	private static Object[][] columnsDefine = {
@@ -68,7 +75,8 @@ public class SysDpyResInstanceTreeTable extends BaseWithTitleArea{
 	
 	public SysDpyResInstanceTreeTable() {
 		super("资源应用场景",null);
-		doper = new SysDpyResInstDoper();
+		this.doper = new SysDpyResInstDoper();
+		this.doperOps = new OpsAssetCmdbDoper();
 	}
 
 	@Override
@@ -98,23 +106,62 @@ public class SysDpyResInstanceTreeTable extends BaseWithTitleArea{
 		return tree.getSelectionProvider();
 	}
 	
-	//刷新树表数据
+	/**
+	 * 从[关联资源]进入到资源应用场景,做数据更新操作
+	 * @param selection
+	 */
 	public void setSelection(ISelection selection) {	
 		//点选“关联资源”的记录时，维护当前关联资源的“资源实例”；
-		//添加“资源实例”时，可多选所属的部署方案；
-		//依据所选择的部署方案，显示缺省的资源实例；
-		//选择“过滤”按钮进行其它部署方案的
-
 		Object firstElement = ((IStructuredSelection)selection).getFirstElement();
-		SysDpyResourcesVo sysDpyResourcesVo = null;
 		if(firstElement instanceof SysDpyResourcesVo) {
-			sysDpyResourcesVo = (SysDpyResourcesVo)firstElement;
+			currentSysDpyResources = (SysDpyResourcesVo)firstElement;
+		}else {
+			return;
 		}
 		
-		IEpiInput input = doper.loadSysDypResInstList(sysDpyResourcesVo);
+		//依据当前[关联资源]条件查询资源应用场景数据
+		IEpiInput input = doper.loadSysDypResInstList(currentSysDpyResources);
 		context.setInput(input);
-		tree.getViewer().setInput(context.getInput());
+		tree.getViewer().setInput(input);
 		tree.getViewer().refresh();
+
+		currentHandlerRole = 1;//设置[关联资源]进入
+	}
+	
+	/**
+	 * 从[部署方案]进入到资源应用场景,做数据更新操作
+	 * //添加“资源实例”时，可多选所属的部署方案；
+	 * //依据所选择的部署方案，显示缺省的资源实例；
+	 * //选择“过滤”按钮进行其它部署方案的
+	 * @param baseVo
+	 */
+	public void setSelectionBySysDpySchema(IBaseVo baseVo) {
+		if(baseVo instanceof SysDpySchemaVo) {
+			currentSysDpySchema = (SysDpySchemaVo)baseVo;
+		}else {
+			return;
+		}
+		
+		//依据当前[部署方案]条件查询资源应用场景数据
+		IEpiInput input = doper.loadSysDypResInstList(currentSysDpySchema);
+		context.setInput(input);
+		tree.getViewer().setInput(input);
+		tree.getViewer().refresh();
+		
+		currentHandlerRole = 2;//设置[部署方案]进入
+	}
+	
+	/**
+	 * 判断当前是否有选中交联资源或部署方案,若未选中其一则资源使用场景区域工具按钮无效
+	 * @return
+	 */
+	public boolean isSelectResOrSchema() {
+		if(currentSysDpyResources != null && currentHandlerRole == 1) {
+			return true;
+		}else if (currentSysDpySchema != null && currentHandlerRole == 2) {
+			return true;
+		}
+		return false;
 	}
 	
 	
@@ -130,18 +177,15 @@ public class SysDpyResInstanceTreeTable extends BaseWithTitleArea{
 		
 		@Override
 		protected IBaseVo doAddChildNode(IBaseVo parentData) {
-			if(parentData == null) return null;
-			SysDpyResourcesVo sysDpyResVo = null;
-			SysDpyResourcesVo scv = (SysDpyResourcesVo)parentData;
-			
-			sysDpyResVo = new SysDpyResourcesVo();
-			sysDpyResVo.setCode(scv.getCode()+"_Copy");
-			sysDpyResVo.setName(scv.getName()+"_Copy");
-			sysDpyResVo.setEtype("SYS_DPY_RES_INST");
-			sysDpyResVo.setParentNode(scv);
-			scv.getChildrenList().add(sysDpyResVo);
-			
-			return sysDpyResVo;
+			if(!isSelectResOrSchema()) return null;
+			if(parentData == null) {
+				MessageDialog.openInformation(getControl().getShell(), "提示", "请选择父级节点后再添加子节点");
+				return null;
+			}
+			SysDpyResInsAddDialog sysDpyResInsAddDialog = new SysDpyResInsAddDialog(getControl().getShell(),parentData);			
+			sysDpyResInsAddDialogType = SysDpyResInsAddDialogType.ADD_CHILD;
+			sysDpyResInsAddDialog.open();
+			return null;
 		}
 	}
 	
@@ -155,44 +199,12 @@ public class SysDpyResInstanceTreeTable extends BaseWithTitleArea{
 		}
 		
 		@Override
-		protected IBaseVo doAddBrotherRow(IBaseVo currData) {
-			IBaseVo brotherData = null;
-			if(currData == null) return brotherData;
-			if(currData instanceof SysDpyResourcesVo) {
-				SysDpyResourcesVo currModData = (SysDpyResourcesVo)currData;
-				SysDpyResourcesVo parentData = (SysDpyResourcesVo) currModData.getParentNode();
-				
-				
-				SysDpyResourcesVo sysDpyResVo = new SysDpyResourcesVo();
-				sysDpyResVo.setCode(currModData.getCode()+"_Copy");
-				sysDpyResVo.setName(currModData.getName()+"_Copy");
-				sysDpyResVo.setPrdRid(currModData.getPrdRid());
-				sysDpyResVo.setEtype("SYS_DPY_RES_INST");
-				if(parentData != null) {
-					sysDpyResVo.setParentNode(parentData);
-					parentData.getChildrenList().add(sysDpyResVo);
-				}else {
-					IEpiInput input = context.getInput();
-					List<IBaseVo> dataList = input.getDataList();
-					dataList.add(sysDpyResVo);
-				}
-				tree.getViewer().refresh();
-				
-//				if (parentData != null) {
-//					sysCmpVo.setParentSysCmpVo(parentData);
-//					List<IBaseVo> childrenList = parentData.getChildrenSysCmpVoList();
-//					int index=0;
-//					for(index=0; index<childrenList.size();index++) {
-//						if(currData.equals(childrenList.get(index))) {
-//							break;
-//						}
-//					}
-//					childrenList.add(index + 1, sysCmpVo);
-//				}
-				brotherData = sysDpyResVo;
-			}
-			
-			return brotherData;
+		protected IBaseVo doAddBrotherRow(IBaseVo parentData) {
+			if(!isSelectResOrSchema()) return null;
+			SysDpyResInsAddDialog sysDpyResInsAddDialog = new SysDpyResInsAddDialog(getControl().getShell(),parentData);
+			sysDpyResInsAddDialogType = SysDpyResInsAddDialogType.ADD_BROTHER;
+			sysDpyResInsAddDialog.open();
+			return null;
 		}
 	}
 	
@@ -207,17 +219,17 @@ public class SysDpyResInstanceTreeTable extends BaseWithTitleArea{
 		
 		@Override
 		protected int doDdeleteNode(IBaseVo[] currDatas) {
+			if(!isSelectResOrSchema()) return 0;
 			if(currDatas == null) return 0;
 			for (IBaseVo currData : currDatas) {
-				SysDpyResourcesVo currNode = (SysDpyResourcesVo)currData;
-				SysDpyResourcesVo parentNode = (SysDpyResourcesVo) currNode.getParentNode();
+				SysDpyResInstVo currNode = (SysDpyResInstVo)currData;
+				SysDpyResInstVo parentNode = (SysDpyResInstVo) currNode.getParentNode();
 				if(parentNode != null) {
 					parentNode.getChildrenList().remove(currNode);
 				}else {
-					context.getInput().getDataList().remove(currNode);
+					((IEpiInput)tree.getViewer().getInput()).getDataList().remove(currNode);
 				}
 			}
-			
 			return currDatas.length;
 		}
 	}
@@ -234,36 +246,37 @@ public class SysDpyResInstanceTreeTable extends BaseWithTitleArea{
 		
 		@Override
 		protected void doFilterAction() {
-			
-			
-			
-			
-			
-			
+			if(!isSelectResOrSchema()) return;
+			SysDpyResInsFilterDialog sysDpyResInsFilterDialog = new SysDpyResInsFilterDialog(getControl().getShell());
+			sysDpyResInsFilterDialog.open();
 		}
 	}
 	
 	
 	
 	/**
-	 * 新增资源应用场景弹框
+	 * [添加]资源应用场景弹框
 	 * @author WANGQINGPING
 	 *
 	 */
-	public class SysDpyResInsCreateDialog extends Dialog{
+	public class SysDpyResInsAddDialog extends Dialog{
+		private SysDpyResInstVo currentData;
+		private List<IBaseVo> currentOpsAssetCmdbList;//当前IT资产 数据列表
+		
 		private Composite composite;
-		private Text textAssoResCode;//关联资源代码
-		private Text textAssoResName;//关联资源名称
-		private Combo comboAssoResType;//关联资源类型
-		private Text textAssoResDesc;//关联资源描述
-		private Combo comboAssoITRes;//关联资源IT资产
+		private Text textAssoResCode;//关联资源 代码
+		private Text textAssoResName;//关联资源 名称
+		private Combo comboAssoResType;//关联资源 类型
+		private Text textAssoResDesc;//关联资源 描述
 		
-		private Text textITResNo;//关联IT资产元素类型
-		private Text textITResType;//关联IT资产元素类型
-		private Combo textITResCode;//关联IT资产类型代码
+//		private Text textITResNo;//关联IT资产 编号
+		private Combo comboITAssetEType;//关联IT资产 元素类型
+//		private Combo textITResCode;//关联IT资产 代码
 		
-		protected SysDpyResInsCreateDialog(Shell parentShell) {
+
+		protected SysDpyResInsAddDialog(Shell parentShell,IBaseVo baseVo) {
 			super(parentShell);
+			this.currentData = (SysDpyResInstVo) baseVo;
 		}
 		
 		@Override
@@ -271,33 +284,48 @@ public class SysDpyResInstanceTreeTable extends BaseWithTitleArea{
 			return new Point(600, 400);
 		}
 		
+		/**
+		 * 执行[添加]资源应用场景数据
+		 */
 		private void doAddSysDpyResIns() {
-			SysDpyResInstVo sdriv = new SysDpyResInstVo();
-			sdriv.setCode(textAssoResCode.getText().trim());
-			sdriv.setName(textAssoResName.getText().trim());
-			sdriv.setType(comboAssoResType.getItem(comboAssoResType.getSelectionIndex()));
-			sdriv.setDescription(textAssoResDesc.getText().trim());
-//			sdriv.setAssetRid(textITResNo.getText().trim());
-//			IEpiInput input = context.getInput();
-//			input.getDataList().add(sdrv);
-//			tree.getViewer().refresh();
-//			tree.putInsertedData(sdrv);
+			//IT资产类型和关联资源的类型要保持一致
+			OpsAssetCmdbVo oacv = (OpsAssetCmdbVo) currentOpsAssetCmdbList.get(comboITAssetEType.getSelectionIndex());		
+			SysDpyResInstVo newData = new SysDpyResInstVo();
+			newData.setCode(textAssoResCode.getText().trim());
+			newData.setName(textAssoResName.getText().trim());
+			newData.setType(comboAssoResType.getItem(comboAssoResType.getSelectionIndex()));
+			newData.setDescription(textAssoResDesc.getText().trim());
+			newData.setAssetRid(oacv.getRid());//关联IT资产ID
+			newData.setPrdRid(currentHandlerRole == 1 ? currentSysDpyResources.getPrdRid():currentHandlerRole == 2 ? currentSysDpySchema.getPrdRid():null);						
+			if(sysDpyResInsAddDialogType == SysDpyResInsAddDialogType.ADD_CHILD) {//子节点
+				newData.setParentNode(currentData);
+				currentData.getChildrenList().add(newData);
+			}else if(sysDpyResInsAddDialogType == SysDpyResInsAddDialogType.ADD_BROTHER) {//兄弟节点
+				newData.setParentNode(currentData != null ? currentData.getParentNode():null);
+				if(currentData == null || currentData.getParentNode() == null) {
+					((IEpiInput)tree.getViewer().getInput()).getDataList().add(newData);
+				}else {
+					currentData.getParentNode().getChildrenList().add(newData);
+				}
+			}
+			tree.getViewer().refresh();
+			tree.putInsertedData(newData);
+			
+			//关闭弹框
 			close();
 		}
 		
 		
 		@Override
 		protected Control createDialogArea(Composite parent) {
-			GridLayout gridLayout = new GridLayout(2,false);
-			gridLayout.makeColumnsEqualWidth = false;
-			GridData gridData = new GridData();
-			gridData.grabExcessHorizontalSpace = true;
+			composite = new Composite(parent, SWT.NONE);
+			composite.setLayout(new GridLayout(1,false));
 			
 			//关联资源
 			Group groupAssoRes = new Group(composite, SWT.NONE);
 			groupAssoRes.setText("关联资源");
-			groupAssoRes.setLayout(gridLayout);
-			groupAssoRes.setLayoutData(gridData);
+			groupAssoRes.setLayout(new GridLayout(2,true));
+//			groupAssoRes.setLayoutData(gridData);
 			
 			Label label1 = new Label(groupAssoRes, SWT.NONE);
 			label1.setText("代码:");
@@ -320,33 +348,36 @@ public class SysDpyResInstanceTreeTable extends BaseWithTitleArea{
 			textAssoResDesc = new Text(groupAssoRes, SWT.NONE);
 			textAssoResDesc.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,1,1));
 			
-			Label label5 = new Label(groupAssoRes, SWT.NONE);
-			label5.setText("描述:");
-			comboAssoITRes = new Combo(groupAssoRes, SWT.NONE);
-			comboAssoITRes.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,1,1));
-			
-			
+
 			//IT资产
-			Group groupITRes = new Group(composite, SWT.NONE);
-			groupAssoRes.setText("IT资产");
-			groupAssoRes.setLayout(gridLayout);
-			groupAssoRes.setLayoutData(gridData);
+			Group groupITAsset = new Group(composite, SWT.NONE);
+			groupITAsset.setText("关联IT资产");
+			groupITAsset.setLayout(new GridLayout(2,true));
 			
-			Label label11 = new Label(groupITRes, SWT.NONE);
-			label11.setText("资产编号:");
-			textITResNo = new Text(groupITRes, SWT.NONE);
-			textITResNo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,1,1));
+			currentOpsAssetCmdbList = doperOps.loadOpsAssetCmdbList(currentData);
+			List<String> items = new ArrayList<>();
+			for (IBaseVo bv : currentOpsAssetCmdbList) {
+				OpsAssetCmdbVo oacv = (OpsAssetCmdbVo) bv;
+				items.add(oacv.getEtype());
+			}
+			Label label21 = new Label(groupITAsset, SWT.NONE);
+			label21.setText("元素类型:");
+			comboITAssetEType = new Combo(groupITAsset, SWT.NONE);
+			comboITAssetEType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,1,1));
+			comboITAssetEType.setItems(items.toArray(new String[]{}));
 			
-			Label label12 = new Label(groupITRes, SWT.NONE);
-			label12.setText("元素类型:");
-			textITResType = new Text(groupITRes, SWT.NONE);
-			textITResType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,1,1));
 			
-			Label label13 = new Label(groupITRes, SWT.NONE);
-			label13.setText("类型代码:");
-			textITResCode = new Combo(groupITRes, SWT.NONE);
-			textITResCode.setItems(new String[] {"部署到","连接","调用"});
-			textITResCode.select(0);
+			
+//			Label label11 = new Label(groupITRes, SWT.NONE);
+//			label11.setText("资产编号:");
+//			textITResNo = new Text(groupITRes, SWT.NONE);
+//			textITResNo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,1,1));
+			
+//			Label label13 = new Label(groupITRes, SWT.NONE);
+//			label13.setText("类型代码:");
+//			textITResCode = new Combo(groupITRes, SWT.NONE);
+//			textITResCode.setItems(new String[] {"部署到","连接","调用"});
+//			textITResCode.select(0);
 			
 			
 			//添加按钮
@@ -370,19 +401,11 @@ public class SysDpyResInstanceTreeTable extends BaseWithTitleArea{
 		@Override
 		protected void configureShell(Shell newShell) {
 			super.configureShell(newShell);
-			newShell.setText("添加关联资源");
+			newShell.setText("添加资源应用场景数据");
 //			newShell.setLayout(new FillLayout());
 //			newShell.setImage(PrddevImageConstant.getImage(BaseImageConstant.A_ADD));
 //			newShell.setBounds((int) (newShell.getSize().x/2.5), (int) (newShell.getSize().y/3), 600, 400);
 		}
-		
-		
-//		@Override
-//		protected void createButtonsForButtonBar(Composite parent) {
-//			GridData gridData = new GridData(0,0);
-//			parent.setLayoutData(gridData);
-//			super.createButtonsForButtonBar(parent);
-//		}
 		
 		@Override
 		protected Control createButtonBar(Composite parent) {
@@ -391,9 +414,137 @@ public class SysDpyResInstanceTreeTable extends BaseWithTitleArea{
 			getButton(IDialogConstants.CANCEL_ID).setVisible(false);
 			return createButtonBar;
 		}
-		
-		
-
 	}
+	
+	/**
+	 * [过滤]资源应用场景弹框
+	 * @author WANGQINGPING
+	 *
+	 */
+	public class SysDpyResInsFilterDialog extends Dialog{
+		private Composite composite;
+		private Text textType;//资源实例 类型
+		private Text textName;//资源实例 名称
+		private Text textCode;//资源实例 代码
+		private Text textDesc;//资源实例 描述
+		
 
+		protected SysDpyResInsFilterDialog(Shell parentShell) {
+			super(parentShell);
+		}
+		
+		@Override
+		protected Point getInitialSize() {
+			return new Point(600, 400);
+		}
+		
+		/**
+		 * 执行[添加]资源应用场景数据
+		 */
+		private void doFilterSysDpyResIns() {
+			SysDpyResInstVo sdriv = new SysDpyResInstVo();
+			String type = textType.getText().trim();
+			String name = textName.getText().trim();
+			String code = textCode.getText().trim();
+			String desc = textDesc.getText().trim();
+			sdriv.setType(type);
+			sdriv.setName(name);
+			sdriv.setCode(code);
+			sdriv.setDescription(desc);
+			sdriv.setPrdRid(currentHandlerRole == 1 ? currentSysDpyResources.getPrdRid():currentHandlerRole == 2 ? currentSysDpySchema.getPrdRid():null);
+			
+			IEpiInput input = doper.loadSysDypResInstFilterList(sdriv);
+			context.setInput(input);
+			tree.getViewer().setInput(input);
+			tree.getViewer().refresh();
+			close();//关闭弹框
+		}
+		
+		
+		@Override
+		protected Control createDialogArea(Composite parent) {
+			composite = new Composite(parent, SWT.NONE);
+			GridLayout gridLayout = new GridLayout(2,false);
+			GridData gridData = new GridData();
+			composite.setLayout(gridLayout);
+			composite.setLayoutData(gridData);
+			
+			Label label1 = new Label(composite, SWT.NONE);
+			label1.setText("类型:");
+			textType = new Text(composite, SWT.NONE);
+			textType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,1,1));
+			
+			
+			Label label2 = new Label(composite, SWT.NONE);
+			label2.setText("名称:");
+			textName = new Text(composite, SWT.NONE);
+			textName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,1,1));
+			
+			Label label3 = new Label(composite, SWT.NONE);
+			label3.setText("代码:");
+			textCode = new Text(composite, SWT.NONE);
+			textCode.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,1,1));
+			
+			Label label4 = new Label(composite, SWT.NONE);
+			label4.setText("描述:");
+			textDesc = new Text(composite, SWT.NONE);
+			textDesc.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,1,1));
+			
+			Button button = new Button(composite,SWT.NONE);
+			button.setText("过滤");
+			GridData buttonGridData = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);		
+			buttonGridData.horizontalSpan = 2;
+			buttonGridData.widthHint = 80;
+			buttonGridData.heightHint = 25;
+			button.setLayoutData(buttonGridData);
+			
+			button.addListener(SWT.Selection, new Listener() {
+				@Override
+				public void handleEvent(Event event) {
+					doFilterSysDpyResIns();
+				}
+			});
+			return composite;
+		}
+		
+		@Override
+		protected void configureShell(Shell newShell) {
+			super.configureShell(newShell);
+			newShell.setText("过滤资源应用场景数据");
+//			newShell.setLayout(new FillLayout());
+//			newShell.setImage(PrddevImageConstant.getImage(BaseImageConstant.A_ADD));
+//			newShell.setBounds((int) (newShell.getSize().x/2.5), (int) (newShell.getSize().y/3), 600, 400);
+		}
+		
+		@Override
+		protected Control createButtonBar(Composite parent) {
+			Control createButtonBar = super.createButtonBar(parent);
+			getButton(IDialogConstants.OK_ID).setVisible(false);
+			getButton(IDialogConstants.CANCEL_ID).setVisible(false);
+			return createButtonBar;
+		}
+	}
+	
+	
+	/**
+	 * 资源使用场景添加操作类型枚举
+	 * @author WANGQINGPING
+	 */
+	public enum SysDpyResInsAddDialogType{
+		NONE("NONE"),
+		ADD_CHILD("ADD_CHILD"),
+		ADD_BROTHER("ADD_BROTHER"),
+		;
+		
+		private String type;
+		
+		private SysDpyResInsAddDialogType(String type) {
+			this.type = type;
+		}
+		
+		public String getType() {
+			return type;
+		}
+	}
+	
 }

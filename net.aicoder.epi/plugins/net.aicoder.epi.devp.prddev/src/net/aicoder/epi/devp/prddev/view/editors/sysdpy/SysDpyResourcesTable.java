@@ -46,7 +46,7 @@ public class SysDpyResourcesTable extends BaseWithTitleArea{
 	private EpiTableDefiner definer;
 	private IViewContext context;
 	private SysDpyResourcesDoper doper;
-	private PrdProductVo currentProduct;//当前产品
+	private PrdProductVo currentSelectProduct;//当前选中的产品
 	
 	
 	// 0-列名, 1-数据属性名称, 2-列显示的宽度, 3-数据类型, 4-数据格式, 5-是否隐藏的标志, 6-是否可编辑的标志
@@ -54,8 +54,6 @@ public class SysDpyResourcesTable extends BaseWithTitleArea{
 		{"关联类型", "type", -20, null, null, null, IColumnDefiner.CE_TEXT},
 		{"关联名称", "name", 20, null, null, null, IColumnDefiner.CE_TEXT }
 	};
-	
-	
 	
 	//Constructor
 	public SysDpyResourcesTable() {
@@ -68,7 +66,6 @@ public class SysDpyResourcesTable extends BaseWithTitleArea{
 		IEpiAction[] epiAction = new IEpiAction[2];
 		epiAction[0] = new SysDpyResourcesAddAction(table);
 		epiAction[1] = new SysDpyResourcesDeleteAction(table);
-		
 		toolBarManager.add(epiAction[0]);
 		toolBarManager.add(epiAction[1]);
 		toolBarManager.update(true);
@@ -78,14 +75,12 @@ public class SysDpyResourcesTable extends BaseWithTitleArea{
 	protected Control createAreaControl(Composite parent) {
 		IEpiEditorInput editorInput = (IEpiEditorInput)this.getEditorInput();
 		IBaseVo currentData = editorInput.getCurrentData();
-		PrdProductVo product = null;
 		if(currentData instanceof PrdProductVo){
-			product = (PrdProductVo)currentData;
-			this.currentProduct = product;
+			currentSelectProduct = (PrdProductVo)currentData;
 		}
 		
 		//点选XXX产品时，获取当前产品的所关联的资源；关联资源为该产品所涉及的外部产品、及其它系统资源；关联资源类型有：部署到、连接（双向/请求）、调用	
-		IEpiInput input = doper.loadSysDpyResourcesList(product);
+		IEpiInput input = doper.loadSysDpyResourcesList(currentSelectProduct);
 		
 		definer = new EpiTableDefiner(null, columnsDefine);
 		context = new ViewContext();
@@ -118,8 +113,8 @@ public class SysDpyResourcesTable extends BaseWithTitleArea{
 		
 		@Override
 		protected void doAddAction() {
-			SysDpyResourcesCreateDialog sysDpyResourcesCreateDialog = new SysDpyResourcesCreateDialog(getControl().getShell());
-			sysDpyResourcesCreateDialog.open();
+			SysDpyResourcesAddDialog sysDpyResourcesAddDialog = new SysDpyResourcesAddDialog(getControl().getShell());
+			sysDpyResourcesAddDialog.open();
 		}
 		
 	}
@@ -137,7 +132,7 @@ public class SysDpyResourcesTable extends BaseWithTitleArea{
 		protected void doDeleteAction(IBaseVo baseVo) {
 			if(baseVo == null || !(baseVo instanceof SysDpyResourcesVo)) return;
 			SysDpyResourcesVo sysDpyResourcesVo = (SysDpyResourcesVo) baseVo;
-			IEpiInput input = context.getInput();
+			IEpiInput input = (IEpiInput) table.getViewer().getInput();
 			input.getDataList().remove(sysDpyResourcesVo);
 			table.getViewer().refresh();
 			table.putDeletedData(baseVo);
@@ -145,11 +140,11 @@ public class SysDpyResourcesTable extends BaseWithTitleArea{
 	}
 	
 	/**
-	 * 新增关联资源弹框
+	 * 关联资源新增弹框
 	 * @author WANGQINGPING
 	 *
 	 */
-	public class SysDpyResourcesCreateDialog extends Dialog{
+	public class SysDpyResourcesAddDialog extends Dialog{
 		private Composite composite;
 		private Text textAccsType;//关联类型
 		private Combo comboResType;//关联资源类型
@@ -157,7 +152,7 @@ public class SysDpyResourcesTable extends BaseWithTitleArea{
 		private Text code;//代码
 		private Text desc;//描述
 		
-		protected SysDpyResourcesCreateDialog(Shell parentShell) {
+		protected SysDpyResourcesAddDialog(Shell parentShell) {
 			super(parentShell);
 		}
 		
@@ -168,14 +163,17 @@ public class SysDpyResourcesTable extends BaseWithTitleArea{
 		
 		private void doAddSysDpyResources() {
 			SysDpyResourcesVo sdrv = new SysDpyResourcesVo();
-			sdrv.setSubType(textAccsType.getText().trim());
-			sdrv.setType(comboResType.getItem(comboResType.getSelectionIndex()));
+			sdrv.setRid(38882983898L);
+			sdrv.setTid(1);
 			sdrv.setName(textResName.getText().trim());
 			sdrv.setCode(code.getText().trim());
+			sdrv.setAlias("");
+			sdrv.setType(comboResType.getItem(comboResType.getSelectionIndex()));
+			sdrv.setSubType(textAccsType.getText().trim());
 			sdrv.setDescription(desc.getText().trim());
-			sdrv.setPrdRid(currentProduct.getRid());
+			sdrv.setPrdRid(currentSelectProduct.getRid());
 			
-			IEpiInput input = context.getInput();
+			IEpiInput input = (IEpiInput) table.getViewer().getInput();
 			input.getDataList().add(sdrv);
 			table.getViewer().refresh();
 			table.putInsertedData(sdrv);
@@ -237,7 +235,7 @@ public class SysDpyResourcesTable extends BaseWithTitleArea{
 		@Override
 		protected void configureShell(Shell newShell) {
 			super.configureShell(newShell);
-			newShell.setText("添加关联资源");
+			newShell.setText("添加关联资源数据");
 //			newShell.setLayout(new FillLayout());
 //			newShell.setImage(PrddevImageConstant.getImage(BaseImageConstant.A_ADD));
 //			newShell.setBounds((int) (newShell.getSize().x/2.5), (int) (newShell.getSize().y/3), 600, 400);
@@ -259,7 +257,7 @@ public class SysDpyResourcesTable extends BaseWithTitleArea{
 			return createButtonBar;
 		}
 		
-		
-
 	}
+	
+
 }

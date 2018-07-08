@@ -3,9 +3,22 @@ package net.aicoder.epi.devp.prddev.view.editors.sysdpy;
 import java.util.List;
 
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.view.action.IEpiAction;
@@ -18,6 +31,7 @@ import net.aicoder.epi.base.view.action.tree.EpiFilterAction;
 import net.aicoder.epi.base.view.action.tree.EpiRefreshAction;
 import net.aicoder.epi.base.view.action.tree.EpiUpRowAction;
 import net.aicoder.epi.base.view.action.tree.EpiUpgradeAction;
+import net.aicoder.epi.base.view.context.EpiInput;
 import net.aicoder.epi.base.view.context.IEpiEditorInput;
 import net.aicoder.epi.base.view.context.IEpiInput;
 import net.aicoder.epi.base.view.context.IViewContext;
@@ -45,6 +59,7 @@ public class SysDpyCmpTreeTable extends BaseWithTitleArea{
 	private EpiTreeDefiner definer;
 	private IViewContext context;
 	private SysCmpDoper doper;
+	private PrdProductVo currentSelectProduct;//当前选中的产品
 	// 0-列名, 1-数据属性名称, 2-列显示的宽度, 3-数据类型, 4-数据格式, 5-是否隐藏的标志, 6-是否可编辑的标志
 	private static Object[][] columnsDefine = {
 		{"名称*", "name", 20, null, null, null, IColumnDefiner.EDITABLE },
@@ -91,18 +106,17 @@ public class SysDpyCmpTreeTable extends BaseWithTitleArea{
 	protected Control createAreaControl(Composite parent) {
 		IEpiEditorInput editorInput = (IEpiEditorInput)this.getEditorInput();
 		IBaseVo currentData = editorInput.getCurrentData();
-		PrdProductVo product = null;
 		if(currentData instanceof SysElmCatgVo) {
 			ProductDevVo productDev = (ProductDevVo) ((SysElmCatgVo)currentData).getParentNode();
-			product = productDev.getProduct();
+			currentSelectProduct = productDev.getProduct();
 		}else if(currentData instanceof PrdProductVo){
-			product = (PrdProductVo)currentData;
+			currentSelectProduct = (PrdProductVo)currentData;
 		}
 		
 		
 		//点选XXX产品时，获取当前产品的系统、子系统、组件；
 		//可新增/删除系统、子系统、组件等，及维护系统、子系统、组件结构
-		IEpiInput input = doper.loadSysCmpList(product);
+		IEpiInput input = doper.loadSysCmpList(currentSelectProduct);
 		
 		definer = new EpiTreeDefiner(null, columnsDefine);
 		context = new ViewContext();
@@ -129,18 +143,26 @@ public class SysDpyCmpTreeTable extends BaseWithTitleArea{
 	 * @author WANGQINGPING
 	 */
 	public class SysCmpAddChildAction extends EpiAddChildAction {
+		private int serial = 1;
 		public SysCmpAddChildAction(EpiTree tree) {
 			super(tree);
 		}
 		
 		@Override
 		protected IBaseVo doAddChildNode(IBaseVo parentData) {
-			if(parentData == null) return null;
-			SysCmpVo sysCmpVo = null;
-			SysCmpVo scv = (SysCmpVo)parentData;
-			if("SYS_CMP".equals(scv.getEtype())) return sysCmpVo;
+			if(parentData == null) {
+				MessageDialog.openInformation(getControl().getShell(), "提示", "当前未选择父级节点,请选择父级节点后再添加子节点");
+				return null;
+			}
+			if("SYS_CMP".equals(((SysCmpVo)parentData).getEtype())) {
+				MessageDialog.openInformation(getControl().getShell(), "提示", "当前选择为叶子节点,请选择父级节点后再添加子节点");
+				return null;
+			}
 			
-			sysCmpVo = new SysCmpVo();
+			SysCmpVo scv = (SysCmpVo)parentData;			
+			SysCmpVo sysCmpVo = new SysCmpVo();
+			sysCmpVo.setRid(368+serial);
+			sysCmpVo.setTid(1);
 			sysCmpVo.setCode(scv.getCode()+"_Copy");
 			sysCmpVo.setName(scv.getName()+"_Copy");
 			if("SYSTEM".equals(scv.getEtype())) {
@@ -150,7 +172,7 @@ public class SysDpyCmpTreeTable extends BaseWithTitleArea{
 			}
 			sysCmpVo.setParentNode(scv);
 			scv.getChildrenList().add(sysCmpVo);
-			
+			serial++;
 			return sysCmpVo;
 		}
 	}
@@ -160,23 +182,30 @@ public class SysDpyCmpTreeTable extends BaseWithTitleArea{
 	 * @author WANGQINGPING
 	 */
 	public class SysCmpAddBrotherAction extends EpiAddBrotherAction {
+		private int serial = 1;
 		public SysCmpAddBrotherAction(EpiTree tree) {
 			super(tree);
 		}
 		
 		@Override
 		protected IBaseVo doAddBrotherRow(IBaseVo currData) {
-			IBaseVo brotherData = null;
-			if(currData == null) return brotherData;
-			if(currData instanceof SysCmpVo) {
+			//如果currData为空则表示没有选中添加节点位置，则直接添加在跟节点上
+			//如果currData非空若表示有选中添加节点位置，则添加在同级节点上
+			
+			SysCmpVo sysCmpVo = new SysCmpVo();
+			if(currData instanceof SysCmpVo) {//有选中添加节点位置处理
 				SysCmpVo currModData = (SysCmpVo)currData;
 				SysCmpVo parentData = (SysCmpVo) currModData.getParentNode();
+//				if("SYS_CMP".equals(currModData.getEtype())) {
+//					MessageDialog.openInformation(getControl().getShell(), "提示", "当前选择为叶子节点,请选择父级节点后再添加子节点");
+//					return null;
+//				}
 				
-				
-				SysCmpVo sysCmpVo = new SysCmpVo();
-				sysCmpVo.setCode(currModData.getCode()+"_Copy");
-				sysCmpVo.setName(currModData.getName()+"_Copy");
-				sysCmpVo.setPrdRid(currModData.getPrdRid());
+				sysCmpVo.setRid(268+serial);
+				sysCmpVo.setTid(1);
+				sysCmpVo.setName(currModData.getName()+"_New_Copy");
+				sysCmpVo.setCode(currModData.getCode()+"_New_Copy");
+				sysCmpVo.setPrdRid(currentSelectProduct.getRid());
 				if("SYSTEM".equals(currModData.getEtype())) {
 					sysCmpVo.setEtype("SYSTEM");
 				}else if("SUB_SYS".equals(currModData.getEtype())) {
@@ -184,32 +213,32 @@ public class SysDpyCmpTreeTable extends BaseWithTitleArea{
 				}else if("SYS_CMP".equals(currModData.getEtype())) {
 					sysCmpVo.setEtype("SYS_CMP");
 				}
-
+				
+				//是否存在父级节点
 				if(parentData != null) {
 					sysCmpVo.setParentNode(parentData);
 					parentData.getChildrenList().add(sysCmpVo);
 				}else {
-					IEpiInput input = context.getInput();
+					IEpiInput input = (IEpiInput) tree.getViewer().getInput();
 					List<IBaseVo> dataList = input.getDataList();
 					dataList.add(sysCmpVo);
 				}
-				tree.getViewer().refresh();
-				
-//				if (parentData != null) {
-//					sysCmpVo.setParentSysCmpVo(parentData);
-//					List<IBaseVo> childrenList = parentData.getChildrenSysCmpVoList();
-//					int index=0;
-//					for(index=0; index<childrenList.size();index++) {
-//						if(currData.equals(childrenList.get(index))) {
-//							break;
-//						}
-//					}
-//					childrenList.add(index + 1, sysCmpVo);
-//				}
-				brotherData = sysCmpVo;
+			}else {//没有选中添加节点位置处理
+				sysCmpVo.setRid(268790814048238999L);
+				sysCmpVo.setTid(1);
+				sysCmpVo.setName("New_Copy");
+				sysCmpVo.setCode("New_Copy");
+				sysCmpVo.setPrdRid(currentSelectProduct.getRid());
+				sysCmpVo.setEtype("SYSTEM");
+				IEpiInput input = (IEpiInput) tree.getViewer().getInput();
+				List<IBaseVo> dataList = input.getDataList();
+				dataList.add(sysCmpVo);
 			}
 			
-			return brotherData;
+			tree.getViewer().refresh();
+//			tree.putInsertedData(sysCmpVo);
+			serial++;
+			return sysCmpVo;
 		}
 	}
 	
@@ -243,8 +272,8 @@ public class SysDpyCmpTreeTable extends BaseWithTitleArea{
 		@Override
 		protected void doFilterAction() {
 			//过滤处理
-			
-			
+			SysDpyCmpFilterDialog sdcfd = new SysDpyCmpFilterDialog(getControl().getShell());
+			sdcfd.open();
 		}
 	}
 	
@@ -267,13 +296,17 @@ public class SysDpyCmpTreeTable extends BaseWithTitleArea{
 				SysCmpVo dest = new SysCmpVo();
 				BeanUtil.copyBeanToBean(dest, currNode);
 				dest.setEtype(parentNode.getEtype());
-				if(currData instanceof SysCmpVo && parentNode.getParentNode() != null) {//第三级
+				if(currData instanceof SysCmpVo && parentNode.getParentNode() != null) {//当前操作数据为第三级
 					dest.setParentNode(parentNode.getParentNode());
 					parentNode.getParentNode().getChildrenList().add(dest);
 					parentNode.getChildrenList().remove(currNode);
-				}else if(currData instanceof SysCmpVo && parentNode.getParentNode() == null) {//第二级
+				}else if(currData instanceof SysCmpVo && parentNode.getParentNode() == null) {//当前操作数据为第二级
 					dest.setParentNode(null);
-					IEpiInput input = tree.getViewContext().getInput();
+					List<IBaseVo> childrenList = dest.getChildrenList();
+					for (IBaseVo iBaseVo : childrenList) { 
+						iBaseVo.setEtype(currData.getEtype()); 
+					}
+					IEpiInput input = (IEpiInput) tree.getViewer().getInput();
 					List<IBaseVo> dataList = input.getDataList();
 					dataList.add(dest);
 					currNode.getParentNode().getChildrenList().remove(currData);
@@ -295,6 +328,37 @@ public class SysDpyCmpTreeTable extends BaseWithTitleArea{
 		protected void doDegradeAction(IBaseVo currData) {
 //			SysCmpVo currNode = (SysCmpVo)currData;
 //			SysCmpVo parentNode = (SysCmpVo) currNode.getParentNode();
+			return;
+			
+			/*
+			//当前为叶子节点
+			if("SYS_CMP".equals(currNode.getEtype())) {
+				MessageDialog.openInformation(getControl().getShell(), "提示", "当前选择为叶子节点,不能再降级操作");
+				return;
+			}
+			//当前为子系统节点
+			if("SUB_SYS".equals(currNode.getEtype())) {
+				//如果存在叶子节点，则升序为子系统节点
+				List<IBaseVo> childrenList = currNode.getChildrenList();
+				for (IBaseVo iBaseVo : childrenList) {
+					SysCmpVo scv = (SysCmpVo) iBaseVo;
+					scv.setEtype(currNode.getEtype());
+					scv.setParentNode(parentNode);
+				}
+				
+				//当前子系统节点[降序]为叶子节点
+				//此处有疑问:
+				//一个父节点,一个子节点,2个叶子节点,若子节点降序后2个叶子节点升序为子节点,则之前的子节点该是2个新子节点中的哪个叶子节点?
+				
+			}
+			//当前为系统节点
+			if("SYSTEM".equals(currNode.getEtype())) {
+				//如果存在子系统节点，则升序为系统节点
+				//当前系统节点[降序]为子系统节点
+				List<IBaseVo> childrenList = currNode.getChildrenList();
+				
+			}
+			*/
 
 		}
 	}
@@ -318,11 +382,118 @@ public class SysDpyCmpTreeTable extends BaseWithTitleArea{
 				if(parentNode != null) {
 					parentNode.getChildrenList().remove(currNode);
 				}else {
-					context.getInput().getDataList().remove(currNode);
+					((IEpiInput)tree.getViewer().getInput()).getDataList().remove(currNode);
 				}
 			}
+			tree.getViewer().refresh();
 			
 			return currDatas.length;
+		}
+	}
+	
+	
+	/**
+	 * 系统、子系统、组件过滤弹框
+	 * @author WANGQINGPING
+	 *
+	 */
+	public class SysDpyCmpFilterDialog extends Dialog{
+		private Composite composite;
+		private Text textType;//类型
+		private Text textName;//关联资源名称
+		private Text textCode;//代码
+		private Text textDesc;//描述
+		
+		protected SysDpyCmpFilterDialog(Shell parentShell) {
+			super(parentShell);
+		}
+		
+		@Override
+		protected Point getInitialSize() {
+			return new Point(600, 400);
+		}
+		
+		private void doFilterSysCmp() {
+			SysCmpVo scv = new SysCmpVo();
+			String type = textType.getText().trim();
+			String name = textName.getText().trim();
+			String code = textCode.getText().trim();
+			String desc = textDesc.getText().trim();
+			scv.setType(type);
+			scv.setName(name);
+			scv.setCode(code);
+			scv.setDescription(desc);
+			scv.setPrdRid(currentSelectProduct.getRid());
+			
+			EpiInput input = doper.loadSysCmpFilterList(scv);
+			context.setInput(input);
+			tree.getViewer().setInput(input);
+			tree.getViewer().refresh();
+			close();//关闭弹框
+		}
+		
+		
+		@Override
+		protected Control createDialogArea(Composite parent) {
+			composite = new Composite(parent, SWT.NONE);
+			GridLayout gridLayout = new GridLayout(2,false);
+			GridData gridData = new GridData();
+			composite.setLayout(gridLayout);
+			composite.setLayoutData(gridData);
+			
+			Label label1 = new Label(composite, SWT.NONE);
+			label1.setText("类型:");
+			textType = new Text(composite, SWT.NONE);
+			textType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,1,1));
+			
+			
+			Label label2 = new Label(composite, SWT.NONE);
+			label2.setText("名称:");
+			textName = new Text(composite, SWT.NONE);
+			textName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,1,1));
+			
+			Label label3 = new Label(composite, SWT.NONE);
+			label3.setText("代码:");
+			textCode = new Text(composite, SWT.NONE);
+			textCode.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,1,1));
+			
+			Label label4 = new Label(composite, SWT.NONE);
+			label4.setText("描述:");
+			textDesc = new Text(composite, SWT.NONE);
+			textDesc.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,1,1));
+			
+			Button button = new Button(composite,SWT.NONE);
+			button.setText("过滤");
+			GridData buttonGridData = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);		
+			buttonGridData.horizontalSpan = 2;
+			buttonGridData.widthHint = 80;
+			buttonGridData.heightHint = 25;
+			button.setLayoutData(buttonGridData);
+			
+			button.addListener(SWT.Selection, new Listener() {
+				@Override
+				public void handleEvent(Event event) {
+					doFilterSysCmp();
+				}
+			});
+			return composite;
+		}
+		
+		@Override
+		protected void configureShell(Shell newShell) {
+			super.configureShell(newShell);
+			newShell.setText("过滤系统、子系统、组件数据");
+//			newShell.setLayout(new FillLayout());
+//			newShell.setImage(PrddevImageConstant.getImage(BaseImageConstant.A_ADD));
+//			newShell.setBounds((int) (newShell.getSize().x/2.5), (int) (newShell.getSize().y/3), 600, 400);
+		}
+		
+		@Override
+		protected Control createButtonBar(Composite parent) {
+			Control createButtonBar = super.createButtonBar(parent);
+			getButton(IDialogConstants.OK_ID).setVisible(false);
+			getButton(IDialogConstants.CANCEL_ID).setVisible(false);
+			return createButtonBar;
 		}
 	}
 

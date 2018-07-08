@@ -27,4 +27,5 @@ public class SysDpyEditor extends BaseFormEditor{
 		setPartName(input.getName());
 		setTitleToolTip(input.getToolTipText());
 	}
+
 }

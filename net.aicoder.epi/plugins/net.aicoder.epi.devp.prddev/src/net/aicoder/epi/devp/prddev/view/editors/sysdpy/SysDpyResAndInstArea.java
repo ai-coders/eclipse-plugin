@@ -44,16 +44,13 @@ public class SysDpyResAndInstArea extends BaseArea{
 		sashArea.setAreaWeights(areaWeights);
 		sashArea.createControl(parent);
 
-		//点选“关联资源”的记录时，维护当前关联资源的“资源实例”；
-		//添加“资源实例”时，可多选所属的部署方案；
-		//依据所选择的部署方案，显示缺省的资源实例；
-		//选择“过滤”按钮进行其它部署方案的
-		sysDpyResourcesTable.getSelectionProvider().addSelectionChangedListener(new ISelectionChangedListener() {
+		//点选“关联资源”的一条记录时，传递到关联资源的“资源应用场景区域展示该关联资源内的资源实例数据”
+		getSysDpyResourcesTable().getSelectionProvider().addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				//跳转到资源实例区域处理
+				//事件传递到资源应用场景区域处理
 				ISelection selection = event.getSelection();
-				sysDpyResInstanceTreeTable.setSelection(selection);
+				getSysDpyResInstanceTreeTable().setSelection(selection);
 			}
 		});
 		return sashArea.getControl();
