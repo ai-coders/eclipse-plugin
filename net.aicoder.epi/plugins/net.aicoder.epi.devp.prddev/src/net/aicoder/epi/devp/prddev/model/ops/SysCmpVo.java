@@ -7,6 +7,11 @@ import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.model.ITreeNode;
 import net.aicoder.epi.base.model.TreeNodeVo;
 
+/**
+ * 部署模型-系统、子系统、组件
+ * @author WANGQINGPING
+ *
+ */
 public class SysCmpVo extends TreeNodeVo{
 	private static final long serialVersionUID = 1L;
 	private String type;

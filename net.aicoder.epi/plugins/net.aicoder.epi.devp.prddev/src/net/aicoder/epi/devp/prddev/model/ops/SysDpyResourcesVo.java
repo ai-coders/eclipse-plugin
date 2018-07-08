@@ -2,6 +2,11 @@ package net.aicoder.epi.devp.prddev.model.ops;
 
 import net.aicoder.epi.base.model.TreeNodeVo;
 
+/**
+ * 部署模型-关联资源
+ * @author WANGQINGPING
+ *
+ */
 public class SysDpyResourcesVo extends TreeNodeVo{
 	private static final long serialVersionUID = 1L;
 	private String type;

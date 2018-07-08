@@ -1,8 +1,13 @@
 package net.aicoder.epi.devp.prddev.model.ops;
 
-import net.aicoder.epi.base.model.BaseVo;
+import net.aicoder.epi.base.model.TreeNodeVo;
 
-public class SysDpyResInstVo extends BaseVo {
+/**
+ * 部署模型-资源应用场景实体
+ * @author WANGQINGPING
+ *
+ */
+public class SysDpyResInstVo extends TreeNodeVo {
 	private static final long serialVersionUID = 1L;
 	private String type;
   	private String subType;

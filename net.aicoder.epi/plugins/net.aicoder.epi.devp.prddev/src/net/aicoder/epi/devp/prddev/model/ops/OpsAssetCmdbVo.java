@@ -2,6 +2,11 @@ package net.aicoder.epi.devp.prddev.model.ops;
 
 import net.aicoder.epi.base.model.BaseVo;
 
+/**
+ * IT资产配置数据库表实体
+ * @author WANGQINGPING
+ *
+ */
 public class OpsAssetCmdbVo extends BaseVo{
 	private static final long serialVersionUID = 1L;
 	private String typeCode;
