@@ -14,6 +14,8 @@ public final class PrddevImageConstant {
 	public static final String E_PRD_CPNT = "icons/product/prd_component.png";
 	public static final String E_PRD_IDEPRJ = "icons/product/prd_ideprj.png";
 	public static final String E_PRD_DEPLOY = "icons/product/prd_deploy.png";
+	
+	public static final String DPY_DEFEND = "icons/ops/dpy_defend.png";
 
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return PrddevPlugin.getImageDescriptor(path);
