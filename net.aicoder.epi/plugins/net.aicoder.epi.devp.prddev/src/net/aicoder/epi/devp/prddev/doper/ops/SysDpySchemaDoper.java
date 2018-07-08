@@ -5,7 +5,6 @@ import java.util.List;
 import net.aicoder.epi.base.doper.BaseDoper;
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.devp.prddev.dao.ops.SysDpySchemaDao;
-import net.aicoder.epi.devp.prddev.model.ops.SysDpySchemaVo;
 
 /**
  * 部署模型-部署方案
@@ -20,7 +19,7 @@ public class SysDpySchemaDoper extends BaseDoper{
 		this.sysDpySchemaDao = new SysDpySchemaDao();
 	}
 	
-	public List<SysDpySchemaVo> loadSysDpySchemaList(IBaseVo baseVo){
+	public List<IBaseVo> loadSysDpySchemaList(IBaseVo baseVo){
 		return sysDpySchemaDao.loadSysDpySchemaList(baseVo);
 	}
 }

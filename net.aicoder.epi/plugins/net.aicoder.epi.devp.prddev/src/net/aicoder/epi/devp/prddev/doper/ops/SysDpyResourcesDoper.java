@@ -7,6 +7,11 @@ import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.view.context.EpiInput;
 import net.aicoder.epi.devp.prddev.dao.ops.SysDpyResourcesDao;
 
+/**
+ * 部署模型-关联资源
+ * @author WANGQINGPING
+ *
+ */
 public class SysDpyResourcesDoper extends BaseDoper {
 	private SysDpyResourcesDao sysDpyResourcesDao;
 
