@@ -297,7 +297,7 @@ public class EpiTree extends Composite implements IViewElement {
 			TreeItem item = iter.next();
 			for (int i=0;i<columns;i++)
 			{
-				item.setBackground(i, display.getSystemColor(SWT.COLOR_WHITE));
+				if(!item.isDisposed()) item.setBackground(i, display.getSystemColor(SWT.COLOR_WHITE));				
 			}			
 		}		
 		dirtyBackgroundSet.clear();
