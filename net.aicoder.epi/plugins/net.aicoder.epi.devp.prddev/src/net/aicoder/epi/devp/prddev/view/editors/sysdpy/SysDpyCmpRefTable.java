@@ -1,11 +1,16 @@
 package net.aicoder.epi.devp.prddev.view.editors.sysdpy;
 
+import org.apache.commons.lang.ObjectUtils.Null;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DropTarget;
+import org.eclipse.swt.dnd.DropTargetEvent;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -29,6 +34,8 @@ import net.aicoder.epi.base.view.context.IEpiInput;
 import net.aicoder.epi.base.view.context.IViewContext;
 import net.aicoder.epi.base.view.context.ViewContext;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
+import net.aicoder.epi.base.view.drag.BaseDropTarget;
+import net.aicoder.epi.base.view.drag.BaseVoTransfer;
 import net.aicoder.epi.base.view.element.area.BaseWithTitleArea;
 import net.aicoder.epi.base.view.element.table.EpiSelectionProvider;
 import net.aicoder.epi.base.view.element.table.EpiTable;
@@ -94,6 +101,12 @@ public class SysDpyCmpRefTable extends BaseWithTitleArea {
 		definer = new EpiTableDefiner(null, columnsDefine);
 		context = new ViewContext();
 		table = new EpiTable(parent, definer, context);
+		
+		//添加拖入支持
+		DropTarget dropTarget = new DropTarget(table, DND.DROP_MOVE|DND.DROP_DEFAULT|DND.DROP_COPY);			
+		dropTarget.setTransfer(new Transfer[] {BaseVoTransfer.getInstance()});
+		dropTarget.addDropListener(new SysDpyCmpRefDropTarget());
+		
 		return table;
 	}
 	
@@ -294,6 +307,32 @@ public class SysDpyCmpRefTable extends BaseWithTitleArea {
 			getButton(IDialogConstants.OK_ID).setVisible(false);
 			getButton(IDialogConstants.CANCEL_ID).setVisible(false);
 			return createButtonBar;
+		}
+		
+	}
+	
+	/**
+	 * table拖入响应监听
+	 * @author WANGQINGPING
+	 *
+	 */
+	public class SysDpyCmpRefDropTarget extends BaseDropTarget{
+		@Override
+		public void dragEnter(DropTargetEvent event) {
+			super.dragEnter(event);
+			if (event.detail == DND.DROP_DEFAULT) {
+				event.detail = DND.DROP_COPY;
+			}
+		}
+		@Override
+		public void drop(DropTargetEvent event) {
+			super.drop(event);
+			System.out.println(event.data);
+		}
+		@Override
+		public void dragLeave(DropTargetEvent event) {
+			// TODO Auto-generated method stub
+			super.dragLeave(event);
 		}
 		
 	}

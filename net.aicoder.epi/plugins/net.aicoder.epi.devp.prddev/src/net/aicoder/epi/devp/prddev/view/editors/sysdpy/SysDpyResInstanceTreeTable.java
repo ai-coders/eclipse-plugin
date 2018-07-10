@@ -10,6 +10,10 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSource;
+import org.eclipse.swt.dnd.DragSourceEvent;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -34,6 +38,8 @@ import net.aicoder.epi.base.view.context.IEpiInput;
 import net.aicoder.epi.base.view.context.IViewContext;
 import net.aicoder.epi.base.view.context.ViewContext;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
+import net.aicoder.epi.base.view.drag.BaseDragSource;
+import net.aicoder.epi.base.view.drag.BaseVoTransfer;
 import net.aicoder.epi.base.view.element.area.BaseWithTitleArea;
 import net.aicoder.epi.base.view.element.table.EpiSelectionProvider;
 import net.aicoder.epi.base.view.element.tree.EpiTree;
@@ -67,8 +73,8 @@ public class SysDpyResInstanceTreeTable extends BaseWithTitleArea{
 	
 	// 0-列名, 1-数据属性名称, 2-列显示的宽度, 3-数据类型, 4-数据格式, 5-是否隐藏的标志, 6-是否可编辑的标志
 	private static Object[][] columnsDefine = {
-		{"名称", "name", -20, null, null, null, IColumnDefiner.EDITABLE },
-		{"代码", "code", 20, null, null, null, IColumnDefiner.EDITABLE }
+		{"名称", "name", -20, null, null, null, IColumnDefiner.CE_TEXT },
+		{"代码", "code", 20, null, null, null, IColumnDefiner.CE_TEXT }
 	};
 	
 	
@@ -99,6 +105,12 @@ public class SysDpyResInstanceTreeTable extends BaseWithTitleArea{
 		definer = new EpiTreeDefiner(null, columnsDefine);
 		context = new ViewContext();
 		tree = new EpiTree(parent, definer, context);
+
+		//添加拖动支持
+		DragSource dragSource = new DragSource(tree.getViewer().getControl(), DND.DROP_MOVE|DND.DROP_COPY);
+		dragSource.setTransfer(new Transfer[] {BaseVoTransfer.getInstance()});
+		dragSource.addDragListener(new SysDpyResInsDragSource());
+
 		return tree;
 	}
 
@@ -544,6 +556,29 @@ public class SysDpyResInstanceTreeTable extends BaseWithTitleArea{
 		
 		public String getType() {
 			return type;
+		}
+	}
+	
+	
+	/**
+	 * tree拖动响应监听
+	 * @author WANGQINGPING
+	 *
+	 */
+	public class SysDpyResInsDragSource extends BaseDragSource{
+		@Override
+		public void dragStart(DragSourceEvent event) {
+			super.dragStart(event);
+			if(tree.getFirstSelectedItem() instanceof IBaseVo) {
+				event.doit = true;
+				event.data = tree.getFirstSelectedItem();
+			}else {
+				event.doit = false;
+			}
+		}
+		@Override
+		public void dragSetData(DragSourceEvent event) {
+			super.dragSetData(event);
 		}
 	}
 	
