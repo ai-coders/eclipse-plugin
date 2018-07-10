@@ -8,6 +8,10 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSource;
+import org.eclipse.swt.dnd.DragSourceEvent;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -40,6 +44,7 @@ import net.aicoder.epi.base.view.control.table.EpiSelectionProvider;
 import net.aicoder.epi.base.view.control.tree.EpiTree;
 import net.aicoder.epi.base.view.control.tree.EpiTreeDefiner;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
+import net.aicoder.epi.base.view.drag.BaseDragSource;
 import net.aicoder.epi.base.view.part.area.BaseTitleArea;
 import net.aicoder.epi.devp.prddev.doper.ops.SysCmpDoper;
 import net.aicoder.epi.devp.prddev.model.dev.ProductDevVo;
@@ -104,7 +109,6 @@ public class SysDpyCmpTreeTable extends BaseTitleArea{
 	}
 
 	@Override
-	//protected Control createAreaControl(Composite parent) {
 	public void assembleControl(Composite parent) {
 		IEpiEditorInput editorInput = (IEpiEditorInput)this.getEditorInput();
 		IBaseVo currentData = editorInput.getCurrentData();
@@ -124,8 +128,12 @@ public class SysDpyCmpTreeTable extends BaseTitleArea{
 		context = new ViewContext();
 		context.setInput(input);
 		tree = new EpiTree(parent, definer, context);
+		
+		//添加拖动支持
+		DragSource dragSource = new DragSource(tree.getViewer().getControl(), DND.DROP_MOVE|DND.DROP_COPY);
+		dragSource.setTransfer(new Transfer[] {SysDpyTransfer.getInstance()});
+		dragSource.addDragListener(new SysDpyCmpDragSource());
 
-		//return tree;
 	}
 	
 	public void bindSelectionDataEvent(ISelection selection) {
@@ -500,6 +508,29 @@ public class SysDpyCmpTreeTable extends BaseTitleArea{
 			getButton(IDialogConstants.OK_ID).setVisible(false);
 			getButton(IDialogConstants.CANCEL_ID).setVisible(false);
 			return createButtonBar;
+		}
+	}
+	
+	
+	/**
+	 * tree拖动响应监听
+	 * @author WANGQINGPING
+	 *
+	 */
+	public class SysDpyCmpDragSource extends BaseDragSource{
+		@Override
+		public void dragStart(DragSourceEvent event) {
+			super.dragStart(event);
+			if(tree.getFirstSelectedItem() instanceof IBaseVo) {
+				event.doit = true;
+			}else {
+				event.doit = false;
+			}
+		}
+		@Override
+		public void dragSetData(DragSourceEvent event) {
+			super.dragSetData(event);
+			event.data = tree.getFirstSelectedItem();
 		}
 	}
 

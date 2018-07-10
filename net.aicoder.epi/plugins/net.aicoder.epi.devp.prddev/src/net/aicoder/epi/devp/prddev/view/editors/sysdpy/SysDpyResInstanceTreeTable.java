@@ -42,7 +42,6 @@ import net.aicoder.epi.base.view.control.tree.EpiTree;
 import net.aicoder.epi.base.view.control.tree.EpiTreeDefiner;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.drag.BaseDragSource;
-import net.aicoder.epi.base.view.drag.BaseVoTransfer;
 import net.aicoder.epi.base.view.part.area.BaseTitleArea;
 import net.aicoder.epi.devp.prddev.doper.ops.OpsAssetCmdbDoper;
 import net.aicoder.epi.devp.prddev.doper.ops.SysDpyResInstDoper;
@@ -100,7 +99,6 @@ public class SysDpyResInstanceTreeTable extends BaseTitleArea{
 	}
 
 	@Override
-	//protected Control createAreaControl(Composite parent) {
 	public void assembleControl(Composite parent) {
 		definer = new EpiTreeDefiner(null, columnsDefine);
 		context = new ViewContext();
@@ -108,10 +106,9 @@ public class SysDpyResInstanceTreeTable extends BaseTitleArea{
 
 		//添加拖动支持
 		DragSource dragSource = new DragSource(tree.getViewer().getControl(), DND.DROP_MOVE|DND.DROP_COPY);
-		dragSource.setTransfer(new Transfer[] {BaseVoTransfer.getInstance()});
+		dragSource.setTransfer(new Transfer[] {SysDpyTransfer.getInstance()});
 		dragSource.addDragListener(new SysDpyResInsDragSource());
 
-		//return tree;
 	}
 
 	public EpiSelectionProvider getSelectionProvider() {
@@ -572,7 +569,6 @@ public class SysDpyResInstanceTreeTable extends BaseTitleArea{
 			super.dragStart(event);
 			if(tree.getFirstSelectedItem() instanceof IBaseVo) {
 				event.doit = true;
-				event.data = tree.getFirstSelectedItem();
 			}else {
 				event.doit = false;
 			}
@@ -580,6 +576,7 @@ public class SysDpyResInstanceTreeTable extends BaseTitleArea{
 		@Override
 		public void dragSetData(DragSourceEvent event) {
 			super.dragSetData(event);
+			event.data = tree.getFirstSelectedItem();
 		}
 	}
 	

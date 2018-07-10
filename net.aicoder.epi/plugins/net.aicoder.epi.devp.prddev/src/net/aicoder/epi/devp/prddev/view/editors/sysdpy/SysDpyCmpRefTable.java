@@ -1,6 +1,8 @@
 package net.aicoder.epi.devp.prddev.view.editors.sysdpy;
 
-import org.apache.commons.lang.ObjectUtils.Null;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -38,13 +40,13 @@ import net.aicoder.epi.base.view.control.table.EpiTable;
 import net.aicoder.epi.base.view.control.table.EpiTableDefiner;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.drag.BaseDropTarget;
-import net.aicoder.epi.base.view.drag.BaseVoTransfer;
 import net.aicoder.epi.base.view.part.area.BaseTitleArea;
 import net.aicoder.epi.devp.prddev.doper.ops.SysDpyCmpRefDoper;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysCmpVo;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyCmpRefVo;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyResInstVo;
 import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
+import net.aicoder.tcom.tools.util.BeanUtil;
 
 /**
  * 部署模型-XXX组件(列表)
@@ -87,7 +89,6 @@ public class SysDpyCmpRefTable extends BaseTitleArea {
 	}
 
 	@Override
-	//protected Control createAreaControl(Composite parent) {
 	public void assembleControl(Composite parent) {
 		IEpiEditorInput editorInput = (IEpiEditorInput)this.getEditorInput();
 		IBaseVo currentData = editorInput.getCurrentData();
@@ -102,12 +103,16 @@ public class SysDpyCmpRefTable extends BaseTitleArea {
 		definer = new EpiTableDefiner(null, columnsDefine);
 		context = new ViewContext();
 		table = new EpiTable(parent, definer, context);
+		IEpiInput input = new EpiInput();
+		input.setDataList(new ArrayList<IBaseVo>());
+		context.setInput(input);
+		table.getViewer().setInput(input);
 		
 		//添加拖入支持
 		DropTarget dropTarget = new DropTarget(table, DND.DROP_MOVE|DND.DROP_DEFAULT|DND.DROP_COPY);			
-		dropTarget.setTransfer(new Transfer[] {BaseVoTransfer.getInstance()});
+		dropTarget.setTransfer(new Transfer[] {SysDpyTransfer.getInstance()});
 		dropTarget.addDropListener(new SysDpyCmpRefDropTarget());
-		//return table;
+		
 	}
 	
 	public EpiSelectionProvider getSelectionProvider() {
@@ -115,7 +120,7 @@ public class SysDpyCmpRefTable extends BaseTitleArea {
 	}
 	
 	/**
-	 * 刷新列表数据
+	 * 从[系统、子系统、组件]点击进入到xxx组件区域,做xxx组件数据维护操作
 	 * @param selection
 	 */
 	public void setSelection(ISelection selection) {
@@ -134,7 +139,7 @@ public class SysDpyCmpRefTable extends BaseTitleArea {
 	
 	
 	/**
-	 * 从[资源应用场景]进入到xxx组件区域,做xxx组件数据维护操作
+	 * 从[资源应用场景]点击进入到xxx组件区域,做xxx组件数据维护操作
 	 * @param baseVo
 	 */
 	public void setSelectionBySysDpyResInstVo(ISelection selection) {
@@ -327,12 +332,28 @@ public class SysDpyCmpRefTable extends BaseTitleArea {
 		@Override
 		public void drop(DropTargetEvent event) {
 			super.drop(event);
-			System.out.println(event.data);
-		}
-		@Override
-		public void dragLeave(DropTargetEvent event) {
-			// TODO Auto-generated method stub
-			super.dragLeave(event);
+			Object data = event.data;
+			if(data instanceof SysCmpVo) {
+				//从系统、子系统、组件区域拖拽进入
+				SysCmpVo scv = (SysCmpVo) data;
+				SysDpyCmpRefVo sdcrv = new SysDpyCmpRefVo();
+				BeanUtil.copyBeanToBean(sdcrv, scv);
+				List<IBaseVo> dataList = ((IEpiInput)table.getViewer().getInput()).getDataList();
+				dataList.add(sdcrv);
+				table.putInsertedData(sdcrv);
+			}else if(data instanceof SysDpyResInstVo) {
+				//从资源应用场景区域拖拽进入
+				SysDpyResInstVo sdriv = (SysDpyResInstVo) data;
+				SysDpyCmpRefVo sdcrv = new SysDpyCmpRefVo();
+				BeanUtil.copyBeanToBean(sdcrv, sdriv);
+				List<IBaseVo> dataList = ((IEpiInput)table.getViewer().getInput()).getDataList();
+				dataList.add(sdcrv);
+				table.putInsertedData(sdcrv);
+			}else {
+				return;
+			}
+			
+			table.getViewer().refresh();
 		}
 		
 	}

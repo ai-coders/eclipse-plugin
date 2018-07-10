@@ -65,7 +65,6 @@ public class SysDpySchemeArea extends BaseArea{
 	}
 
 	@Override
-	//protected Control createAreaControl(Composite parent) {
 	public void assembleControl(Composite parent) {
 		//加载该产品部署方案
 		IEpiEditorInput editorInput = (IEpiEditorInput)this.getEditorInput();
@@ -94,30 +93,6 @@ public class SysDpySchemeArea extends BaseArea{
 			combo.add(name, i);
 		}
 		
-//		combo.addSelectionListener(new SelectionListener() {
-//			@Override
-//			public void widgetSelected(SelectionEvent e) {
-//				IBaseVo baseVo = null;
-//				String source = e.getSource().toString();
-//				String name = source.substring(source.indexOf("{")+1, source.indexOf("}"));
-//				for (IBaseVo iBaseVo : currentSysDpySchemas) {
-//					if(iBaseVo.getName().equals(name)) {
-//						baseVo = iBaseVo;
-//						break;
-//					}
-//				}
-//				if(baseVo == null) return;
-//				
-//				
-//				System.out.println("widgetSelected:"+name);
-//			}
-//			
-//			@Override
-//			public void widgetDefaultSelected(SelectionEvent e) {
-//				System.out.println("widgetDefaultSelected:"+e.getSource().toString());
-//			}
-//		});
-		
 		//添加按钮
 		Button addBtn = new Button(parent, SWT.CENTER);
 		addBtn.setBounds(0, 0, 10, 10);
@@ -134,8 +109,7 @@ public class SysDpySchemeArea extends BaseArea{
 				System.out.println("[添加部署方案]widgetDefaultSelected");
 			}
 		});
-		
-		//return parent;
+
 	}
 	
 	/**

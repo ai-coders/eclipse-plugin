@@ -6,11 +6,10 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 
 import net.aicoder.epi.base.view.part.area.BaseArea;
-import net.aicoder.epi.base.view.part.area.SashArea;
 import net.aicoder.epi.base.view.part.area.IArea;
+import net.aicoder.epi.base.view.part.area.SashArea;
 
 /**
  * 部署模型-关联资源和资源实例(区域)
@@ -28,7 +27,6 @@ public class SysDpyResAndInstArea extends BaseArea{
 	}
 
 	@Override
-	//protected Control createAreaControl(Composite parent) {
 	public void assembleControl(Composite parent) {
 		int[] areaWeights = new int[2];
 		areaWeights[0] = 1;
@@ -52,12 +50,12 @@ public class SysDpyResAndInstArea extends BaseArea{
 		sysDpyResourcesTable.getSelectionProvider().addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				//跳转到资源实例区域处理
+				//跳转到[资源应用场景]区域处理
 				ISelection selection = event.getSelection();
 				sysDpyResInstanceTreeTable.setSelection(selection);
 			}
 		});
-		//return sashArea.getControl();
+
 	}
 
 	

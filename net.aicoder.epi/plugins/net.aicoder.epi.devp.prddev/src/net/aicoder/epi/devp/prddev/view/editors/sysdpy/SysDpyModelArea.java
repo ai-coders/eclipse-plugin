@@ -100,38 +100,35 @@ public class SysDpyModelArea extends PrddevWithPropArea {
 	
 	@Override
 	public void attachEvent() {
+		//绑定监听：[系统、子系统、组件树表]点击选择组件-->响应到右边区域[xxx组件列表]处理
 		sysDpyCmpTreeTable.getSelectionProvider().addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				ISelection selection = event.getSelection();
-				//sysDpyResAndInstArea.setSelection(selection);
-				sysDpyCmpTreeTable.bindSelectionDataEvent(selection);
+				
+//				sysDpyCmpRefTable.setSelection(selection);
 				setElementSelection(selection);
 			}
 		});
 		
 		//绑定监听：[资源应用场景]点击选择组件-->响应到右边区域[xxx组件列表]处理
-		//getModelLeftArea().getSysDpyResAndInstArea().getSysDpyResInstanceTreeTable().getSelectionProvider().addSelectionChangedListener(new ISelectionChangedListener() {			
 		sysDpyResAndInstArea.getSysDpyResInstanceTreeTable().getSelectionProvider().addSelectionChangedListener(new ISelectionChangedListener() {			
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				ISelection selection = event.getSelection();
 				if(((StructuredSelection)selection).getFirstElement() == null) return;
 				
-				//getModelRightArea().getSysDpyCmpRefTable().setSelectionBySysDpyResInstVo(selection);
-				sysDpyCmpRefTable.setSelectionBySysDpyResInstVo(selection);
+//				sysDpyCmpRefTable.setSelectionBySysDpyResInstVo(selection);
 			}
 		});
 		
 		//绑定监听：[部署方案]下拉框选择组件-->响应到[资源应用场景]区域处理
-		//getModelRightArea().getSysDpySchemeArea().getSelectionCombo().addSelectionListener(new SelectionListener() {		
 		sysDpySchemeArea.getSelectionCombo().addSelectionListener(new SelectionListener() {		
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				IBaseVo baseVo = null;
 				String source = e.getSource().toString();
 				String name = source.substring(source.indexOf("{")+1, source.indexOf("}"));
-				//List<IBaseVo> currentSysDpySchemas = getModelRightArea().getSysDpySchemeArea().getSelectionComboData();
 				List<IBaseVo> currentSysDpySchemas = sysDpySchemeArea.getSelectionComboData();
 				for (IBaseVo iBaseVo : currentSysDpySchemas) {
 					if(iBaseVo.getName().equals(name)) {
@@ -141,9 +138,7 @@ public class SysDpyModelArea extends PrddevWithPropArea {
 				}
 				if(baseVo == null) return;
 				
-				// getModelLeftArea().getSysDpyResAndInstArea().getSysDpyResInstanceTreeTable().setSelectionBySysDpySchema(baseVo);
-				sysDpyResAndInstArea.getSysDpyResInstanceTreeTable().setSelectionBySysDpySchema(baseVo);
-				System.out.println("widgetSelected:"+name);
+				sysDpyResAndInstArea.getSysDpyResInstanceTreeTable().setSelectionBySysDpySchema(baseVo);			
 			}
 			
 			@Override

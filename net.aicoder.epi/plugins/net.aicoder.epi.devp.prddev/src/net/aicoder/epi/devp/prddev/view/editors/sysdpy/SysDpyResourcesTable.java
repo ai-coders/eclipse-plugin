@@ -72,7 +72,6 @@ public class SysDpyResourcesTable extends BaseTitleArea{
 	}
 
 	@Override
-	//protected Control createAreaControl(Composite parent) {
 	public void assembleControl(Composite parent) {
 		IEpiEditorInput editorInput = (IEpiEditorInput)this.getEditorInput();
 		IBaseVo currentData = editorInput.getCurrentData();
@@ -87,8 +86,7 @@ public class SysDpyResourcesTable extends BaseTitleArea{
 		context = new ViewContext();
 		context.setInput(input);
 		table = new EpiTable(parent, definer, context);
-		
-		//return table;
+
 	}
 	
 	public EpiSelectionProvider getSelectionProvider() {
