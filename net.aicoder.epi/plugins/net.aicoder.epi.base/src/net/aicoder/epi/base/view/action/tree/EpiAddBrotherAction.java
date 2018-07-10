@@ -50,7 +50,7 @@ public class EpiAddBrotherAction extends BaseAction {
 		if (currData == null) {
 			Object input = viewer.getInput();
 			Object[] rootNodes = ((EpiTreeContentProvider) definer.getContentProvider()).getElements(input);
-			if (rootNodes != null) {
+			if (rootNodes != null && rootNodes.length > 0) {
 				currData = (IBaseVo) rootNodes[0];
 			}
 		}

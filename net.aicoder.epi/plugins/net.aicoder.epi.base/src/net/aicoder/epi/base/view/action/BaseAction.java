@@ -11,7 +11,7 @@ public abstract class BaseAction extends Action implements IEpiAction {
 	/**
 	 * 元素选择的含义： * = 任意数量的元素; ? = 0个或1个元素; + = 一个或多个元素; ! = 没有元素;
 	 */
-	private String visibleWhenCount = "";
+	protected String visibleWhenCount = "";
 
 	public BaseAction(String actionText, ImageDescriptor actionImageDescriptor) {
 		super(actionText, actionImageDescriptor);

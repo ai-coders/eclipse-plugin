@@ -40,6 +40,7 @@ public class EpiAddChildAction extends BaseAction {
 		super(actionText, actionImageDescriptor);
 		setToolTipText(toolTipText);
 		setTree(tree);
+		setVisibleWhenCount(visibleWhenCount);
 	}
 
 	public void run() {
@@ -50,7 +51,7 @@ public class EpiAddChildAction extends BaseAction {
 		if (currData == null) {
 			Object input = viewer.getInput();
 			Object[] rootNodes = ((EpiTreeContentProvider) definer.getContentProvider()).getElements(input);
-			if (rootNodes != null) {
+			if (rootNodes != null && rootNodes.length > 0) {
 				currData = (IBaseVo) rootNodes[0];
 			}
 		}

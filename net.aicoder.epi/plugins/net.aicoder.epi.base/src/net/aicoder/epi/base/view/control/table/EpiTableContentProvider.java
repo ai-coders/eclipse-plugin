@@ -18,7 +18,7 @@ public class EpiTableContentProvider implements IStructuredContentProvider {
 		Object[] elements = new Object[0];
 		if (input instanceof IEpiInput) {
 			IEpiInput adapter = (IEpiInput) input;
-			if(adapter != null) {
+			if(adapter != null && adapter.getDataList() != null) {
 				elements = adapter.getDataList().toArray();
 			}
 		}
