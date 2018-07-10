@@ -1,10 +1,11 @@
 package net.aicoder.epi.base.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ExtInfosDefine {
+public class ExtInfosDefine implements Serializable{
 	private String etype;
 
 	private Map<String, ElementInfoDefine> elementInfoDefineMap = new HashMap<String, ElementInfoDefine>(0);

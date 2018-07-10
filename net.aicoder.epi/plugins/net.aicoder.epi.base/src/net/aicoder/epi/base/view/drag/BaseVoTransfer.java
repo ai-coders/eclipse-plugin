@@ -5,25 +5,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-import org.eclipse.swt.dnd.TransferData;
-
 import net.aicoder.epi.base.model.IBaseVo;
 
 
 public class BaseVoTransfer extends BaseTransfer {
-	private static final BaseVoTransfer INSTANCE = new BaseVoTransfer();
+	protected static BaseVoTransfer INSTANCE = null;
 	private static final String TYPE_NAME = "locat-selection-custom-basevo-format"; //$NON-NLS-1$;
 	private static final int TYPEID = registerType(TYPE_NAME);
-	
-	
-	private BaseVoTransfer() {
-		
-	}
-	
-	public static BaseVoTransfer getInstance() {
-        return INSTANCE;
-    }
 	
 	@Override
 	protected int[] getTypeIds() {
@@ -40,76 +28,61 @@ public class BaseVoTransfer extends BaseTransfer {
 		return (object != null  && object instanceof IBaseVo);
 	}
 	
-	@Override
-	protected void javaToNative(Object object, TransferData transferData) {
-		if(!(object instanceof IBaseVo)) return;
-		IBaseVo baseVo = (IBaseVo) object;
-		ByteArrayOutputStream out = null;
-		ObjectOutputStream oos = null;
-		try {
-			out = new ByteArrayOutputStream();
-			oos = new ObjectOutputStream(out);
-			oos.writeObject(baseVo);
-			
-			byte[] data = out.toByteArray();
-			super.javaToNative(data, transferData);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if(oos != null) oos.close();
-				if(out != null) out.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+//	@Override
+//	protected void javaToNative(Object object, TransferData transferData) {
+//		if(object == null) return;
+//		super.javaToNative(objectToByteArray(object), transferData);
+//	}
+	
+//	@Override
+//	protected Object nativeToJava(TransferData transferData) {
+//		byte[] bytes = (byte[]) super.nativeToJava(transferData);
+//        if (bytes == null) {
+//			return null;
+//		}
+//        return byteArrayToObject(bytes);
+//	}
+	
+	/**
+	 * 对象转对象字节数组
+	 * @param obj
+	 * @return
+	 */
+	public byte[] objectToByteArray(Object obj) {
+		byte[] bytes = null;      
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();      
+        try {        
+            ObjectOutputStream oos = new ObjectOutputStream(bos);         
+            oos.writeObject(obj);        
+            oos.flush();         
+            bytes = bos.toByteArray();      
+            oos.close();         
+            bos.close();        
+        } catch (IOException ex) {        
+            ex.printStackTrace();   
+        }      
+        return bytes;  
 	}
 	
-	@Override
-	protected Object nativeToJava(TransferData transferData) {
-		if (!isSupportedType(transferData) || transferData.pIDataObject == 0)  return null;
-
-//		IDataObject data = new IDataObject(transferData.pIDataObject);
-//		data.AddRef();
-//		FORMATETC formatetc = transferData.formatetc;
-//		STGMEDIUM stgmedium = new STGMEDIUM();
-//		stgmedium.tymed = COM.TYMED_HGLOBAL;
-//		transferData.result = getData(data, formatetc, stgmedium);
-//		data.Release();
-//		if (transferData.result != COM.S_OK) return null;
-//		long /*int*/ hMem = stgmedium.unionField;
-//		int size = OS.GlobalSize(hMem);
-//		byte[] buffer = new byte[size];
-//		long /*int*/ ptr = OS.GlobalLock(hMem);
-//		OS.MoveMemory(buffer, ptr, size);
-//		OS.GlobalUnlock(hMem);
-//		OS.GlobalFree(hMem);
-		
-		byte[] bytes = (byte[]) super.nativeToJava(transferData);
-        if (bytes == null) {
-			return null;
-		}
-        
-        IBaseVo baseVo = null;
-        ByteArrayInputStream bais = null;
-        ObjectInputStream ois = null;
-        try {
-        	bais = new ByteArrayInputStream(bytes);
-			ois = new ObjectInputStream(bais);
-			baseVo = (IBaseVo) ois.readObject();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if(bais != null) bais.close();
-				if(ois != null) ois.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-        
-        return baseVo;
-	}
+	/**
+	 * 对象字节数据转对象
+	 * @param bytes
+	 * @return
+	 */
+	public Object byteArrayToObject (byte[] bytes) {      
+        Object obj = null;      
+        try {        
+            ByteArrayInputStream bis = new ByteArrayInputStream (bytes);        
+            ObjectInputStream ois = new ObjectInputStream (bis);        
+            obj = ois.readObject();   
+            ois.close();   
+            bis.close();   
+        } catch (IOException ex) {        
+            ex.printStackTrace();   
+        } catch (ClassNotFoundException ex) {        
+            ex.printStackTrace();   
+        }      
+        return obj;    
+    }
+	
 }

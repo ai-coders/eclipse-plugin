@@ -1,6 +1,8 @@
 package net.aicoder.epi.base.model;
 
-public class LoadElementState {
+import java.io.Serializable;
+
+public class LoadElementState implements Serializable{
 	private final static int DEFAULT_PAGE_SIZE = 100;
 
 	private String elementName;

@@ -20,35 +20,30 @@ public abstract class BaseTransfer extends ByteArrayTransfer{
 	@Override
 	public boolean isSupportedType(TransferData transferData) {
 		// TODO Auto-generated method stub
-		System.out.println("BaseTransfer-->isSupportedType");
 		return super.isSupportedType(transferData);
 	}
 
 	@Override
 	protected int[] getTypeIds() {
 		// TODO Auto-generated method stub
-		System.out.println("BaseTransfer-->getTypeIds");
 		return null;
 	}
 
 	@Override
 	protected String[] getTypeNames() {
 		// TODO Auto-generated method stub
-		System.out.println("BaseTransfer-->getTypeNames");
 		return null;
 	}
 
 	@Override
 	protected void javaToNative(Object object, TransferData transferData) {
 		// TODO Auto-generated method stub
-		System.out.println("BaseTransfer-->javaToNative");
 		super.javaToNative(object, transferData);
 	}
 
 	@Override
 	protected Object nativeToJava(TransferData transferData) {
 		// TODO Auto-generated method stub
-		System.out.println("BaseTransfer-->nativeToJava");
 		return super.nativeToJava(transferData);
 	}
 }
