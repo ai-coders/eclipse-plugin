@@ -8,9 +8,9 @@ import org.springframework.util.MultiValueMap;
 
 import net.aicoder.epi.base.dao.BaseDao;
 import net.aicoder.epi.base.model.IBaseVo;
-import net.aicoder.epi.devp.prddev.model.ops.SysDpyResInstVo;
-import net.aicoder.epi.devp.prddev.model.ops.SysDpyResourcesVo;
-import net.aicoder.epi.devp.prddev.model.ops.SysDpySchemaVo;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyResInstVo;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyResourcesVo;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysDpySchemaVo;
 import net.aicoder.epi.util.network.NetworkConstant;
 import net.aicoder.epi.util.network.NetworkHelper;
 

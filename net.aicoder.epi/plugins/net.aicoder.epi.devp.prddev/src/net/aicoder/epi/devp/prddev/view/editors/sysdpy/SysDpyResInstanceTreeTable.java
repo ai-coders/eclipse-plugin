@@ -46,10 +46,10 @@ import net.aicoder.epi.base.view.drag.BaseVoTransfer;
 import net.aicoder.epi.base.view.part.area.BaseTitleArea;
 import net.aicoder.epi.devp.prddev.doper.ops.OpsAssetCmdbDoper;
 import net.aicoder.epi.devp.prddev.doper.ops.SysDpyResInstDoper;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyResInstVo;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyResourcesVo;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysDpySchemaVo;
 import net.aicoder.epi.devp.prddev.model.ops.OpsAssetCmdbVo;
-import net.aicoder.epi.devp.prddev.model.ops.SysDpyResInstVo;
-import net.aicoder.epi.devp.prddev.model.ops.SysDpyResourcesVo;
-import net.aicoder.epi.devp.prddev.model.ops.SysDpySchemaVo;
 
 /**
  * 部署模型-资源应用场景(树表)

@@ -39,7 +39,7 @@ import net.aicoder.epi.base.view.part.area.IArea;
 import net.aicoder.epi.base.view.part.area.SashArea;
 import net.aicoder.epi.devp.prddev.PrddevImageConstant;
 import net.aicoder.epi.devp.prddev.doper.ops.SysDpySchemaDoper;
-import net.aicoder.epi.devp.prddev.model.ops.SysDpySchemaVo;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysDpySchemaVo;
 import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
 
 /**

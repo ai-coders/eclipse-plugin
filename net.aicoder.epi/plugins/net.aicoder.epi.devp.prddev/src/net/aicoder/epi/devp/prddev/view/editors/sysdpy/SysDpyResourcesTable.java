@@ -32,7 +32,7 @@ import net.aicoder.epi.base.view.control.table.EpiTableDefiner;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.part.area.BaseTitleArea;
 import net.aicoder.epi.devp.prddev.doper.ops.SysDpyResourcesDoper;
-import net.aicoder.epi.devp.prddev.model.ops.SysDpyResourcesVo;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyResourcesVo;
 import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
 
 /**

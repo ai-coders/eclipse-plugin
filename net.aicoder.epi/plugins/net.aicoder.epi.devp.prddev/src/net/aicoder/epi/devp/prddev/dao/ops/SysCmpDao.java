@@ -11,8 +11,8 @@ import com.alibaba.fastjson.TypeReference;
 
 import net.aicoder.epi.base.dao.BaseDao;
 import net.aicoder.epi.base.model.IBaseVo;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysCmpVo;
 import net.aicoder.epi.devp.prddev.model.ops.ResponseResult;
-import net.aicoder.epi.devp.prddev.model.ops.SysCmpVo;
 import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
 import net.aicoder.epi.util.network.NetworkConstant;
 import net.aicoder.epi.util.network.NetworkHelper;

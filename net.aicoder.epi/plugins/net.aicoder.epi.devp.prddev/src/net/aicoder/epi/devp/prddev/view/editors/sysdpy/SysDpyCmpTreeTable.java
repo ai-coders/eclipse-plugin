@@ -45,8 +45,8 @@ import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.part.area.BaseTitleArea;
 import net.aicoder.epi.devp.prddev.doper.ops.SysCmpDoper;
 import net.aicoder.epi.devp.prddev.model.dev.ProductDevVo;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysCmpVo;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysElmCatgVo;
-import net.aicoder.epi.devp.prddev.model.ops.SysCmpVo;
 import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
 import net.aicoder.tcom.tools.util.BeanUtil;
 

@@ -5,10 +5,10 @@ import java.util.List;
 
 import net.aicoder.epi.base.dao.BaseDao;
 import net.aicoder.epi.base.model.IBaseVo;
-import net.aicoder.epi.devp.prddev.model.ops.SysCmpVo;
-import net.aicoder.epi.devp.prddev.model.ops.SysDpyCmpRefVo;
-import net.aicoder.epi.devp.prddev.model.ops.SysDpyResInstVo;
-import net.aicoder.epi.devp.prddev.model.ops.SysDpySchemaVo;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysCmpVo;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyCmpRefVo;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyResInstVo;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysDpySchemaVo;
 
 /**
  * 部署模块-xxx组件

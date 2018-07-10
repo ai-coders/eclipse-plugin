@@ -41,9 +41,9 @@ import net.aicoder.epi.base.view.drag.BaseDropTarget;
 import net.aicoder.epi.base.view.drag.BaseVoTransfer;
 import net.aicoder.epi.base.view.part.area.BaseTitleArea;
 import net.aicoder.epi.devp.prddev.doper.ops.SysDpyCmpRefDoper;
-import net.aicoder.epi.devp.prddev.model.ops.SysCmpVo;
-import net.aicoder.epi.devp.prddev.model.ops.SysDpyCmpRefVo;
-import net.aicoder.epi.devp.prddev.model.ops.SysDpyResInstVo;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysCmpVo;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyCmpRefVo;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyResInstVo;
 import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
 
 /**
