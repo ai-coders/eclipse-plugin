@@ -13,21 +13,16 @@ public abstract class BaseDragSource implements DragSourceListener{
 	@Override
 	public void dragStart(DragSourceEvent event) {
 		// TODO Auto-generated method stub
-		System.out.println("BaseDragSource-->dragStart");
 	}
 
 	@Override
 	public void dragSetData(DragSourceEvent event) {
 		// TODO Auto-generated method stub
-		System.out.println("BaseDragSource-->dragSetData");
 	}
 
 	@Override
 	public void dragFinished(DragSourceEvent event) {
 		// TODO Auto-generated method stub
-		System.out.println("BaseDragSource-->dragFinished");
 	}
 
-	
-	
 }
