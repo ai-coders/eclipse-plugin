@@ -1,7 +1,5 @@
 package net.aicoder.epi.devp.prddev.view.editors.sysdpy;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import org.eclipse.jface.action.IToolBarManager;

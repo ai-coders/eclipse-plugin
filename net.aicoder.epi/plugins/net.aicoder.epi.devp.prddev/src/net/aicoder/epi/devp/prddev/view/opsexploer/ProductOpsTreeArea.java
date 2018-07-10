@@ -1,11 +1,7 @@
 package net.aicoder.epi.devp.prddev.view.opsexploer;
 
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.ISharedImages;
 
 import net.aicoder.devp.model.EtypeEnum;
@@ -38,8 +34,8 @@ public class ProductOpsTreeArea extends BaseTitleArea{
 	// 0-数据类型, 1-图片, 2-Text对应变量名(缺省为name), 3-Description对应变量名(缺省为description), 4-双击对应的动作
 	private Object[][] viewDefine = {
 			//应用发布-XXX产品-部署模型
-			{EtypeEnum.PRD_GROUP.etype(),PrddevImageConstant.getImage(PrddevImageConstant.PRODUCT),},
-			{EtypeEnum.PRODUCT.etype(),PrddevImageConstant.getImage(ISharedImages.IMG_OBJ_FOLDER),null,null,SysDpyEditor.ID},
+			{EtypeEnum.PRD_GROUP.etype(),PrddevImageConstant.getImage(ISharedImages.IMG_OBJ_FOLDER),},
+			{EtypeEnum.PRODUCT.etype(),PrddevImageConstant.getImage(PrddevImageConstant.PRODUCT),null,null,SysDpyEditor.ID},
 	};
 	
 	
