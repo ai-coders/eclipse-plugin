@@ -13,7 +13,6 @@ public abstract class BaseTransfer extends ByteArrayTransfer{
 	@Override
 	public TransferData[] getSupportedTypes() {
 		// TODO Auto-generated method stub
-		System.out.println("BaseTransfer-->getSupportedTypes");
 		return super.getSupportedTypes();
 	}
 
