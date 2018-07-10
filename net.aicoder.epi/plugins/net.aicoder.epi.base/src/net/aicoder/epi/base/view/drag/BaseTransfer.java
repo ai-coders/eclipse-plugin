@@ -51,7 +51,4 @@ public abstract class BaseTransfer extends ByteArrayTransfer{
 		System.out.println("BaseTransfer-->nativeToJava");
 		return super.nativeToJava(transferData);
 	}
-	
-	
-	
 }

@@ -7,11 +7,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import org.eclipse.swt.dnd.TransferData;
-import org.eclipse.swt.internal.ole.win32.COM;
-import org.eclipse.swt.internal.ole.win32.FORMATETC;
-import org.eclipse.swt.internal.ole.win32.IDataObject;
-import org.eclipse.swt.internal.ole.win32.STGMEDIUM;
-import org.eclipse.swt.internal.win32.OS;
 
 import net.aicoder.epi.base.model.IBaseVo;
 
@@ -89,10 +84,6 @@ public class BaseVoTransfer extends BaseTransfer {
 //		OS.MoveMemory(buffer, ptr, size);
 //		OS.GlobalUnlock(hMem);
 //		OS.GlobalFree(hMem);
-		
-		
-		
-		
 		
 		byte[] bytes = (byte[]) super.nativeToJava(transferData);
         if (bytes == null) {
