@@ -20,8 +20,6 @@ public class BaseVo extends AbstractBaseVo {
 	//private Map<String, Object> propertyOriginalValueMap = new HashMap<String, Object>(0);
 	private Map<String, LoadElementState> loadElementStateMap = new HashMap<String, LoadElementState>(0);
 
-	private IBaseVo preItemData;
-
 	public BaseVo() {
 		super();
 	}
@@ -38,17 +36,6 @@ public class BaseVo extends AbstractBaseVo {
 		return dataState;
 	}
 	
-	//// 前置的元素引用，控制元素排列顺序时使用
-	@Override
-	public IBaseVo getPreItemData() {
-		return preItemData;
-	}
-
-	@Override
-	public void setPreItemData(IBaseVo preItemData) {
-		this.preItemData = preItemData;
-	}
-
 	//// property
 	@Override
 	public void setPropertyValue(String propertyCode, Object value) {

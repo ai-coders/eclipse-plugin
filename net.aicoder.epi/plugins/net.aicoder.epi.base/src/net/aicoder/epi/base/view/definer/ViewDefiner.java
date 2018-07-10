@@ -73,11 +73,27 @@ public abstract class ViewDefiner implements IViewDefiner {
 	}
 	
 	@Override
-	public IColumnDefiner getColumnDefiner(String columnName) {
+	public IColumnDefiner getColumnDefinerByName(String columnName) {
 		IColumnDefiner columnDefiner = null;
 		columnDefiner = this.columnDefineMap.get(columnName);
 		return columnDefiner;
 	}
+	
+	@Override
+	public IColumnDefiner getColumnDefinerByCode(String columnCode) {
+		IColumnDefiner columnDefiner = null;
+		if(columnCode == null) {
+			return columnDefiner;
+		}
+		for(IColumnDefiner oneDefiner:columnDefinerList) {
+			if(columnCode.equals(oneDefiner.getDataName())) {
+				columnDefiner = oneDefiner;
+				break;
+			}
+		}
+		return columnDefiner;
+	}
+
 
 	@Override
 	public boolean hasOpenEditAction() {

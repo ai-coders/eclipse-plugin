@@ -22,7 +22,9 @@ public interface IViewDefiner {
 	
 	public void setColumnsDefine(Object[][] columnsDefine);
 	
-	public IColumnDefiner getColumnDefiner(String columnName);
+	public IColumnDefiner getColumnDefinerByName(String columnName);
+	
+	public IColumnDefiner getColumnDefinerByCode(String columnCode);
 
 	public IContentProvider getContentProvider();
 

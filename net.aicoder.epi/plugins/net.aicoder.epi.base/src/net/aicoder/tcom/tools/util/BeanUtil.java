@@ -33,6 +33,20 @@ import org.apache.commons.logging.LogFactory;
 
 public class BeanUtil {
 	private static final Log log = LogFactory.getLog(BeanUtil.class);
+	
+	public static boolean isEquals(Object one, Object two) {
+		boolean isEquals = false;
+		if(one == null) {
+			if(two == null) {
+				isEquals = true;
+			}
+		}else {
+			if(one.equals(two)) {
+				isEquals = true;
+			}
+		}
+		return isEquals;
+	}
 
     /**
      * 检测属性是否存在

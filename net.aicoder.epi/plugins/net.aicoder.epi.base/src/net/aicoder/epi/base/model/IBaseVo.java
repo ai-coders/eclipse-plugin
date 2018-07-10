@@ -96,6 +96,8 @@ public interface IBaseVo extends Serializable {
 	IBaseVo getPreItemData();
 
 	void setPreItemData(IBaseVo preItemData);
+	
+	public boolean isPropertyChanged(String propertyCode);
 
 	//// property
 	/**

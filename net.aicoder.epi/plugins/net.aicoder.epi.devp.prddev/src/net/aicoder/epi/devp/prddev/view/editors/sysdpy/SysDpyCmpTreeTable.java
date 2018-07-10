@@ -1,8 +1,12 @@
 package net.aicoder.epi.devp.prddev.view.editors.sysdpy;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -29,6 +33,7 @@ import net.aicoder.epi.devp.prddev.doper.ops.SysCmpDoper;
 import net.aicoder.epi.devp.prddev.model.dev.ProductDevVo;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysElmCatgVo;
 import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
+import net.aicoder.tcom.tools.util.BeanUtil;
 
 /**
  * 部署模型-组件(树表)
@@ -104,6 +109,10 @@ public class SysDpyCmpTreeTable extends BaseTitleArea{
 		tree = new EpiTree(parent, definer, context);
 
 		//return tree;
+	}
+	
+	public void bindSelectionDataEvent(ISelection selection) {
+		tree.bindSelectionDataEvent();
 	}
 	
 	public EpiSelectionProvider getSelectionProvider() {

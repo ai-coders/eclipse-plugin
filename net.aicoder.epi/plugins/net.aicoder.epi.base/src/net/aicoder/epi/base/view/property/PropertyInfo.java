@@ -14,6 +14,7 @@ import net.aicoder.epi.base.model.property.PitemDefine;
 import net.aicoder.epi.base.model.property.PropCatgEnum;
 import net.aicoder.epi.base.model.property.PropControlEnum;
 import net.aicoder.tcom.tools.util.AiStringUtil;
+import net.aicoder.tcom.tools.util.BeanUtil;
 
 public class PropertyInfo extends TreeNodeVo {
 	private static final long serialVersionUID = 1L;
@@ -127,13 +128,17 @@ public class PropertyInfo extends TreeNodeVo {
 		Object value = null;
 		String propertyCode = itemDefine.getCode();
 		if (currentData != null) {
-			currentData.getPropertyValue(propertyCode);
+			value = currentData.getPropertyValue(propertyCode);
 		}
 		return value;
 	}
 
 	public void setValue(Object value) {
 		String propertyCode = itemDefine.getCode();
+		Object oldValue = getValue();
+		if(BeanUtil.isEquals(oldValue, value)) {
+			return;
+		}
 		if (currentData != null) {
 			currentData.putPropertyValue(propertyCode, value);
 		}

@@ -18,6 +18,7 @@ public class PropsArea extends BaseTitleArea {
 	private IPropsManager propsManager;
 	//private IExtInfosManager extInfosManager;
 
+	//private PropertyTable propertyTable;
 	private PropertyTable propertyTable;
 	private PropsInput propsInput;
 
@@ -28,20 +29,21 @@ public class PropsArea extends BaseTitleArea {
 		super(workbenchPart);
 	}
 
-/**	
-	@Override
-	protected Control createAreaControl(Composite parent) {
-		propertyTable = new PropertyTable(parent);
-		propsInput = new PropsInput(propsManager);
-
-		createActons();
-
-		return propertyTable;
-	}
-**/
+	/**	
+		@Override
+		protected Control createAreaControl(Composite parent) {
+			propertyTable = new PropertyTable(parent);
+			propsInput = new PropsInput(propsManager);
 	
+			createActons();
+	
+			return propertyTable;
+		}
+	**/
+
 	@Override
 	public final void assembleControl(Composite parent) {
+		//propertyTable = new PropertyTable(parent);
 		propertyTable = new PropertyTable(parent);
 		propsInput = new PropsInput(propsManager);
 
@@ -54,8 +56,15 @@ public class PropsArea extends BaseTitleArea {
 
 	public void setElementSelection(ISelection selection) {
 		Object item = ((IStructuredSelection) selection).getFirstElement();
+		if (item == null) {
+			return;
+		}
 		IBaseVo currentData = (IBaseVo) item;
 		//propsInput = new PropsInput(propsManager, currentData);
+		IBaseVo oldData = propsInput.getCurrentData();
+		if (currentData.equals(oldData)) {
+			return;
+		}
 		propsInput.setCurrentData(currentData);
 		propertyTable.setPropsInput(propsInput);
 
@@ -81,7 +90,7 @@ public class PropsArea extends BaseTitleArea {
 	private void createActons() {
 		create_showAdvancedPropertiesAction();
 		create_defaultValueAction();
-		
+
 		propsToolBarAactons = new IAction[2];
 		propsToolBarAactons[0] = m_showAdvancedPropertiesAction;
 		propsToolBarAactons[1] = m_defaultValueAction;
@@ -145,32 +154,32 @@ public class PropsArea extends BaseTitleArea {
 		m_showAdvancedPropertiesAction.setToolTipText("显示高级属性");
 	}
 
-	  //// Action: Restore default value
-	  private Action m_defaultValueAction;
+	//// Action: Restore default value
+	private Action m_defaultValueAction;
 
-	  /**
-	   * Creates the {@link #m_defaultValueAction}.
-	   */
-	  private void create_defaultValueAction() {
-	    m_defaultValueAction = new Action() {
-	      @Override
-	      public void run() {
-	      }
-	    };
-	    m_defaultValueAction.setImageDescriptor(BaseImageConstant.getImageDescriptor(BaseImageConstant.PROPS_RESET_DEFAULT));
-	    m_defaultValueAction.setText("恢复到原始值");
-	    m_defaultValueAction.setToolTipText("恢复到原始值");
-	  }
+	/**
+	 * Creates the {@link #m_defaultValueAction}.
+	 */
+	private void create_defaultValueAction() {
+		m_defaultValueAction = new Action() {
+			@Override
+			public void run() {
+			}
+		};
+		m_defaultValueAction
+				.setImageDescriptor(BaseImageConstant.getImageDescriptor(BaseImageConstant.PROPS_RESET_DEFAULT));
+		m_defaultValueAction.setText("恢复到原始值");
+		m_defaultValueAction.setToolTipText("恢复到原始值");
+	}
 
-	  /**
-	   * Updates the state of {@link #m_defaultValueAction}.
-	   */
-	  private void update_defaultValueAction() {
-	    if (m_activePropertyInfo != null) {
-	      m_defaultValueAction.setEnabled(m_activePropertyInfo.isModified());
-	    } else {
-	      m_defaultValueAction.setEnabled(false);
-	    }
-	  }
-
+	/**
+	 * Updates the state of {@link #m_defaultValueAction}.
+	 */
+	private void update_defaultValueAction() {
+		if (m_activePropertyInfo != null) {
+			m_defaultValueAction.setEnabled(m_activePropertyInfo.isModified());
+		} else {
+			m_defaultValueAction.setEnabled(false);
+		}
+	}
 }

@@ -47,10 +47,7 @@ public class SysDpyModelArea extends PrddevWithPropArea {
 		IArea[] areas = new IArea[2];
 		areas[0] = newLeftWorkArea(); //左边区域
 		areas[1] = newRightWorkArea(); //右边区域
-		//areas[0] = new TableEditorArea(); //左边区域
-		//areas[1] = new TableEditorArea(); //右边区域
 
-		//SashArea sashArea = new SashArea(getWorkbenchPart(), SWT.HORIZONTAL);
 		SashArea sashArea = new SashArea(getWorkbenchPart());
 		sashArea.setAreas(areas);
 		sashArea.setWeights(weights);
@@ -70,8 +67,6 @@ public class SysDpyModelArea extends PrddevWithPropArea {
 		IArea[] areas = new IArea[2];
 		areas[0] = sysDpyCmpTreeTable;
 		areas[1] = sysDpyResAndInstArea;
-		//areas[0] = new TableEditorArea();
-		//areas[1] = new TableEditorArea();
 
 		SashArea sashArea = new SashArea(getWorkbenchPart());
 		sashArea.setAreas(areas);
@@ -108,6 +103,7 @@ public class SysDpyModelArea extends PrddevWithPropArea {
 			public void selectionChanged(SelectionChangedEvent event) {
 				ISelection selection = event.getSelection();
 				//sysDpyResAndInstArea.setSelection(selection);
+				sysDpyCmpTreeTable.bindSelectionDataEvent(selection);
 				setElementSelection(selection);
 			}
 		});

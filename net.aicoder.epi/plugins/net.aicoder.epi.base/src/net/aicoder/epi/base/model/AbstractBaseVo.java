@@ -40,6 +40,8 @@ public abstract class AbstractBaseVo implements IBaseVo {
 	protected Map<String, Object> propertyOriginalValueMap = new HashMap<String, Object>(0);
 	//private Map<String, LoadElementState> loadElementStateMap = new HashMap<String, LoadElementState>(0);
 
+	private IBaseVo preItemData;
+
 	public AbstractBaseVo() {
 		super();
 	}
@@ -248,14 +250,24 @@ public abstract class AbstractBaseVo implements IBaseVo {
 	//// 前置的元素引用，控制元素排列顺序时使用
 	@Override
 	public IBaseVo getPreItemData() {
-		return null;
+		return preItemData;
 	}
 
 	@Override
 	public void setPreItemData(IBaseVo preItemData) {
+		this.preItemData = preItemData;
 	}
 
 	//// property
+	@Override
+	public boolean isPropertyChanged(String propertyCode) {
+		boolean isPropertyChanged = false;
+		Object origValue = getPropertyOrigValue(propertyCode);
+		Object newValue = getPropertyValue(propertyCode);
+		isPropertyChanged = !(BeanUtil.isEquals(origValue, newValue)); // 与Equals相反
+		return isPropertyChanged;
+	}
+
 	@Override
 	public void setPropertyValue(String propertyCode, Object value) { // 只能给跟踪属性变更的情景下使用
 		try {
@@ -268,46 +280,21 @@ public abstract class AbstractBaseVo implements IBaseVo {
 	@Override
 	public boolean putPropertyValue(String propertyCode, Object value) { // 只能给跟踪属性变更的情景下使用
 		boolean isModfiy = false;
-		Object origVlaue;
+		Object oldValue = getPropertyValue(propertyCode);
+		if(BeanUtil.isEquals(oldValue, value)) {
+			return isModfiy;
+		}
+		
+		Object origValue;
 		try {
-			origVlaue = getPropertyOrigValue(propertyCode);
-			if (origVlaue == null) {
-				if (value != null) {
-					isModfiy = true;
-				}
-			} else {
-				if (!origVlaue.equals(value)) {
-					isModfiy = true;
-				}
-			}
+			origValue = getPropertyOrigValue(propertyCode);
+			isModfiy = !(BeanUtil.isEquals(origValue, value)); // 与isEquals相反
 			if (isModfiy) {
-				propertyOriginalValueMap.put(propertyCode, origVlaue);
-				//putPropertyOrigValue(propertyCode, origVlaue);
+				propertyOriginalValueMap.put(propertyCode, origValue);
 				BeanUtil.setPropertyValue(this, propertyCode, value);
-				PropertyChangeEvent event = new PropertyChangeEvent(this, propertyCode, origVlaue, value);
+				PropertyChangeEvent event = new PropertyChangeEvent(this, propertyCode, origValue, value);
 				firePropertyChange(event);
 			}
-/**			
-			if (StateFlagEnum.INSERTED == dataState) {
-				BeanUtil.setPropertyValue(this, propertyCode, value);
-				isModfiy = true;
-			} else {
-				origVlaue = getPropertyOrigValue(propertyCode);
-				if (origVlaue == null) {
-					if (value != null) {
-						isModfiy = true;
-					}
-				} else {
-					if (!origVlaue.equals(value)) {
-						isModfiy = true;
-					}
-				}
-				if (isModfiy) {
-					propertyOriginalValueMap.put(propertyCode, origVlaue);
-					BeanUtil.setPropertyValue(this, propertyCode, value);
-				}
-			}
-**/			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -316,28 +303,28 @@ public abstract class AbstractBaseVo implements IBaseVo {
 
 	@Override
 	public Object getPropertyOrigValue(String propertyCode) {
-		Object origVlaue = null;
+		Object origValue = null;
 		try {
 			if (propertyOriginalValueMap.containsKey(propertyCode)) {
-				origVlaue = propertyOriginalValueMap.get(propertyCode);
+				origValue = propertyOriginalValueMap.get(propertyCode);
 			} else {
-				origVlaue = BeanUtil.getPropertyValue(this, propertyCode);
+				origValue = BeanUtil.getPropertyValue(this, propertyCode);
 			}
 /**			
 			if (StateFlagEnum.INSERTED == dataState) {
 				// BeanUtil.setPropertyValue(this, propertyCode, value);
 			} else {
 				if (propertyOriginalValueMap.containsKey(propertyCode)) {
-					origVlaue = propertyOriginalValueMap.get(propertyCode);
+					origValue = propertyOriginalValueMap.get(propertyCode);
 				} else {
-					origVlaue = BeanUtil.getPropertyValue(this, propertyCode);
+					origValue = BeanUtil.getPropertyValue(this, propertyCode);
 				}
 			}
 **/			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return origVlaue;
+		return origValue;
 	}
 	
 	@Override

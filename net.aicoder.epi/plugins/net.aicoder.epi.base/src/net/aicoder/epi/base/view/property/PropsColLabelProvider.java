@@ -48,14 +48,16 @@ public class PropsColLabelProvider implements ITableLabelProvider {
 		if (itemDefine != null && itemDefine.getControl() != null) {
 			ioFlag = itemDefine.getControl().getIoFlag();
 		}
-		if(AiStringUtil.isEmpty(propertyInfo.getCode())) {
+		if (AiStringUtil.isEmpty(propertyInfo.getCode())) {
 			text = propertyInfo.getName();
-		}else {
-			text = propertyInfo.getName() + "(" + propertyInfo.getCode()  + ")";
+		} else {
+			text = propertyInfo.getName() + "(" + propertyInfo.getCode() + ")";
 		}
 		if (PropIoFlagEnum.NotNull.ioFlag().equalsIgnoreCase(ioFlag)) {
 			text = "*" + text;
-		} 
+		} else {
+			text = " " + text;
+		}
 		return text;
 	}
 

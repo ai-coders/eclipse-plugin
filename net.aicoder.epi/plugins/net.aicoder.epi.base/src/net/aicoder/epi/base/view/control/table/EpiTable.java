@@ -205,7 +205,7 @@ public class EpiTable extends Composite implements IViewElement {
 
 	@Override
 	public void setDirtyBackground(String property) {
-		IColumnDefiner columnDefiner = definer.getColumnDefiner(property);
+		IColumnDefiner columnDefiner = definer.getColumnDefinerByName(property);
 		if (columnDefiner != null) {
 			setDirtyBackground(columnDefiner.getColumnIndex());
 		}

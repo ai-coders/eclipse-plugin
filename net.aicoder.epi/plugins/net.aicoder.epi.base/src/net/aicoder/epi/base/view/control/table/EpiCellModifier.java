@@ -41,7 +41,7 @@ public class EpiCellModifier implements ICellModifier {
 		boolean isCanModify = false;
 		if (element != null) {
 			IViewDefiner viewDefiner = viewElement.getDefiner();
-			IColumnDefiner columnDefiner = viewDefiner.getColumnDefiner(property);
+			IColumnDefiner columnDefiner = viewDefiner.getColumnDefinerByName(property);
 			if (columnDefiner != null) {
 				isCanModify = columnDefiner.isEditable();
 			}
@@ -54,7 +54,7 @@ public class EpiCellModifier implements ICellModifier {
 		Object value = "";
 		IViewDefiner viewDefiner = viewElement.getDefiner();
 		if(element != null) {
-			IColumnDefiner columnDefiner = viewDefiner.getColumnDefiner(property);
+			IColumnDefiner columnDefiner = viewDefiner.getColumnDefinerByName(property);
 			if(columnDefiner!=null) {
 				try {
 					value = BeanUtil.getPropertyValue(element, columnDefiner.getDataName());
@@ -84,7 +84,7 @@ public class EpiCellModifier implements ICellModifier {
 			if (element != null) {
 				Item tableItem = (Item) element;
 				Object data = tableItem.getData();
-				IColumnDefiner columnDefiner = viewDefiner.getColumnDefiner(property);
+				IColumnDefiner columnDefiner = viewDefiner.getColumnDefinerByName(property);
 				if (columnDefiner != null) {
 					String propertyName = columnDefiner.getDataName();
 					if (data instanceof IBaseVo) {

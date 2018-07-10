@@ -1,5 +1,7 @@
 package net.aicoder.epi.base.view.control.tree;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -38,6 +40,7 @@ import net.aicoder.epi.base.view.control.table.EpiSelectionProvider;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.part.IViewElement;
 import net.aicoder.tcom.tools.util.AiStringUtil;
+import net.aicoder.tcom.tools.util.BeanUtil;
 
 public class EpiTree extends Composite implements IViewElement {
 	public final int EACH_CHAR_WIDTH = 10;
@@ -55,6 +58,10 @@ public class EpiTree extends Composite implements IViewElement {
 	private List<IBaseVo> updatedDataList = new ArrayList<IBaseVo>(0);
 	
     private Set<TreeItem> dirtyBackgroundSet = new HashSet<TreeItem>(0);
+    
+    private TreeItem currentSelectionTreeItem = null;
+    private IBaseVo currentSelectionData = null;
+    
 /**	
 	public EpiTree(Composite parent) {
 		super(parent, SWT.NULL);
@@ -102,7 +109,10 @@ public class EpiTree extends Composite implements IViewElement {
 			public void widgetDefaultSelected(SelectionEvent event) { // 双击展开、收缩
 				TreeItem treeItem = (TreeItem) event.item;
 				IBaseVo item = getFirstSelectedItem();
-				String editorId = definer.getViewItemDefiner(item.getEtype()).getEditorId();
+				String editorId = null;
+				if(definer.getViewItemDefiner(item.getEtype()) != null) {
+					editorId = definer.getViewItemDefiner(item.getEtype()).getEditorId();
+				}
 				if (AiStringUtil.isEmpty(editorId)) {
 					if (treeItem != null && treeItem.getItemCount() > 0) {
 						boolean expanded = treeItem.getExpanded();
@@ -250,7 +260,7 @@ public class EpiTree extends Composite implements IViewElement {
 	
 	@Override
 	public void setDirtyBackground(String property) {
-		IColumnDefiner columnDefiner = definer.getColumnDefiner(property);
+		IColumnDefiner columnDefiner = definer.getColumnDefinerByName(property);
 		if (columnDefiner != null) {
 			setDirtyBackground(columnDefiner.getColumnIndex());
 		}
@@ -266,27 +276,52 @@ public class EpiTree extends Composite implements IViewElement {
 		}
 	}
 	
-/**
-	public void setDirtyBackground(TreeItem item, int columnIndex)
-	{
-		if (item != null) 
-		{
-			Display display = Display.getCurrent();
-			item.setBackground(columnIndex, display.getSystemColor(SWT.COLOR_YELLOW));			
-			dirtyBackgroundSet.add(item);
+	public void bindSelectionDataEvent() {
+		TreeItem selectionTreeItem = getSelectedTreeItem();
+		if(selectionTreeItem == null) {
+			return;
+		}
+		if(selectionTreeItem.equals(currentSelectionTreeItem)) {
+			return;
+		}
+		IBaseVo selectionData = this.getFirstSelectedItem();
+		if(selectionData == null || selectionData.equals(currentSelectionData)) {
+		}else{
+			if(currentSelectionData != null) {
+				currentSelectionData.removeAllPropertyChangeListener();
+			}
+			selectionData.addPropertyChangeListener(new PropertyChangeListener() {
+				@Override
+				public void propertyChange(PropertyChangeEvent event) {
+					if (BeanUtil.isEquals(event.getOldValue(), event.getNewValue())) {
+						return;
+					}
+					
+					String property = event.getPropertyName();
+					setCellValue(selectionTreeItem,selectionData, property);
+				}
+			});
+		}
+		
+		currentSelectionTreeItem = selectionTreeItem;
+		currentSelectionData = selectionData;
+	}
+	
+	private void setCellValue(TreeItem selectionTreeItem, IBaseVo selectionData , String property) {
+		if(selectionTreeItem == null || selectionData == null || property == null) {
+			return;
+		}
+		IColumnDefiner columnDefiner = definer.getColumnDefinerByCode(property);
+		int colIdx = columnDefiner.getColumnIndex();
+		boolean isColumnEditable = columnDefiner.isEditable();
+		String showValue = selectionData.getPropertyShowValue(property);
+		if (isColumnEditable) {
+			selectionTreeItem.setText(colIdx, showValue);
+		}else {
+			selectionTreeItem.setText(colIdx, showValue);
 		}
 	}
-
-	public void removeDirtyBackground(TreeItem item, int columnIndex) {
-		if (item != null) {
-			Display display = Display.getCurrent();
-			item.setBackground(columnIndex, display.getSystemColor(SWT.COLOR_WHITE));
-			
-			//dirtyBackgroundSet.remove(item);
-		}
-	}
-**/	
-
+	
 	protected void revertToOriginalBackground()
 	{
 		Display display = Display.getCurrent();

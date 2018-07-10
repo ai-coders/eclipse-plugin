@@ -11,9 +11,6 @@ import net.aicoder.epi.base.model.property.PropsDefine;
 import net.aicoder.epi.base.view.context.EpiInput;
 
 public class PropsInput extends EpiInput{ //implements IEpiInput {
-	//private IBaseVo currentData;
-	//private List<IBaseVo> dataList;
-
 	private IPropsManager propsManager;
 	private ExtInfosDefine extInfosDefine;
 	private PropsDefine propsDefine;
@@ -49,6 +46,17 @@ public class PropsInput extends EpiInput{ //implements IEpiInput {
 
 	@Override
 	public void setCurrentData(IBaseVo currentData) {
+		if(currentData == null) {
+			return;
+		}
+		IBaseVo oldData = this.getCurrentData();
+		if( oldData != null) {
+			if(oldData.equals(currentData)) {
+				return;
+			}else {
+				oldData.removeAllPropertyChangeListener();
+			}
+		}
 		super.setCurrentData(currentData);
 		
 		fullPropsInfoList.clear();
