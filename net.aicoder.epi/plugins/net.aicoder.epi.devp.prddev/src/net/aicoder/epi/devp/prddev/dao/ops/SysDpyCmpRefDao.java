@@ -47,7 +47,7 @@ public class SysDpyCmpRefDao extends BaseDao {
 			sdcrv.setName("tomcat");
 			sdcrv.setAlias("tomcat");
 			sdcrv.setDescription("服务器中间件");
-			sdcrv.setEtype("安装到tomat");
+			sdcrv.setEtype("SYS_DPY_CMP_REF");
 			sysDpyCmpRefList.add(sdcrv);
 		}
 		{
@@ -56,7 +56,7 @@ public class SysDpyCmpRefDao extends BaseDao {
 			sdcrv.setName("weblogic");
 			sdcrv.setAlias("weblogic");
 			sdcrv.setDescription("服务器中间件");
-			sdcrv.setEtype("安装到weblogic");
+			sdcrv.setEtype("SYS_DPY_CMP_REF");
 			sysDpyCmpRefList.add(sdcrv);
 		}
 		

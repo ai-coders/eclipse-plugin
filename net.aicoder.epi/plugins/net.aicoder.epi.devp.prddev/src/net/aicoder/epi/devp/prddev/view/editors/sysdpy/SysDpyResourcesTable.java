@@ -89,6 +89,10 @@ public class SysDpyResourcesTable extends BaseTitleArea{
 
 	}
 	
+	public void bindSelectionDataEvent(ISelection selection) {
+		table.bindSelectionDataEvent();
+	}
+	
 	public EpiSelectionProvider getSelectionProvider() {
 		return table.getSelectionProvider();
 	}
@@ -164,6 +168,7 @@ public class SysDpyResourcesTable extends BaseTitleArea{
 			sdrv.setName(textResName.getText().trim());
 			sdrv.setCode(code.getText().trim());
 			sdrv.setAlias("");
+			sdrv.setEtype("SYS_DPY_RES");
 			sdrv.setType(comboResType.getItem(comboResType.getSelectionIndex()));
 			sdrv.setSubType(textAccsType.getText().trim());
 			sdrv.setDescription(desc.getText().trim());

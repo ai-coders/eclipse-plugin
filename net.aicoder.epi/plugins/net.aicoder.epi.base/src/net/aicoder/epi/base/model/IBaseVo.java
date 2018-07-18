@@ -126,6 +126,7 @@ public interface IBaseVo extends Serializable {
 	
 	public boolean isLoadedElement(String elementName, int pageNo);
 	
+	public void putLoadElementState(LoadElementState loadElementState);
 	///////////////////////
 	public void addPropertyChangeListener(PropertyChangeListener listener);
 	

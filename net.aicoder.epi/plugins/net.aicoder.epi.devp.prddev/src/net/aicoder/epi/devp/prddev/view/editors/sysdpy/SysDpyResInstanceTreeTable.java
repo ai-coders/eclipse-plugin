@@ -110,6 +110,10 @@ public class SysDpyResInstanceTreeTable extends BaseTitleArea{
 		dragSource.addDragListener(new SysDpyResInsDragSource());
 
 	}
+	
+	public void bindSelectionDataEvent(ISelection selection) {
+		tree.bindSelectionDataEvent();
+	}
 
 	public EpiSelectionProvider getSelectionProvider() {
 		return tree.getSelectionProvider();
@@ -131,9 +135,11 @@ public class SysDpyResInstanceTreeTable extends BaseTitleArea{
 		
 		//依据当前[关联资源]条件查询资源应用场景数据
 		IEpiInput input = doper.loadSysDypResInstList(currentSysDpyResources);
-		context.setInput(input);
-		tree.getViewer().setInput(input);
-		tree.getViewer().refresh();
+		if(input != null) {
+			context.setInput(input);
+			tree.getViewer().setInput(input);
+			tree.getViewer().refresh();
+		}
 
 		currentHandlerRole = 1;//设置[关联资源]进入
 	}
@@ -154,9 +160,11 @@ public class SysDpyResInstanceTreeTable extends BaseTitleArea{
 		
 		//依据当前[部署方案]条件查询资源应用场景数据
 		IEpiInput input = doper.loadSysDypResInstList(currentSysDpySchema);
-		context.setInput(input);
-		tree.getViewer().setInput(input);
-		tree.getViewer().refresh();
+		if(input != null) {
+			context.setInput(input);
+			tree.getViewer().setInput(input);
+			tree.getViewer().refresh();
+		}
 		
 		currentHandlerRole = 2;//设置[部署方案]进入
 	}
@@ -303,6 +311,7 @@ public class SysDpyResInstanceTreeTable extends BaseTitleArea{
 			SysDpyResInstVo newData = new SysDpyResInstVo();
 			newData.setCode(textAssoResCode.getText().trim());
 			newData.setName(textAssoResName.getText().trim());
+			newData.setEtype("SYS_DPY_RES_INST");
 			newData.setType(comboAssoResType.getItem(comboAssoResType.getSelectionIndex()));
 			newData.setDescription(textAssoResDesc.getText().trim());
 			newData.setAssetRid(oacv.getRid());//关联IT资产ID

@@ -88,10 +88,13 @@ public class SysDpySchemeArea extends BaseArea{
 		//下拉选择
 		currentSysDpySchemas = sysDpySchemaDoper.loadSysDpySchemaList(currentSelectProduct);	
 		combo = new Combo(parent, SWT.LEFT|SWT.CENTER);
-		for(int i=0;i<currentSysDpySchemas.size();i++) {
-			String name = currentSysDpySchemas.get(i).getName();
-			combo.add(name, i);
+		if(currentSysDpySchemas != null) {
+			for(int i=0;i<currentSysDpySchemas.size();i++) {
+				String name = currentSysDpySchemas.get(i).getName();
+				combo.add(name, i);
+			}
 		}
+		
 		
 		//添加按钮
 		Button addBtn = new Button(parent, SWT.CENTER);
@@ -280,6 +283,7 @@ public class SysDpySchemeArea extends BaseArea{
 			protected void doAddAction() {
 				//新增列表一行
 				SysDpySchemaVo sdsv = new SysDpySchemaVo();
+				sdsv.setEtype("SYS_DPY_SCHEME");
 				IEpiInput input = context.getInput();
 				input.getDataList().add(sdsv);
 				table.getViewer().refresh();

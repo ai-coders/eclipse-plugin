@@ -86,4 +86,10 @@ public class ElementInfo extends AbstractBaseVo {
 		this.notes = notes;
 	}
 
+	@Override
+	public void putLoadElementState(LoadElementState loadElementState) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

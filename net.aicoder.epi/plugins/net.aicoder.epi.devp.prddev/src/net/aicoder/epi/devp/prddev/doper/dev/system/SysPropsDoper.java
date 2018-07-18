@@ -8,6 +8,7 @@ import net.aicoder.epi.base.model.ElementInfo;
 import net.aicoder.epi.base.model.ElementInfoDefine;
 import net.aicoder.epi.base.model.ExtInfosDefine;
 import net.aicoder.epi.base.model.IBaseVo;
+import net.aicoder.epi.base.model.LoadElementState;
 import net.aicoder.epi.devp.prddev.dao.dev.system.SysPropsDao;
 
 public class SysPropsDoper  extends BaseDoper {
@@ -41,6 +42,11 @@ public class SysPropsDoper  extends BaseDoper {
 			return null;
 		}
 		List<ElementInfo> list = sysPropsDao.listElementInfo(element);
+		
+		LoadElementState loadElementState = new LoadElementState(BaseVo.PROP_INFO_PREFIX);
+		loadElementState.setStartRecNo(0);
+		element.putLoadElementState(loadElementState);
+
 		return list;
 	}
 

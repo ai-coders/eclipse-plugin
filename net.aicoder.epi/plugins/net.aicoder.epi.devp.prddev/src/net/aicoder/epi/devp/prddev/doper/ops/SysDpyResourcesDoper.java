@@ -14,7 +14,8 @@ import net.aicoder.epi.devp.prddev.dao.ops.SysDpyResourcesDao;
  */
 public class SysDpyResourcesDoper extends BaseDoper {
 	private SysDpyResourcesDao sysDpyResourcesDao;
-
+	public static final String SYS_DPY_RESOURCES = "SysDpyResources";
+	
 	public SysDpyResourcesDoper() {
 		super();
 		this.sysDpyResourcesDao = new SysDpyResourcesDao();
@@ -26,9 +27,18 @@ public class SysDpyResourcesDoper extends BaseDoper {
 	 * @return
 	 */
 	public EpiInput loadSysDpyResourcesList(IBaseVo baseVo) {
+		if(baseVo == null) return null;
+//		if(baseVo.isLoadedElement(SYS_DPY_RESOURCES)) return null;
+		
+		
 		List<IBaseVo> loadSysDpyResourcesList = sysDpyResourcesDao.loadSysDpyResourcesList(baseVo);
 		EpiInput epiInput = new EpiInput();
 		epiInput.setDataList(loadSysDpyResourcesList);
+		
+//		LoadElementState loadElementState = new LoadElementState(SYS_DPY_RESOURCES);
+//		loadElementState.setStartRecNo(0);
+//		baseVo.putLoadElementState(loadElementState);
+		
 		return epiInput;
 	}
 	

@@ -1,5 +1,6 @@
 package net.aicoder.epi.devp.prddev.view.editors.sysdpy;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.PartInitException;
 
@@ -26,5 +27,17 @@ public class SysDpyEditor extends BaseFormEditor{
 		IEditorInput input = getEditorInput();
 		setPartName(input.getName());
 		setTitleToolTip(input.getToolTipText());
+	}
+	
+	@Override
+	public boolean isDirty() {
+		// TODO Auto-generated method stub
+		return super.isDirty();
+	}
+	
+	@Override
+	public void doSave(IProgressMonitor arg0) {
+		// TODO Auto-generated method stub
+		super.doSave(arg0);
 	}
 }

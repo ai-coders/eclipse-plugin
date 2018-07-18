@@ -1,5 +1,7 @@
 package net.aicoder.epi.base.view.control.table;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -34,6 +36,7 @@ import net.aicoder.epi.base.view.context.IViewContext;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.part.IViewElement;
 import net.aicoder.tcom.tools.util.AiStringUtil;
+import net.aicoder.tcom.tools.util.BeanUtil;
 
 public class EpiTable extends Composite implements IViewElement {
 	public final int EACH_CHAR_WIDTH = 10;
@@ -52,6 +55,9 @@ public class EpiTable extends Composite implements IViewElement {
 	
     private Set<TableItem> dirtyBackgroundSet = new HashSet<TableItem>(0);
 
+    private TableItem currentSelectionTableItem = null;
+    private IBaseVo currentSelectionData = null;
+    
  /**   
 	public EpiTable(Composite parent) {
 		super(parent, SWT.NULL);
@@ -249,12 +255,12 @@ public class EpiTable extends Composite implements IViewElement {
 	
 	public TableItem getSelectedTableItem() {
 		TableItem[] items;
-		TableItem treeItem0 = null;
+		TableItem tableItem0 = null;
 		items = table.getSelection();
 		if(items != null) {
-			treeItem0 = items[0];
+			tableItem0 = items[0];
 		}
-		return treeItem0;
+		return tableItem0;
 	}
 	
 	public IBaseVo getFirstSelectedItem() {
@@ -384,6 +390,55 @@ public class EpiTable extends Composite implements IViewElement {
 
 	public EpiSelectionProvider getSelectionProvider() {
 		return selectionProvider;
+	}
+	
+	/**
+	 * 绑定属性区域处理，改变值逆向更新数据
+	 */
+	public void bindSelectionDataEvent() {
+		TableItem selectionTableItem = getSelectedTableItem();
+		if(selectionTableItem == null) {
+			return;
+		}
+		if(selectionTableItem.equals(currentSelectionTableItem)) {
+			return;
+		}
+		IBaseVo selectionData = this.getFirstSelectedItem();
+		if(selectionData == null || selectionData.equals(currentSelectionData)) {
+		}else{
+			if(currentSelectionData != null) {
+				currentSelectionData.removeAllPropertyChangeListener();
+			}
+			selectionData.addPropertyChangeListener(new PropertyChangeListener() {
+				@Override
+				public void propertyChange(PropertyChangeEvent event) {
+					if (BeanUtil.isEquals(event.getOldValue(), event.getNewValue())) {
+						return;
+					}
+					
+					String property = event.getPropertyName();
+					setCellValue(selectionTableItem,selectionData, property);
+				}
+			});
+		}
+		
+		currentSelectionTableItem = selectionTableItem;
+		currentSelectionData = selectionData;
+	}
+	
+	private void setCellValue(TableItem selectionTableItem, IBaseVo selectionData , String property) {
+		if(selectionTableItem == null || selectionData == null || property == null) {
+			return;
+		}
+		IColumnDefiner columnDefiner = definer.getColumnDefinerByCode(property);
+		int colIdx = columnDefiner.getColumnIndex();
+		boolean isColumnEditable = columnDefiner.isEditable();
+		String showValue = selectionData.getPropertyShowValue(property);
+		if (isColumnEditable) {
+			selectionTableItem.setText(colIdx, showValue);
+		}else {
+			selectionTableItem.setText(colIdx, showValue);
+		}
 	}
 	
 }

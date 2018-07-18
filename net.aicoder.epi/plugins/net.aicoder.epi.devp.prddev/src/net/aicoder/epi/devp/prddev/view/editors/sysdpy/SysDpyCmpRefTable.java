@@ -115,6 +115,10 @@ public class SysDpyCmpRefTable extends BaseTitleArea {
 		
 	}
 	
+	public void bindSelectionDataEvent(ISelection selection) {
+		table.bindSelectionDataEvent();
+	}
+	
 	public EpiSelectionProvider getSelectionProvider() {
 		return table.getSelectionProvider();
 	}
@@ -132,9 +136,11 @@ public class SysDpyCmpRefTable extends BaseTitleArea {
 		}
 		
 		EpiInput input = doper.loadSysDpyCmpRefList(currentSysCmp);
-		context.setInput(input);
-		table.getViewer().setInput(input);
-		table.getViewer().refresh();
+		if(input != null) {
+			context.setInput(input);
+			table.getViewer().setInput(input);
+			table.getViewer().refresh();
+		}
 	}
 	
 	
@@ -152,9 +158,11 @@ public class SysDpyCmpRefTable extends BaseTitleArea {
 		
 		//依据当前[资源应用场景]条件查询xxx组件数据
 		EpiInput input = doper.loadSysDpyCmpRefList(currentSysDpyResInst);
-		context.setInput(input);
-		table.getViewer().setInput(input);
-		table.getViewer().refresh();
+		if(input != null) {
+			context.setInput(input);
+			table.getViewer().setInput(input);
+			table.getViewer().refresh();
+		}
 	}
 	
 	
@@ -225,6 +233,7 @@ public class SysDpyCmpRefTable extends BaseTitleArea {
 			sdcrv.setName(textResName.getText().trim());
 			sdcrv.setCode(code.getText().trim());
 			sdcrv.setAlias("");
+			sdcrv.setEtype("SYS_DPY_CMP_REF");
 			sdcrv.setType(comboResType.getItem(comboResType.getSelectionIndex()));
 			sdcrv.setSubType(textAccsType.getText().trim());
 			sdcrv.setDescription(desc.getText().trim());

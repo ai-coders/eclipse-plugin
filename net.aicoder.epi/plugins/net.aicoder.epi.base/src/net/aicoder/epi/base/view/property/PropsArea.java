@@ -47,13 +47,17 @@ public class PropsArea extends BaseTitleArea {
 		propertyTable = new PropertyTable(parent);
 		propsInput = new PropsInput(propsManager);
 
-		createActons();
+		createActions();
 	}
 
 	@Override
 	public void attachEvent() {
 	}
 
+	/**
+	 * 设置属性区域原始对象数据
+	 * @param selection
+	 */
 	public void setElementSelection(ISelection selection) {
 		Object item = ((IStructuredSelection) selection).getFirstElement();
 		if (item == null) {
@@ -87,7 +91,7 @@ public class PropsArea extends BaseTitleArea {
 		updateActions();
 	}
 
-	private void createActons() {
+	private void createActions() {
 		create_showAdvancedPropertiesAction();
 		create_defaultValueAction();
 

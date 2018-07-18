@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import net.aicoder.epi.base.model.IBaseVo;
+import net.aicoder.epi.base.model.ITreeNode;
 import net.aicoder.epi.base.view.action.IEpiAction;
 import net.aicoder.epi.base.view.action.tree.EpiAddBrotherAction;
 import net.aicoder.epi.base.view.action.tree.EpiAddChildAction;
@@ -70,7 +71,7 @@ public class SysDpyCmpTreeTable extends BaseTitleArea{
 		{"*名称", "name", 20, null, null, null, IColumnDefiner.EDITABLE },
 		{"代码", "code", -20, null, null, null, IColumnDefiner.EDITABLE },
 		{"别名", "alias", },
-		{"类型", "type", },
+		{"类型", "type", 0,null,null,null,IColumnDefiner.CE_COMBOBOX},
 		{"版本", "version", },
 		{"描述", "description", 0, null, null, null, IColumnDefiner.EDITABLE }
 	};
@@ -120,20 +121,25 @@ public class SysDpyCmpTreeTable extends BaseTitleArea{
 		}
 		
 		
-		//点选XXX产品时，获取当前产品的系统、子系统、组件；
-		//可新增/删除系统、子系统、组件等，及维护系统、子系统、组件结构
-		IEpiInput input = doper.loadSysCmpList(currentSelectProduct);
 		
 		definer = new EpiTreeDefiner(null, columnsDefine);
 		context = new ViewContext();
-		context.setInput(input);
 		tree = new EpiTree(parent, definer, context);
 		
+		//点选XXX产品时，获取当前产品的系统、子系统、组件；
+		//可新增/删除系统、子系统、组件等，及维护系统、子系统、组件结构
+		IEpiInput input = doper.loadSysCmpList(currentSelectProduct);
+		if(input != null) {
+			context.setInput(input);
+			tree.getViewer().setInput(input);
+			tree.getViewer().refresh();
+		}
+				
 		//添加拖动支持
 		DragSource dragSource = new DragSource(tree.getViewer().getControl(), DND.DROP_MOVE|DND.DROP_COPY);
 		dragSource.setTransfer(new Transfer[] {SysDpyTransfer.getInstance()});
 		dragSource.addDragListener(new SysDpyCmpDragSource());
-
+		
 	}
 	
 	public void bindSelectionDataEvent(ISelection selection) {
@@ -150,6 +156,9 @@ public class SysDpyCmpTreeTable extends BaseTitleArea{
 		
 		
 	}
+	
+	
+	
 	
 	
 	/**
@@ -339,41 +348,36 @@ public class SysDpyCmpTreeTable extends BaseTitleArea{
 		}
 		
 		@Override
-		protected void doDegradeAction(IBaseVo currData) {
-//			SysCmpVo currNode = (SysCmpVo)currData;
-//			SysCmpVo parentNode = (SysCmpVo) currNode.getParentNode();
-			return;
-			
-			/*
-			//当前为叶子节点
-			if("SYS_CMP".equals(currNode.getEtype())) {
-				MessageDialog.openInformation(getControl().getShell(), "提示", "当前选择为叶子节点,不能再降级操作");
-				return;
-			}
-			//当前为子系统节点
-			if("SUB_SYS".equals(currNode.getEtype())) {
-				//如果存在叶子节点，则升序为子系统节点
-				List<IBaseVo> childrenList = currNode.getChildrenList();
-				for (IBaseVo iBaseVo : childrenList) {
-					SysCmpVo scv = (SysCmpVo) iBaseVo;
-					scv.setEtype(currNode.getEtype());
-					scv.setParentNode(parentNode);
-				}
-				
-				//当前子系统节点[降序]为叶子节点
-				//此处有疑问:
-				//一个父节点,一个子节点,2个叶子节点,若子节点降序后2个叶子节点升序为子节点,则之前的子节点该是2个新子节点中的哪个叶子节点?
-				
-			}
-			//当前为系统节点
-			if("SYSTEM".equals(currNode.getEtype())) {
-				//如果存在子系统节点，则升序为系统节点
-				//当前系统节点[降序]为子系统节点
-				List<IBaseVo> childrenList = currNode.getChildrenList();
-				
-			}
-			*/
+		protected IBaseVo doDegradeAction(IBaseVo currData) {
+			IBaseVo newData = currData;
 
+			if (currData instanceof ITreeNode) {
+				ITreeNode parentData = ((ITreeNode) currData).getParentNode();
+				if (parentData != null) {
+					List<IBaseVo> childrenList = parentData.getChildrenList();
+					int index = 0;
+					for (index = 0; index < childrenList.size(); index++) {
+						if (currData.equals(childrenList.get(index))) {
+							break;
+						}
+					}
+					if (index > 0) {
+						IBaseVo newParentData = childrenList.get(index - 1);
+						if(newParentData instanceof ITreeNode) {
+							childrenList.remove(currData);
+							
+							ITreeNode newParent = (ITreeNode)newParentData;
+							((ITreeNode) currData).setParentNode(newParent);
+							newParent.getChildrenList().add(currData);
+						}
+					}
+				} else {
+					newData = null;
+				}
+			} else {
+				newData = null;
+			}
+			return newData;
 		}
 	}
 	

@@ -129,10 +129,11 @@ public class BaseVo extends AbstractBaseVo {
 			return;
 		}
 		elementInfoMap.clear();
+/**		
 		LoadElementState loadElementState = new LoadElementState(PROP_INFO_PREFIX);
 		loadElementState.setStartRecNo(0);
 		putLoadElementState(loadElementState);
-
+**/
 		for (ElementInfo info : elementInfoList) {
 			if (info != null) {
 				elementInfoMap.put(info.getCode(), info);

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Properties name="系统元素定义" image="" tooltip="系统元素定义：组件视图的系统/子系统、开发视图的目录、部署视图的分类目录，以及其下的各种元素" >
+   <Pitem code="rid" name="记录编号" category="Advanced"><Data type="Long"></Data><Control ioFlag="Display"></Control><CheckRule></CheckRule></Pitem>
+   <Pitem code="tid" name="租户编号" category="Advanced"><Data type="Long"></Data><Control ioFlag="Display"></Control><CheckRule></CheckRule></Pitem>
+   <Pitem code="name" name="系统元素名称"><Data type="String"  length="50"></Data><Control ioFlag="NotNull"></Control><CheckRule></CheckRule></Pitem>
+   <Pitem code="code" name="系统元素代码"><Data type="String"  length="50"></Data><Control></Control><CheckRule></CheckRule></Pitem>
+   <Pitem code="alias" name="系统元素别名"><Data type="String"  length="50"></Data><Control></Control><CheckRule></CheckRule></Pitem>
+   <Pitem code="description" name="系统元素描述"><Data type="String"  length="255"></Data><Control></Control><CheckRule></CheckRule></Pitem>
+   <Pitem code="type" name="类型"><Data type="String"  length="32"></Data><Control type="ComboBox" refObjects="cmpType"></Control><CheckRule></CheckRule><Description>SYS-系统/目录，SUB-子系统/子目录，CMPELM-组件,IDEPRJ-开发工程,ENV-环境</Description></Pitem>
+   <Pitem code="subType" name="子类型"><Data type="String"  length="32"></Data><Control type="ComboBox" refObjects="comboObjects-sub_type"></Control><CheckRule></CheckRule><Description>ENV：NODE,DEVICE,EXEENV,DOCKER</Description></Pitem>
+   <Pitem code="stereotype" name="构造型" category="Hidden"><Data type="String"  length="32"></Data><Control></Control><CheckRule></CheckRule></Pitem>
+   <Pitem code="scope" name="范围"><Data type="String"  length="32"></Data><Control type="ComboBox" refObjects="comboObjects-scope"></Control><CheckRule></CheckRule><Description>访问控制范围:产品内可见，同模块可见，模块内可见</Description></Pitem>
+   <Pitem code="version" name="版本"><Data type="String"  length="32"></Data><Control></Control><CheckRule></CheckRule><Description>当前版本</Description></Pitem>
+   <Pitem code="phase" name="阶段"><Data type="String"  length="32"></Data><Control type="ComboBox" refObjects="comboObjects-phase"></Control><CheckRule></CheckRule><Description>系统调研,系统设计,系统开发,试运行,系统运维,已停用</Description></Pitem>
+   <Pitem code="status" name="状态"><Data type="String"  length="32"></Data><Control type="ComboBox" refObjects="comboObjects-status"></Control><CheckRule></CheckRule><Description>未开始,进行中,已完成,暂停,取消</Description></Pitem>
+   <Pitem code="prdRid" name="产品编号" category="Advanced"><Data type="Long"></Data><Control ioFlag="Display"></Control><CheckRule></CheckRule></Pitem>
+   <Pitem code="parentRid" name="父包编号" category="Advanced"><Data type="Long"></Data><Control></Control><CheckRule></CheckRule></Pitem>
+   <Pitem code="seq" name="顺序号" category="Advanced"><Data type="Integer"></Data><Control></Control><CheckRule></CheckRule></Pitem>
+   <Pitem code="sharedComponent" name="共享组件"><Data type="Integer"></Data><Control type="CheckBox"></Control><CheckRule></CheckRule><Description>是否为共享组件，0:不共享；1：共享</Description></Pitem>
+   <Pitem code="sharedService" name="共享服务"><Data type="Integer"></Data><Control type="CheckBox"></Control><CheckRule></CheckRule><Description>是否提供共享服务，0:不共享；1：共享</Description></Pitem>
+   <Pitem code="notes" name="备注" category="Advanced"><Data type="String"  length="2000"></Data><Control></Control><CheckRule></CheckRule></Pitem>
+   <Pitem code="recordState" name="记录状态" category="Advanced"><Data type="Integer"></Data><Control></Control><CheckRule></CheckRule><Description>0-失效;1-生效;缺省为1</Description></Pitem>
+   <Pitem code="createUid" name="创建用户编号" category="Advanced"><Data type="Long"></Data><Control ioFlag="Display"></Control><CheckRule></CheckRule></Pitem>
+   <Pitem code="createUcode" name="创建用户代码" category="Advanced"><Data type="String"  length="50"></Data><Control ioFlag="Display"></Control><CheckRule></CheckRule></Pitem>
+   <Pitem code="createUname" name="创建用户姓名" category="Advanced"><Data type="String"  length="50"></Data><Control ioFlag="Display"></Control><CheckRule></CheckRule></Pitem>
+   <Pitem code="createAt" name="创建时间" category="Advanced"><Data type="Timestamp"></Data><Control ioFlag="Display"></Control><CheckRule></CheckRule></Pitem>
+   <Pitem code="modifyUid" name="修改用户编号" category="Advanced"><Data type="Long"></Data><Control ioFlag="Display"></Control><CheckRule></CheckRule></Pitem>
+   <Pitem code="modifyUcode" name="修改用户代码" category="Advanced"><Data type="String"  length="50"></Data><Control ioFlag="Display"></Control><CheckRule></CheckRule></Pitem>
+   <Pitem code="modifyUname" name="修改用户姓名" category="Advanced"><Data type="String"  length="50"></Data><Control ioFlag="Display"></Control><CheckRule></CheckRule></Pitem>
+   <Pitem code="modifyAt" name="修改时间" category="Advanced"><Data type="Timestamp"></Data><Control ioFlag="Display"></Control><CheckRule></CheckRule></Pitem>
+   <Pitem code="" name="SVN定义"><Control ioFlag="Display"></Control>
+<!--
+	<SubItems>
+   </SubItems>
+ -->   
+   <Pitem code="Info:svnUrl" name="SVN地址"><Data type="String"  length="50"></Data><Control ioFlag="NotNull"></Control><CheckRule></CheckRule></Pitem>
+   <Pitem code="Info:svnUser" name="SVN用户"><Data type="String"  length="50"></Data><CheckRule></CheckRule></Pitem>
+   <Pitem code="Info:svnPassword" name="SVN密码"><Data type="String"  length="50"></Data><CheckRule></CheckRule></Pitem>
+   </Pitem>
+</Properties>

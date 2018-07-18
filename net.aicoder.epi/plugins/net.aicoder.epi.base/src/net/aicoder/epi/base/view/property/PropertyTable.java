@@ -8,10 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.jface.viewers.IBaseLabelProvider;
-import org.eclipse.jface.viewers.IContentProvider;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.TreeEditor;
@@ -22,7 +18,6 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -223,13 +218,35 @@ public class PropertyTable extends Composite {
 		newEditor.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				//newEditor.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
 				String newValue = newEditor.getText();
-				propertyInfo.setValue(newValue);
-				if(propertyInfo.isModified()) {
-					newEditor.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_YELLOW));
-					//dirtyBackgroundSet.add(treeItem);
+
+				//校验当前值跟原始值/上次编辑值对比
+				String propertyCode = propertyInfo.getItemDefine().getCode();
+				Object oldValue = propertyInfo.getCurrentData().getPropertyValue(propertyCode);
+				Object origValue = propertyInfo.getCurrentData().getPropertyOrigValue(propertyCode);
+				
+				if(BeanUtil.isEquals(origValue, newValue)) {
+					//恢复默认颜色
+					newEditor.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+				}else {
+					if(BeanUtil.isEquals(oldValue, newValue)) {
+						//与上一次值一致则不做处理
+					}else {
+						newEditor.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_YELLOW));
+					}
 				}
+				propertyInfo.setValue(newValue);
+				
+				
+//				if(propertyInfo.isModified()) {
+//					newEditor.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_YELLOW));
+//					//dirtyBackgroundSet.add(treeItem);
+//					
+//					//设置颜色和验证
+//					
+//					
+//					
+//				}
 			}
 		});
 

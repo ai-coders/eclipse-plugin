@@ -107,7 +107,20 @@ public class SysDpyModelArea extends PrddevWithPropArea {
 				ISelection selection = event.getSelection();
 				
 //				sysDpyCmpRefTable.setSelection(selection);
-				setElementSelection(selection);
+				setElementSelection(selection);//进入属性区域处理
+				sysDpyCmpTreeTable.bindSelectionDataEvent(selection);//进入属性区域逆向处理
+			}
+		});
+		
+		//绑定监听：[关联资源列表]点击选择组件-->响应到[资源使用场景]区域处理
+		sysDpyResAndInstArea.getSysDpyResourcesTable().getSelectionProvider().addSelectionChangedListener(new ISelectionChangedListener() {
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				ISelection selection = event.getSelection();
+				
+				sysDpyResAndInstArea.getSysDpyResInstanceTreeTable().setSelection(selection);
+				setElementSelection(selection);//进入属性区域处理
+				sysDpyResAndInstArea.getSysDpyResourcesTable().bindSelectionDataEvent(selection);//进入属性区域逆向处理
 			}
 		});
 		
@@ -119,6 +132,8 @@ public class SysDpyModelArea extends PrddevWithPropArea {
 				if(((StructuredSelection)selection).getFirstElement() == null) return;
 				
 //				sysDpyCmpRefTable.setSelectionBySysDpyResInstVo(selection);
+				setElementSelection(selection);//进入属性区域处理
+				sysDpyResAndInstArea.getSysDpyResInstanceTreeTable().bindSelectionDataEvent(selection);//进入属性区域逆向处理
 			}
 		});
 		
@@ -143,7 +158,20 @@ public class SysDpyModelArea extends PrddevWithPropArea {
 			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				System.out.println("widgetDefaultSelected:"+e.getSource().toString());
+				System.out.println("widgetDefaultSelected:[部署方案]下拉框选择"+e.getSource().toString());
+			}
+		});
+		
+		//绑定监听：[xxx组件列表]点击选择组件-->响应右侧[属性]区域处理
+		sysDpyCmpRefTable.getSelectionProvider().addSelectionChangedListener(new ISelectionChangedListener() {
+			
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				ISelection selection = event.getSelection();
+				if(((StructuredSelection)selection).getFirstElement() == null) return;
+				
+				setElementSelection(selection);//进入属性区域处理
+				sysDpyCmpRefTable.bindSelectionDataEvent(selection);//进入属性区域逆向处理
 			}
 		});
 	}

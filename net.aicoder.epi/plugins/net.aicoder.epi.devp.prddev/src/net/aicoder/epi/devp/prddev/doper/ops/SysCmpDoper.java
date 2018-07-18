@@ -14,6 +14,7 @@ import net.aicoder.epi.devp.prddev.dao.ops.SysCmpDao;
  */
 public class SysCmpDoper extends BaseDoper{
 	private SysCmpDao sysCmpDao;
+	public static final String SYS_CMP = "SysCmp";
 
 	public SysCmpDoper() {
 		super();
@@ -26,9 +27,16 @@ public class SysCmpDoper extends BaseDoper{
 	 * @return
 	 */
 	public EpiInput loadSysCmpList(IBaseVo baseVo) {
+		if(baseVo == null) return null;
+//		if(baseVo.isLoadedElement(SYS_CMP)) return null;
+		
 		List<IBaseVo> loadSysCmpList = sysCmpDao.loadSysCmpList(baseVo);
 		EpiInput epiInput = new EpiInput();
 		epiInput.setDataList(loadSysCmpList);
+		
+//		LoadElementState loadElementState = new LoadElementState(SYS_CMP);
+//		loadElementState.setStartRecNo(0);
+//		baseVo.putLoadElementState(loadElementState);
 		return epiInput;
 	}
 	

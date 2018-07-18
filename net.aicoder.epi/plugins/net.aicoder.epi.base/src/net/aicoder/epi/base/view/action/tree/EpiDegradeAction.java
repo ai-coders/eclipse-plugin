@@ -4,6 +4,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 
 import net.aicoder.epi.base.BaseImageConstant;
@@ -55,12 +56,24 @@ public class EpiDegradeAction extends BaseAction{
 		if (currData == null) {
 			return;
 		}
-		doDegradeAction(currData);
+
+		IBaseVo newData = doDegradeAction(currData);
+		if (newData == null) {
+			return;
+		}
 		viewer.refresh();
+
+		StructuredSelection newSelection;
+		newSelection = new StructuredSelection(newData);
+		viewer.setSelection(newSelection);
+		// epiTree.setDirtyBackground(0);
+
+		// newData.setPreItemData(currData);
+		// epiTree.putInsertedData(newData);
 	}
 	
-	protected void doDegradeAction(IBaseVo currData) {
-		
+	protected IBaseVo doDegradeAction(IBaseVo currData) {
+		return null;
 	}
 
 	public EpiTree getTree() {

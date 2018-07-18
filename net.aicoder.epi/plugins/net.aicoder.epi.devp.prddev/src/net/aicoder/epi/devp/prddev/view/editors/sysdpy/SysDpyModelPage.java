@@ -1,5 +1,6 @@
 package net.aicoder.epi.devp.prddev.view.editors.sysdpy;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.editor.FormEditor;
 
@@ -26,6 +27,23 @@ public class SysDpyModelPage extends BaseFormPage {
 	@Override
 	public void createControl(Composite parent) {
 		area.createControl(parent);
+	}
+	
+	@Override
+	public boolean isSaveAsAllowed() {
+		return true;
+	}
+	
+	@Override
+	public void doSave(IProgressMonitor monitor) {
+		
+		super.doSave(monitor);
+	}
+	
+	@Override
+	public void doSaveAs() {
+		// TODO Auto-generated method stub
+		super.doSaveAs();
 	}
 
 }
