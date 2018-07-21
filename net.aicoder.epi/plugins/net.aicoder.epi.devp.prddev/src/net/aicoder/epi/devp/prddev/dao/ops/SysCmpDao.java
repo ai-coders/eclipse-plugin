@@ -1,6 +1,7 @@
 package net.aicoder.epi.devp.prddev.dao.ops;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.util.LinkedMultiValueMap;
@@ -41,15 +42,18 @@ public class SysCmpDao extends BaseDao{
 		{
 			SysCmpVo scv = new SysCmpVo();
 			BeanUtil.copyBeanToBean(scv, resultObj.getData().get(0));
+			scv.setCreateAt(new Date());
 			sysCmpList.add(scv);
 			{
 				SysCmpVo scv_sub = new SysCmpVo();
 				BeanUtil.copyBeanToBean(scv_sub, resultObj.getData().get(1));
+				scv_sub.setCreateAt(new Date());
 				scv_sub.setParentNode(scv);
 				scv.getChildrenList().add(scv_sub);
 				{
 					SysCmpVo scv_cmp = new SysCmpVo();
 					BeanUtil.copyBeanToBean(scv_cmp, resultObj.getData().get(2));
+					scv_cmp.setCreateAt(new Date());
 					scv_cmp.setParentNode(scv_sub);
 					scv_sub.getChildrenList().add(scv_cmp);
 				}

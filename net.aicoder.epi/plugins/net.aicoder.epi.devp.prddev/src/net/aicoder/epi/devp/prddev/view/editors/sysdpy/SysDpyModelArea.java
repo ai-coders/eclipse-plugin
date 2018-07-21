@@ -5,6 +5,7 @@ import java.util.List;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
@@ -17,6 +18,7 @@ import net.aicoder.epi.base.view.part.area.SashArea;
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.view.part.area.IArea;
 import net.aicoder.epi.devp.prddev.doper.dev.DropdownOptionsDoper;
+import net.aicoder.epi.devp.prddev.model.dev.system.SysCmpVo;
 import net.aicoder.epi.devp.prddev.view.property.PrddevWithPropArea;
 
 /**
@@ -105,6 +107,8 @@ public class SysDpyModelArea extends PrddevWithPropArea {
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				ISelection selection = event.getSelection();
+				SysCmpVo sysCmpVo = (SysCmpVo) ((IStructuredSelection)selection).getFirstElement();
+				sysDpyCmpTreeTable.setCurrentData(sysCmpVo);
 				
 //				sysDpyCmpRefTable.setSelection(selection);
 				setElementSelection(selection);//进入属性区域处理

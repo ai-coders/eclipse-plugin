@@ -204,6 +204,7 @@ public class SysDpySchemeArea extends BaseArea{
 		
 		@Override
 		public boolean close() {
+			if(currentSysDpySchemas == null) return super.close();
 			//移除掉空数据,此处按没填写name值则移除处理
 			List<IBaseVo> temp = new ArrayList<>();
 			for (IBaseVo iBaseVo : currentSysDpySchemas) {
@@ -267,6 +268,7 @@ public class SysDpySchemeArea extends BaseArea{
 			context = new ViewContext();
 			context.setInput(input);
 			table = new EpiTable(parent, definer, context);
+			table.getViewer().setInput(input);
 			//return table;
 		}
 		
@@ -284,10 +286,13 @@ public class SysDpySchemeArea extends BaseArea{
 				//新增列表一行
 				SysDpySchemaVo sdsv = new SysDpySchemaVo();
 				sdsv.setEtype("SYS_DPY_SCHEME");
-				IEpiInput input = context.getInput();
-				input.getDataList().add(sdsv);
-				table.getViewer().refresh();
-				table.putInsertedData(sdsv);
+				Object object = table.getViewer().getInput();
+				if(object instanceof EpiInput) {
+					EpiInput input = (EpiInput) object;
+					input.getDataList().add(sdsv);
+					table.getViewer().refresh();
+					table.putInsertedData(sdsv);
+				}
 			}
 			
 		}

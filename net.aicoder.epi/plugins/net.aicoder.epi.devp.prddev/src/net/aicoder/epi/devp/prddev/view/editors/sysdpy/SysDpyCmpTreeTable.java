@@ -7,6 +7,7 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
@@ -26,6 +27,7 @@ import org.eclipse.swt.widgets.Text;
 
 import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.base.model.ITreeNode;
+import net.aicoder.epi.base.model.OptionItem;
 import net.aicoder.epi.base.view.action.IEpiAction;
 import net.aicoder.epi.base.view.action.tree.EpiAddBrotherAction;
 import net.aicoder.epi.base.view.action.tree.EpiAddChildAction;
@@ -47,6 +49,8 @@ import net.aicoder.epi.base.view.control.tree.EpiTreeDefiner;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
 import net.aicoder.epi.base.view.drag.BaseDragSource;
 import net.aicoder.epi.base.view.part.area.BaseTitleArea;
+import net.aicoder.epi.devp.prddev.doper.dev.DropdownOptionsDoper;
+import net.aicoder.epi.devp.prddev.doper.dev.ExtendWidgetDoper;
 import net.aicoder.epi.devp.prddev.doper.ops.SysCmpDoper;
 import net.aicoder.epi.devp.prddev.model.dev.ProductDevVo;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysCmpVo;
@@ -65,15 +69,18 @@ public class SysDpyCmpTreeTable extends BaseTitleArea{
 	private EpiTreeDefiner definer;
 	private IViewContext context;
 	private SysCmpDoper doper;
+	private ExtendWidgetDoper extendDoper;//获取下拉控件、checkbox控件数据
+	private DropdownOptionsDoper dropdownOptionsDoper;
 	private PrdProductVo currentSelectProduct;//当前选中的产品
 	// 0-列名, 1-数据属性名称, 2-列显示的宽度, 3-数据类型, 4-数据格式, 5-是否隐藏的标志, 6-是否可编辑的标志
 	private static Object[][] columnsDefine = {
-		{"*名称", "name", 20, null, null, null, IColumnDefiner.EDITABLE },
-		{"代码", "code", -20, null, null, null, IColumnDefiner.EDITABLE },
-		{"别名", "alias", },
-		{"类型", "type", 0,null,null,null,IColumnDefiner.CE_COMBOBOX},
-		{"版本", "version", },
-		{"描述", "description", 0, null, null, null, IColumnDefiner.EDITABLE }
+		{"*名称", "name", 20, IColumnDefiner.CE_TEXT, null, null, IColumnDefiner.EDITABLE },
+		{"代码", "code", -20, IColumnDefiner.CE_TEXT, null, null, IColumnDefiner.EDITABLE },
+		{"别名", "alias", 0,IColumnDefiner.CE_TEXT, null, null, IColumnDefiner.EDITABLE},
+		{"类型", "type", 0,IColumnDefiner.CE_COMBOBOX,null,null,IColumnDefiner.EDITABLE},
+		{"日期", "createAt", 0, IColumnDefiner.CE_DATE, null, null, IColumnDefiner.EDITABLE },
+		{"版本", "version", 0,IColumnDefiner.CE_TEXT, null, null, IColumnDefiner.EDITABLE},
+		{"描述", "description", 0, IColumnDefiner.CE_TEXT, null, null, IColumnDefiner.EDITABLE }
 	};
 	
 	
@@ -81,6 +88,8 @@ public class SysDpyCmpTreeTable extends BaseTitleArea{
 	public SysDpyCmpTreeTable() {
 		super();
 		doper = new SysCmpDoper();
+		extendDoper = new ExtendWidgetDoper();
+		dropdownOptionsDoper = new DropdownOptionsDoper();
 	}
 
 	@Override
@@ -121,18 +130,32 @@ public class SysDpyCmpTreeTable extends BaseTitleArea{
 		}
 		
 		
-		
 		definer = new EpiTreeDefiner(null, columnsDefine);
+		//获取combo,checkbox数据
+//		List<OptionItem> downPushType = extendDoper.loadCmpTypeList("cmpType");
+		List<OptionItem> listDropdownOption = dropdownOptionsDoper.listDropdownOption("cmpType");
+		if(listDropdownOption != null && listDropdownOption.size() > 0) {
+			String[] cellEditorItems = new String[listDropdownOption.size()];
+			for (int i=0;i<listDropdownOption.size();i++) {
+				cellEditorItems[i] = listDropdownOption.get(i).getValue();
+			}
+			definer.putRefObjects("类型", listDropdownOption);
+			definer.putCellEditorItems("类型", cellEditorItems);
+		}
+		
 		context = new ViewContext();
 		tree = new EpiTree(parent, definer, context);
-		
+//		tree.setRefObjectsType(refObjectsCode);
+
 		//点选XXX产品时，获取当前产品的系统、子系统、组件；
 		//可新增/删除系统、子系统、组件等，及维护系统、子系统、组件结构
 		IEpiInput input = doper.loadSysCmpList(currentSelectProduct);
 		if(input != null) {
+			input.setCurrentData(input.getDataList().get(0));
 			context.setInput(input);
-			tree.getViewer().setInput(input);
-			tree.getViewer().refresh();
+			TreeViewer treeViewer = tree.getViewer();
+			treeViewer.setInput(input);
+			treeViewer.refresh();
 		}
 				
 		//添加拖动支持
@@ -155,6 +178,11 @@ public class SysDpyCmpTreeTable extends BaseTitleArea{
 
 		
 		
+	}
+	
+	public void setCurrentData(IBaseVo currentData) {
+		EpiInput input = (EpiInput) tree.getViewer().getInput();
+		input.setCurrentData(currentData);
 	}
 	
 	
