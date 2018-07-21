@@ -38,11 +38,13 @@ import net.aicoder.epi.base.view.context.IViewContext;
 import net.aicoder.epi.base.view.control.table.EpiCellModifier;
 import net.aicoder.epi.base.view.control.table.EpiSelectionProvider;
 import net.aicoder.epi.base.view.definer.IColumnDefiner;
+import net.aicoder.epi.base.view.extend.DatePickerCombo;
+import net.aicoder.epi.base.view.extend.PullDownComboBoxCellEditor;
 import net.aicoder.epi.base.view.part.IViewElement;
 import net.aicoder.tcom.tools.util.AiStringUtil;
 import net.aicoder.tcom.tools.util.BeanUtil;
 
-public class EpiTree extends Composite implements IViewElement {
+public class EpiTree extends Composite implements IViewElement{
 	public final int EACH_CHAR_WIDTH = 10;
 	
 	private EpiTreeDefiner definer;
@@ -62,6 +64,16 @@ public class EpiTree extends Composite implements IViewElement {
     private TreeItem currentSelectionTreeItem = null;
     private IBaseVo currentSelectionData = null;
     
+    private String refObjectsType = null;//扩展控件类别
+    
+    public String getRefObjectsType() {
+		return refObjectsType;
+	}
+
+	public void setRefObjectsType(String refObjectsType) {
+		this.refObjectsType = refObjectsType;
+	}
+
 /**	
 	public EpiTree(Composite parent) {
 		super(parent, SWT.NULL);
@@ -185,6 +197,8 @@ public class EpiTree extends Composite implements IViewElement {
 		}
 	}
 	
+	
+	
 	private void attachTreeColumns() {
 		if (definer.getColumnDefinerList().size() == 0) {
 			return;
@@ -237,7 +251,12 @@ public class EpiTree extends Composite implements IViewElement {
 					switch (dataType) {
 					case IColumnDefiner.CE_COMBOBOX:
 						String[] items = definer.getCellEditorItems(columnName);
-						cellEditors[colIdx] = new ComboBoxCellEditor(tree, items);
+						ComboBoxCellEditor comboBoxCellEditor = new PullDownComboBoxCellEditor(tree, items, SWT.READ_ONLY,columnName, definer.getRefObjects(columnName));
+						comboBoxCellEditor.activate();
+						cellEditors[colIdx] = comboBoxCellEditor;
+						break;
+					case IColumnDefiner.CE_DATE:
+						cellEditors[colIdx] = new DatePickerCombo.DatePickerComboCellEditor(tree,columnName);
 						break;
 					default:
 						cellEditors[colIdx] = new TextCellEditor(tree);

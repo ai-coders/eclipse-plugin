@@ -6,6 +6,7 @@ public interface IColumnDefiner {
 	
 	public final static String CE_COMBOBOX = "ComboBoxCellEditor";
 	public final static String CE_TEXT = "TextCellEditor";
+	public final static String CE_DATE = "DateCellEditor";
 
 	String getColumnName();
 

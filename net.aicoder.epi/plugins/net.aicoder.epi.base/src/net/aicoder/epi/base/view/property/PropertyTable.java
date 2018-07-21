@@ -296,7 +296,9 @@ public class PropertyTable extends Composite {
 				//treeItem.setText(col, newEditor.getText());
 				int selectionIndex = newEditor.getSelectionIndex();
 				OptionItem optionItem = propertyInfo.getComboBoxOptionItem(selectionIndex);
-				Object value = optionItem.getCode();
+				String code = optionItem.getCode();
+				String value = optionItem.getValue();
+				propertyInfo.setCode(code);
 				propertyInfo.setValue(value);
 			}
 		});

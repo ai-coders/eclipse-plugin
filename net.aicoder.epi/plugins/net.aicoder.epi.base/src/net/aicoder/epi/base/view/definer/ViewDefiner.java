@@ -9,11 +9,10 @@ import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 
-import net.aicoder.epi.base.view.context.IEpiEditorInput;
-import net.aicoder.epi.base.view.context.IEpiInput;
+import net.aicoder.epi.base.view.extend.BaseExtendManager;
 import net.aicoder.tcom.tools.util.AiStringUtil;
 
-public abstract class ViewDefiner implements IViewDefiner {
+public abstract class ViewDefiner implements IViewDefiner,BaseExtendManager {
 	private Object[][] viewDefine;
 	private Object[][] columnsDefine;
 	
@@ -196,6 +195,21 @@ public abstract class ViewDefiner implements IViewDefiner {
 				columnDefineMap.put(columnName, columnDefiner);
 			}
 		}
+	}
+
+	@Override
+	public void clearRefObjects() {
+		refObjectsMap.clear();
+	}
+
+	@Override
+	public void putRefObjects(String refObjectsCode, Object refObjects) {
+		refObjectsMap.put(refObjectsCode, refObjects);
+	}
+
+	@Override
+	public Object getRefObjects(String refObjectsCode) {
+		return refObjectsMap.get(refObjectsCode);
 	}
 
 }
