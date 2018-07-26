@@ -1,7 +1,7 @@
 package net.aicoder.epi.util.network;
 
 public class NetworkConstant{
-	//public static final String HOST = "http://127.0.0.1:8000";//http://39.108.171.116:8000";// "http://183.63.91.141:11201";//
+//	public static final String HOST = "http://127.0.0.1:8000";//http://39.108.171.116:8000";// "http://183.63.91.141:11201";//
 	public static final String HOST = "http://39.108.171.116:8000"; // "http://183.63.91.141:11201";//
 	public static final String AUTHENTICATE = HOST+"/security/login/authenticate";//登陆
 	public static final String PRODUCT = HOST+"/product/devpPrdProduct";//产品
