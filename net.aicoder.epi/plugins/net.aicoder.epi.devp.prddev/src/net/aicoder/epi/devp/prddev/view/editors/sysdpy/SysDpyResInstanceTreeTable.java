@@ -49,6 +49,7 @@ import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyResInstVo;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyResourcesVo;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysDpySchemaVo;
 import net.aicoder.epi.devp.prddev.model.ops.OpsAssetCmdbVo;
+import net.aicoder.epi.util.network.MakeId;
 
 /**
  * 部署模型-资源应用场景(树表)
@@ -119,6 +120,14 @@ public class SysDpyResInstanceTreeTable extends BaseTitleArea{
 		return tree.getSelectionProvider();
 	}
 	
+	/**
+	 * 获取当前tree对象
+	 * @return tree
+	 */
+	public EpiTree getTree() {
+		return tree;
+	}
+
 	//刷新树表数据
 	public void setSelection(ISelection selection) {	
 		//点选“关联资源”的记录时，维护当前关联资源的“资源实例”；
@@ -140,7 +149,7 @@ public class SysDpyResInstanceTreeTable extends BaseTitleArea{
 			tree.getViewer().setInput(input);
 			tree.getViewer().refresh();
 		}
-
+		
 		currentHandlerRole = 1;//设置[关联资源]进入
 	}
 	
@@ -309,6 +318,8 @@ public class SysDpyResInstanceTreeTable extends BaseTitleArea{
 			//IT资产类型和关联资源的类型要保持一致
 			OpsAssetCmdbVo oacv = (OpsAssetCmdbVo) currentOpsAssetCmdbList.get(comboITAssetEType.getSelectionIndex());		
 			SysDpyResInstVo newData = new SysDpyResInstVo();
+			newData.setRid(MakeId.newId());
+			newData.setTid(currentHandlerRole == 1?currentSysDpyResources.getTid():(currentHandlerRole == 2?currentSysDpySchema.getTid():0L));
 			newData.setCode(textAssoResCode.getText().trim());
 			newData.setName(textAssoResName.getText().trim());
 			newData.setEtype("SYS_DPY_RES_INST");

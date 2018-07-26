@@ -56,6 +56,7 @@ import net.aicoder.epi.devp.prddev.model.dev.ProductDevVo;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysCmpVo;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysElmCatgVo;
 import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
+import net.aicoder.epi.util.network.MakeId;
 import net.aicoder.tcom.tools.util.BeanUtil;
 
 /**
@@ -150,7 +151,7 @@ public class SysDpyCmpTreeTable extends BaseTitleArea{
 		//点选XXX产品时，获取当前产品的系统、子系统、组件；
 		//可新增/删除系统、子系统、组件等，及维护系统、子系统、组件结构
 		IEpiInput input = doper.loadSysCmpList(currentSelectProduct);
-		if(input != null) {
+		if(input != null && input.getDataList().size() > 0) {
 			input.setCurrentData(input.getDataList().get(0));
 			context.setInput(input);
 			TreeViewer treeViewer = tree.getViewer();
@@ -180,15 +181,27 @@ public class SysDpyCmpTreeTable extends BaseTitleArea{
 		
 	}
 	
+	/**
+	 * 设置当前操作实体
+	 * @param currentData
+	 */
 	public void setCurrentData(IBaseVo currentData) {
 		EpiInput input = (EpiInput) tree.getViewer().getInput();
 		input.setCurrentData(currentData);
 	}
-	
-	
-	
-	
-	
+
+	/**
+	 * 获取当前tree对象
+	 * @return tree
+	 */
+	public EpiTree getTree() {
+		return tree;
+	}
+
+
+
+
+
 	/**
 	 * 部署模型-系统、子系统新增(子节点)动作
 	 * @author WANGQINGPING
@@ -212,8 +225,8 @@ public class SysDpyCmpTreeTable extends BaseTitleArea{
 			
 			SysCmpVo scv = (SysCmpVo)parentData;			
 			SysCmpVo sysCmpVo = new SysCmpVo();
-			sysCmpVo.setRid(368+serial);
-			sysCmpVo.setTid(1);
+			sysCmpVo.setRid(MakeId.newId());
+			sysCmpVo.setTid(currentSelectProduct.getTid());
 			sysCmpVo.setCode(scv.getCode()+"_Copy");
 			sysCmpVo.setName(scv.getName()+"_Copy");
 			if("SYSTEM".equals(scv.getEtype())) {
@@ -252,8 +265,8 @@ public class SysDpyCmpTreeTable extends BaseTitleArea{
 //					return null;
 //				}
 				
-				sysCmpVo.setRid(268+serial);
-				sysCmpVo.setTid(1);
+				sysCmpVo.setRid(MakeId.newId());
+				sysCmpVo.setTid(currentSelectProduct.getTid());
 				sysCmpVo.setName(currModData.getName()+"_New_Copy");
 				sysCmpVo.setCode(currModData.getCode()+"_New_Copy");
 				sysCmpVo.setPrdRid(currentSelectProduct.getRid());
@@ -275,8 +288,8 @@ public class SysDpyCmpTreeTable extends BaseTitleArea{
 					dataList.add(sysCmpVo);
 				}
 			}else {//没有选中添加节点位置处理
-				sysCmpVo.setRid(268790814048238999L);
-				sysCmpVo.setTid(1);
+				sysCmpVo.setRid(MakeId.newId());
+				sysCmpVo.setTid(currentSelectProduct.getTid());
 				sysCmpVo.setName("New_Copy");
 				sysCmpVo.setCode("New_Copy");
 				sysCmpVo.setPrdRid(currentSelectProduct.getRid());

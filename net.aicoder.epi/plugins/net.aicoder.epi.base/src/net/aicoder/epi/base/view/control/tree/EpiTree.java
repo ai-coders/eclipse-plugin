@@ -251,7 +251,7 @@ public class EpiTree extends Composite implements IViewElement{
 					switch (dataType) {
 					case IColumnDefiner.CE_COMBOBOX:
 						String[] items = definer.getCellEditorItems(columnName);
-						ComboBoxCellEditor comboBoxCellEditor = new PullDownComboBoxCellEditor(tree, items, SWT.READ_ONLY,columnName, definer.getRefObjects(columnName));
+						ComboBoxCellEditor comboBoxCellEditor = new PullDownComboBoxCellEditor(tree, items, SWT.READ_ONLY,columnDefiner.getDataName(), definer.getRefObjects(columnName));
 						comboBoxCellEditor.activate();
 						cellEditors[colIdx] = comboBoxCellEditor;
 						break;

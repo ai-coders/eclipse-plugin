@@ -41,6 +41,7 @@ import net.aicoder.epi.devp.prddev.PrddevImageConstant;
 import net.aicoder.epi.devp.prddev.doper.ops.SysDpySchemaDoper;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysDpySchemaVo;
 import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
+import net.aicoder.epi.util.network.MakeId;
 
 /**
  * 部署模型-部署方案(视图)
@@ -49,6 +50,7 @@ import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
  */
 public class SysDpySchemeArea extends BaseArea{
 	public static final String ID = SysDpySchemeArea.class.getName();
+	private EpiTable table;// SysDpySchemaDefendTable 里面使用
 	private SysDpySchemaDoper sysDpySchemaDoper;
 	private PrdProductVo currentSelectProduct;//当前选中的产品
 	private Combo combo;
@@ -123,6 +125,13 @@ public class SysDpySchemeArea extends BaseArea{
 		return combo;
 	}
 	
+	/**
+	 * 获取SysDpySchemaDefendTable内table对象
+	 * @return table
+	 */
+	public EpiTable getTable() {
+		return table;
+	}
 	/**
 	 * 获取下拉选框对象数据
 	 * @return
@@ -229,7 +238,7 @@ public class SysDpySchemeArea extends BaseArea{
 	 */
 	public class SysDpySchemaDefendTable extends BaseTitleArea{
 		public final String ID = SysDpySchemaDefendTable.class.getName();
-		private EpiTable table;
+//		private EpiTable table;
 		private EpiTableDefiner definer;
 		private IViewContext context;
 		
@@ -258,7 +267,6 @@ public class SysDpySchemeArea extends BaseArea{
 		}
 		
 		@Override
-		//protected Control createAreaControl(Composite parent) {
 		public void assembleControl(Composite parent) {
 //			List<IBaseVo> loadSysDpySchemaList = sysDpySchemaDoper.loadSysDpySchemaList(currentProduct);
 			EpiInput input = new EpiInput();
@@ -285,6 +293,8 @@ public class SysDpySchemeArea extends BaseArea{
 			protected void doAddAction() {
 				//新增列表一行
 				SysDpySchemaVo sdsv = new SysDpySchemaVo();
+				sdsv.setRid(MakeId.newId());
+				sdsv.setTid(currentSelectProduct.getTid());
 				sdsv.setEtype("SYS_DPY_SCHEME");
 				Object object = table.getViewer().getInput();
 				if(object instanceof EpiInput) {

@@ -22,7 +22,7 @@ import net.aicoder.epi.devp.prddev.model.dev.system.SysCmpVo;
 import net.aicoder.epi.devp.prddev.view.property.PrddevWithPropArea;
 
 /**
- * 部署模型-内容(左/右区域)
+ * 部署模型-内容区域(左/右区域)
  * @author WANGQINGPING
  *
  */
@@ -30,15 +30,14 @@ public class SysDpyModelArea extends PrddevWithPropArea {
 	public final static String ID = SysDpyModelArea.class.getName();
 	private DropdownOptionsDoper dropdownOptionsDoper;
 
-	private SysDpyCmpTreeTable sysDpyCmpTreeTable; // 左-上
-	private SysDpyResAndInstArea sysDpyResAndInstArea; // 左-下
-
-	private SysDpySchemeArea sysDpySchemeArea; // 右-上
-	private SysDpyCmpRefTable sysDpyCmpRefTable; // 右-下
+	private SysDpyCmpTreeTable sysDpyCmpTreeTable; // 左-上 系统、子系统、组件
+	private SysDpyResourcesTable sysDpyResourcesTable; // 左-下 关联资源
+	private SysDpySchemeArea sysDpySchemeArea; // 右-上 部署方案
+	private SysDpyCmpRefTable sysDpyCmpRefTable; // 右-中 xxx组件维护
+	private SysDpyResInstanceTreeTable sysDpyResInstanceTreeTable; // 右-下 资源实例		
 
 	public SysDpyModelArea(IWorkbenchPart workbenchPart) {
 		super(workbenchPart);
-		
 		initDropdownOptions();
 	}
 
@@ -62,15 +61,15 @@ public class SysDpyModelArea extends PrddevWithPropArea {
 
 	private IArea newLeftWorkArea() {
 		int[] weights = new int[2];
-		weights[0] = 1;
+		weights[0] = 2;
 		weights[1] = 1;
 
 		sysDpyCmpTreeTable = new SysDpyCmpTreeTable();
-		sysDpyResAndInstArea = new SysDpyResAndInstArea();
+		sysDpyResourcesTable = new SysDpyResourcesTable();
 
 		IArea[] areas = new IArea[2];
 		areas[0] = sysDpyCmpTreeTable;
-		areas[1] = sysDpyResAndInstArea;
+		areas[1] = sysDpyResourcesTable;
 
 		SashArea sashArea = new SashArea(getWorkbenchPart());
 		sashArea.setAreas(areas);
@@ -81,16 +80,19 @@ public class SysDpyModelArea extends PrddevWithPropArea {
 	}
 
 	private IArea newRightWorkArea() {
-		int[] weights = new int[2];
+		int[] weights = new int[3];
 		weights[0] = 1;
 		weights[1] = 15;
+		weights[2] = 8;
 
 		sysDpySchemeArea = new SysDpySchemeArea();
 		sysDpyCmpRefTable = new SysDpyCmpRefTable();
+		sysDpyResInstanceTreeTable = new SysDpyResInstanceTreeTable();		
 
-		IArea[] areas = new IArea[2];
+		IArea[] areas = new IArea[3];
 		areas[0] = sysDpySchemeArea;
 		areas[1] = sysDpyCmpRefTable;
+		areas[2] = sysDpyResInstanceTreeTable;
 
 		SashArea sashArea = new SashArea(getWorkbenchPart());
 		sashArea.setAreas(areas);
@@ -116,20 +118,20 @@ public class SysDpyModelArea extends PrddevWithPropArea {
 			}
 		});
 		
-		//绑定监听：[关联资源列表]点击选择组件-->响应到[资源使用场景]区域处理
-		sysDpyResAndInstArea.getSysDpyResourcesTable().getSelectionProvider().addSelectionChangedListener(new ISelectionChangedListener() {
+		//绑定监听：[关联资源列表]点击选择组件-->响应到右边区域[资源使用场景]区域处理
+		sysDpyResourcesTable.getSelectionProvider().addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				ISelection selection = event.getSelection();
 				
-				sysDpyResAndInstArea.getSysDpyResInstanceTreeTable().setSelection(selection);
+				sysDpyResInstanceTreeTable.setSelection(selection);
 				setElementSelection(selection);//进入属性区域处理
-				sysDpyResAndInstArea.getSysDpyResourcesTable().bindSelectionDataEvent(selection);//进入属性区域逆向处理
+				sysDpyResourcesTable.bindSelectionDataEvent(selection);//进入属性区域逆向处理
 			}
 		});
 		
-		//绑定监听：[资源应用场景]点击选择组件-->响应到右边区域[xxx组件列表]处理
-		sysDpyResAndInstArea.getSysDpyResInstanceTreeTable().getSelectionProvider().addSelectionChangedListener(new ISelectionChangedListener() {			
+		//绑定监听：[资源应用场景]点击选择组件-->响应到[xxx组件列表]处理
+		sysDpyResInstanceTreeTable.getSelectionProvider().addSelectionChangedListener(new ISelectionChangedListener() {			
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				ISelection selection = event.getSelection();
@@ -137,7 +139,7 @@ public class SysDpyModelArea extends PrddevWithPropArea {
 				
 //				sysDpyCmpRefTable.setSelectionBySysDpyResInstVo(selection);
 				setElementSelection(selection);//进入属性区域处理
-				sysDpyResAndInstArea.getSysDpyResInstanceTreeTable().bindSelectionDataEvent(selection);//进入属性区域逆向处理
+				sysDpyResInstanceTreeTable.bindSelectionDataEvent(selection);//进入属性区域逆向处理
 			}
 		});
 		
@@ -157,7 +159,7 @@ public class SysDpyModelArea extends PrddevWithPropArea {
 				}
 				if(baseVo == null) return;
 				
-				sysDpyResAndInstArea.getSysDpyResInstanceTreeTable().setSelectionBySysDpySchema(baseVo);			
+				sysDpyResInstanceTreeTable.setSelectionBySysDpySchema(baseVo);			
 			}
 			
 			@Override
@@ -196,35 +198,45 @@ public class SysDpyModelArea extends PrddevWithPropArea {
 		}
 	}
 
+	
+	/**
+	 * 获取系统、子系统、组件对象
+	 * @return tree
+	 */
 	public SysDpyCmpTreeTable getSysDpyCmpTreeTable() {
 		return sysDpyCmpTreeTable;
 	}
 
-	public void setSysDpyCmpTreeTable(SysDpyCmpTreeTable sysDpyCmpTreeTable) {
-		this.sysDpyCmpTreeTable = sysDpyCmpTreeTable;
+	/**
+	 * 获取关联资源对象
+	 * @return 
+	 */
+	public SysDpyResourcesTable getSysDpyResourcesTable() {
+		return sysDpyResourcesTable;
 	}
 
-	public SysDpyResAndInstArea getSysDpyResAndInstArea() {
-		return sysDpyResAndInstArea;
-	}
-
-	public void setSysDpyResAndInstArea(SysDpyResAndInstArea sysDpyResAndInstArea) {
-		this.sysDpyResAndInstArea = sysDpyResAndInstArea;
-	}
-
+	/**
+	 * 获取部署方案对象
+	 * @return
+	 */
 	public SysDpySchemeArea getSysDpySchemeArea() {
 		return sysDpySchemeArea;
 	}
 
-	public void setSysDpySchemeArea(SysDpySchemeArea sysDpySchemeArea) {
-		this.sysDpySchemeArea = sysDpySchemeArea;
-	}
-
+	/**
+	 * 获取引用组件对象
+	 * @return
+	 */
 	public SysDpyCmpRefTable getSysDpyCmpRefTable() {
 		return sysDpyCmpRefTable;
 	}
 
-	public void setSysDpyCmpRefTable(SysDpyCmpRefTable sysDpyCmpRefTable) {
-		this.sysDpyCmpRefTable = sysDpyCmpRefTable;
+	/**
+	 * 获取资源实例对象
+	 * @return
+	 */
+	public SysDpyResInstanceTreeTable getSysDpyResInstanceTreeTable() {
+		return sysDpyResInstanceTreeTable;
 	}
+	
 }

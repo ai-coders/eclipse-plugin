@@ -34,6 +34,7 @@ import net.aicoder.epi.base.view.part.area.BaseTitleArea;
 import net.aicoder.epi.devp.prddev.doper.ops.SysDpyResourcesDoper;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyResourcesVo;
 import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
+import net.aicoder.epi.util.network.MakeId;
 
 /**
  * 部署模型-关联资源(表)
@@ -97,6 +98,14 @@ public class SysDpyResourcesTable extends BaseTitleArea{
 		return table.getSelectionProvider();
 	}
 	
+	/**
+	 * 获取当前table对象
+	 * @return table
+	 */
+	public EpiTable getTable() {
+		return table;
+	}
+
 	public void setSelection(ISelection selection) {
 		//刷新列表数据
 	}
@@ -163,8 +172,8 @@ public class SysDpyResourcesTable extends BaseTitleArea{
 		
 		private void doAddSysDpyResources() {
 			SysDpyResourcesVo sdrv = new SysDpyResourcesVo();
-			sdrv.setRid(38882983898L);
-			sdrv.setTid(1);
+			sdrv.setRid(MakeId.newId());
+			sdrv.setTid(currentSelectProduct.getTid());
 			sdrv.setName(textResName.getText().trim());
 			sdrv.setCode(code.getText().trim());
 			sdrv.setAlias("");

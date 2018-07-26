@@ -1,12 +1,12 @@
 package net.aicoder.epi.base.view.extend;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTError;
 import org.eclipse.swt.accessibility.ACC;
 import org.eclipse.swt.accessibility.AccessibleAdapter;
 import org.eclipse.swt.accessibility.AccessibleControlAdapter;
@@ -38,7 +38,7 @@ import org.eclipse.swt.widgets.TypedListener;
  *  + setDate(null) clears the date.
  *  + added getText & setText()
  * 
- * @author <a href="mailto:andy@tiff.ru">Andrey Onistchuk</a>
+ * 自定义日期选择控件
  * 
  */
 public class DatePickerCombo extends Composite
@@ -375,6 +375,9 @@ public class DatePickerCombo extends Composite
 					}
 
 					hasFocus = false;
+					
+					Text text = (Text) focusControl;
+					text.getText();
 
 					Event e = new Event();
 					e.time = event.time;
@@ -403,7 +406,7 @@ public class DatePickerCombo extends Composite
 					if (!isClosePopupWithSingleMouseClick)
 					{
 						Date date = dp.getDate();
-						text.setText(DateFormat.getDateInstance().format(date));
+						text.setText(formatDate(date));
 						text.selectAll();
 
 						Event e = new Event();
@@ -431,7 +434,7 @@ public class DatePickerCombo extends Composite
 					}
 					else
 					{
-						text.setText(DateFormat.getDateInstance().format(date));
+//						text.setText(formatDate(date));
 						text.selectAll();
 					}
 
@@ -536,6 +539,10 @@ public class DatePickerCombo extends Composite
 		popup.setBounds(point.x, point.y + comboSize.y, width, listRect.height + 2);
 		popup.setVisible(true);
 		dp.setFocus();
+	}
+	
+	public String formatDate(Date date) {
+		return new SimpleDateFormat("yyyy-MM-dd").format(date);
 	}
 
 	public Control[] getChildren()
@@ -832,7 +839,7 @@ public class DatePickerCombo extends Composite
 		//sebthom
 		if (date != null)
 		{
-			text.setText(DateFormat.getDateInstance().format(date));
+			text.setText(formatDate(date));
 			text.selectAll();
 		}
 		else
@@ -955,6 +962,7 @@ public class DatePickerCombo extends Composite
 					if (getEditable())
 					{
 						text.selectAll();
+						text.getText();
 					}
 
 					Event e = new Event();
@@ -971,7 +979,10 @@ public class DatePickerCombo extends Composite
 					{
 						return;
 					}
-
+					if(focusControl instanceof Text) {
+						Text text = (Text) focusControl;
+						text.getText();
+					}
 					hasFocus = false;
 
 					Event e = new Event();
@@ -1053,7 +1064,8 @@ public class DatePickerCombo extends Composite
 						{
 							try
 							{
-								dp.setDate(SimpleDateFormat.getDateInstance().parse(text.getText()));
+								Date parse = new SimpleDateFormat("yyyy-MM-dd").parse(text.getText());
+								dp.setDate(parse);
 							}
 							catch (ParseException pe)
 							{
@@ -1140,6 +1152,7 @@ public class DatePickerCombo extends Composite
 		@Override
 		protected Control createControl(Composite parent) {
 			datePickerCombo = new DatePickerCombo(parent,SWT.NONE);
+			
 			return datePickerCombo;
 		}
 

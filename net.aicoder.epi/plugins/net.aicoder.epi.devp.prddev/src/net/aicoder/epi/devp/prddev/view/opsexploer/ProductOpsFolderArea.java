@@ -3,11 +3,10 @@ package net.aicoder.epi.devp.prddev.view.opsexploer;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 
 import net.aicoder.epi.base.view.part.area.BaseArea;
-import net.aicoder.epi.base.view.part.area.TabArea;
 import net.aicoder.epi.base.view.part.area.IArea;
+import net.aicoder.epi.base.view.part.area.TabArea;
 
 public class ProductOpsFolderArea extends BaseArea{
 	public static final String ID = ProductOpsFolderArea.class.getName();

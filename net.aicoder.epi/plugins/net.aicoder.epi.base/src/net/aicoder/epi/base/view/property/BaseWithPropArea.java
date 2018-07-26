@@ -2,13 +2,10 @@ package net.aicoder.epi.base.view.property;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbenchPart;
 
-import net.aicoder.epi.base.view.part.area.SashArea;
-import net.aicoder.epi.example.area.TableEditorArea;
 import net.aicoder.epi.base.view.part.area.IArea;
+import net.aicoder.epi.base.view.part.area.SashArea;
 
 public abstract class BaseWithPropArea extends SashArea { //BaseArea {
 	protected IPropsManager propsManager;

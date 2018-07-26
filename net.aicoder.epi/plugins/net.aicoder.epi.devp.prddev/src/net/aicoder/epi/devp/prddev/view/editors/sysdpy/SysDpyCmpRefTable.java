@@ -46,6 +46,7 @@ import net.aicoder.epi.devp.prddev.model.dev.system.SysCmpVo;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyCmpRefVo;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysDpyResInstVo;
 import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
+import net.aicoder.epi.util.network.MakeId;
 import net.aicoder.tcom.tools.util.BeanUtil;
 
 /**
@@ -123,6 +124,14 @@ public class SysDpyCmpRefTable extends BaseTitleArea {
 		return table.getSelectionProvider();
 	}
 	
+	/**
+	 * 获取当前table对象
+	 * @return table
+	 */
+	public EpiTable getTable() {
+		return table;
+	}
+
 	/**
 	 * 从[系统、子系统、组件]点击进入到xxx组件区域,做xxx组件数据维护操作
 	 * @param selection
@@ -228,8 +237,8 @@ public class SysDpyCmpRefTable extends BaseTitleArea {
 		
 		private void doAddSysDpyCmpRef() {
 			SysDpyCmpRefVo sdcrv = new SysDpyCmpRefVo();
-			sdcrv.setRid(38882983898L);
-			sdcrv.setTid(1);
+			sdcrv.setRid(MakeId.newId());
+			sdcrv.setTid(currentSelectProduct.getTid());
 			sdcrv.setName(textResName.getText().trim());
 			sdcrv.setCode(code.getText().trim());
 			sdcrv.setAlias("");

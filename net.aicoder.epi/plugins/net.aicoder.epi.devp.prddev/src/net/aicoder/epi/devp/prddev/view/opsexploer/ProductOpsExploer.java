@@ -18,6 +18,7 @@ public class ProductOpsExploer extends BaseViewPart{
 	public static final String ID = ProductOpsExploer.class.getName();	
 	private SashArea epiSashArea;
 
+	
 	@Override
 	public IArea newPageArea() {
 		epiSashArea = new SashArea(this);
@@ -50,5 +51,6 @@ public class ProductOpsExploer extends BaseViewPart{
 	public void setFocus() {
 		epiSashArea.setFocus();
 	}
+	
 
 }

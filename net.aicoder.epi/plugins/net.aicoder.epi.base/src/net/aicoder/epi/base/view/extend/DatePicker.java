@@ -473,7 +473,7 @@ public class DatePicker extends Composite {
 		return selectedDate;
 	}
 
-	private String getMonthName(int month) {
+	public String getMonthName(int month) {
 		return dateSymbols.getMonths()[month];
 	}
 
