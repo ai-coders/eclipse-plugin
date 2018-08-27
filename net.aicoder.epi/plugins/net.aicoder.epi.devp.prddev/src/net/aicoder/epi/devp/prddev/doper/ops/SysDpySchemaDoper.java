@@ -4,11 +4,12 @@ import java.util.List;
 
 import net.aicoder.epi.base.doper.BaseDoper;
 import net.aicoder.epi.base.model.IBaseVo;
-import net.aicoder.epi.base.model.LoadElementState;
+import net.aicoder.epi.base.view.context.EpiInput;
+import net.aicoder.epi.base.view.context.IEpiInput;
 import net.aicoder.epi.devp.prddev.dao.ops.SysDpySchemaDao;
 
 /**
- * 部署模型-部署方案
+ * 运维流水线-部署方案Doper
  * @author WANGQINGPING
  *
  */
@@ -21,15 +22,17 @@ public class SysDpySchemaDoper extends BaseDoper{
 		this.sysDpySchemaDao = new SysDpySchemaDao();
 	}
 	
-	public List<IBaseVo> loadSysDpySchemaList(IBaseVo baseVo){
+	public IEpiInput loadSysDpySchemaList(IBaseVo baseVo){
 		if(baseVo == null) return null;
-		if(baseVo.isLoadedElement(SYS_DPY_SCHEMA)) return null;
+//		if(baseVo.isLoadedElement(SYS_DPY_SCHEMA)) return null;
 		
-		List<IBaseVo> loadSysDpySchemaList = sysDpySchemaDao.loadSysDpySchemaList(baseVo);
+		List<IBaseVo> sysDpySchemaList = sysDpySchemaDao.loadSysDpySchemaList(baseVo);
+		IEpiInput epiInput = new EpiInput();
+		epiInput.setDataList(sysDpySchemaList);
 		
-		LoadElementState loadElementState = new LoadElementState(SYS_DPY_SCHEMA);
-		loadElementState.setStartRecNo(0);
-		baseVo.putLoadElementState(loadElementState);
-		return loadSysDpySchemaList;
+//		LoadElementState loadElementState = new LoadElementState(SYS_DPY_SCHEMA);
+//		loadElementState.setStartRecNo(0);
+//		baseVo.putLoadElementState(loadElementState);
+		return epiInput;
 	}
 }

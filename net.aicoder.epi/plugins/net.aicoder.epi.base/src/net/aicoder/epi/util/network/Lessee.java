@@ -10,6 +10,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 public class Lessee {
 	public static final String LESSEE_USERNAME = "LESSEE_USERNAME";//租户用户名称
 	public static final String LESSEE_PASSWORD = "LESSEE_PASSWORD";//租户用户密码
+	public static final String LESSEE_PRESENT_SESSION = "LESSEE_PRESENT_SESSION";//这次登录用户Session值			
 	
 	private static AbstractUIPlugin plugin;
 	
@@ -44,6 +45,26 @@ public class Lessee {
 	
 	public static void setLesseeName(String username) {
 		if(assertPluginNoEmpty()) plugin.getPreferenceStore().setValue(LESSEE_USERNAME, username);
+	}
+	
+	public static String getPresentSession() {
+		return assertPluginNoEmpty() ? plugin.getPreferenceStore().getString(LESSEE_PRESENT_SESSION):null;
+	}
+	
+	public static void setPresentSession(String presentSession) {
+		if(assertPluginNoEmpty()) plugin.getPreferenceStore().setValue(LESSEE_PRESENT_SESSION, presentSession);
+	}
+	
+	/**
+	 * 校验请求网络是否已正常登录
+	 * @return
+	 */
+	public static boolean isAccess() {
+		boolean state = false;
+		if(getPresentSession() != null) {
+			state = true;
+		}
+		return state;
 	}
 	
 	

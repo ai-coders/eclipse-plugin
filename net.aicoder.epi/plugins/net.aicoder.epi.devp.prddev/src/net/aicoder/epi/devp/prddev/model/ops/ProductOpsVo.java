@@ -1,6 +1,7 @@
 package net.aicoder.epi.devp.prddev.model.ops;
 
 import java.util.Date;
+import java.util.List;
 
 import net.aicoder.epi.base.model.TreeNodeVo;
 import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
@@ -34,7 +35,7 @@ public class ProductOpsVo extends TreeNodeVo{
 	private String status; // 状态
 	private String notes; // 备注
 	private PrdProductVo prdProductVo; //产品
-
+	private List<PrdProductVo> productList; //产品组内产品集合
 
 
 	public ProductOpsVo() {
@@ -250,6 +251,12 @@ public class ProductOpsVo extends TreeNodeVo{
 		this.notes = notes;
 	}
 	
-	
+	public List<PrdProductVo> getProductList() {
+		return productList;
+	}
+
+	public void setProductList(List<PrdProductVo> productList) {
+		this.productList = productList;
+	}
 	
 }

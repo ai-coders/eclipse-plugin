@@ -1,7 +1,9 @@
 package net.aicoder.epi.devp.prddev.dao.ops;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -18,7 +20,7 @@ import net.aicoder.epi.util.network.NetworkConstant;
 import net.aicoder.epi.util.network.NetworkHelper;
 
 /**
- * 部署方案
+ * 运维流水线-部署方案Dao
  * @author WANGQINGPING
  *
  */
@@ -34,18 +36,16 @@ public class SysDpySchemaDao extends BaseDao {
 		PrdProductVo pVo = (PrdProductVo)baseVo;
 		
 		
-		MultiValueMap<String, String> request = new LinkedMultiValueMap<>();
-		request.add("sessionId", "123456789");
-		request.add("prd_rid", String.valueOf(pVo.getRid()));
-		String resultJson = NetworkHelper.postForObject(NetworkConstant.PRODUCTOPS_SYS_DPY_SCHEMA, request, String.class);
-		System.out.println(resultJson);
-		ResponseResult<List<SysDpySchemaVo>> resultObj = JSON.parseObject(resultJson,new TypeReference<ResponseResult<List<SysDpySchemaVo>>>(){});
-		if(resultObj == null || resultObj.getData() == null || resultObj.getData().size() == 0) return sysDpySchemaVos;
+		Map<String, Object> request = new HashMap<String,Object>();
+		request.put("searchCondition", new Object());
+		request.put("start", 0);
+		request.put("limit", 10);
 		
-		List<SysDpySchemaVo> data = resultObj.getData();
-		for (SysDpySchemaVo sysDpySchemaVo : data) {
-			sysDpySchemaVos.add(sysDpySchemaVo);
-		}
+//		String resultJson = NetworkHelper.postForObject(NetworkConstant.SYS_DPY_PARAM_CONF, request, String.class);
+//		System.out.println(resultJson);
+//		ResponseResult<List<SysDpySchemaVo>> resultObj = JSON.parseObject(resultJson,new TypeReference<ResponseResult<List<SysDpySchemaVo>>>(){});
+//		if(resultObj == null || resultObj.getData() == null || resultObj.getData().size() == 0) return sysDpySchemaVos;
+		
 		
 		return sysDpySchemaVos;
 	}

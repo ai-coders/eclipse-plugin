@@ -1,10 +1,9 @@
 package net.aicoder.epi.devp.prddev.dao.ops;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -15,6 +14,7 @@ import net.aicoder.epi.base.model.IBaseVo;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysDiagramVo;
 import net.aicoder.epi.devp.prddev.model.dev.system.SysElementVo;
 import net.aicoder.epi.devp.prddev.model.ops.ProductOpsVo;
+import net.aicoder.epi.devp.prddev.model.ops.ResponseContent;
 import net.aicoder.epi.devp.prddev.model.ops.ResponseResult;
 import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
 import net.aicoder.epi.util.network.NetworkConstant;
@@ -32,90 +32,26 @@ public class ProductOpsDao extends BaseDao {
 	}
 	
 	
-	//获取产品分组内产品
+	//加载产品分组数据
 	public List<IBaseVo> loadProductGroupList(IBaseVo baseVo){
 		List<IBaseVo> produtOpsList = new ArrayList<>();
 		
-		MultiValueMap<String, String> request = new LinkedMultiValueMap<>();
-		request.add("sessionId", "123456789");
-		String resultJson = NetworkHelper.postForObject(NetworkConstant.PRODUCTOPS_GROUP, request, String.class);
+		Map<String, Object> request = new HashMap<String,Object>();
+		request.put("searchCondition", new Object());
+		request.put("start", 0);
+		request.put("limit", 10);
+		String resultJson = NetworkHelper.postForObject(NetworkConstant.SYS_DPY_OPS, request, String.class);
 		System.out.println(resultJson);
-		ResponseResult<List<PrdProductVo>> resultObj = JSON.parseObject(resultJson,new TypeReference<ResponseResult<List<PrdProductVo>>>(){});
-		if(resultObj == null || resultObj.getData() == null || resultObj.getData().size() == 0) return produtOpsList;
-		
-		{
-			//产品分组1
-			ProductOpsVo prdGroupVo1 = new ProductOpsVo();
-			prdGroupVo1.setRid(100);
-			prdGroupVo1.setTid(1);
-			prdGroupVo1.setCode("Prd_Group_Code_1");
-			prdGroupVo1.setName("信息部产品分组");
-			prdGroupVo1.setEtype(EtypeEnum.PRD_GROUP.etype());
-			produtOpsList.add(prdGroupVo1);
-			{
-				//产品分组1-产品一
-//				PrdProductVo pv = new PrdProductVo();
-//				BeanUtil.copyBeanToBean(pv, resultObj.getData().get(0));
-				prdGroupVo1.getChildrenList().add(resultObj.getData().get(0));
-			}
-			{
-				//产品分组1-产品二
-//				PrdProductVo pv = new PrdProductVo();
-//				BeanUtil.copyBeanToBean(pv, resultObj.getData().get(1));
-				prdGroupVo1.getChildrenList().add(resultObj.getData().get(1));
-			}
-			{
-				//产品分组1-产品三
-//				PrdProductVo pv = new PrdProductVo();
-//				BeanUtil.copyBeanToBean(pv, resultObj.getData().get(2));
-				prdGroupVo1.getChildrenList().add(resultObj.getData().get(2));
-			}
-			{
-				prdGroupVo1.getChildrenList().add(resultObj.getData().get(3));
-			}
+		ResponseResult<ResponseContent<List<ProductOpsVo>>> resultObj = JSON.parseObject(resultJson,new TypeReference<ResponseResult<ResponseContent<List<ProductOpsVo>>>>(){});
+		if(resultObj == null || resultObj.getData() == null || resultObj.getData().getContent() == null || resultObj.getData().getContent().size() == 0) return produtOpsList;
+		List<ProductOpsVo> prdGroups = resultObj.getData().getContent();
+		for (ProductOpsVo pov : prdGroups) {
+			pov.setEtype(EtypeEnum.PRD_GROUP.etype());
+			List<PrdProductVo> productList = pov.getProductList();
+			for (PrdProductVo ppv : productList) { ppv.setEtype(EtypeEnum.PRODUCT.etype());}
+			pov.getChildrenList().addAll(productList);
+			produtOpsList.add(pov);
 		}
-		
-		{
-			//产品分组2
-			ProductOpsVo prdGroupVo2 = new ProductOpsVo();
-			prdGroupVo2.setRid(101);
-			prdGroupVo2.setTid(1);
-			prdGroupVo2.setCode("Prd_Group_Code_2");
-			prdGroupVo2.setName("实验室产品分组");
-			prdGroupVo2.setEtype(EtypeEnum.PRD_GROUP.etype());
-			produtOpsList.add(prdGroupVo2);
-			{
-				//产品分组2-产品一
-				PrdProductVo prd = new PrdProductVo();
-				prd.setRid(13);
-				prd.setTid(1);
-				prd.setCode("Product_Code_21");
-				prd.setName("微生物产品");
-				prd.setEtype("ASSET_BIZ_SW");
-				prdGroupVo2.getChildrenList().add(prd);
-			}
-			{
-				//产品分组2-产品二
-				PrdProductVo prd = new PrdProductVo();
-				prd.setRid(14);
-				prd.setTid(1);
-				prd.setCode("Product_Code_22");
-				prd.setName("高血压产品");
-				prd.setEtype("ASSET_BIZ_SW");
-				prdGroupVo2.getChildrenList().add(prd);
-			}
-			{
-				//产品分组2-产品三
-				PrdProductVo prd = new PrdProductVo();
-				prd.setRid(15);
-				prd.setTid(1);
-				prd.setCode("Product_Code_23");
-				prd.setName("血常规产品");
-				prd.setEtype("ASSET_BIZ_SW");
-				prdGroupVo2.getChildrenList().add(prd);
-			}
-		}
-		
 		return produtOpsList;
 	}
 	

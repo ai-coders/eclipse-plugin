@@ -3,7 +3,7 @@ package net.aicoder.epi.devp.prddev.model.dev.system;
 import net.aicoder.epi.base.model.BaseVo;
 
 /**
- * 部署模型-部署方案实体
+ * 运维流水线-部署方案实体
  * @author WANGQINGPING
  *
  */

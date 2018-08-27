@@ -21,14 +21,16 @@ import net.aicoder.epi.devp.prddev.model.product.PrdProductVo;
 import net.aicoder.epi.devp.prddev.view.editors.sysdpy.SysDpyEditor;
 
 /**
- * 产品发布导航-产品分组-浏览区域
+ * 产品发布导航-产品分组-树型菜单
  * @author WANGQINGPING
  *
  */
 public class ProductOpsTreeArea extends BaseTitleArea{
 	public static final String ID = ProductOpsTreeArea.class.getName();
-	private ProductOpsDoper productOpsDoper;
+	private EpiTreeDefiner define;
+	private ProductOpsTreeAreaContext context;
 	private EpiTree tree;
+	private ProductOpsDoper productOpsDoper;
 	
 	//Tree定义
 	// 0-数据类型, 1-图片, 2-Text对应变量名(缺省为name), 3-Description对应变量名(缺省为description), 4-双击对应的动作
@@ -52,14 +54,12 @@ public class ProductOpsTreeArea extends BaseTitleArea{
 	}
 
 	@Override
-	//protected Control createAreaControl(Composite parent) {
 	public void assembleControl(Composite parent) {
-		EpiTreeDefiner treeDefiner = new EpiTreeDefiner(viewDefine);
-		ProductOpsTreeAreaContext productOpsTreeContext = new ProductOpsTreeAreaContext();
-		tree = new EpiTree(parent, treeDefiner, productOpsTreeContext);
+		define = new EpiTreeDefiner(viewDefine);
+		context = new ProductOpsTreeAreaContext();
+		tree = new EpiTree(parent, define, context);
 		tree.getTree().setHeaderVisible(false);
 		tree.getTree().setLinesVisible(false);
-		//return tree;
 	}
 	
 	public EpiSelectionProvider getSelectionProvider() {

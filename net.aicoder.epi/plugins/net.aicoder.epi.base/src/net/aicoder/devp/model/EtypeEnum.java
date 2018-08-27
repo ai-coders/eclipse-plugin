@@ -5,7 +5,7 @@ public enum EtypeEnum {
 	
 	// 产品
 	PRD_LINE("PRD_LINE"), //产品线
-	PRODUCT("PRODUCT"), //产品
+	PRODUCT("PRD"), //产品
 	MODULE("MODULE"), //模块
 	FUNCTION("FUNCTION"), //功能
 	PRD_GROUP("PRD_GROUP"), //产品组

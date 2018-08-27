@@ -6,13 +6,14 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.PartInitException;
 
 import net.aicoder.epi.base.view.part.editor.BaseFormEditor;
+import net.aicoder.epi.devp.prddev.view.editors.sysdpy.model.SysDpyModelPage;
+import net.aicoder.epi.devp.prddev.view.editors.sysdpy.opsline.SysDpyOpsPage;
 
 public class SysDpyEditor extends BaseFormEditor{
 	public static String ID = SysDpyEditor.class.getName();
 	
-	//private IViewContext context;
-	private SysDpyModelPage sysDpyModelPage;
-	private SysDpyOpsPage sysDpyOpsPage;
+	private SysDpyModelPage sysDpyModelPage; // 部署模型
+	private SysDpyOpsPage sysDpyOpsPage; // 运维流水线
 
 	@Override
 	protected void addPages() {
@@ -21,7 +22,6 @@ public class SysDpyEditor extends BaseFormEditor{
 			sysDpyOpsPage = new SysDpyOpsPage(this);
 			addPage(sysDpyModelPage);
 			addPage(sysDpyOpsPage);
-			
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}

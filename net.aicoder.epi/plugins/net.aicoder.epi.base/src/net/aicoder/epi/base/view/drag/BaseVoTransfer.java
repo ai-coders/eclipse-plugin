@@ -10,7 +10,7 @@ import net.aicoder.epi.base.model.IBaseVo;
 
 public class BaseVoTransfer extends BaseTransfer {
 	protected static BaseVoTransfer INSTANCE = null;
-	private static final String TYPE_NAME = "locat-selection-custom-basevo-format"; //$NON-NLS-1$;
+	private static final String TYPE_NAME = "custom-define-local-selection-basevo-format";				
 	private static final int TYPEID = registerType(TYPE_NAME);
 	
 	@Override

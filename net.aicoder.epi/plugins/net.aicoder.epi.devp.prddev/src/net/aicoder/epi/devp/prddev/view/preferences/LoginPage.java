@@ -1,5 +1,8 @@
 package net.aicoder.epi.devp.prddev.view.preferences;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -15,10 +18,11 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+
+import com.alibaba.fastjson.JSON;
 
 import net.aicoder.epi.devp.prddev.model.sys.LoginResult;
+import net.aicoder.epi.util.network.Lessee;
 import net.aicoder.epi.util.network.NetworkConstant;
 import net.aicoder.epi.util.network.NetworkHelper;
 
@@ -57,6 +61,7 @@ public class LoginPage extends PreferencePage implements IWorkbenchPreferencePag
 		
 		passwordText = new Text(loginGroup, SWT.BORDER);
 		passwordText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,1,1));
+		passwordText.setText("123456");
 		
 		Button loginButton = new Button(loginGroup, SWT.NONE);
 		loginButton.setText("登录");
@@ -78,19 +83,26 @@ public class LoginPage extends PreferencePage implements IWorkbenchPreferencePag
 	
 	
 	private void login(String account,String password) {
-		MultiValueMap<String, String> request = new LinkedMultiValueMap<>();
-		request.add("username", account);
-		request.add("password", password);
+		Map<String, Object> params = new HashMap<String,Object>();
+		params.put("username", account);
+		params.put("password", password);
 		
 		Display.getDefault().asyncExec(new Runnable() {
 			
 			@Override
 			public void run() {
-				LoginResult result = NetworkHelper.postForObject(NetworkConstant.AUTHENTICATE, request, LoginResult.class);
+				String result = NetworkHelper.postForObject(NetworkConstant.AUTHENTICATE, params, String.class);
+				if(result != null) {
+					LoginResult parseObject = JSON.parseObject(result, LoginResult.class);
+					Lessee.setLesseeName(account);
+					Lessee.setLesseePwd(password);
+					Lessee.setPresentSession(parseObject.getData().getSessionId());
+				}
 				System.out.println("登陆请求的result:"+result);
 			}
 		});
 	}
+	
 	
 //	private void showMessageDialog(String result) {
 //		if(result != null && "success".contains(result) && "true".contains(result)) {

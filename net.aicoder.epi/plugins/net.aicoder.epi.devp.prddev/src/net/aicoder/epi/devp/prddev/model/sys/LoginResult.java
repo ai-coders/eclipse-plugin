@@ -1,55 +1,56 @@
 package net.aicoder.epi.devp.prddev.model.sys;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 /**
- * 登陆结果
- * Created by gonghongrui on 2017/1/5.
+ * 登陆结果实体
+ *
  */
 public class LoginResult {
-
-	private boolean success;
-
-	private String sessionId;
-
+	private int code;
 	private String message;
+	private LoginResultData data;
 
-	public LoginResult(Boolean success){
-		this.success = success;
+	public int getCode() {
+		return code;
 	}
-
-	public LoginResult(Boolean success, String id){
-		this.success = success;
-		this.sessionId = id;
+	public void setCode(int code) {
+		this.code = code;
 	}
-
-
-	public String getSessionId() {
-		return sessionId;
-	}
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
-	}
-
-	public boolean isSuccess() {
-		return success;
-	}
-	public void setSuccess(boolean success) {
-		this.success = success;
-	}
-
 	public String getMessage() {
 		return message;
 	}
-
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	public LoginResultData getData() {
+		return data;
+	}
+	public void setData(LoginResultData data) {
+		this.data = data;
+	}
 
-	@Override
-	public String toString() {
-		return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+	public class LoginResultData{
+		private boolean success;
+		private String sessionId;
+		private String message;
+		
+		public boolean isSuccess() {
+			return success;
+		}
+		public void setSuccess(boolean success) {
+			this.success = success;
+		}
+		public String getSessionId() {
+			return sessionId;
+		}
+		public void setSessionId(String sessionId) {
+			this.sessionId = sessionId;
+		}
+		public String getMessage() {
+			return message;
+		}
+		public void setMessage(String message) {
+			this.message = message;
+		}
 	}
 
 }

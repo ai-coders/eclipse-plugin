@@ -37,6 +37,9 @@ public final class BaseImageConstant {
 	public static final String A_REFRESH_DIS = "icons/actions/refresh_dis.png";
 
 	public static final String A_FILTER = "icons/actions/filter.gif";
+	public static final String A_EDITOR = "icons/actions/editor.png";
+	public static final String A_DISPLAY = "icons/actions/display.png";
+	public static final String A_COPY = "icons/actions/copy.png";
 
 	public static final String E_PRDLINE = "icons/product/prdline.gif";
 	public static final String E_PRODUCT = "icons/product/product.gif";

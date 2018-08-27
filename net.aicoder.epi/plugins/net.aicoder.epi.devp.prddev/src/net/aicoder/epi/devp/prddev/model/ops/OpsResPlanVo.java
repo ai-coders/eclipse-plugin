@@ -1,16 +1,13 @@
-package net.aicoder.epi.devp.prddev.model.dev.system;
+package net.aicoder.epi.devp.prddev.model.ops;
 
-
-import java.util.List;
-
-import net.aicoder.epi.base.model.TreeNodeVo;
+import net.aicoder.epi.base.model.BaseVo;
 
 /**
- * 产品->系统、子系统、组件实体
+ * 部署模型-资源规划实体
  * @author WANGQINGPING
  *
  */
-public class SysCmpVo extends TreeNodeVo{
+public class OpsResPlanVo extends BaseVo {
 	private static final long serialVersionUID = 1L;
 	
 	private String type; // 类型
@@ -21,105 +18,130 @@ public class SysCmpVo extends TreeNodeVo{
 	private String phase; // 阶段
 	private String status; // 状态
 	private String notes; // 备注
-	private int installable; //可安装组件
-	private int sharedComponent; //共享组件
-	private int sharedService; //共享服务
 	private long prdRid; // 产品编号
-	private long parentRid; // 父包编号
 	private int seq; // 顺序号
-	private List<SysCmpVo> devpSysCmpList;//子组件集合
 	
 	
-	
+	/**
+	 * @return the type
+	 */
 	public String getType() {
 		return type;
 	}
+	/**
+	 * @param type the type to set
+	 */
 	public void setType(String type) {
 		this.type = type;
 	}
+	/**
+	 * @return the subType
+	 */
 	public String getSubType() {
 		return subType;
 	}
+	/**
+	 * @param subType the subType to set
+	 */
 	public void setSubType(String subType) {
 		this.subType = subType;
 	}
+	/**
+	 * @return the stereotype
+	 */
 	public String getStereotype() {
 		return stereotype;
 	}
+	/**
+	 * @param stereotype the stereotype to set
+	 */
 	public void setStereotype(String stereotype) {
 		this.stereotype = stereotype;
 	}
+	/**
+	 * @return the scope
+	 */
 	public String getScope() {
 		return scope;
 	}
+	/**
+	 * @param scope the scope to set
+	 */
 	public void setScope(String scope) {
 		this.scope = scope;
 	}
+	/**
+	 * @return the version
+	 */
 	public String getVersion() {
 		return version;
 	}
+	/**
+	 * @param version the version to set
+	 */
 	public void setVersion(String version) {
 		this.version = version;
 	}
+	/**
+	 * @return the phase
+	 */
 	public String getPhase() {
 		return phase;
 	}
+	/**
+	 * @param phase the phase to set
+	 */
 	public void setPhase(String phase) {
 		this.phase = phase;
 	}
+	/**
+	 * @return the status
+	 */
 	public String getStatus() {
 		return status;
 	}
+	/**
+	 * @param status the status to set
+	 */
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	/**
+	 * @return the notes
+	 */
 	public String getNotes() {
 		return notes;
 	}
+	/**
+	 * @param notes the notes to set
+	 */
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
-	public int getInstallable() {
-		return installable;
-	}
-	public void setInstallable(int installable) {
-		this.installable = installable;
-	}
-	public int getSharedComponent() {
-		return sharedComponent;
-	}
-	public void setSharedComponent(int sharedComponent) {
-		this.sharedComponent = sharedComponent;
-	}
-	public int getSharedService() {
-		return sharedService;
-	}
-	public void setSharedService(int sharedService) {
-		this.sharedService = sharedService;
-	}
+	/**
+	 * @return the prdRid
+	 */
 	public long getPrdRid() {
 		return prdRid;
 	}
+	/**
+	 * @param prdRid the prdRid to set
+	 */
 	public void setPrdRid(long prdRid) {
 		this.prdRid = prdRid;
 	}
-	public long getParentRid() {
-		return parentRid;
-	}
-	public void setParentRid(long parentRid) {
-		this.parentRid = parentRid;
-	}
+	/**
+	 * @return the seq
+	 */
 	public int getSeq() {
 		return seq;
 	}
+	/**
+	 * @param seq the seq to set
+	 */
 	public void setSeq(int seq) {
 		this.seq = seq;
 	}
-	public List<SysCmpVo> getDevpSysCmpList() {
-		return devpSysCmpList;
-	}
-	public void setDevpSysCmpList(List<SysCmpVo> devpSysCmpList) {
-		this.devpSysCmpList = devpSysCmpList;
-	}
+	
 	
 }

@@ -8,7 +8,7 @@ import net.aicoder.epi.base.view.context.EpiInput;
 import net.aicoder.epi.devp.prddev.dao.ops.SysCmpDao;
 
 /**
- * 部署模型-系统组件
+ * 部署模型-系统组件 Doper
  * @author WANGQINGPING
  *
  */

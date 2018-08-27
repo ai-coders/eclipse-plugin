@@ -4,6 +4,7 @@ Bundle-Name: Prddev
 Bundle-SymbolicName: net.aicoder.epi.devp.prddev;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Vendor: ai-coder
+Bundle-Activator: net.aicoder.epi.devp.prddev.PrddevPlugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
  org.eclipse.ui,
@@ -36,3 +37,4 @@ Export-Package: net.aicoder.epi.devp.prddev,
  net.aicoder.epi.devp.prddev.view.editors.sysdpy,
  net.aicoder.epi.devp.prddev.view.editors.syside,
  net.aicoder.epi.devp.prddev.view.opsexploer
+Bundle-ActivationPolicy: lazy
